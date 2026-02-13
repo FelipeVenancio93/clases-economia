@@ -18,566 +18,143 @@
             --amarillo: #F59E0B;
             --magenta: #E91E90;
         }
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
+        * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
             font-family: 'Albert Sans', -apple-system, BlinkMacSystemFont, sans-serif;
             background: var(--azul-respaldo);
             color: var(--blanco);
             overflow: hidden;
         }
-
-        .slide-container {
-            width: 100vw;
-            height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .slide {
-            display: none;
-            width: 100%;
-            height: 100%;
-            padding: 60px 80px;
-            flex-direction: column;
-            justify-content: center;
-        }
-
-        .slide.active {
-            display: flex;
-        }
-
-        /* Fondos */
+        .slide-container { width: 100vw; height: 100vh; display: flex; align-items: center; justify-content: center; }
+        .slide { display: none; width: 100%; height: 100%; padding: 60px 80px; flex-direction: column; justify-content: center; overflow-y: auto; }
+        .slide.active { display: flex; }
         .bg-respaldo { background: var(--azul-respaldo); color: var(--blanco); }
         .bg-impulso { background: var(--azul-impulso); color: var(--blanco); }
         .bg-verde { background: var(--verde-activo); color: var(--blanco); }
         .bg-blanco { background: var(--blanco); color: var(--azul-respaldo); }
         .bg-oscuro { background: #0a0a0a; color: var(--blanco); }
         .bg-magenta { background: var(--magenta); color: var(--blanco); }
-
-        /* Tipografía */
-        h1 {
-            font-size: 3.8rem;
-            font-weight: 700;
-            line-height: 1.1;
-            margin-bottom: 30px;
-        }
-
-        h2 {
-            font-size: 2.6rem;
-            font-weight: 600;
-            margin-bottom: 25px;
-        }
-
-        h3 {
-            font-size: 1.8rem;
-            font-weight: 500;
-            margin-bottom: 20px;
-            opacity: 0.9;
-        }
-
-        p, li {
-            font-size: 1.5rem;
-            line-height: 1.6;
-            margin-bottom: 15px;
-        }
-
-        .subtitle {
-            font-size: 1.6rem;
-            opacity: 0.8;
-            font-weight: 400;
-        }
-
-        .highlight {
-            color: var(--verde-activo);
-        }
-
-        .bg-blanco .highlight {
-            color: var(--azul-impulso);
-        }
-
-        .highlight-red {
-            color: var(--rojo-alerta);
-        }
-
-        .highlight-yellow {
-            color: var(--amarillo);
-        }
-
-        .highlight-magenta {
-            color: var(--magenta);
-        }
-
-        blockquote {
-            font-size: 1.7rem;
-            font-style: italic;
-            border-left: 4px solid var(--verde-activo);
-            padding-left: 30px;
-            margin: 25px 0;
-            opacity: 0.95;
-        }
-
-        .bg-blanco blockquote {
-            border-left-color: var(--azul-impulso);
-        }
-
-        blockquote cite {
-            display: block;
-            font-size: 1.1rem;
-            margin-top: 12px;
-            font-style: normal;
-            opacity: 0.7;
-        }
-
-        ul {
-            list-style: none;
-            padding-left: 0;
-        }
-
-        ul li {
-            padding-left: 35px;
-            position: relative;
-            margin-bottom: 18px;
-        }
-
-        ul li::before {
-            content: "▸";
-            position: absolute;
-            left: 0;
-            color: var(--verde-activo);
-            font-size: 1.4rem;
-        }
-
-        .bg-verde ul li::before,
-        .bg-impulso ul li::before,
-        .bg-magenta ul li::before {
-            color: var(--blanco);
-        }
-
-        /* Tablas */
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin: 25px 0;
-            font-size: 1.3rem;
-        }
-
-        th, td {
-            padding: 18px 22px;
-            text-align: left;
-            border-bottom: 1px solid rgba(255,255,255,0.2);
-        }
-
-        .bg-blanco th,
-        .bg-blanco td {
-            border-bottom: 1px solid rgba(0,0,0,0.1);
-        }
-
-        th {
-            font-weight: 600;
-            opacity: 0.7;
-            font-size: 1rem;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-
-        td.resultado {
-            font-weight: 700;
-            font-size: 1.4rem;
-        }
-
-        /* Fórmula */
-        .formula {
-            font-size: 2rem;
-            text-align: center;
-            padding: 30px;
-            background: rgba(255,255,255,0.08);
-            border-radius: 12px;
-            margin: 25px 0;
-            font-weight: 500;
-            letter-spacing: 2px;
-        }
-
-        .bg-blanco .formula {
-            background: rgba(16, 54, 226, 0.06);
-        }
-
-        .formula-grande {
-            font-size: 2.8rem;
-            padding: 40px;
-        }
-
-        /* Diagrama flujo */
-        .flow-diagram {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 15px;
-            margin: 35px 0;
-            flex-wrap: wrap;
-        }
-
-        .flow-box {
-            background: rgba(255,255,255,0.1);
-            padding: 20px 28px;
-            border-radius: 10px;
-            font-size: 1.2rem;
-            font-weight: 500;
-            text-align: center;
-        }
-
-        .bg-blanco .flow-box {
-            background: rgba(16, 54, 226, 0.1);
-        }
-
-        .flow-arrow {
-            font-size: 1.8rem;
-            color: var(--verde-activo);
-        }
-
-        /* Dos columnas */
-        .two-cols {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 50px;
-            margin-top: 25px;
-        }
-
-        /* Tres columnas */
-        .three-cols {
-            display: grid;
-            grid-template-columns: 1fr 1fr 1fr;
-            gap: 30px;
-            margin-top: 25px;
-        }
-
-        /* Concepto box */
-        .concepto-box {
-            background: rgba(255,255,255,0.08);
-            padding: 25px;
-            border-radius: 12px;
-            text-align: center;
-        }
-
-        .bg-blanco .concepto-box {
-            background: rgba(16, 54, 226, 0.06);
-        }
-
-        .concepto-box h4 {
-            font-size: 1.3rem;
-            font-weight: 600;
-            margin-bottom: 12px;
-            color: var(--verde-activo);
-        }
-
-        .bg-blanco .concepto-box h4 {
-            color: var(--azul-impulso);
-        }
-
-        .concepto-box p {
-            font-size: 1.15rem;
-            margin-bottom: 0;
-        }
-
-        /* Cita académica */
-        .cita-paper {
-            background: rgba(255,255,255,0.06);
-            padding: 25px 30px;
-            border-radius: 10px;
-            margin: 20px 0;
-            border-left: 4px solid var(--verde-activo);
-        }
-
-        .bg-blanco .cita-paper {
-            background: rgba(16, 54, 226, 0.04);
-            border-left-color: var(--azul-impulso);
-        }
-
-        .cita-paper .titulo {
-            font-weight: 600;
-            font-size: 1.15rem;
-            margin-bottom: 8px;
-        }
-
-        .cita-paper .autores {
-            font-size: 0.95rem;
-            opacity: 0.7;
-            margin-bottom: 12px;
-        }
-
-        .cita-paper .contenido {
-            font-size: 1.2rem;
-            line-height: 1.5;
-            font-style: italic;
-        }
-
-        /* Gráficos de barras */
-        .bar-chart {
-            margin: 30px 0;
-        }
-
-        .bar-row {
-            display: flex;
-            align-items: center;
-            margin-bottom: 15px;
-        }
-
-        .bar-label {
-            width: 160px;
-            font-size: 1.1rem;
-            font-weight: 500;
-        }
-
-        .bar-container {
-            flex: 1;
-            height: 35px;
-            background: rgba(255,255,255,0.1);
-            border-radius: 5px;
-            overflow: hidden;
-            margin: 0 15px;
-        }
-
-        .bg-blanco .bar-container {
-            background: rgba(0,0,0,0.05);
-        }
-
-        .bar {
-            height: 100%;
-            background: var(--verde-activo);
-            border-radius: 5px;
-            display: flex;
-            align-items: center;
-            justify-content: flex-end;
-            padding-right: 12px;
-            font-weight: 600;
-            font-size: 0.95rem;
-            color: white;
-        }
-
+        h1 { font-size: 3.8rem; font-weight: 700; line-height: 1.1; margin-bottom: 30px; }
+        h2 { font-size: 2.6rem; font-weight: 600; margin-bottom: 25px; }
+        h3 { font-size: 1.8rem; font-weight: 500; margin-bottom: 20px; opacity: 0.9; }
+        p, li { font-size: 1.5rem; line-height: 1.6; margin-bottom: 15px; }
+        .subtitle { font-size: 1.6rem; opacity: 0.8; font-weight: 400; }
+        .highlight { color: var(--verde-activo); }
+        .bg-blanco .highlight { color: var(--azul-impulso); }
+        .highlight-red { color: var(--rojo-alerta); }
+        .highlight-yellow { color: var(--amarillo); }
+        .highlight-magenta { color: var(--magenta); }
+        blockquote { font-size: 1.7rem; font-style: italic; border-left: 4px solid var(--verde-activo); padding-left: 30px; margin: 25px 0; opacity: 0.95; }
+        .bg-blanco blockquote { border-left-color: var(--azul-impulso); }
+        blockquote cite { display: block; font-size: 1.1rem; margin-top: 12px; font-style: normal; opacity: 0.7; }
+        ul { list-style: none; padding-left: 0; }
+        ul li { padding-left: 35px; position: relative; margin-bottom: 18px; }
+        ul li::before { content: "▸"; position: absolute; left: 0; color: var(--verde-activo); font-size: 1.4rem; }
+        .bg-verde ul li::before, .bg-impulso ul li::before, .bg-magenta ul li::before { color: var(--blanco); }
+        table { width: 100%; border-collapse: collapse; margin: 25px 0; font-size: 1.3rem; }
+        th, td { padding: 18px 22px; text-align: left; border-bottom: 1px solid rgba(255,255,255,0.2); }
+        .bg-blanco th, .bg-blanco td { border-bottom: 1px solid rgba(0,0,0,0.1); }
+        th { font-weight: 600; opacity: 0.7; font-size: 1rem; text-transform: uppercase; letter-spacing: 1px; }
+        .formula { font-size: 2rem; text-align: center; padding: 30px; background: rgba(255,255,255,0.08); border-radius: 12px; margin: 25px 0; font-weight: 500; letter-spacing: 2px; }
+        .bg-blanco .formula { background: rgba(16, 54, 226, 0.06); }
+        .formula-grande { font-size: 2.8rem; padding: 40px; }
+        .flow-diagram { display: flex; align-items: center; justify-content: center; gap: 15px; margin: 35px 0; flex-wrap: wrap; }
+        .flow-box { background: rgba(255,255,255,0.1); padding: 20px 28px; border-radius: 10px; font-size: 1.2rem; font-weight: 500; text-align: center; }
+        .bg-blanco .flow-box { background: rgba(16, 54, 226, 0.1); }
+        .flow-arrow { font-size: 1.8rem; color: var(--verde-activo); }
+        .two-cols { display: grid; grid-template-columns: 1fr 1fr; gap: 50px; margin-top: 25px; }
+        .three-cols { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 30px; margin-top: 25px; }
+        .concepto-box { background: rgba(255,255,255,0.08); padding: 25px; border-radius: 12px; text-align: center; }
+        .bg-blanco .concepto-box { background: rgba(16, 54, 226, 0.06); }
+        .concepto-box h4 { font-size: 1.3rem; font-weight: 600; margin-bottom: 12px; color: var(--verde-activo); }
+        .bg-blanco .concepto-box h4 { color: var(--azul-impulso); }
+        .concepto-box p { font-size: 1.15rem; margin-bottom: 0; }
+        .cita-paper { background: rgba(255,255,255,0.06); padding: 25px 30px; border-radius: 10px; margin: 20px 0; border-left: 4px solid var(--verde-activo); }
+        .bg-blanco .cita-paper { background: rgba(16, 54, 226, 0.04); border-left-color: var(--azul-impulso); }
+        .cita-paper .titulo { font-weight: 600; font-size: 1.15rem; margin-bottom: 8px; }
+        .cita-paper .autores { font-size: 0.95rem; opacity: 0.7; margin-bottom: 12px; }
+        .cita-paper .contenido { font-size: 1.2rem; line-height: 1.5; font-style: italic; }
+        .bar-chart { margin: 20px 0; }
+        .bar-row { display: flex; align-items: center; margin-bottom: 12px; }
+        .bar-label { width: 160px; font-size: 1.05rem; font-weight: 500; flex-shrink: 0; }
+        .bar-container { flex: 1; height: 35px; background: rgba(255,255,255,0.1); border-radius: 5px; overflow: hidden; margin: 0 15px; position: relative; }
+        .bg-blanco .bar-container { background: rgba(0,0,0,0.05); }
+        .bar { height: 100%; background: var(--verde-activo); border-radius: 5px; display: flex; align-items: center; justify-content: flex-end; padding-right: 12px; font-weight: 600; font-size: 0.95rem; color: white; }
         .bar.rojo { background: var(--rojo-alerta); }
         .bar.azul { background: var(--azul-impulso); }
         .bar.amarillo { background: var(--amarillo); color: #000; }
         .bar.magenta { background: var(--magenta); }
-
-        /* Stats */
-        .stat-box {
-            text-align: center;
-            padding: 25px;
-        }
-
-        .stat-numero {
-            font-size: 4.5rem;
-            font-weight: 800;
-            color: var(--verde-activo);
-            line-height: 1;
-        }
-
-        .bg-blanco .stat-numero {
-            color: var(--azul-impulso);
-        }
-
-        .stat-numero.rojo {
-            color: var(--rojo-alerta);
-        }
-
-        .stat-label {
-            font-size: 1.2rem;
-            opacity: 0.8;
-            margin-top: 10px;
-        }
-
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 35px;
-            margin-top: 35px;
-        }
-
-        .stats-grid-4 {
-            grid-template-columns: repeat(4, 1fr);
-        }
-
-        /* Versus */
-        .versus {
-            display: grid;
-            grid-template-columns: 1fr auto 1fr;
-            gap: 25px;
-            align-items: center;
-            margin: 25px 0;
-        }
-
-        .versus-center {
-            font-size: 2.5rem;
-            font-weight: 800;
-            opacity: 0.3;
-        }
-
-        /* Problema/Solución */
-        .problema-box {
-            background: rgba(220, 38, 38, 0.15);
-            border-left: 4px solid var(--rojo-alerta);
-            padding: 20px 25px;
-            border-radius: 0 10px 10px 0;
-            margin: 12px 0;
-        }
-
-        .solucion-box {
-            background: rgba(0, 198, 0, 0.15);
-            border-left: 4px solid var(--verde-activo);
-            padding: 20px 25px;
-            border-radius: 0 10px 10px 0;
-            margin: 12px 0;
-        }
-
-        .bg-blanco .problema-box {
-            background: rgba(220, 38, 38, 0.08);
-        }
-
-        .bg-blanco .solucion-box {
-            background: rgba(0, 198, 0, 0.08);
-        }
-
-        /* Nota académica */
-        .nota-academica {
-            font-size: 0.95rem;
-            opacity: 0.6;
-            margin-top: 25px;
-            padding-top: 15px;
-            border-top: 1px solid rgba(255,255,255,0.15);
-        }
-
-        .bg-blanco .nota-academica {
-            border-top-color: rgba(0,0,0,0.1);
-        }
-
-        /* Anexo badge */
-        .anexo-badge {
-            background: var(--amarillo);
-            color: #000;
-            padding: 5px 15px;
-            border-radius: 20px;
-            font-size: 0.9rem;
-            font-weight: 600;
-            display: inline-block;
-            margin-bottom: 20px;
-        }
-
-        /* Navegación */
-        .nav-hint {
-            position: fixed;
-            bottom: 30px;
-            right: 40px;
-            font-size: 0.9rem;
-            opacity: 0.5;
-        }
-
-        .slide-counter {
-            position: fixed;
-            bottom: 30px;
-            left: 40px;
-            font-size: 0.9rem;
-            opacity: 0.5;
-        }
-
-        /* Portada */
-        .portada {
-            text-align: center;
-        }
-
-        .portada h1 {
-            font-size: 4.2rem;
-            margin-bottom: 20px;
-        }
-
-        /* Sección título */
-        .seccion-titulo {
-            text-align: center;
-        }
-
-        .seccion-titulo h3 {
-            text-transform: uppercase;
-            letter-spacing: 3px;
-            font-size: 1.2rem;
-            opacity: 0.7;
-            margin-bottom: 15px;
-        }
-
-        /* Timeline */
-        .timeline {
-            display: flex;
-            flex-direction: column;
-            gap: 18px;
-            margin: 25px 0;
-        }
-
-        .timeline-item {
-            display: flex;
-            gap: 20px;
-            align-items: flex-start;
-        }
-
-        .timeline-year {
-            font-weight: 700;
-            font-size: 1rem;
-            color: var(--verde-activo);
-            min-width: 80px;
-        }
-
-        .bg-blanco .timeline-year {
-            color: var(--azul-impulso);
-        }
-
-        /* Donut chart */
-        .donut-container {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 40px;
-            margin: 20px 0;
-        }
-
-        .donut-chart {
-            position: relative;
-            width: 280px;
-            height: 280px;
-        }
-
-        .donut-chart svg {
-            transform: rotate(-90deg);
-        }
-
-        .donut-segment {
-            fill: none;
-            stroke-width: 50;
-        }
-
-        .donut-legend {
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-        }
-
-        .legend-item {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            font-size: 1.1rem;
-        }
-
-        .legend-color {
-            width: 20px;
-            height: 20px;
-            border-radius: 4px;
-            flex-shrink: 0;
-            display: inline-block;
-        }
-
+        .bar-value-outside { font-weight: 700; font-size: 1rem; margin-left: 10px; white-space: nowrap; }
+        .stat-box { text-align: center; padding: 25px; }
+        .stat-numero { font-size: 4.5rem; font-weight: 800; color: var(--verde-activo); line-height: 1; }
+        .bg-blanco .stat-numero { color: var(--azul-impulso); }
+        .stat-numero.rojo { color: var(--rojo-alerta); }
+        .stat-label { font-size: 1.2rem; opacity: 0.8; margin-top: 10px; }
+        .stats-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 35px; margin-top: 35px; }
+        .stats-grid-4 { grid-template-columns: repeat(4, 1fr); }
+        .versus { display: grid; grid-template-columns: 1fr auto 1fr; gap: 25px; align-items: center; margin: 25px 0; }
+        .versus-center { font-size: 2.5rem; font-weight: 800; opacity: 0.3; }
+        .problema-box { background: rgba(220, 38, 38, 0.15); border-left: 4px solid var(--rojo-alerta); padding: 20px 25px; border-radius: 0 10px 10px 0; margin: 12px 0; }
+        .solucion-box { background: rgba(0, 198, 0, 0.15); border-left: 4px solid var(--verde-activo); padding: 20px 25px; border-radius: 0 10px 10px 0; margin: 12px 0; }
+        .bg-blanco .problema-box { background: rgba(220, 38, 38, 0.08); }
+        .bg-blanco .solucion-box { background: rgba(0, 198, 0, 0.08); }
+        .nota-academica { font-size: 0.95rem; opacity: 0.6; margin-top: 25px; padding-top: 15px; border-top: 1px solid rgba(255,255,255,0.15); }
+        .bg-blanco .nota-academica { border-top-color: rgba(0,0,0,0.1); }
+        .anexo-badge { background: var(--amarillo); color: #000; padding: 5px 15px; border-radius: 20px; font-size: 0.9rem; font-weight: 600; display: inline-block; margin-bottom: 20px; }
+        .nav-hint { position: fixed; bottom: 30px; right: 40px; font-size: 0.9rem; opacity: 0.5; }
+        .slide-counter { position: fixed; bottom: 30px; left: 40px; font-size: 0.9rem; opacity: 0.5; }
+        .portada { text-align: center; }
+        .portada h1 { font-size: 4.2rem; margin-bottom: 20px; }
+        .seccion-titulo { text-align: center; }
+        .seccion-titulo h3 { text-transform: uppercase; letter-spacing: 3px; font-size: 1.2rem; opacity: 0.7; margin-bottom: 15px; }
+        .timeline { display: flex; flex-direction: column; gap: 18px; margin: 25px 0; }
+        .timeline-item { display: flex; gap: 20px; align-items: flex-start; }
+        .timeline-year { font-weight: 700; font-size: 1rem; color: var(--verde-activo); min-width: 80px; }
+        .bg-blanco .timeline-year { color: var(--azul-impulso); }
+        .donut-container { display: flex; align-items: center; justify-content: center; gap: 40px; margin: 20px 0; }
+        .donut-chart { position: relative; width: 280px; height: 280px; }
+        .donut-chart svg { transform: rotate(-90deg); }
+        .donut-segment { fill: none; stroke-width: 50; }
+        .donut-legend { display: flex; flex-direction: column; gap: 12px; }
+        .legend-item { display: flex; align-items: center; gap: 12px; font-size: 1.1rem; }
+        .legend-color { width: 20px; height: 20px; border-radius: 4px; flex-shrink: 0; display: inline-block; }
+        /* SVG chart styles */
+        .chart-container { margin: 15px auto; max-width: 700px; }
+        .chart-container svg { width: 100%; height: auto; }
+        .chart-line { fill: none; stroke-width: 3; stroke-linecap: round; stroke-linejoin: round; }
+        .chart-dot { r: 4; }
+        .chart-label { font-family: 'Albert Sans', sans-serif; font-size: 11px; fill: #666; }
+        .chart-value { font-family: 'Albert Sans', sans-serif; font-size: 10px; fill: #333; font-weight: 600; }
+        .chart-grid { stroke: #e0e0e0; stroke-width: 0.5; }
+        .chart-axis { stroke: #999; stroke-width: 1; }
+        /* Interactive trade buttons */
+        .trade-btn { padding: 14px 30px; border: 3px solid var(--azul-impulso); background: white; color: var(--azul-impulso); font-size: 1.2rem; font-weight: 700; border-radius: 10px; cursor: pointer; transition: all 0.3s; font-family: inherit; }
+        .trade-btn:hover { background: rgba(16,54,226,0.05); }
+        .trade-btn.active { background: var(--azul-impulso); color: white; }
+        .trade-result { min-height: 180px; display: flex; align-items: center; justify-content: center; transition: all 0.4s ease; }
+        .production-grid { display: flex; gap: 40px; justify-content: center; align-items: flex-end; flex-wrap: wrap; }
+        .production-item { text-align: center; }
+        .production-icons { font-size: 2rem; line-height: 1.3; min-height: 80px; display: flex; flex-wrap: wrap; justify-content: center; gap: 4px; max-width: 200px; }
+        .production-label { font-size: 1.2rem; font-weight: 700; margin-top: 8px; }
+        .production-sublabel { font-size: 0.95rem; opacity: 0.6; }
+        .total-box { background: rgba(16,54,226,0.08); padding: 15px 25px; border-radius: 10px; text-align: center; margin-top: 15px; font-size: 1.3rem; font-weight: 700; }
+        /* Image backgrounds for cinematic slides */
+        .bg-western { background: linear-gradient(135deg, #8B6914 0%, #D4A847 30%, #C4893B 60%, #6B3A1F 100%); color: var(--blanco); }
+        .bg-baltimore { background: linear-gradient(180deg, #0d1117 0%, #1a1f2e 40%, #2d1b3d 70%, #0d1117 100%); color: var(--blanco); }
+        .bg-sarmiento { background: linear-gradient(135deg, rgba(2,23,81,0.92), rgba(2,23,81,0.85)), url('https://upload.wikimedia.org/wikipedia/commons/4/4d/Sarmiento.jpg') center/cover no-repeat; color: var(--blanco); }
+        .bg-liberation { background: linear-gradient(135deg, #1a1a3e 0%, #2d1533 40%, #3d1515 70%, #1a1a3e 100%); color: var(--blanco); }
+        /* Deal comparison bars */
+        .deal-row { display: flex; align-items: center; margin-bottom: 14px; gap: 10px; }
+        .deal-label { width: 120px; font-size: 1rem; font-weight: 600; flex-shrink: 0; }
+        .deal-bars { flex: 1; display: flex; flex-direction: column; gap: 4px; }
+        .deal-bar-container { height: 22px; background: rgba(0,0,0,0.05); border-radius: 4px; overflow: visible; display: flex; align-items: center; }
+        .deal-bar { height: 100%; border-radius: 4px; display: flex; align-items: center; padding-right: 8px; justify-content: flex-end; font-size: 0.8rem; font-weight: 700; color: white; min-width: 35px; }
+        .deal-bar.threatened { background: var(--rojo-alerta); opacity: 0.6; }
+        .deal-bar.final { background: var(--verde-activo); }
+        .deal-bar.final.argentina { background: var(--azul-impulso); box-shadow: 0 0 12px rgba(16,54,226,0.4); }
+        .deal-legend-mini { display: flex; gap: 20px; font-size: 0.9rem; margin-bottom: 15px; }
+        .deal-legend-mini span { display: flex; align-items: center; gap: 6px; }
+        .deal-legend-mini .dot { width: 12px; height: 12px; border-radius: 3px; }
         /* Responsive */
         @media (max-width: 1200px) {
             h1 { font-size: 2.8rem; }
@@ -592,13 +169,13 @@
 <body>
     <div class="slide-container">
 
-        <!-- ==================== SLIDE 1: PORTADA ==================== -->
+        <!-- SLIDE 1: PORTADA -->
         <div class="slide bg-respaldo portada active">
             <h1>Comercio Internacional</h1>
             <p class="subtitle">Por qué los países comercian, qué ganan y qué arriesgan</p>
         </div>
 
-        <!-- ==================== SLIDE 2: CITA APERTURA ==================== -->
+        <!-- SLIDE 2: CITA APERTURA -->
         <div class="slide bg-oscuro">
             <blockquote style="font-size: 2.2rem; border-left-color: var(--magenta);">
                 "No hay ninguna nación que haya arruinado su comercio con otros países sin arruinarse a sí misma."
@@ -606,7 +183,7 @@
             </blockquote>
         </div>
 
-        <!-- ==================== SLIDE 3: IDENTIDAD PBI ==================== -->
+        <!-- SLIDE 3: IDENTIDAD PBI -->
         <div class="slide bg-blanco">
             <h2>El comercio exterior en la identidad del PBI</h2>
             <div class="formula formula-grande">
@@ -617,55 +194,81 @@
             <p class="nota-academica">Samuelson & Nordhaus, "Economics", Cap. 15: "El comercio internacional afecta el PBI a través de las exportaciones netas."</p>
         </div>
 
-        <!-- ==================== SLIDE 4: LA BALANZA COMERCIAL ==================== -->
+        <!-- SLIDE 4: BALANZA COMERCIAL -->
         <div class="slide bg-blanco">
             <h2>La balanza comercial</h2>
-            <p>Es la diferencia entre las <strong>exportaciones</strong> y las <strong>importaciones</strong> de un país. Indica la entrada o salida neta de divisas producto del comercio internacional.</p>
+            <p>Es la diferencia entre las <strong>exportaciones</strong> y las <strong>importaciones</strong> de un país. Indica la entrada o salida neta de divisas.</p>
             <div class="two-cols" style="margin-top: 30px;">
                 <div class="solucion-box">
                     <h4 style="color: var(--verde-activo); margin-bottom: 10px;">Superávit comercial</h4>
-                    <p style="font-size: 1.2rem; margin: 0;">X > M. Entran más divisas de las que salen. El país acumula reservas.</p>
+                    <p style="font-size: 1.2rem; margin: 0;">X > M. Entran más divisas de las que salen.</p>
                 </div>
                 <div class="problema-box">
                     <h4 style="color: var(--rojo-alerta); margin-bottom: 10px;">Déficit comercial</h4>
-                    <p style="font-size: 1.2rem; margin: 0;">M > X. Salen más divisas. El país necesita financiarse (deuda, inversión extranjera).</p>
+                    <p style="font-size: 1.2rem; margin: 0;">M > X. Salen más divisas. Hay que financiarse.</p>
                 </div>
             </div>
-            <p class="nota-academica">Fuente: INDEC, Intercambio Comercial Argentino (ICA). La balanza comercial argentina fue superavitaria en 2024 por ~USD 19.000 M.</p>
+            <p class="nota-academica">Fuente: INDEC, Intercambio Comercial Argentino (ICA).</p>
         </div>
 
-        <!-- ==================== SLIDE 5: TRANSICIÓN 3 HECHOS ==================== -->
+        <!-- SLIDE 5: TRANSICIÓN 3 HECHOS -->
         <div class="slide bg-magenta seccion-titulo">
             <h3>Antes de la teoría</h3>
             <h1>3 hechos estilizados del comercio internacional</h1>
             <p class="subtitle">Lo que nos dicen los datos</p>
         </div>
 
-        <!-- ==================== SLIDE 6: HECHO 1 ==================== -->
+        <!-- SLIDE 6: HECHO 1 - CON GRÁFICO DE LÍNEA [CAMBIO 1] -->
         <div class="slide bg-blanco">
             <h2>1. Los países comercian <strong class="highlight">cada vez más</strong></h2>
-            <p>El comercio internacional como porcentaje del PBI mundial pasó del <strong>24%</strong> en 1960 a más del <strong>60%</strong> en 2022.</p>
-            <div class="stats-grid" style="margin-top: 30px;">
-                <div class="stat-box">
-                    <div class="stat-numero">24%</div>
-                    <div class="stat-label">Comercio/PBI mundial<br>1960</div>
-                </div>
-                <div class="stat-box">
-                    <div class="stat-numero">48%</div>
-                    <div class="stat-label">Comercio/PBI mundial<br>1995</div>
-                </div>
-                <div class="stat-box">
-                    <div class="stat-numero">62%</div>
-                    <div class="stat-label">Comercio/PBI mundial<br>2022</div>
-                </div>
+            <div class="chart-container">
+                <svg viewBox="0 0 620 280">
+                    <!-- Grid -->
+                    <line x1="50" y1="20" x2="50" y2="240" class="chart-axis"/>
+                    <line x1="50" y1="240" x2="600" y2="240" class="chart-axis"/>
+                    <line x1="50" y1="196" x2="600" y2="196" class="chart-grid" stroke-dasharray="4"/>
+                    <line x1="50" y1="152" x2="600" y2="152" class="chart-grid" stroke-dasharray="4"/>
+                    <line x1="50" y1="108" x2="600" y2="108" class="chart-grid" stroke-dasharray="4"/>
+                    <line x1="50" y1="64" x2="600" y2="64" class="chart-grid" stroke-dasharray="4"/>
+                    <line x1="50" y1="20" x2="600" y2="20" class="chart-grid" stroke-dasharray="4"/>
+                    <!-- Y labels -->
+                    <text x="45" y="244" text-anchor="end" class="chart-label">20%</text>
+                    <text x="45" y="200" text-anchor="end" class="chart-label">30%</text>
+                    <text x="45" y="156" text-anchor="end" class="chart-label">40%</text>
+                    <text x="45" y="112" text-anchor="end" class="chart-label">50%</text>
+                    <text x="45" y="68" text-anchor="end" class="chart-label">60%</text>
+                    <!-- X labels -->
+                    <text x="50" y="258" text-anchor="middle" class="chart-label">1970</text>
+                    <text x="155" y="258" text-anchor="middle" class="chart-label">1980</text>
+                    <text x="260" y="258" text-anchor="middle" class="chart-label">1990</text>
+                    <text x="365" y="258" text-anchor="middle" class="chart-label">2000</text>
+                    <text x="470" y="258" text-anchor="middle" class="chart-label">2010</text>
+                    <text x="580" y="258" text-anchor="middle" class="chart-label">2022</text>
+                    <!-- Area fill -->
+                    <polygon points="50,215 103,190 155,168 208,173 260,169 313,139 365,107 418,76 440,48 451,71 506,75 558,96 580,28 580,240 50,240" fill="rgba(16,54,226,0.08)" />
+                    <!-- Line: trade/GDP 1970-2022 -->
+                    <polyline class="chart-line" stroke="#1036E2"
+                        points="50,215 103,190 155,168 208,173 260,169 313,139 365,107 418,76 440,48 451,71 506,75 558,96 580,28"/>
+                    <!-- Key dots with values -->
+                    <circle cx="50" cy="215" r="4" fill="#1036E2"/><text x="50" y="230" class="chart-value" text-anchor="middle">25,8%</text>
+                    <circle cx="260" cy="169" r="4" fill="#1036E2"/><text x="260" y="163" class="chart-value" text-anchor="middle">38%</text>
+                    <circle cx="365" cy="107" r="4" fill="#1036E2"/><text x="365" y="100" class="chart-value" text-anchor="middle">50,3%</text>
+                    <circle cx="440" cy="48" r="5" fill="#E91E90"/><text x="455" y="42" class="chart-value" fill="#E91E90" text-anchor="start">60,6% (2008)</text>
+                    <circle cx="451" cy="71" r="4" fill="#1036E2"/>
+                    <circle cx="558" cy="96" r="4" fill="#DC2626"/><text x="540" y="112" class="chart-value" fill="#DC2626" text-anchor="end">COVID</text>
+                    <circle cx="580" cy="28" r="5" fill="#00C600"/><text x="575" y="22" class="chart-value" fill="#00C600" text-anchor="end">62,4%</text>
+                    <!-- Title -->
+                    <text x="325" y="275" text-anchor="middle" font-size="10" fill="#999" font-family="Albert Sans">Comercio internacional como % del PBI mundial (1970-2022)</text>
+                </svg>
             </div>
-            <p class="nota-academica">Fuente: Banco Mundial, indicadores de desarrollo mundial. Comercio = (X + M) / PBI.</p>
+            <p style="text-align: center;">El comercio mundial se <strong class="highlight">más que duplicó</strong> como porcentaje del PBI en 50 años.</p>
+            <p class="nota-academica">Fuente: Banco Mundial, World Development Indicators. Comercio = (Exportaciones + Importaciones) / PBI.</p>
         </div>
 
-        <!-- ==================== SLIDE 7: HECHO 1 BIS - ARGENTINA ATRASADA ==================== -->
+        <!-- SLIDE 7: HECHO 1 BIS - ARGENTINA ATRASADA [CAMBIO 2] -->
         <div class="slide bg-blanco">
             <h2>Paréntesis: Argentina viene <strong class="highlight-red">atrasada</strong></h2>
-            <p>Comercio internacional (X+M) como % del PBI, países comparables (2018):</p>
+            <p>Comercio internacional (X+M) como % del PBI (2018):</p>
             <div class="bar-chart">
                 <div class="bar-row">
                     <span class="bar-label">Eslovaquia</span>
@@ -674,10 +277,6 @@
                 <div class="bar-row">
                     <span class="bar-label">Malasia</span>
                     <div class="bar-container"><div class="bar" style="width: 66%;">131%</div></div>
-                </div>
-                <div class="bar-row">
-                    <span class="bar-label">Portugal</span>
-                    <div class="bar-container"><div class="bar azul" style="width: 53%;">105%</div></div>
                 </div>
                 <div class="bar-row">
                     <span class="bar-label">México</span>
@@ -692,95 +291,107 @@
                     <div class="bar-container"><div class="bar amarillo" style="width: 26%;">51%</div></div>
                 </div>
                 <div class="bar-row">
+                    <span class="bar-label"><strong>Brasil</strong></span>
+                    <div class="bar-container"><div class="bar rojo" style="width: 15%;">29%</div></div>
+                </div>
+                <div class="bar-row">
                     <span class="bar-label"><strong>Argentina</strong></span>
                     <div class="bar-container"><div class="bar rojo" style="width: 16%;">31%</div></div>
                 </div>
             </div>
-            <p style="text-align: center;"><strong class="highlight-red">Argentina es una de las economías más cerradas del mundo</strong>, incluso comparada con Latinoamérica.</p>
+            <p style="text-align: center;"><strong class="highlight-red">Argentina y Brasil son las economías más cerradas de la muestra.</strong> Que ambos estén en los últimos lugares sugiere que es un fenómeno a nivel <strong>Mercosur</strong>: el Arancel Externo Común del bloque contribuye al aislamiento comercial de toda la región.</p>
             <p class="nota-academica">Fuente: Banco Mundial. Se seleccionaron países de LATAM, OCDE y otros con PBI per cápita comparable.</p>
         </div>
 
-        <!-- ==================== SLIDE 8: HECHO 2 ==================== -->
+        <!-- SLIDE 8: HECHO 2 - CON GRÁFICO DE LÍNEA [CAMBIO 3] -->
         <div class="slide bg-blanco">
             <h2>2. Con aranceles <strong class="highlight">cada vez menores</strong></h2>
-            <p>Los aranceles promedio mundiales bajaron de <strong>13%</strong> en 1990 a menos del <strong>4%</strong> en 2022, fruto de décadas de negociaciones multilaterales.</p>
-            <div class="flow-diagram">
-                <div class="flow-box" style="background: rgba(220,38,38,0.1);"><strong>1990</strong><br>Arancel promedio: 13%</div>
-                <span class="flow-arrow">→</span>
-                <div class="flow-box"><strong>2000</strong><br>Arancel promedio: 7%</div>
-                <span class="flow-arrow">→</span>
-                <div class="flow-box"><strong>2010</strong><br>Arancel promedio: 5%</div>
-                <span class="flow-arrow">→</span>
-                <div class="flow-box" style="background: rgba(0,198,0,0.1);"><strong>2022</strong><br>Arancel promedio: 3,7%</div>
+            <div class="chart-container">
+                <svg viewBox="0 0 620 280">
+                    <!-- Grid -->
+                    <line x1="50" y1="20" x2="50" y2="240" class="chart-axis"/>
+                    <line x1="50" y1="240" x2="600" y2="240" class="chart-axis"/>
+                    <line x1="50" y1="196" x2="600" y2="196" class="chart-grid" stroke-dasharray="4"/>
+                    <line x1="50" y1="152" x2="600" y2="152" class="chart-grid" stroke-dasharray="4"/>
+                    <line x1="50" y1="108" x2="600" y2="108" class="chart-grid" stroke-dasharray="4"/>
+                    <line x1="50" y1="64" x2="600" y2="64" class="chart-grid" stroke-dasharray="4"/>
+                    <!-- Y labels (0 to 15%) -->
+                    <text x="45" y="244" text-anchor="end" class="chart-label">0%</text>
+                    <text x="45" y="200" text-anchor="end" class="chart-label">3%</text>
+                    <text x="45" y="156" text-anchor="end" class="chart-label">6%</text>
+                    <text x="45" y="112" text-anchor="end" class="chart-label">9%</text>
+                    <text x="45" y="68" text-anchor="end" class="chart-label">12%</text>
+                    <text x="45" y="24" text-anchor="end" class="chart-label">15%</text>
+                    <!-- X labels -->
+                    <text x="50" y="258" text-anchor="middle" class="chart-label">1990</text>
+                    <text x="222" y="258" text-anchor="middle" class="chart-label">2000</text>
+                    <text x="394" y="258" text-anchor="middle" class="chart-label">2010</text>
+                    <text x="580" y="258" text-anchor="middle" class="chart-label">2022</text>
+                    <!-- Area -->
+                    <polygon points="50,47 136,90 222,133 308,157 394,175 480,183 566,196 580,197 580,240 50,240" fill="rgba(233,30,144,0.06)"/>
+                    <!-- Line: tariffs 1990-2022 -->
+                    <polyline class="chart-line" stroke="#E91E90"
+                        points="50,47 136,90 222,133 308,157 394,175 480,183 566,196 580,197"/>
+                    <!-- Key dots -->
+                    <circle cx="50" cy="47" r="5" fill="#E91E90"/><text x="65" y="42" class="chart-value" fill="#E91E90">13,2%</text>
+                    <circle cx="222" cy="133" r="4" fill="#E91E90"/><text x="237" y="128" class="chart-value" fill="#E91E90">7,1%</text>
+                    <circle cx="394" cy="175" r="4" fill="#E91E90"/><text x="409" y="170" class="chart-value" fill="#E91E90">5,0%</text>
+                    <circle cx="580" cy="197" r="5" fill="#E91E90"/><text x="565" y="210" class="chart-value" fill="#E91E90" text-anchor="end">3,7%</text>
+                    <text x="325" y="275" text-anchor="middle" font-size="10" fill="#999" font-family="Albert Sans">Aranceles promedio mundiales ponderados (% sobre bienes importados, 1990-2022)</text>
+                </svg>
             </div>
-            <p class="nota-academica">Fuente: Banco Mundial, aranceles promedio ponderados sobre bienes importados. El GATT (1947) y la OMC (1995) fueron los principales motores de esta reducción.</p>
+            <p style="text-align: center;">El GATT (1947) y la OMC (1995) fueron los principales motores de esta reducción sostenida.</p>
+            <p class="nota-academica">Fuente: OMC, Tariff and Trade Data. Aranceles promedio ponderados NMF (Nación Más Favorecida).</p>
         </div>
 
-        <!-- ==================== SLIDE 9: HECHO 2 BIS - TRUMP ==================== -->
+        <!-- SLIDE 9: HECHO 2 BIS - TRUMP [CAMBIO 4] -->
         <div class="slide bg-oscuro">
             <h2>Paréntesis: al menos <strong class="highlight-red">por ahora</strong>...</h2>
-            <p>Los aranceles promedio de EE.UU. pasaron de ~2% en 2024 a <strong class="highlight-red">16,5%</strong> en 2025, niveles no vistos desde la década de 1940.</p>
-            <div class="stats-grid" style="margin-top: 30px;">
+            <p>Tras el "Liberation Day" (abril 2025), los aranceles de EE.UU. subieron a niveles no vistos en 80 años. Si bien hubo negociaciones y pausas, la tasa efectiva se mantiene elevada:</p>
+            <div class="stats-grid" style="margin-top: 25px;">
                 <div class="stat-box">
-                    <div class="stat-numero" style="color: var(--verde-activo);">~2%</div>
-                    <div class="stat-label">Arancel promedio EE.UU.<br>2024</div>
+                    <div class="stat-numero" style="color: var(--verde-activo);">~2,5%</div>
+                    <div class="stat-label">Arancel efectivo EE.UU.<br>Enero 2025</div>
                 </div>
                 <div class="stat-box">
-                    <div class="stat-numero rojo">16,5%</div>
-                    <div class="stat-label">Arancel promedio EE.UU.<br>2025 (post "Liberation Day")</div>
+                    <div class="stat-numero rojo">~27%</div>
+                    <div class="stat-label">Pico abril 2025<br>(post Liberation Day)</div>
                 </div>
                 <div class="stat-box">
-                    <div class="stat-numero" style="color: var(--amarillo);">x8</div>
-                    <div class="stat-label">Multiplicación en<br>un solo año</div>
+                    <div class="stat-numero" style="color: var(--amarillo);">10-17%</div>
+                    <div class="stat-label">Tasa efectiva actual<br>(tras negociaciones)</div>
                 </div>
             </div>
-            <p style="text-align: center; margin-top: 20px; opacity: 0.7;">Más sobre esto en la sección "La guerra comercial de Trump".</p>
+            <p style="margin-top: 20px;">Aunque muchas de las tasas del "Liberation Day" fueron reducidas mediante acuerdos bilaterales, el arancel efectivo ponderado se ubica entre <strong>10% y 17%</strong> según la fuente (Tax Foundation: 13,5%; Yale Budget Lab: 16,8%; Penn Wharton: 10,5%). Es el nivel más alto desde la década de <strong class="highlight-red">1940</strong>.</p>
+            <p class="nota-academica">Fuentes: Tax Foundation (feb. 2026), Yale Budget Lab (nov. 2025), Penn Wharton Budget Model (feb. 2026). Datos actualizados a febrero 2026.</p>
         </div>
 
-        <!-- ==================== SLIDE 10: HECHO 3 ==================== -->
+        <!-- SLIDE 10: HECHO 3 -->
         <div class="slide bg-blanco">
             <h2>3. <strong class="highlight">Casi nada</strong> se hace ya en un solo lugar</h2>
             <p>La participación de bienes intermedios en el comercio global pasó del <strong>36%</strong> (1995) al <strong>50%</strong> (2021). Un iPhone tiene componentes de más de 40 países.</p>
             <div class="three-cols" style="margin-top: 25px;">
-                <div class="concepto-box">
-                    <h4>Diseño</h4>
-                    <p>California, EE.UU.</p>
-                </div>
-                <div class="concepto-box">
-                    <h4>Chips</h4>
-                    <p>Taiwán (TSMC)</p>
-                </div>
-                <div class="concepto-box">
-                    <h4>Pantallas</h4>
-                    <p>Corea del Sur (Samsung)</p>
-                </div>
-                <div class="concepto-box">
-                    <h4>Ensamblaje</h4>
-                    <p>China (Foxconn)</p>
-                </div>
-                <div class="concepto-box">
-                    <h4>Litio</h4>
-                    <p>Chile / Australia</p>
-                </div>
-                <div class="concepto-box">
-                    <h4>Software</h4>
-                    <p>India / EE.UU.</p>
-                </div>
+                <div class="concepto-box"><h4>Diseño</h4><p>California, EE.UU.</p></div>
+                <div class="concepto-box"><h4>Chips</h4><p>Taiwán (TSMC)</p></div>
+                <div class="concepto-box"><h4>Pantallas</h4><p>Corea del Sur (Samsung)</p></div>
+                <div class="concepto-box"><h4>Ensamblaje</h4><p>China (Foxconn)</p></div>
+                <div class="concepto-box"><h4>Litio</h4><p>Chile / Australia</p></div>
+                <div class="concepto-box"><h4>Software</h4><p>India / EE.UU.</p></div>
             </div>
             <p class="nota-academica">Fuente: UNCTAD, World Investment Report 2023. Las Cadenas Globales de Valor (CGV) representan hoy la mitad del comercio mundial.</p>
         </div>
 
-        <!-- ==================== SLIDE 11: TRANSICIÓN HISTORIA ==================== -->
+        <!-- SLIDE 11: TRANSICIÓN HISTORIA -->
         <div class="slide bg-respaldo seccion-titulo">
             <h3>Parte 1</h3>
             <h1>Historia del pensamiento <span class="highlight">económico</span> sobre el comercio</h1>
             <p class="subtitle">De los mercantilistas a las cadenas globales de valor</p>
         </div>
 
-        <!-- ==================== SLIDE 12: MERCANTILISMO ==================== -->
+        <!-- SLIDE 12: MERCANTILISMO -->
         <div class="slide bg-blanco">
             <h2>Mercantilismo (siglos XVI-XVIII)</h2>
-            <p>Para los mercantilistas, la riqueza de una nación se medía por la <strong class="highlight">acumulación de metales preciosos</strong> (oro y plata). El comercio era un juego de suma cero.</p>
+            <p>La riqueza se medía por la <strong class="highlight">acumulación de metales preciosos</strong>. El comercio era un juego de suma cero.</p>
             <ul>
                 <li><strong>Maximizar exportaciones</strong>, minimizar importaciones</li>
                 <li>Rol activo del Estado: aranceles, subsidios, monopolios coloniales</li>
@@ -790,32 +401,34 @@
                 "La idea de que el comercio es guerra es tan vieja como el mercantilismo del siglo XVII, y tan equivocada hoy como entonces."
                 <cite>-- Paul Krugman, Premio Nobel de Economía 2008</cite>
             </blockquote>
-            <p class="nota-academica">Samuelson & Nordhaus: "Los mercantilistas confundían el dinero con la riqueza. Adam Smith mostró que la verdadera riqueza son los bienes y servicios."</p>
+            <p class="nota-academica">Samuelson & Nordhaus: "Los mercantilistas confundían el dinero con la riqueza."</p>
         </div>
 
-        <!-- ==================== SLIDE 13: ADAM SMITH ==================== -->
-        <div class="slide bg-blanco">
+        <!-- SLIDE 13: ADAM SMITH INTERACTIVO [CAMBIO 5] -->
+        <div class="slide bg-blanco" id="slide-smith">
             <h2>Adam Smith y las ventajas absolutas</h2>
-            <p>Smith (1776) propuso que el comercio es un <strong class="highlight">juego de suma positiva</strong>: si cada país se dedica a lo que produce mejor, todos ganan.</p>
-            <table>
-                <tr><th>Producción por mes de trabajo</th><th>Trenes</th><th>Trigo</th></tr>
-                <tr><td><strong>Inglaterra</strong></td><td>4</td><td>1</td></tr>
-                <tr><td><strong>Argentina</strong></td><td>1</td><td>2</td></tr>
+            <p>Smith (1776): si cada país se dedica a lo que produce mejor, <strong class="highlight">todos ganan</strong>.</p>
+            <table style="margin: 15px 0;">
+                <tr><th>Producción por mes</th><th style="text-align:center">🚂 Trenes</th><th style="text-align:center">🌾 Trigo</th></tr>
+                <tr><td><strong>Inglaterra</strong></td><td style="text-align:center">4</td><td style="text-align:center">1</td></tr>
+                <tr><td><strong>Argentina</strong></td><td style="text-align:center">1</td><td style="text-align:center">2</td></tr>
             </table>
-            <div class="two-cols">
-                <div class="concepto-box">
-                    <h4>Sin comercio</h4>
-                    <p>5 trenes + 3 trigos</p>
-                </div>
-                <div class="concepto-box" style="border: 2px solid var(--azul-impulso);">
-                    <h4>Con especialización</h4>
-                    <p><strong>8 trenes + 4 trigos</strong></p>
+            <div style="display: flex; gap: 15px; justify-content: center; margin: 15px 0;">
+                <button class="trade-btn active" onclick="showSmith('sin')">Sin especialización</button>
+                <button class="trade-btn" onclick="showSmith('con')">Con especialización</button>
+            </div>
+            <div class="trade-result" id="smith-result">
+                <div>
+                    <div class="production-grid">
+                        <div class="production-item"><div class="production-icons">🚂🚂🚂🚂 🚂</div><div class="production-label">5 trenes</div><div class="production-sublabel">ING: 4 + ARG: 1</div></div>
+                        <div class="production-item"><div class="production-icons">🌾🌾🌾</div><div class="production-label">3 trigos</div><div class="production-sublabel">ING: 1 + ARG: 2</div></div>
+                    </div>
+                    <div class="total-box">Total mundial: <strong>5 trenes + 3 trigos</strong></div>
                 </div>
             </div>
-            <p style="margin-top: 15px; text-align: center;">Pero... <strong class="highlight-magenta">¿y si un país no es mejor que el resto en nada?</strong></p>
         </div>
 
-        <!-- ==================== SLIDE 14: CITA SMITH ==================== -->
+        <!-- SLIDE 14: CITA SMITH -->
         <div class="slide bg-oscuro">
             <blockquote style="font-size: 2rem;">
                 "Si un país extranjero puede proveernos de una mercancía más barata de lo que nosotros mismos podemos fabricarla, es mejor comprársela con alguna parte del producto de nuestra propia industria empleada de una forma en la que tengamos alguna ventaja."
@@ -823,29 +436,32 @@
             </blockquote>
         </div>
 
-        <!-- ==================== SLIDE 15: DAVID RICARDO ==================== -->
-        <div class="slide bg-blanco">
+        <!-- SLIDE 15: RICARDO INTERACTIVO [CAMBIO 6] -->
+        <div class="slide bg-blanco" id="slide-ricardo">
             <h2>Ricardo y las ventajas comparativas</h2>
-            <p>David Ricardo (1817) demostró que <strong class="highlight">aun siendo peor en todo</strong>, un país se beneficia del comercio especializándose en lo que es <em>relativamente</em> menos malo.</p>
-            <table>
-                <tr><th>Producción por mes</th><th>Trenes</th><th>Trigo</th></tr>
-                <tr><td><strong>Inglaterra</strong></td><td>4</td><td>3</td></tr>
-                <tr><td><strong>Argentina</strong></td><td>1</td><td>2</td></tr>
+            <p><strong class="highlight">Aun siendo peor en todo</strong>, un país se beneficia especializándose en lo que es <em>relativamente</em> menos malo.</p>
+            <table style="margin: 15px 0;">
+                <tr><th>Producción por mes</th><th style="text-align:center">🚂 Trenes</th><th style="text-align:center">🌾 Trigo</th></tr>
+                <tr><td><strong>Inglaterra</strong></td><td style="text-align:center">4</td><td style="text-align:center">3</td></tr>
+                <tr><td><strong>Argentina</strong></td><td style="text-align:center">1</td><td style="text-align:center">2</td></tr>
             </table>
-            <div class="two-cols">
-                <div class="concepto-box">
-                    <h4>Sin comercio (autarquía)</h4>
-                    <p>6 trenes + 5 trigos</p>
-                </div>
-                <div class="concepto-box" style="border: 2px solid var(--azul-impulso);">
-                    <h4>Con especialización</h4>
-                    <p><strong>8 trenes + 6 trigos</strong></p>
+            <div style="display: flex; gap: 15px; justify-content: center; margin: 15px 0;">
+                <button class="trade-btn active" onclick="showRicardo('sin')">Sin especialización</button>
+                <button class="trade-btn" onclick="showRicardo('con')">Con especialización</button>
+            </div>
+            <div class="trade-result" id="ricardo-result">
+                <div>
+                    <div class="production-grid">
+                        <div class="production-item"><div class="production-icons">🚂🚂🚂🚂 🚂🚂</div><div class="production-label">6 trenes</div><div class="production-sublabel">ING: 4 + ARG: 2</div></div>
+                        <div class="production-item"><div class="production-icons">🌾🌾🌾🌾🌾</div><div class="production-label">5 trigos</div><div class="production-sublabel">ING: 3 + ARG: 2</div></div>
+                    </div>
+                    <div class="total-box">Total mundial: <strong>6 trenes + 5 trigos</strong></div>
                 </div>
             </div>
-            <p style="margin-top: 15px; text-align: center;"><strong class="highlight">Aunque las ganancias no sean simétricas, hay espacio para que ambos ganen.</strong></p>
+            <p style="text-align: center; margin-top: 10px; font-size: 1.1rem; opacity: 0.7;">Argentina es peor en ambas cosas. Pero si se especializan, <strong>ambos ganan</strong>.</p>
         </div>
 
-        <!-- ==================== SLIDE 16: CITA SAMUELSON ==================== -->
+        <!-- SLIDE 16: CITA SAMUELSON -->
         <div class="slide bg-impulso">
             <blockquote style="font-size: 1.9rem; border-left-color: white;">
                 "La ventaja comparativa es el mejor ejemplo que conozco de un principio económico que es verdadero sin ser obvio."
@@ -854,63 +470,84 @@
             <p style="margin-top: 30px; opacity: 0.8;">Cuando le pidieron un ejemplo de una proposición en ciencias sociales que fuera verdadera y no trivial, Samuelson eligió la ventaja comparativa de Ricardo.</p>
         </div>
 
-        <!-- ==================== SLIDE 17: COSTO DE OPORTUNIDAD ==================== -->
+        <!-- SLIDE 17: COSTO DE OPORTUNIDAD -->
         <div class="slide bg-blanco">
             <h2>La clave: el costo de oportunidad</h2>
-            <p>Lo que importa no es quién produce más, sino <strong class="highlight">a qué renuncia cada uno</strong> para producir una unidad.</p>
+            <p>Lo que importa no es quién produce más, sino <strong class="highlight">a qué renuncia cada uno</strong>.</p>
             <table>
                 <tr><th>Costo de oportunidad</th><th>1 Tren cuesta...</th><th>1 Trigo cuesta...</th></tr>
                 <tr><td><strong>Inglaterra</strong></td><td>3/4 tn de trigo</td><td>4/3 de tren</td></tr>
                 <tr><td><strong>Argentina</strong></td><td>2 tn de trigo</td><td>1/2 tren</td></tr>
             </table>
-            <p style="margin-top: 20px;">A Argentina le cuesta <strong class="highlight-red">relativamente menos</strong> producir trigo (renuncia a 1/2 tren vs. 4/3 de tren para Inglaterra). Por eso tiene <strong>ventaja comparativa en trigo</strong>.</p>
-            <p class="nota-academica">Ricardo, D. (1817). "On the Principles of Political Economy and Taxation". Este principio sigue siendo el fundamento teórico del comercio internacional.</p>
+            <p style="margin-top: 20px;">Argentina tiene <strong>ventaja comparativa en trigo</strong> (renuncia a menos para producirlo).</p>
+            <p class="nota-academica">Ricardo, D. (1817). "On the Principles of Political Economy and Taxation".</p>
         </div>
 
-        <!-- ==================== SLIDE 18: ANALOGÍA DE LA PELÍCULA ==================== -->
-        <div class="slide bg-oscuro">
-            <blockquote style="font-size: 2rem; border-left-color: var(--magenta);">
-                "Mi padre me dijo: 'hay dos tipos de personas en el mundo, Tuco. Los que tienen un revólver cargado y los que cavan. Tú cavas.' (...) En el comercio entre países, todos tenemos algo en lo que somos el que tiene el revólver."
-                <cite>-- Adaptación libre de "El Bueno, el Malo y el Feo" (1966). La ventaja comparativa explica por qué hasta el "peor" tiene un rol.</cite>
+        <!-- SLIDE 18: EL BUENO, EL FEO Y EL MALO [CAMBIO 7] -->
+        <div class="slide bg-western" style="position: relative;">
+            <div style="position: absolute; top: 20px; right: 30px; font-size: 5rem; opacity: 0.2;">🤠</div>
+            <blockquote style="font-size: 1.9rem; border-left-color: #D4A847; max-width: 80%;">
+                "Hay dos tipos de personas en el mundo: los que tienen un revólver cargado y los que cavan."
+                <cite>-- Tuco, "El Bueno, el Malo y el Feo" (Sergio Leone, 1966)</cite>
             </blockquote>
+            <p style="margin-top: 30px; font-size: 1.4rem;">En el comercio entre países, la ventaja comparativa demuestra que <strong>hasta el que "cava"</strong> tiene un rol productivo. Nadie está condenado a quedarse afuera.</p>
+            <p style="font-size: 1rem; opacity: 0.6; margin-top: 15px;">La clave no es ser el mejor en todo, sino especializarse en aquello donde tu costo de oportunidad es menor.</p>
         </div>
 
-        <!-- ==================== SLIDE 19: CRÍTICAS ESTRUCTURALISTAS ==================== -->
+        <!-- SLIDE 19: ESPECIALIZACIÓN NO ES NEUTRAL [CAMBIO 16 - NUEVO] -->
+        <div class="slide bg-blanco">
+            <h2>Pero ojo: <strong class="highlight-magenta">en qué te especializás importa</strong></h2>
+            <p>El debate sobre la especialización <strong>no es la vieja dicotomía campo vs. industria</strong>. El campo puede ser tan sofisticado como una fábrica.</p>
+            <div class="three-cols" style="margin-top: 20px;">
+                <div class="concepto-box" style="border: 2px solid var(--azul-impulso);">
+                    <h4>Lo que importa</h4>
+                    <p><strong>Tecnología</strong> incorporada<br><strong>Diferenciación</strong> de producto<br><strong>Valor agregado</strong> por unidad</p>
+                </div>
+                <div class="concepto-box">
+                    <h4>Agro sofisticado</h4>
+                    <p>Semillas editadas genéticamente, agricultura de precisión con IA, vino de alta gama, aceite de oliva premium</p>
+                </div>
+                <div class="concepto-box">
+                    <h4>Industria commoditizada</h4>
+                    <p>Ensamblaje simple, maquila sin diseño propio, manufactura básica sin I+D</p>
+                </div>
+            </div>
+            <p style="text-align: center; margin-top: 20px;"><strong class="highlight">La clave es subir en la escalera de valor:</strong> más tecnología, más diferenciación, más conocimiento incorporado. Eso vale tanto para una tonelada de soja procesada como para un software.</p>
+            <p class="nota-academica">Hausmann, R. & Hidalgo, C. (2011). "The Atlas of Economic Complexity". Harvard/MIT. La complejidad económica predice mejor el crecimiento que los recursos naturales.</p>
+        </div>
+
+        <!-- SLIDE 20: CRÍTICA ESTRUCTURALISTA -->
         <div class="slide bg-blanco">
             <h2>La crítica estructuralista</h2>
             <p>Desde Latinoamérica, la CEPAL (Prebisch, 1950) cuestionó: <strong class="highlight-red">¿la especialización es neutral?</strong></p>
             <div class="cita-paper">
                 <div class="titulo">"El desarrollo económico de la América Latina y algunos de sus principales problemas"</div>
                 <div class="autores">Raúl Prebisch (1950) - Manifiesto fundacional de la CEPAL</div>
-                <div class="contenido">
-                    Los precios de las materias primas tienden a caer en relación a los productos industriales. La periferia transfiere los frutos de su progreso técnico al centro.
-                </div>
+                <div class="contenido">Los precios de las materias primas tienden a caer en relación a los productos industriales. La periferia transfiere los frutos de su progreso técnico al centro.</div>
             </div>
             <ul style="margin-top: 15px;">
-                <li><strong>Deterioro de los términos del intercambio:</strong> exportar más para importar lo mismo</li>
+                <li><strong>Deterioro de los términos del intercambio</strong></li>
                 <li><strong>Propuesta:</strong> Industrialización por Sustitución de Importaciones (ISI)</li>
                 <li><strong>Matiz empírico:</strong> no hay evidencia clara de deterioro sostenido, pero sí de <strong>mayor volatilidad</strong></li>
             </ul>
         </div>
 
-        <!-- ==================== SLIDE 20: NUEVO COMERCIO - KRUGMAN ==================== -->
+        <!-- SLIDE 21: NUEVO COMERCIO KRUGMAN -->
         <div class="slide bg-blanco">
             <h2>El Nuevo Comercio Internacional</h2>
-            <p>Paul Krugman (1979, Nobel 2008) incorporó <strong class="highlight">economías de escala</strong> y <strong>competencia imperfecta</strong> a la teoría del comercio.</p>
+            <p>Paul Krugman (1979, Nobel 2008) incorporó <strong class="highlight">economías de escala</strong> y <strong>competencia imperfecta</strong>.</p>
             <div class="cita-paper">
                 <div class="titulo">"Increasing Returns, Monopolistic Competition, and International Trade"</div>
                 <div class="autores">Paul Krugman (1979) - Journal of International Economics</div>
-                <div class="contenido">
-                    Los países no solo comercian porque son diferentes, sino porque el comercio les permite especializarse y explotar economías de escala, incluso entre países similares.
-                </div>
+                <div class="contenido">Los países no solo comercian porque son diferentes, sino porque el comercio les permite especializarse y explotar economías de escala.</div>
             </div>
-            <p style="margin-top: 15px;"><strong class="highlight">Ventajas comparativas no son estáticas:</strong> se pueden construir (learning by doing). Pero atención: la protección genera inercia y comportamiento rent-seeking.</p>
+            <p style="margin-top: 15px;"><strong class="highlight">Ventajas comparativas no son estáticas:</strong> se pueden construir (learning by doing). Pero la protección genera inercia y rent-seeking.</p>
         </div>
 
-        <!-- ==================== SLIDE 21: CADENAS GLOBALES DE VALOR ==================== -->
+        <!-- SLIDE 22: CGV -->
         <div class="slide bg-blanco">
             <h2>Cadenas Globales de Valor (CGV)</h2>
-            <p><strong class="highlight">Ya ningún país hace nada solo.</strong> Las empresas deciden cómo deslocalizar las distintas etapas de la producción.</p>
+            <p><strong class="highlight">Ya ningún país hace nada solo.</strong></p>
             <div class="flow-diagram">
                 <div class="flow-box">Diseño<br><small>País A</small></div>
                 <span class="flow-arrow">→</span>
@@ -921,89 +558,113 @@
                 <div class="flow-box">Distribución<br><small>Global</small></div>
             </div>
             <ul>
-                <li><strong>Desafío de inserción:</strong> ¿Cómo insertarse en estas cadenas?</li>
+                <li><strong>Desafío:</strong> ¿Cómo insertarse en estas cadenas?</li>
                 <li>Incentivos fiscales, institucionales, ventajas geográficas</li>
-                <li>Fortalecer capacidades locales: logística, educación, infraestructura</li>
+                <li>Fortalecer capacidades: logística, educación, infraestructura</li>
                 <li><strong class="highlight">Reglas claras y estables:</strong> condición necesaria</li>
             </ul>
             <p class="nota-academica">Banco Mundial, "World Development Report 2020: Trading for Development in the Age of Global Value Chains".</p>
         </div>
 
-        <!-- ==================== SLIDE 22: TRANSICIÓN PROTECCIONISMO ==================== -->
+        <!-- SLIDE 23: TRANSICIÓN PROTECCIONISMO -->
         <div class="slide bg-respaldo seccion-titulo">
             <h3>Parte 2</h3>
             <h1>Proteccionismo vs. <span class="highlight">Librecambio</span></h1>
             <p class="subtitle">El debate que nunca termina</p>
         </div>
 
-        <!-- ==================== SLIDE 23: CITA LINCOLN ==================== -->
+        <!-- SLIDE 24: CITA LINCOLN -->
         <div class="slide bg-oscuro">
             <blockquote style="font-size: 2rem;">
-                "No sé mucho sobre aranceles. Pero sí sé esto: cuando compramos productos manufacturados en el extranjero, nosotros obtenemos los bienes y el extranjero obtiene el dinero. Cuando los compramos producidos en casa, nosotros obtenemos tanto los bienes como el dinero."
-                <cite>-- Atribuida a Abraham Lincoln (apócrifa pero ilustrativa del pensamiento proteccionista estadounidense del siglo XIX)</cite>
+                "No sé mucho sobre aranceles. Pero sí sé esto: cuando compramos productos manufacturados en el extranjero, nosotros obtenemos los bienes y el extranjero obtiene el dinero. Cuando los compramos en casa, obtenemos tanto los bienes como el dinero."
+                <cite>-- Atribuida a Abraham Lincoln (apócrifa pero ilustrativa del pensamiento proteccionista del siglo XIX)</cite>
             </blockquote>
         </div>
 
-        <!-- ==================== SLIDE 24: EFECTOS DE UN ARANCEL ==================== -->
+        <!-- SLIDE 25: EFECTOS DE UN ARANCEL CON GRÁFICO [CAMBIO 8] -->
         <div class="slide bg-blanco">
             <h2>Efectos de un arancel</h2>
-            <p>¿Qué pasa cuando un gobierno pone un impuesto a las importaciones?</p>
-            <div class="three-cols" style="margin-top: 20px;">
-                <div class="problema-box">
-                    <p style="font-size: 1.15rem; margin: 0;"><strong>Sube el precio</strong> del bien importado para el consumidor local</p>
+            <div class="two-cols">
+                <div>
+                    <!-- SVG Supply/Demand diagram -->
+                    <svg viewBox="0 0 380 320" style="width: 100%; max-width: 420px;">
+                        <!-- Axes -->
+                        <line x1="50" y1="10" x2="50" y2="280" stroke="#333" stroke-width="2"/>
+                        <line x1="50" y1="280" x2="370" y2="280" stroke="#333" stroke-width="2"/>
+                        <text x="25" y="150" font-size="14" fill="#333" font-weight="700" transform="rotate(-90 25 150)" text-anchor="middle" font-family="Albert Sans">Precio</text>
+                        <text x="210" y="305" font-size="14" fill="#333" font-weight="700" text-anchor="middle" font-family="Albert Sans">Cantidad</text>
+                        <!-- Demand curve (downward) -->
+                        <line x1="60" y1="30" x2="350" y2="270" stroke="#DC2626" stroke-width="2.5"/>
+                        <text x="355" y="270" font-size="11" fill="#DC2626" font-weight="600" font-family="Albert Sans">D</text>
+                        <!-- Supply curve (upward) -->
+                        <line x1="60" y1="260" x2="300" y2="40" stroke="#00C600" stroke-width="2.5"/>
+                        <text x="305" y="40" font-size="11" fill="#00C600" font-weight="600" font-family="Albert Sans">S</text>
+                        <!-- World price P* -->
+                        <line x1="50" y1="200" x2="350" y2="200" stroke="#1036E2" stroke-width="2" stroke-dasharray="8,4"/>
+                        <text x="355" y="204" font-size="11" fill="#1036E2" font-weight="700" font-family="Albert Sans">P*</text>
+                        <!-- Price with tariff P*+t -->
+                        <line x1="50" y1="160" x2="350" y2="160" stroke="#E91E90" stroke-width="2" stroke-dasharray="8,4"/>
+                        <text x="355" y="164" font-size="11" fill="#E91E90" font-weight="700" font-family="Albert Sans">P*+t</text>
+                        <!-- Deadweight loss triangles -->
+                        <polygon points="115,200 145,160 145,200" fill="rgba(220,38,38,0.25)" stroke="#DC2626" stroke-width="1"/>
+                        <polygon points="275,200 250,160 250,200" fill="rgba(220,38,38,0.25)" stroke="#DC2626" stroke-width="1"/>
+                        <!-- Government revenue -->
+                        <rect x="145" y="160" width="105" height="40" fill="rgba(245,158,11,0.2)" stroke="#F59E0B" stroke-width="1"/>
+                        <!-- Producer surplus gain -->
+                        <polygon points="82,200 115,200 145,160 100,160" fill="rgba(0,198,0,0.15)" stroke="#00C600" stroke-width="1"/>
+                        <!-- Labels -->
+                        <text x="130" y="215" font-size="9" fill="#DC2626" text-anchor="middle" font-family="Albert Sans">DWL</text>
+                        <text x="198" y="185" font-size="9" fill="#F59E0B" text-anchor="middle" font-family="Albert Sans">Recaudación</text>
+                        <text x="263" y="215" font-size="9" fill="#DC2626" text-anchor="middle" font-family="Albert Sans">DWL</text>
+                        <!-- Arrow showing tariff -->
+                        <line x1="38" y1="200" x2="38" y2="160" stroke="#E91E90" stroke-width="2" marker-end="url(#arrow)"/>
+                        <text x="15" y="183" font-size="10" fill="#E91E90" font-weight="600" font-family="Albert Sans">t</text>
+                        <defs><marker id="arrow" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#E91E90"/></marker></defs>
+                    </svg>
                 </div>
-                <div class="problema-box">
-                    <p style="font-size: 1.15rem; margin: 0;"><strong>Bajan las cantidades</strong> consumidas (menos acceso)</p>
-                </div>
-                <div class="problema-box">
-                    <p style="font-size: 1.15rem; margin: 0;"><strong>Se reduce</strong> el excedente del consumidor</p>
+                <div>
+                    <p style="font-size: 1.2rem;"><strong>Al subir el arancel (t):</strong></p>
+                    <div class="problema-box" style="padding: 12px 15px;"><p style="font-size: 1.05rem; margin: 0;">Sube el precio para el consumidor</p></div>
+                    <div class="problema-box" style="padding: 12px 15px;"><p style="font-size: 1.05rem; margin: 0;">Bajan cantidades consumidas</p></div>
+                    <div class="problema-box" style="padding: 12px 15px;"><p style="font-size: 1.05rem; margin: 0;">Se reduce excedente del consumidor</p></div>
+                    <div class="solucion-box" style="padding: 12px 15px;"><p style="font-size: 1.05rem; margin: 0;">Aumenta producción nacional</p></div>
+                    <div class="solucion-box" style="padding: 12px 15px;"><p style="font-size: 1.05rem; margin: 0;">Sube excedente de productores</p></div>
+                    <p style="font-size: 1.1rem; margin-top: 12px;"><strong class="highlight-red">Resultado neto:</strong> pérdida irrecuperable de eficiencia (DWL).</p>
                 </div>
             </div>
-            <div class="three-cols" style="margin-top: 15px;">
-                <div class="solucion-box">
-                    <p style="font-size: 1.15rem; margin: 0;"><strong>Aumenta</strong> la producción nacional</p>
-                </div>
-                <div class="solucion-box">
-                    <p style="font-size: 1.15rem; margin: 0;"><strong>Sube</strong> el excedente de los productores locales</p>
-                </div>
-                <div class="concepto-box">
-                    <p style="font-size: 1.15rem; margin: 0;"><strong>El gobierno</strong> recauda por el arancel</p>
-                </div>
-            </div>
-            <p style="text-align: center; margin-top: 20px;"><strong class="highlight-red">Resultado neto: pérdida de eficiencia</strong> (triángulos de pérdida irrecuperable).</p>
             <p class="nota-academica">Samuelson & Nordhaus: "Un arancel beneficia a los productores nacionales a expensas de los consumidores y de la eficiencia global."</p>
         </div>
 
-        <!-- ==================== SLIDE 25: PROTECCIÓN Y DESPROTECCIÓN EFECTIVA ==================== -->
+        <!-- SLIDE 26: PROTECCIÓN Y DESPROTECCIÓN EFECTIVA -->
         <div class="slide bg-blanco">
             <h2>Protección y desprotección efectiva</h2>
             <p><strong class="highlight-red">Proteger a un sector es desproteger al resto aguas abajo.</strong></p>
             <div class="two-cols" style="margin-top: 20px;">
                 <div class="concepto-box" style="border: 2px solid var(--rojo-alerta);">
                     <h4 style="color: var(--rojo-alerta);">País A (protege al acero)</h4>
-                    <p style="font-size: 1.3rem;">Mano de obra: $100<br>Insumos: $900<br>Acero: $1.000 + <strong style="color: var(--rojo-alerta);">$250</strong><br><strong>Costo total: $2.250</strong></p>
+                    <p style="font-size: 1.3rem;">Mano de obra: $100<br>Insumos: $900<br>Acero: $1.000 + <strong style="color: var(--rojo-alerta);">$250</strong><br><strong>Costo: $2.250</strong></p>
                 </div>
                 <div class="concepto-box" style="border: 2px solid var(--verde-activo);">
                     <h4>País B (no protege)</h4>
-                    <p style="font-size: 1.3rem;">Mano de obra: $100<br>Insumos: $900<br>Acero: $1.000<br><strong>Costo total: $2.000</strong></p>
+                    <p style="font-size: 1.3rem;">Mano de obra: $100<br>Insumos: $900<br>Acero: $1.000<br><strong>Costo: $2.000</strong></p>
                 </div>
             </div>
-            <p style="text-align: center; margin-top: 20px;">Argentina tiene un arancel promedio de <strong class="highlight-red">10,2%</strong>, mientras que el 87% de los países tiene aranceles a insumos menores al 10%.</p>
-            <p class="nota-academica">Fuente: WITS y BACI. Aranceles ponderados por comercio mundial 2017.</p>
+            <p style="text-align: center; margin-top: 20px;">Argentina: arancel promedio de <strong class="highlight-red">10,2%</strong>. El 87% de los países tiene aranceles a insumos menores al 10%.</p>
+            <p class="nota-academica">Fuente: WITS y BACI.</p>
         </div>
 
-        <!-- ==================== SLIDE 26: INDUSTRIA NACIENTE ==================== -->
+        <!-- SLIDE 27: INDUSTRIA NACIENTE -->
         <div class="slide bg-blanco">
             <h2>El argumento de la industria naciente</h2>
-            <p><strong class="highlight">Proteger temporalmente</strong> hasta ser competitivos. Como se aprende haciendo, hay que dar tiempo a los sectores para que "cierren la brecha".</p>
+            <p><strong class="highlight">Proteger temporalmente</strong> hasta ser competitivos.</p>
             <div class="two-cols" style="margin-top: 25px;">
                 <div class="problema-box">
                     <h4 style="color: var(--rojo-alerta); margin-bottom: 10px;">Problema 1: Escala</h4>
-                    <p style="font-size: 1.15rem; margin: 0;">Es imposible cerrar el "gap de aprendizaje" si practico con 100 autos mientras el resto produce 1.000.000.</p>
+                    <p style="font-size: 1.15rem; margin: 0;">Imposible cerrar el "gap de aprendizaje" si practico con 100 autos mientras el resto produce 1.000.000.</p>
                 </div>
                 <div class="problema-box">
                     <h4 style="color: var(--rojo-alerta); margin-bottom: 10px;">Problema 2: Inercia</h4>
-                    <p style="font-size: 1.15rem; margin: 0;">Una protección "temporal" puede volverse permanente. Los sectores protegidos hacen lobby para mantener sus privilegios (rent-seeking).</p>
+                    <p style="font-size: 1.15rem; margin: 0;">Protección "temporal" que se vuelve permanente. Los sectores hacen lobby para mantener privilegios (rent-seeking).</p>
                 </div>
             </div>
             <blockquote style="margin-top: 20px;">
@@ -1012,18 +673,22 @@
             </blockquote>
         </div>
 
-        <!-- ==================== SLIDE 27: CITA THE WIRE ==================== -->
-        <div class="slide bg-oscuro">
-            <blockquote style="font-size: 2rem; border-left-color: var(--magenta);">
-                "The game is the game. Always."
-                <cite>-- Omar Little, "The Wire" (HBO, 2002). El proteccionismo, como las calles de Baltimore, genera sus propias reglas: una vez que protegés un sector, es muy difícil dar marcha atrás.</cite>
-            </blockquote>
+        <!-- SLIDE 28: THE WIRE [CAMBIO 9] -->
+        <div class="slide bg-baltimore" style="position: relative;">
+            <div style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(90deg, rgba(13,17,23,0.95) 0%, rgba(13,17,23,0.7) 50%, rgba(45,27,61,0.8) 100%); z-index: 0;"></div>
+            <div style="position: relative; z-index: 1;">
+                <p style="font-size: 1rem; opacity: 0.5; text-transform: uppercase; letter-spacing: 3px; margin-bottom: 20px;">The Wire - HBO (2002-2008)</p>
+                <blockquote style="font-size: 2.2rem; border-left-color: #8B5CF6;">
+                    "The game is the game. Always."
+                    <cite>-- Omar Little</cite>
+                </blockquote>
+                <p style="margin-top: 30px; font-size: 1.3rem; opacity: 0.85;">El proteccionismo, como las calles de Baltimore, genera sus propias reglas: una vez que protegés un sector, es muy difícil dar marcha atrás. Los beneficiarios de la protección harán lo que sea para mantenerla.</p>
+            </div>
         </div>
 
-        <!-- ==================== SLIDE 28: ALIANZAS COMERCIALES ==================== -->
+        <!-- SLIDE 29: ALIANZAS COMERCIALES [CAMBIO 10] -->
         <div class="slide bg-blanco">
-            <h2>Alianzas comerciales: lo mejor de ambos mundos</h2>
-            <p>Los bloques comerciales son <strong class="highlight">aperturistas hacia adentro</strong> y <strong>proteccionistas hacia afuera</strong>.</p>
+            <h2>Alianzas comerciales: <strong class="highlight">apertura hacia dentro, proteccionismo hacia fuera</strong></h2>
             <div class="three-cols" style="margin-top: 20px;">
                 <div class="concepto-box">
                     <h4>Desde industria naciente</h4>
@@ -1035,39 +700,26 @@
                 </div>
                 <div class="concepto-box">
                     <h4>Desde las CGV</h4>
-                    <p>Eliminar barreras internas atrae inversiones y cadenas productivas</p>
+                    <p>Sin barreras internas se atraen inversiones y cadenas productivas</p>
                 </div>
             </div>
             <p style="text-align: center; margin-top: 25px;"><strong class="highlight">Ejemplos:</strong> UE, USMCA (ex NAFTA), Mercosur, RCEP (Asia-Pacífico)</p>
             <p class="nota-academica">Viner, J. (1950). "The Customs Union Issue". Distinción clásica entre creación y desvío de comercio.</p>
         </div>
 
-        <!-- ==================== SLIDE 29: COMERCIO BASADO EN REGLAS ==================== -->
+        <!-- SLIDE 30: COMERCIO BASADO EN REGLAS -->
         <div class="slide bg-blanco">
             <h2>El comercio basado en reglas</h2>
-            <p>Después de la Segunda Guerra Mundial, el mundo construyó un sistema de reglas para el comercio:</p>
             <div class="timeline">
-                <div class="timeline-item">
-                    <span class="timeline-year">1947</span>
-                    <p style="margin: 0;"><strong>GATT</strong> - Acuerdo General sobre Aranceles Aduaneros y Comercio. 23 países fundadores.</p>
-                </div>
-                <div class="timeline-item">
-                    <span class="timeline-year">1986-94</span>
-                    <p style="margin: 0;"><strong>Ronda Uruguay</strong> - La negociación más ambiciosa: servicios, propiedad intelectual, agricultura.</p>
-                </div>
-                <div class="timeline-item">
-                    <span class="timeline-year">1995</span>
-                    <p style="margin: 0;"><strong>OMC</strong> - Nace la Organización Mundial del Comercio, con mecanismo de resolución de disputas. Hoy: 164 miembros.</p>
-                </div>
-                <div class="timeline-item">
-                    <span class="timeline-year">2001</span>
-                    <p style="margin: 0;"><strong>China ingresa a la OMC</strong> - El mayor shock al sistema comercial global en décadas.</p>
-                </div>
+                <div class="timeline-item"><span class="timeline-year">1947</span><p style="margin: 0;"><strong>GATT</strong> - 23 países fundadores.</p></div>
+                <div class="timeline-item"><span class="timeline-year">1986-94</span><p style="margin: 0;"><strong>Ronda Uruguay</strong> - Servicios, propiedad intelectual, agricultura.</p></div>
+                <div class="timeline-item"><span class="timeline-year">1995</span><p style="margin: 0;"><strong>OMC</strong> - 164 miembros, mecanismo de resolución de disputas.</p></div>
+                <div class="timeline-item"><span class="timeline-year">2001</span><p style="margin: 0;"><strong>China ingresa a la OMC</strong> - El mayor shock al sistema comercial global.</p></div>
             </div>
             <p class="nota-academica">Samuelson & Nordhaus: "Las reglas multilaterales de comercio son uno de los grandes logros institucionales del siglo XX."</p>
         </div>
 
-        <!-- ==================== SLIDE 30: CITA PROTECCIONISMO ==================== -->
+        <!-- SLIDE 31: CITA LIBRECAMBIO -->
         <div class="slide bg-verde">
             <blockquote style="font-size: 2rem; border-left-color: white;">
                 "El libre comercio, una de las mayores bendiciones que un gobierno puede conceder a un pueblo, es impopular en casi todos los países."
@@ -1076,481 +728,371 @@
             <p style="margin-top: 30px; text-align: center;">200 años después, la tensión <strong>proteccionismo vs. librecambio</strong> sigue sin resolverse.</p>
         </div>
 
-        <!-- ==================== SLIDE 31: TRANSICIÓN TRUMP ==================== -->
+        <!-- SLIDE 32: TRANSICIÓN TRUMP -->
         <div class="slide bg-respaldo seccion-titulo">
             <h3>Parte 3</h3>
             <h1>La guerra comercial de <span class="highlight-red">Trump</span></h1>
             <p class="subtitle">El retorno del proteccionismo a la mayor economía del mundo</p>
         </div>
 
-        <!-- ==================== SLIDE 32: TRUMP CONTEXTO ==================== -->
-        <div class="slide bg-oscuro">
-            <h2>¿Qué pasó?</h2>
-            <p>El 2 de abril de 2025, Trump anunció aranceles "recíprocos" masivos en lo que llamó <strong class="highlight-red">"Liberation Day"</strong>.</p>
-            <ul>
-                <li>Arancel base del <strong>10%</strong> a todos los países</li>
-                <li>Aranceles diferenciados de hasta <strong>46%</strong> (Vietnam), <strong>34%</strong> (China), <strong>20%</strong> (UE)</li>
-                <li>Arancel efectivo a China alcanzó <strong>145%</strong> (acumulado con medidas previas)</li>
-                <li>El 9 de abril, pausa de 90 días para todos <strong>excepto China</strong></li>
-            </ul>
-            <blockquote style="margin-top: 20px; border-left-color: var(--rojo-alerta);">
-                "I am a Tariff Man."
-                <cite>-- Donald Trump, Twitter/X, diciembre 2018</cite>
-            </blockquote>
+        <!-- SLIDE 33: TRUMP CONTEXTO [CAMBIO 11] -->
+        <div class="slide bg-liberation" style="position: relative;">
+            <div style="position: relative; z-index: 1;">
+                <h2>¿Qué pasó?</h2>
+                <p>El 2 de abril de 2025, Trump anunció aranceles "recíprocos" masivos: <strong class="highlight-red">"Liberation Day"</strong>.</p>
+                <ul>
+                    <li>Arancel base del <strong>10%</strong> a prácticamente todos los países</li>
+                    <li>Aranceles diferenciados de hasta <strong>46%</strong> (Vietnam), <strong>34%</strong> (China), <strong>20%</strong> (UE)</li>
+                    <li>Arancel efectivo a China alcanzó <strong>145%</strong> (acumulado)</li>
+                    <li>Posterior pausa de 90 días y negociaciones bilaterales</li>
+                </ul>
+                <blockquote style="margin-top: 20px; border-left-color: var(--rojo-alerta);">
+                    "I am a Tariff Man."
+                    <cite>-- Donald Trump, Twitter/X, diciembre 2018</cite>
+                </blockquote>
+            </div>
         </div>
 
-        <!-- ==================== SLIDE 33: TRUMP - LÓGICA MERCANTILISTA ==================== -->
+        <!-- SLIDE 34: TRUMP LÓGICA MERCANTILISTA -->
         <div class="slide bg-blanco">
             <h2>Una lógica mercantilista en el siglo XXI</h2>
-            <p>La administración Trump calcula los aranceles "recíprocos" con una fórmula sorprendente:</p>
+            <p>La fórmula usada para calcular los aranceles "recíprocos":</p>
             <div class="formula">
                 Arancel = (Importaciones - Exportaciones) / Importaciones
             </div>
-            <p style="text-align: center; margin-top: 15px;">Es decir: <strong class="highlight-red">el déficit bilateral como porcentaje de las importaciones</strong>. No mide aranceles reales del otro país.</p>
-            <div class="cita-paper" style="margin-top: 20px;">
+            <p style="text-align: center;"><strong class="highlight-red">El déficit bilateral como porcentaje de las importaciones.</strong> No mide aranceles reales del otro país.</p>
+            <div class="cita-paper" style="margin-top: 15px;">
                 <div class="titulo">Financial Stability Oversight Council (FSOC) - Annual Report 2025</div>
                 <div class="autores">U.S. Department of the Treasury</div>
-                <div class="contenido">
-                    "La incertidumbre sobre la política comercial y aranceles fue señalada como un riesgo potencial para la estabilidad financiera de Estados Unidos."
-                </div>
+                <div class="contenido">"La incertidumbre sobre la política comercial fue señalada como un riesgo potencial para la estabilidad financiera de Estados Unidos."</div>
             </div>
-            <p class="nota-academica">La "fórmula" fue publicada oficialmente por la USTR (Office of the U.S. Trade Representative). Economistas de todo el espectro la criticaron como carente de fundamento teórico.</p>
+            <p class="nota-academica">La fórmula fue publicada por la USTR. Economistas de todo el espectro la criticaron como carente de fundamento teórico.</p>
         </div>
 
-        <!-- ==================== SLIDE 34: TRUMP - EFECTOS ==================== -->
+        <!-- SLIDE 35: TRUMP EFECTOS -->
         <div class="slide bg-blanco">
             <h2>Efectos de la guerra comercial</h2>
-            <div class="three-cols" style="margin-top: 20px;">
-                <div class="concepto-box">
-                    <h4 style="color: var(--rojo-alerta);">Precios</h4>
-                    <p>Los aranceles son un impuesto al consumo. Cada punto de arancel sube precios internos.</p>
-                </div>
-                <div class="concepto-box">
-                    <h4 style="color: var(--rojo-alerta);">Incertidumbre</h4>
-                    <p>Las empresas no pueden planificar inversiones cuando las reglas cambian por tweet.</p>
-                </div>
-                <div class="concepto-box">
-                    <h4 style="color: var(--rojo-alerta);">Cadenas de valor</h4>
-                    <p>Las CGV, construidas en décadas, no se reconfiguran en 90 días.</p>
-                </div>
+            <div class="three-cols" style="margin-top: 15px;">
+                <div class="concepto-box"><h4 style="color: var(--rojo-alerta);">Precios</h4><p>Los aranceles son un impuesto al consumo. ~USD 1.300 extra por hogar/año.</p></div>
+                <div class="concepto-box"><h4 style="color: var(--rojo-alerta);">Incertidumbre</h4><p>Las empresas no planifican inversiones cuando las reglas cambian por tweet.</p></div>
+                <div class="concepto-box"><h4 style="color: var(--rojo-alerta);">Cadenas de valor</h4><p>Las CGV, construidas en décadas, no se reconfiguran en 90 días.</p></div>
             </div>
-            <div class="cita-paper" style="margin-top: 20px;">
-                <div class="titulo">"The Return to Protectionism"</div>
-                <div class="autores">Fajgelbaum, Goldberg, Kennedy & Khandelwal (2020) - Quarterly Journal of Economics</div>
-                <div class="contenido">
-                    Los aranceles de Trump 2018-2019 fueron pagados casi en su totalidad por consumidores y empresas estadounidenses, no por los exportadores extranjeros.
-                </div>
+            <div class="cita-paper" style="margin-top: 15px;">
+                <div class="titulo">"Who Is Paying for the 2025 U.S. Tariffs?"</div>
+                <div class="autores">Federal Reserve Bank of New York (febrero 2026)</div>
+                <div class="contenido">El 94% de la incidencia de los aranceles fue absorbido por consumidores y empresas estadounidenses, no por los exportadores extranjeros.</div>
             </div>
         </div>
 
-        <!-- ==================== SLIDE 35: TRUMP - PARADOJA ==================== -->
-        <div class="slide bg-oscuro">
-            <h2>La paradoja Trump</h2>
-            <blockquote style="font-size: 1.8rem;">
-                "Las guerras comerciales son buenas y fáciles de ganar."
-                <cite>-- Donald Trump, Twitter/X, marzo 2018</cite>
-            </blockquote>
-            <p style="margin-top: 30px;">Sin embargo:</p>
-            <ul>
-                <li>El déficit comercial de EE.UU. <strong class="highlight-red">aumentó</strong> durante su primer mandato (2017-2020)</li>
-                <li>Los agricultores estadounidenses necesitaron <strong>USD 28.000 M</strong> en subsidios de emergencia por las represalias chinas</li>
-                <li>La Fed estima que los aranceles 2025 podrían <strong>restar 0,5-1 punto</strong> al PBI de EE.UU.</li>
-            </ul>
-            <p style="margin-top: 20px; text-align: center; opacity: 0.7;">"Fáciles de ganar" resultó ser más complejo de lo anunciado.</p>
-        </div>
-
-        <!-- ==================== SLIDE 36: SMOOT-HAWLEY ==================== -->
+        <!-- SLIDE 36: SMOOT-HAWLEY -->
         <div class="slide bg-blanco">
             <h2>La lección histórica: Smoot-Hawley</h2>
-            <p>No es la primera vez que EE.UU. sube aranceles masivamente:</p>
             <div class="cita-paper">
                 <div class="titulo">Smoot-Hawley Tariff Act (1930)</div>
                 <div class="autores">Congreso de Estados Unidos</div>
-                <div class="contenido">
-                    Subió aranceles a más de 20.000 productos. Provocó represalias globales. El comercio mundial cayó un 65% entre 1929 y 1934. Profundizó la Gran Depresión.
-                </div>
+                <div class="contenido">Subió aranceles a más de 20.000 productos. Represalias globales. El comercio mundial cayó un 65% entre 1929 y 1934. Profundizó la Gran Depresión.</div>
             </div>
             <blockquote style="margin-top: 20px;">
                 "Hay un consenso casi total entre los historiadores económicos: Smoot-Hawley fue un desastre autoinfligido."
                 <cite>-- Douglas Irwin, "Peddling Protectionism" (2011), Dartmouth College</cite>
             </blockquote>
-            <p class="nota-academica">Irwin, D. (2011). "Peddling Protectionism: Smoot-Hawley and the Great Depression". Princeton University Press.</p>
         </div>
 
-        <!-- ==================== SLIDE 37: CITA SARMIENTO ==================== -->
-        <div class="slide bg-oscuro">
-            <blockquote style="font-size: 1.8rem; border-left-color: var(--magenta);">
+        <!-- SLIDE 37: CITA SARMIENTO [CAMBIO 12] -->
+        <div class="slide bg-sarmiento" style="text-align: center;">
+            <blockquote style="font-size: 2rem; border-left-color: var(--verde-activo); text-align: left; max-width: 70%; margin: 0 auto;">
                 "Un pueblo que se aísla del movimiento comercial del mundo, se condena a la barbarie."
                 <cite>-- Domingo F. Sarmiento, presidente argentino (1868-1874)</cite>
             </blockquote>
         </div>
 
-        <!-- ==================== SLIDE 38: TRANSICIÓN ARGENTINA ==================== -->
+        <!-- SLIDE 38: TRANSICIÓN ARGENTINA -->
         <div class="slide bg-magenta seccion-titulo">
             <h3>Parte 4</h3>
             <h1>Radiografía del comercio exterior argentino</h1>
             <p class="subtitle">Qué exportamos, a quién, y por qué importa</p>
         </div>
 
-        <!-- ==================== SLIDE 39: ARGENTINA CERRADA ==================== -->
+        <!-- SLIDE 39: ARGENTINA CERRADA [CAMBIO 13] -->
         <div class="slide bg-blanco">
             <h2>Argentina: economía relativamente <strong class="highlight-red">cerrada</strong></h2>
-            <p>Con un ratio comercio/PBI de apenas <strong>31%</strong>, Argentina es una de las economías más cerradas del mundo para su tamaño.</p>
-            <div class="two-cols" style="margin-top: 20px;">
+            <blockquote style="margin-bottom: 20px;">
+                "Hay cuatro tipos de países en el mundo: los desarrollados, los subdesarrollados, Japón --nadie sabe por qué crece-- y Argentina --nadie sabe por qué no crece."
+                <cite>-- Atribuida a Simon Kuznets, Premio Nobel de Economía 1971</cite>
+            </blockquote>
+            <p>El Banco Mundial confirma lo anómalo: con un ratio comercio/PBI de apenas <strong class="highlight-red">27% en 2023</strong>, Argentina tiene el <strong>7mo ratio más bajo del mundo</strong>. El promedio global es 63%.</p>
+            <div class="two-cols" style="margin-top: 15px;">
                 <div class="problema-box">
                     <h4 style="color: var(--rojo-alerta); margin-bottom: 10px;">Aranceles elevados</h4>
-                    <p style="font-size: 1.15rem; margin: 0;">Arancel promedio de 10,2% (Argentina/Mercosur), cuando el 87% de los países tiene menos del 10%.</p>
+                    <p style="font-size: 1.1rem; margin: 0;">Arancel promedio 10,2% (Mercosur). El 87% de los países tiene menos.</p>
                 </div>
                 <div class="problema-box">
                     <h4 style="color: var(--rojo-alerta); margin-bottom: 10px;">Barreras no arancelarias</h4>
-                    <p style="font-size: 1.15rem; margin: 0;">Licencias de importación, controles de cambio (cepo), regulaciones técnicas que funcionan como barreras.</p>
+                    <p style="font-size: 1.1rem; margin: 0;">Licencias, cepo cambiario, regulaciones que funcionan como barreras.</p>
                 </div>
             </div>
-            <blockquote style="margin-top: 20px;">
-                "Argentina ha sido durante más de medio siglo una economía cerrada. No por elección, sino por default de políticas que se acumularon."
-                <cite>-- Marcelo Elizondo, especialista en comercio internacional</cite>
-            </blockquote>
+            <p class="nota-academica">Fuente: Banco Mundial, World Development Indicators 2024.</p>
         </div>
 
-        <!-- ==================== SLIDE 40: QUÉ EXPORTAMOS ==================== -->
+        <!-- SLIDE 40: QUÉ EXPORTAMOS -->
         <div class="slide bg-blanco">
             <h2>¿Qué exporta Argentina?</h2>
-            <p>Los 10 principales productos representan el <strong class="highlight">55,8%</strong> del total exportado (abril 2025):</p>
+            <p>Los 10 principales productos = <strong class="highlight">55,8%</strong> del total (abril 2025):</p>
             <div class="bar-chart">
-                <div class="bar-row">
-                    <span class="bar-label">Maíz en grano</span>
-                    <div class="bar-container"><div class="bar amarillo" style="width: 100%;">12,2%</div></div>
-                </div>
-                <div class="bar-row">
-                    <span class="bar-label">Harina de soja</span>
-                    <div class="bar-container"><div class="bar amarillo" style="width: 87%;">10,6%</div></div>
-                </div>
-                <div class="bar-row">
-                    <span class="bar-label">Aceite de soja</span>
-                    <div class="bar-container"><div class="bar amarillo" style="width: 72%;">8,8%</div></div>
-                </div>
-                <div class="bar-row">
-                    <span class="bar-label">Petróleo crudo</span>
-                    <div class="bar-container"><div class="bar magenta" style="width: 62%;">7,6%</div></div>
-                </div>
-                <div class="bar-row">
-                    <span class="bar-label">Vehículos</span>
-                    <div class="bar-container"><div class="bar azul" style="width: 42%;">5,1%</div></div>
-                </div>
-                <div class="bar-row">
-                    <span class="bar-label">Oro</span>
-                    <div class="bar-container"><div class="bar" style="width: 32%; background: #D4AF37; color: #000;">3,9%</div></div>
-                </div>
-                <div class="bar-row">
-                    <span class="bar-label">Trigo</span>
-                    <div class="bar-container"><div class="bar amarillo" style="width: 20%;">2,4%</div></div>
-                </div>
+                <div class="bar-row"><span class="bar-label">Maíz en grano</span><div class="bar-container"><div class="bar amarillo" style="width: 100%;">12,2%</div></div></div>
+                <div class="bar-row"><span class="bar-label">Harina de soja</span><div class="bar-container"><div class="bar amarillo" style="width: 87%;">10,6%</div></div></div>
+                <div class="bar-row"><span class="bar-label">Aceite de soja</span><div class="bar-container"><div class="bar amarillo" style="width: 72%;">8,8%</div></div></div>
+                <div class="bar-row"><span class="bar-label">Petróleo crudo</span><div class="bar-container"><div class="bar magenta" style="width: 62%;">7,6%</div></div></div>
+                <div class="bar-row"><span class="bar-label">Vehículos</span><div class="bar-container"><div class="bar azul" style="width: 42%;">5,1%</div></div></div>
+                <div class="bar-row"><span class="bar-label">Oro</span><div class="bar-container"><div class="bar" style="width: 32%; background: #D4AF37; color: #000;">3,9%</div></div></div>
+                <div class="bar-row"><span class="bar-label">Trigo</span><div class="bar-container"><div class="bar amarillo" style="width: 20%;">2,4%</div></div></div>
             </div>
-            <p style="text-align: center;"><strong class="highlight">Alta concentración</strong> en productos primarios y manufacturas de origen agropecuario.</p>
-            <p class="nota-academica">Fuente: INDEC, Dirección Nacional de Estadísticas del Sector Externo. Abril 2025.</p>
+            <p style="text-align: center;"><strong class="highlight">Alta concentración</strong> en productos primarios y manufacturas agropecuarias.</p>
+            <p class="nota-academica">Fuente: INDEC, abril 2025.</p>
         </div>
 
-        <!-- ==================== SLIDE 41: SOCIOS COMERCIALES ==================== -->
+        <!-- SLIDE 41: SOCIOS COMERCIALES -->
         <div class="slide bg-blanco">
             <h2>Principales socios comerciales</h2>
-            <p>Intercambio comercial acumulado a abril 2025 (millones de USD):</p>
+            <p>Acumulado a abril 2025 (millones de USD):</p>
             <table>
                 <tr><th>Socio</th><th>Exportaciones</th><th>Importaciones</th><th>Saldo</th></tr>
-                <tr><td><strong>Brasil</strong></td><td>3.772</td><td>5.857</td><td class="resultado" style="color: var(--rojo-alerta);">-2.085</td></tr>
-                <tr><td><strong>China</strong></td><td>1.359</td><td>5.760</td><td class="resultado" style="color: var(--rojo-alerta);">-4.401</td></tr>
-                <tr><td><strong>EE.UU.</strong></td><td>2.212</td><td>2.082</td><td class="resultado" style="color: var(--verde-activo);">+130</td></tr>
-                <tr><td><strong>Chile</strong></td><td>2.271</td><td>--</td><td class="resultado" style="color: var(--verde-activo);">superávit</td></tr>
-                <tr><td><strong>India</strong></td><td>1.532</td><td>--</td><td class="resultado" style="color: var(--verde-activo);">superávit</td></tr>
+                <tr><td><strong>Brasil</strong></td><td>3.772</td><td>5.857</td><td style="font-weight:700; color: var(--rojo-alerta);">-2.085</td></tr>
+                <tr><td><strong>China</strong></td><td>1.359</td><td>5.760</td><td style="font-weight:700; color: var(--rojo-alerta);">-4.401</td></tr>
+                <tr><td><strong>EE.UU.</strong></td><td>2.212</td><td>2.082</td><td style="font-weight:700; color: var(--verde-activo);">+130</td></tr>
+                <tr><td><strong>Chile</strong></td><td>2.271</td><td>--</td><td style="font-weight:700; color: var(--verde-activo);">superávit</td></tr>
+                <tr><td><strong>India</strong></td><td>1.532</td><td>--</td><td style="font-weight:700; color: var(--verde-activo);">superávit</td></tr>
             </table>
-            <p style="margin-top: 15px;"><strong class="highlight-red">Dato clave:</strong> con China importamos casi 4x más de lo que exportamos. Con Brasil el déficit también es significativo.</p>
-            <p class="nota-academica">Fuente: INDEC, ICA. Acumulado enero-abril 2025.</p>
+            <p style="margin-top: 15px;"><strong class="highlight-red">Dato clave:</strong> con China importamos casi 4x más de lo que exportamos.</p>
+            <p class="nota-academica">Fuente: INDEC, ICA. Acumulado ene-abr 2025.</p>
         </div>
 
-        <!-- ==================== SLIDE 42: EXPORTACIONES POR REGIÓN ==================== -->
+        <!-- SLIDE 42: EXPORTACIONES POR REGIÓN - DONUT [CAMBIO 14] -->
         <div class="slide bg-blanco">
             <h2>Exportaciones por región</h2>
-            <p>El <strong class="highlight">71,4%</strong> de las exportaciones argentinas proviene de la región pampeana (2024):</p>
-            <div class="bar-chart">
-                <div class="bar-row">
-                    <span class="bar-label">Pampeana</span>
-                    <div class="bar-container"><div class="bar azul" style="width: 100%;">71,4% - USD 56.929 M</div></div>
+            <p style="text-align: center;">Total país 2024: USD 79.721 millones.</p>
+            <div class="donut-container">
+                <div class="donut-chart">
+                    <svg viewBox="0 0 200 200" width="260" height="260">
+                        <!-- Pampeana 71.4% -->
+                        <circle class="donut-segment" cx="100" cy="100" r="70" stroke="#1036E2" stroke-dasharray="314.0 439.8" stroke-dashoffset="0"/>
+                        <!-- Patagonia 13.3% -->
+                        <circle class="donut-segment" cx="100" cy="100" r="70" stroke="#E91E90" stroke-dasharray="58.5 439.8" stroke-dashoffset="-314.0"/>
+                        <!-- Noroeste 6.5% -->
+                        <circle class="donut-segment" cx="100" cy="100" r="70" stroke="#F59E0B" stroke-dasharray="28.6 439.8" stroke-dashoffset="-372.5"/>
+                        <!-- Cuyo 5.2% -->
+                        <circle class="donut-segment" cx="100" cy="100" r="70" stroke="#00C600" stroke-dasharray="22.9 439.8" stroke-dashoffset="-401.1"/>
+                        <!-- Noreste 1.4% + Otros 2.2% -->
+                        <circle class="donut-segment" cx="100" cy="100" r="70" stroke="#8B5CF6" stroke-dasharray="15.8 439.8" stroke-dashoffset="-424.0"/>
+                    </svg>
                 </div>
-                <div class="bar-row">
-                    <span class="bar-label">Patagonia</span>
-                    <div class="bar-container"><div class="bar" style="width: 19%;">13,3% - USD 10.605 M</div></div>
-                </div>
-                <div class="bar-row">
-                    <span class="bar-label">Noroeste</span>
-                    <div class="bar-container"><div class="bar amarillo" style="width: 9%;">6,5% - USD 5.175 M</div></div>
-                </div>
-                <div class="bar-row">
-                    <span class="bar-label">Cuyo</span>
-                    <div class="bar-container"><div class="bar amarillo" style="width: 7%;">5,2% - USD 4.133 M</div></div>
-                </div>
-                <div class="bar-row">
-                    <span class="bar-label">Noreste</span>
-                    <div class="bar-container"><div class="bar rojo" style="width: 2%;">1,4% - USD 1.139 M</div></div>
+                <div class="donut-legend">
+                    <div class="legend-item"><span class="legend-color" style="background: #1036E2;"></span><span><strong>Pampeana:</strong> 71,4% - USD 56.929 M</span></div>
+                    <div class="legend-item"><span class="legend-color" style="background: #E91E90;"></span><span><strong>Patagonia:</strong> 13,3% - USD 10.605 M</span></div>
+                    <div class="legend-item"><span class="legend-color" style="background: #F59E0B;"></span><span><strong>Noroeste:</strong> 6,5% - USD 5.175 M</span></div>
+                    <div class="legend-item"><span class="legend-color" style="background: #00C600;"></span><span><strong>Cuyo:</strong> 5,2% - USD 4.133 M</span></div>
+                    <div class="legend-item"><span class="legend-color" style="background: #8B5CF6;"></span><span><strong>Noreste y otros:</strong> 3,6% - USD 2.879 M</span></div>
                 </div>
             </div>
-            <p style="text-align: center;">La <strong class="highlight">concentración regional</strong> refleja la dependencia del complejo agroindustrial y, cada vez más, de la energía patagónica (Vaca Muerta).</p>
-            <p class="nota-academica">Fuente: INDEC. Total exportaciones país 2024: USD 79.721 M.</p>
+            <p style="text-align: center;">La concentración refleja el complejo agroindustrial y, cada vez más, la energía patagónica (<strong class="highlight-magenta">Vaca Muerta</strong>).</p>
+            <p class="nota-academica">Fuente: INDEC, 2024.</p>
         </div>
 
-        <!-- ==================== SLIDE 43: PREGUNTA CIERRE ==================== -->
+        <!-- SLIDE 43: PREGUNTA CIERRE -->
         <div class="slide bg-magenta seccion-titulo">
             <h1>¿Proteccionismo o <br>librecambio?</h1>
-            <p class="subtitle" style="margin-top: 20px;">La respuesta no es binaria. Depende del contexto, la estrategia y la capacidad institucional de cada país.</p>
+            <p class="subtitle" style="margin-top: 20px;">La respuesta no es binaria. Depende del contexto, la estrategia y la capacidad institucional.</p>
         </div>
 
-        <!-- ==================== SLIDE 44: CIERRE ==================== -->
+        <!-- SLIDE 44: IDEAS PARA LLEVAR [CAMBIO 15 y 17] -->
         <div class="slide bg-blanco">
             <h2>Ideas para llevar</h2>
             <ul>
                 <li>El comercio internacional no es un juego de suma cero: <strong class="highlight">la especialización genera ganancias</strong></li>
-                <li>La ventaja comparativa funciona, pero <strong>la especialización no es neutral</strong>: importa en qué te especializás</li>
-                <li>Los aranceles protegen a un sector <strong class="highlight-red">a costa de los consumidores y de otros sectores</strong></li>
-                <li>Las cadenas globales de valor cambiaron el juego: hoy importa <strong>integrarse</strong>, no aislarse</li>
+                <li>La ventaja comparativa funciona, pero <strong>lo que importa es la complejidad de tu canasta exportadora</strong>: tecnología, diferenciación y valor agregado (no la falsa dicotomía campo vs. industria)</li>
+                <li>Los aranceles protegen a un sector <strong class="highlight-red">a costa de consumidores y otros sectores</strong></li>
+                <li>Las CGV cambiaron el juego: hoy importa <strong>integrarse</strong>, no aislarse</li>
                 <li>Argentina es <strong class="highlight-red">una de las economías más cerradas del mundo</strong> para su tamaño</li>
-                <li>Las reglas importan: <strong class="highlight">la previsibilidad es condición necesaria</strong> para atraer inversión y comercio</li>
+                <li><strong class="highlight">La previsibilidad es condición necesaria</strong> para atraer inversión y comercio</li>
             </ul>
-            <blockquote style="margin-top: 20px;">
-                "La riqueza de una nación no se mide por cuánto oro tiene en sus arcas, sino por la abundancia de bienes y servicios que sus ciudadanos pueden disfrutar."
-                <cite>-- Adaptación de Adam Smith, "La Riqueza de las Naciones" (1776)</cite>
+            <blockquote style="margin-top: 15px;">
+                "Free trade stops wars. And we figure out a way to fix the rest. One world, one peace."
+                <cite>-- Toby Ziegler (Richard Schiff), "The West Wing" - S02E16 (2001, Aaron Sorkin)</cite>
             </blockquote>
         </div>
 
-        <!-- ==================== SLIDE 45: CITA CIERRE ==================== -->
-        <div class="slide bg-oscuro">
-            <blockquote style="font-size: 2rem; border-left-color: var(--verde-activo);">
-                "I'll make him an offer he can't refuse."
-                <cite>-- Don Vito Corleone, "El Padrino" (1972). En el comercio internacional, los mejores acuerdos son aquellos donde las dos partes sienten que ganaron algo.</cite>
-            </blockquote>
+        <!-- SLIDE 45: CIERRE -->
+        <div class="slide bg-respaldo portada">
+            <h1>Gracias</h1>
+            <p class="subtitle" style="margin-top: 20px;">Felipe Venancio</p>
         </div>
 
-        <!-- ==================== SECCIÓN ANEXO ==================== -->
+        <!-- ========== SECCIÓN ANEXO ========== -->
 
-        <!-- ==================== SLIDE 46: TRANSICIÓN ANEXO ==================== -->
         <div class="slide bg-respaldo seccion-titulo">
             <h3>Anexo</h3>
             <h1>Información <span class="highlight">estadística</span></h1>
             <p class="subtitle">Datos oficiales del mundo y de Argentina</p>
         </div>
 
-        <!-- ==================== SLIDE 47: ANEXO - COMERCIO MUNDIAL ==================== -->
+        <!-- ANEXO: COMERCIO MUNDIAL -->
         <div class="slide bg-blanco">
             <span class="anexo-badge">ANEXO</span>
             <h2>Comercio mundial de bienes (2024)</h2>
             <div class="stats-grid stats-grid-4">
-                <div class="stat-box">
-                    <div class="stat-numero">25,3</div>
-                    <div class="stat-label">Billones USD<br>Exportaciones mundiales</div>
-                </div>
-                <div class="stat-box">
-                    <div class="stat-numero">25,6</div>
-                    <div class="stat-label">Billones USD<br>Importaciones mundiales</div>
-                </div>
-                <div class="stat-box">
-                    <div class="stat-numero">7,6</div>
-                    <div class="stat-label">Billones USD<br>Exportaciones servicios</div>
-                </div>
-                <div class="stat-box">
-                    <div class="stat-numero">164</div>
-                    <div class="stat-label">Miembros de<br>la OMC</div>
-                </div>
+                <div class="stat-box"><div class="stat-numero">25,3</div><div class="stat-label">Billones USD<br>Exportaciones mundiales</div></div>
+                <div class="stat-box"><div class="stat-numero">25,6</div><div class="stat-label">Billones USD<br>Importaciones mundiales</div></div>
+                <div class="stat-box"><div class="stat-numero">7,6</div><div class="stat-label">Billones USD<br>Exportaciones servicios</div></div>
+                <div class="stat-box"><div class="stat-numero">164</div><div class="stat-label">Miembros de<br>la OMC</div></div>
             </div>
-            <p class="nota-academica">Fuente: OMC, World Trade Statistical Review 2025. Los servicios representan ya el 23% del comercio mundial.</p>
+            <p class="nota-academica">Fuente: OMC, World Trade Statistical Review 2025.</p>
         </div>
 
-        <!-- ==================== SLIDE 48: ANEXO - TOP EXPORTADORES ==================== -->
+        <!-- ANEXO: TOP EXPORTADORES [CAMBIO 18] -->
         <div class="slide bg-blanco">
             <span class="anexo-badge">ANEXO</span>
             <h2>Principales exportadores del mundo (2024)</h2>
             <div class="bar-chart">
-                <div class="bar-row">
-                    <span class="bar-label">China</span>
-                    <div class="bar-container"><div class="bar rojo" style="width: 100%;">USD 3,6 billones</div></div>
-                </div>
-                <div class="bar-row">
-                    <span class="bar-label">EE.UU.</span>
-                    <div class="bar-container"><div class="bar azul" style="width: 58%;">USD 2,1 billones</div></div>
-                </div>
-                <div class="bar-row">
-                    <span class="bar-label">Alemania</span>
-                    <div class="bar-container"><div class="bar azul" style="width: 47%;">USD 1,7 billones</div></div>
-                </div>
-                <div class="bar-row">
-                    <span class="bar-label">Japón</span>
-                    <div class="bar-container"><div class="bar" style="width: 22%;">USD 0,8 billones</div></div>
-                </div>
-                <div class="bar-row">
-                    <span class="bar-label">Corea del Sur</span>
-                    <div class="bar-container"><div class="bar" style="width: 19%;">USD 0,7 billones</div></div>
-                </div>
+                <div class="bar-row"><span class="bar-label">China</span><div class="bar-container"><div class="bar rojo" style="width: 100%;">USD 3,6 billones</div></div></div>
+                <div class="bar-row"><span class="bar-label">EE.UU.</span><div class="bar-container"><div class="bar azul" style="width: 58%;">USD 2,1 billones</div></div></div>
+                <div class="bar-row"><span class="bar-label">Alemania</span><div class="bar-container"><div class="bar azul" style="width: 47%;">USD 1,7 billones</div></div></div>
+                <div class="bar-row"><span class="bar-label">Japón</span><div class="bar-container"><div class="bar" style="width: 22%;">USD 0,8 billones</div></div></div>
+                <div class="bar-row"><span class="bar-label">Corea del Sur</span><div class="bar-container"><div class="bar" style="width: 19%;">USD 0,7 billones</div></div></div>
                 <div class="bar-row">
                     <span class="bar-label"><strong>Argentina (#45)</strong></span>
-                    <div class="bar-container"><div class="bar amarillo" style="width: 2%;">USD 80 mil M</div></div>
+                    <div class="bar-container"><div class="bar amarillo" style="width: 2%;"></div></div>
+                    <span class="bar-value-outside" style="color: var(--azul-impulso);">USD 80 mil M (~0,3% mundial)</span>
                 </div>
             </div>
-            <p class="nota-academica">Fuente: OMC / Banco Mundial. Argentina representa ~0,3% de las exportaciones mundiales de bienes.</p>
+            <p class="nota-academica">Fuente: OMC / Banco Mundial.</p>
         </div>
 
-        <!-- ==================== SLIDE 49: ANEXO - COMPOSICIÓN EXPO ARG ==================== -->
+        <!-- ANEXO: COMPOSICIÓN EXPO ARG -->
         <div class="slide bg-blanco">
             <span class="anexo-badge">ANEXO</span>
             <h2>Composición exportaciones argentinas (2024)</h2>
-            <p style="text-align: center;">Exportaciones por grandes rubros. Total país: USD 79.721 millones.</p>
             <div class="donut-container">
                 <div class="donut-chart">
                     <svg viewBox="0 0 200 200" width="260" height="260">
-                        <!-- MOA 37.2% -->
                         <circle class="donut-segment" cx="100" cy="100" r="70" stroke="#F59E0B" stroke-dasharray="163.7 439.8" stroke-dashoffset="0"/>
-                        <!-- MOI 27.7% -->
                         <circle class="donut-segment" cx="100" cy="100" r="70" stroke="#1036E2" stroke-dasharray="121.8 439.8" stroke-dashoffset="-163.7"/>
-                        <!-- PP 22.9% -->
                         <circle class="donut-segment" cx="100" cy="100" r="70" stroke="#00C600" stroke-dasharray="100.7 439.8" stroke-dashoffset="-285.5"/>
-                        <!-- CyE 12.2% -->
                         <circle class="donut-segment" cx="100" cy="100" r="70" stroke="#E91E90" stroke-dasharray="53.6 439.8" stroke-dashoffset="-386.2"/>
                     </svg>
                 </div>
                 <div class="donut-legend">
-                    <div class="legend-item">
-                        <span class="legend-color" style="background: #F59E0B;"></span>
-                        <span><strong>MOA:</strong> 37,2% - USD 29.669 M</span>
-                    </div>
-                    <div class="legend-item">
-                        <span class="legend-color" style="background: #1036E2;"></span>
-                        <span><strong>MOI:</strong> 27,7% - USD 22.052 M</span>
-                    </div>
-                    <div class="legend-item">
-                        <span class="legend-color" style="background: #00C600;"></span>
-                        <span><strong>Prod. Primarios:</strong> 22,9% - USD 18.295 M</span>
-                    </div>
-                    <div class="legend-item">
-                        <span class="legend-color" style="background: #E91E90;"></span>
-                        <span><strong>Combustibles y Energía:</strong> 12,2% - USD 9.705 M</span>
-                    </div>
+                    <div class="legend-item"><span class="legend-color" style="background: #F59E0B;"></span><span><strong>MOA:</strong> 37,2% - USD 29.669 M</span></div>
+                    <div class="legend-item"><span class="legend-color" style="background: #1036E2;"></span><span><strong>MOI:</strong> 27,7% - USD 22.052 M</span></div>
+                    <div class="legend-item"><span class="legend-color" style="background: #00C600;"></span><span><strong>Prod. Primarios:</strong> 22,9% - USD 18.295 M</span></div>
+                    <div class="legend-item"><span class="legend-color" style="background: #E91E90;"></span><span><strong>Combustibles:</strong> 12,2% - USD 9.705 M</span></div>
                 </div>
             </div>
-            <p style="text-align: center;"><strong class="highlight">60%</strong> de las exportaciones son de base agropecuaria (MOA + PP). <strong class="highlight-magenta">Vaca Muerta</strong> impulsa el rubro energético (+22,7% i.a.).</p>
-            <p class="nota-academica">Fuente: INDEC. MOA = Manufacturas de Origen Agropecuario. MOI = Manufacturas de Origen Industrial. PP = Productos Primarios. CyE = Combustibles y Energía.</p>
+            <p style="text-align: center;"><strong class="highlight">60%</strong> de base agropecuaria. <strong class="highlight-magenta">Vaca Muerta</strong> impulsa energía (+22,7% i.a.).</p>
+            <p class="nota-academica">Fuente: INDEC, 2024.</p>
         </div>
 
-        <!-- ==================== SLIDE 50: ANEXO - BALANZA COMERCIAL HISTÓRICA ==================== -->
+        <!-- ANEXO: BALANZA 1990-2023 [CAMBIO 19a] -->
         <div class="slide bg-blanco">
             <span class="anexo-badge">ANEXO</span>
-            <h2>Balanza comercial argentina (1990-2024)</h2>
-            <p>En millones de USD. Los períodos de superávit coinciden con devaluaciones o booms de commodities:</p>
+            <h2>Balanza comercial argentina (1990-2023)</h2>
             <div class="timeline">
-                <div class="timeline-item">
-                    <span class="timeline-year">1990-1994</span>
-                    <p style="margin: 0;">Superávits iniciales de convertibilidad, luego déficit por apreciación cambiaria.</p>
-                </div>
-                <div class="timeline-item">
-                    <span class="timeline-year">1995-2000</span>
-                    <p style="margin: 0;"><strong style="color: var(--rojo-alerta);">Déficits crecientes.</strong> La convertibilidad abarata importaciones. Crisis asiática y brasileña.</p>
-                </div>
-                <div class="timeline-item">
-                    <span class="timeline-year">2002-2014</span>
-                    <p style="margin: 0;"><strong style="color: var(--verde-activo);">Superávits sostenidos.</strong> Devaluación post-convertibilidad + superciclo de commodities (soja a USD 600/tn).</p>
-                </div>
-                <div class="timeline-item">
-                    <span class="timeline-year">2015-2017</span>
-                    <p style="margin: 0;"><strong style="color: var(--rojo-alerta);">Déficits.</strong> Apertura importadora con tipo de cambio apreciado.</p>
-                </div>
-                <div class="timeline-item">
-                    <span class="timeline-year">2018-2024</span>
-                    <p style="margin: 0;">Superávits por cepo cambiario y compresión de importaciones. <strong style="color: var(--verde-activo);">2024: récord ~USD 19.000 M.</strong></p>
-                </div>
+                <div class="timeline-item"><span class="timeline-year">1990-1994</span><p style="margin: 0;">Superávits iniciales de la convertibilidad, luego el tipo de cambio fijo abarata importaciones.</p></div>
+                <div class="timeline-item"><span class="timeline-year">1995-2001</span><p style="margin: 0;"><strong style="color: var(--rojo-alerta);">Déficits crecientes.</strong> La convertibilidad aprecia el peso. Crisis asiática, brasileña y colapso 2001.</p></div>
+                <div class="timeline-item"><span class="timeline-year">2002-2008</span><p style="margin: 0;"><strong style="color: var(--verde-activo);">Superávits sostenidos.</strong> Devaluación post-convertibilidad + superciclo commodities (soja > USD 500/tn).</p></div>
+                <div class="timeline-item"><span class="timeline-year">2009-2014</span><p style="margin: 0;">Superávits decrecientes. Caen precios de commodities, aumentan restricciones a importaciones.</p></div>
+                <div class="timeline-item"><span class="timeline-year">2015-2017</span><p style="margin: 0;"><strong style="color: var(--rojo-alerta);">Déficits.</strong> Apertura importadora con tipo de cambio apreciado. 2017: déficit de USD 8.300 M.</p></div>
+                <div class="timeline-item"><span class="timeline-year">2018-2023</span><p style="margin: 0;">Cepo cambiario comprime importaciones. <strong style="color: var(--rojo-alerta);">Sequía récord 2023:</strong> déficit de USD 6.900 M.</p></div>
             </div>
             <p class="nota-academica">Fuente: INDEC, ICA. Elaboración propia.</p>
         </div>
 
-        <!-- ==================== SLIDE 51: ANEXO - ARANCELES COMPARADOS ==================== -->
+        <!-- ANEXO: 2024 RÉCORD [CAMBIO 19b] -->
+        <div class="slide bg-blanco">
+            <span class="anexo-badge">ANEXO</span>
+            <h2>2024: superávit comercial <strong class="highlight">récord</strong></h2>
+            <div class="stats-grid">
+                <div class="stat-box"><div class="stat-numero">79,7</div><div class="stat-label">Miles de millones USD<br>Exportaciones (+19,4%)</div></div>
+                <div class="stat-box"><div class="stat-numero" style="color: var(--rojo-alerta);">60,8</div><div class="stat-label">Miles de millones USD<br>Importaciones (-17,5%)</div></div>
+                <div class="stat-box"><div class="stat-numero" style="color: var(--verde-activo);">18,9</div><div class="stat-label">Miles de millones USD<br><strong>Superávit récord</strong></div></div>
+            </div>
+            <p style="margin-top: 20px; text-align: center;"><strong>¿Cómo se explica?</strong> Tres fuerzas convergentes:</p>
+            <div class="three-cols" style="margin-top: 10px;">
+                <div class="solucion-box">
+                    <h4 style="color: var(--verde-activo); margin-bottom: 8px;">Vaca Muerta (estructural)</h4>
+                    <p style="font-size: 1.05rem; margin: 0;">Argentina pasó a exportador neto de energía. Superávit energético de USD 5.700 M, el mayor en 18 años.</p>
+                </div>
+                <div class="solucion-box">
+                    <h4 style="color: var(--verde-activo); margin-bottom: 8px;">Recuperación agrícola</h4>
+                    <p style="font-size: 1.05rem; margin: 0;">La cosecha se recuperó tras la sequía récord de 2023. Exportaciones de soja +147%, maíz fuerte.</p>
+                </div>
+                <div class="problema-box">
+                    <h4 style="color: var(--rojo-alerta); margin-bottom: 8px;">Caída de importaciones (cíclico)</h4>
+                    <p style="font-size: 1.05rem; margin: 0;">La recesión (-2,1% PBI) y el ajuste fiscal comprimieron la demanda. Las importaciones cayeron 17,5%.</p>
+                </div>
+            </div>
+            <p class="nota-academica">Fuente: INDEC, informe "Intercambio Comercial Argentino" 2024. Mayor superávit nominal de la historia argentina.</p>
+        </div>
+
+        <!-- ANEXO: ARANCELES COMPARADOS -->
         <div class="slide bg-blanco">
             <span class="anexo-badge">ANEXO</span>
             <h2>Aranceles promedio comparados</h2>
-            <p>Arancel medio ponderado por comercio (todos los productos):</p>
             <div class="bar-chart">
-                <div class="bar-row">
-                    <span class="bar-label"><strong>Argentina</strong></span>
-                    <div class="bar-container"><div class="bar rojo" style="width: 100%;">10,2%</div></div>
-                </div>
-                <div class="bar-row">
-                    <span class="bar-label">Brasil</span>
-                    <div class="bar-container"><div class="bar rojo" style="width: 78%;">8,0%</div></div>
-                </div>
-                <div class="bar-row">
-                    <span class="bar-label">India</span>
-                    <div class="bar-container"><div class="bar amarillo" style="width: 64%;">6,5%</div></div>
-                </div>
-                <div class="bar-row">
-                    <span class="bar-label">México</span>
-                    <div class="bar-container"><div class="bar azul" style="width: 44%;">4,5%</div></div>
-                </div>
-                <div class="bar-row">
-                    <span class="bar-label">China</span>
-                    <div class="bar-container"><div class="bar azul" style="width: 37%;">3,8%</div></div>
-                </div>
-                <div class="bar-row">
-                    <span class="bar-label">Chile</span>
-                    <div class="bar-container"><div class="bar" style="width: 20%;">2,0%</div></div>
-                </div>
-                <div class="bar-row">
-                    <span class="bar-label">UE</span>
-                    <div class="bar-container"><div class="bar" style="width: 18%;">1,8%</div></div>
-                </div>
-                <div class="bar-row">
-                    <span class="bar-label">EE.UU. (pre-Trump)</span>
-                    <div class="bar-container"><div class="bar" style="width: 17%;">1,7%</div></div>
-                </div>
+                <div class="bar-row"><span class="bar-label"><strong>Argentina</strong></span><div class="bar-container"><div class="bar rojo" style="width: 100%;">10,2%</div></div></div>
+                <div class="bar-row"><span class="bar-label">Brasil</span><div class="bar-container"><div class="bar rojo" style="width: 78%;">8,0%</div></div></div>
+                <div class="bar-row"><span class="bar-label">India</span><div class="bar-container"><div class="bar amarillo" style="width: 64%;">6,5%</div></div></div>
+                <div class="bar-row"><span class="bar-label">México</span><div class="bar-container"><div class="bar azul" style="width: 44%;">4,5%</div></div></div>
+                <div class="bar-row"><span class="bar-label">China</span><div class="bar-container"><div class="bar azul" style="width: 37%;">3,8%</div></div></div>
+                <div class="bar-row"><span class="bar-label">Chile</span><div class="bar-container"><div class="bar" style="width: 20%;">2,0%</div></div></div>
+                <div class="bar-row"><span class="bar-label">UE</span><div class="bar-container"><div class="bar" style="width: 18%;">1,8%</div></div></div>
+                <div class="bar-row"><span class="bar-label">EE.UU. (pre-Trump)</span><div class="bar-container"><div class="bar" style="width: 17%;">1,7%</div></div></div>
             </div>
-            <p class="nota-academica">Fuente: Banco Mundial, WITS. Datos pre-aranceles Trump 2025. Los aranceles de Argentina reflejan el Arancel Externo Común del Mercosur.</p>
+            <p class="nota-academica">Fuente: Banco Mundial, WITS. Datos pre-aranceles Trump 2025.</p>
         </div>
 
-        <!-- ==================== SLIDE 52: ANEXO - ARANCELES TRUMP POR PAÍS ==================== -->
+        <!-- ANEXO: MEJORES ACUERDOS CON EE.UU. [CAMBIO 20] -->
         <div class="slide bg-blanco">
             <span class="anexo-badge">ANEXO</span>
-            <h2>Aranceles "recíprocos" de Trump (abril 2025)</h2>
-            <p>Principales tasas anunciadas el "Liberation Day":</p>
-            <table style="font-size: 1.1rem;">
-                <tr><th>País</th><th>Arancel anunciado</th><th>Arancel "reclamado"</th></tr>
-                <tr><td>China</td><td><strong style="color: var(--rojo-alerta);">34% (+previos = 145%)</strong></td><td>67%</td></tr>
-                <tr><td>Unión Europea</td><td><strong style="color: var(--rojo-alerta);">20%</strong></td><td>39%</td></tr>
-                <tr><td>Vietnam</td><td><strong style="color: var(--rojo-alerta);">46%</strong></td><td>90%</td></tr>
-                <tr><td>Japón</td><td>24%</td><td>46%</td></tr>
-                <tr><td>India</td><td>26%</td><td>52%</td></tr>
-                <tr><td>Corea del Sur</td><td>25%</td><td>50%</td></tr>
-                <tr><td>Taiwán</td><td>32%</td><td>64%</td></tr>
-                <tr><td>Argentina</td><td><strong>10% (base)</strong></td><td>10%</td></tr>
-            </table>
-            <p style="margin-top: 10px;">Argentina quedó con el arancel mínimo base del 10%, pero el impacto indirecto vía desaceleración global y desvío de comercio puede ser significativo.</p>
-            <p class="nota-academica">Fuente: USTR, Executive Order del 2 de abril de 2025. Datos actualizados al momento de confección.</p>
+            <h2>¿Quién logró los <strong class="highlight">mejores acuerdos</strong> con EE.UU.?</h2>
+            <p>Comparación entre arancel amenazado (Liberation Day) vs. tasa vigente tras negociaciones:</p>
+            <div class="deal-legend-mini">
+                <span><span class="dot" style="background: var(--rojo-alerta); opacity:0.6; display:inline-block; width:12px; height:12px; border-radius:3px;"></span> Amenazado (abr 2025)</span>
+                <span><span class="dot" style="background: var(--verde-activo); display:inline-block; width:12px; height:12px; border-radius:3px;"></span> Vigente (post negociación)</span>
+            </div>
+            <div style="max-width: 700px;">
+                <div class="deal-row"><span class="deal-label">China</span><div class="deal-bars"><div class="deal-bar-container"><div class="deal-bar threatened" style="width: 97%;">145%</div></div><div class="deal-bar-container"><div class="deal-bar final" style="width: 13%;">20%</div></div></div></div>
+                <div class="deal-row"><span class="deal-label">Vietnam</span><div class="deal-bars"><div class="deal-bar-container"><div class="deal-bar threatened" style="width: 31%;">46%</div></div><div class="deal-bar-container"><div class="deal-bar final" style="width: 13%;">20%</div></div></div></div>
+                <div class="deal-row"><span class="deal-label">UE</span><div class="deal-bars"><div class="deal-bar-container"><div class="deal-bar threatened" style="width: 13%;">20%</div></div><div class="deal-bar-container"><div class="deal-bar final" style="width: 10%;">15%</div></div></div></div>
+                <div class="deal-row"><span class="deal-label">Japón</span><div class="deal-bars"><div class="deal-bar-container"><div class="deal-bar threatened" style="width: 16%;">24%</div></div><div class="deal-bar-container"><div class="deal-bar final" style="width: 10%;">15%</div></div></div></div>
+                <div class="deal-row"><span class="deal-label">Corea del Sur</span><div class="deal-bars"><div class="deal-bar-container"><div class="deal-bar threatened" style="width: 17%;">25%</div></div><div class="deal-bar-container"><div class="deal-bar final" style="width: 10%;">15%</div></div></div></div>
+                <div class="deal-row"><span class="deal-label">India</span><div class="deal-bars"><div class="deal-bar-container"><div class="deal-bar threatened" style="width: 17%;">26%</div></div><div class="deal-bar-container"><div class="deal-bar final" style="width: 12%;">18%</div></div></div></div>
+                <div class="deal-row" style="background: rgba(16,54,226,0.06); border-radius: 8px; padding: 8px;">
+                    <span class="deal-label" style="color: var(--azul-impulso);"><strong>Argentina</strong></span>
+                    <div class="deal-bars">
+                        <div class="deal-bar-container"><div class="deal-bar threatened" style="width: 7%;">10%</div></div>
+                        <div class="deal-bar-container"><div class="deal-bar final argentina" style="width: 7%;">10%</div></div>
+                    </div>
+                </div>
+                <div class="deal-row"><span class="deal-label">Reino Unido</span><div class="deal-bars"><div class="deal-bar-container"><div class="deal-bar threatened" style="width: 7%;">10%</div></div><div class="deal-bar-container"><div class="deal-bar final" style="width: 7%;">10%</div></div></div></div>
+            </div>
+            <p style="margin-top: 10px;"><strong class="highlight">Argentina quedó con la tasa más baja posible (10%)</strong> y además firmó un acuerdo marco en noviembre 2025 que eliminó aranceles recíprocos sobre 1.675 productos argentinos.</p>
+            <p class="nota-academica">Fuentes: Council on Foreign Relations (CFR Tracker), Tax Foundation, USTR. Datos actualizados a febrero 2026.</p>
         </div>
 
-        <!-- ==================== SLIDE 53: ANEXO - EFECTO VACA MUERTA ==================== -->
+        <!-- ANEXO: VACA MUERTA -->
         <div class="slide bg-blanco">
             <span class="anexo-badge">ANEXO</span>
             <h2>El efecto Vaca Muerta en el comercio exterior</h2>
-            <p>La transformación energética está cambiando la estructura del comercio exterior argentino:</p>
             <div class="stats-grid">
-                <div class="stat-box">
-                    <div class="stat-numero" style="color: var(--magenta);">USD 9.705 M</div>
-                    <div class="stat-label">Exportaciones de<br>combustibles y energía 2024</div>
-                </div>
-                <div class="stat-box">
-                    <div class="stat-numero">+22,7%</div>
-                    <div class="stat-label">Crecimiento interanual<br>del rubro energético</div>
-                </div>
-                <div class="stat-box">
-                    <div class="stat-numero">12,2%</div>
-                    <div class="stat-label">Participación en<br>exportaciones totales</div>
-                </div>
+                <div class="stat-box"><div class="stat-numero" style="color: var(--magenta);">USD 9.705 M</div><div class="stat-label">Exportaciones<br>combustibles 2024</div></div>
+                <div class="stat-box"><div class="stat-numero">+22,7%</div><div class="stat-label">Crecimiento<br>interanual</div></div>
+                <div class="stat-box"><div class="stat-numero">12,2%</div><div class="stat-label">Participación en<br>expo totales</div></div>
             </div>
-            <p style="margin-top: 20px;">Argentina pasó de importador neto a <strong class="highlight">exportador neto de energía</strong> en 2023. Vaca Muerta es la segunda reserva mundial de gas no convencional y la cuarta de petróleo.</p>
+            <p style="margin-top: 20px;">Argentina pasó de importador neto a <strong class="highlight">exportador neto de energía</strong> en 2023. Vaca Muerta: 2da reserva mundial de gas no convencional y 4ta de petróleo.</p>
             <p class="nota-academica">Fuente: INDEC, Secretaría de Energía. Datos 2024.</p>
         </div>
 
-        <!-- ==================== SLIDE 54: BIBLIOGRAFÍA ==================== -->
+        <!-- ANEXO: BIBLIOGRAFÍA -->
         <div class="slide bg-blanco">
             <span class="anexo-badge">ANEXO</span>
             <h2>Bibliografía y fuentes</h2>
@@ -1559,13 +1101,14 @@
                     <h4 style="color: var(--azul-impulso); margin-bottom: 10px;">Textos académicos</h4>
                     <ul style="font-size: 0.95rem;">
                         <li>Samuelson & Nordhaus - <em>Economics</em>, Cap. 15-16</li>
-                        <li>Ricardo, D. (1817) - <em>Principles of Political Economy</em></li>
-                        <li>Smith, A. (1776) - <em>La Riqueza de las Naciones</em></li>
-                        <li>Krugman, P. (1979) - <em>Increasing Returns and Int'l Trade</em></li>
-                        <li>Prebisch, R. (1950) - <em>Manifiesto CEPAL</em></li>
-                        <li>Viner, J. (1950) - <em>The Customs Union Issue</em></li>
-                        <li>Irwin, D. (2011) - <em>Peddling Protectionism</em></li>
+                        <li>Ricardo (1817) - <em>Principles of Political Economy</em></li>
+                        <li>Smith (1776) - <em>La Riqueza de las Naciones</em></li>
+                        <li>Krugman (1979) - <em>Increasing Returns & Int'l Trade</em></li>
+                        <li>Prebisch (1950) - <em>Manifiesto CEPAL</em></li>
+                        <li>Hausmann & Hidalgo (2011) - <em>Atlas of Economic Complexity</em></li>
+                        <li>Irwin (2011) - <em>Peddling Protectionism</em></li>
                         <li>Fajgelbaum et al. (2020) - <em>QJE</em></li>
+                        <li>NY Fed (2026) - <em>Who Is Paying for the Tariffs?</em></li>
                     </ul>
                 </div>
                 <div>
@@ -1575,16 +1118,16 @@
                         <li>Banco Mundial - World Development Indicators</li>
                         <li>OMC - World Trade Statistical Review</li>
                         <li>UNCTAD - World Investment Report</li>
-                        <li>WITS/BACI - Datos arancelarios</li>
+                        <li>Tax Foundation / Yale Budget Lab</li>
+                        <li>CFR - Tracking Trump's Trade Deals</li>
                         <li>USTR - Executive Orders 2025</li>
                         <li>FSOC - Annual Report 2025</li>
-                        <li>Secretaría de Energía Argentina</li>
                     </ul>
                 </div>
             </div>
         </div>
 
-        <!-- ==================== SLIDE 55: CIERRE FINAL ==================== -->
+        <!-- CIERRE -->
         <div class="slide bg-respaldo portada">
             <h1>Gracias</h1>
             <p class="subtitle" style="margin-top: 20px;">Felipe Venancio</p>
@@ -1592,19 +1135,13 @@
 
     </div>
 
-    <div class="slide-counter">
-        <span id="current">1</span> / <span id="total"></span>
-    </div>
-
-    <div class="nav-hint">
-        ← → para navegar | F para pantalla completa
-    </div>
+    <div class="slide-counter"><span id="current">1</span> / <span id="total"></span></div>
+    <div class="nav-hint">← → para navegar | F para pantalla completa</div>
 
     <script>
         const slides = document.querySelectorAll('.slide');
         let currentSlide = 0;
         const total = slides.length;
-
         document.getElementById('total').textContent = total;
 
         function showSlide(n) {
@@ -1615,49 +1152,52 @@
         }
 
         document.addEventListener('keydown', (e) => {
-            if (e.key === 'ArrowRight' || e.key === ' ' || e.key === 'Enter') {
-                showSlide(currentSlide + 1);
-            } else if (e.key === 'ArrowLeft') {
-                showSlide(currentSlide - 1);
-            } else if (e.key === 'Home') {
-                showSlide(0);
-            } else if (e.key === 'End') {
-                showSlide(total - 1);
-            } else if (e.key === 'f' || e.key === 'F') {
-                if (document.fullscreenElement) {
-                    document.exitFullscreen();
-                } else {
-                    document.documentElement.requestFullscreen();
-                }
+            if (e.key === 'ArrowRight' || e.key === ' ' || e.key === 'Enter') { showSlide(currentSlide + 1); }
+            else if (e.key === 'ArrowLeft') { showSlide(currentSlide - 1); }
+            else if (e.key === 'Home') { showSlide(0); }
+            else if (e.key === 'End') { showSlide(total - 1); }
+            else if (e.key === 'f' || e.key === 'F') {
+                if (document.fullscreenElement) { document.exitFullscreen(); }
+                else { document.documentElement.requestFullscreen(); }
             }
         });
 
-        // Touch support
         let touchStartX = 0;
-        document.addEventListener('touchstart', (e) => {
-            touchStartX = e.touches[0].clientX;
-        });
-
+        document.addEventListener('touchstart', (e) => { touchStartX = e.touches[0].clientX; });
         document.addEventListener('touchend', (e) => {
-            const touchEndX = e.changedTouches[0].clientX;
-            const diff = touchStartX - touchEndX;
-            if (Math.abs(diff) > 50) {
-                if (diff > 0) {
-                    showSlide(currentSlide + 1);
-                } else {
-                    showSlide(currentSlide - 1);
-                }
-            }
+            const diff = touchStartX - e.changedTouches[0].clientX;
+            if (Math.abs(diff) > 50) { diff > 0 ? showSlide(currentSlide + 1) : showSlide(currentSlide - 1); }
+        });
+        document.querySelector('.slide-container').addEventListener('click', (e) => {
+            if (e.target.closest('button')) return;
+            e.clientX > window.innerWidth / 2 ? showSlide(currentSlide + 1) : showSlide(currentSlide - 1);
         });
 
-        // Click to advance
-        document.querySelector('.slide-container').addEventListener('click', (e) => {
-            if (e.clientX > window.innerWidth / 2) {
-                showSlide(currentSlide + 1);
+        // Interactive Smith slide
+        function showSmith(mode) {
+            const btns = document.querySelectorAll('#slide-smith .trade-btn');
+            btns.forEach(b => b.classList.remove('active'));
+            event.target.classList.add('active');
+            const r = document.getElementById('smith-result');
+            if (mode === 'sin') {
+                r.innerHTML = '<div><div class="production-grid"><div class="production-item"><div class="production-icons">🚂🚂🚂🚂 🚂</div><div class="production-label">5 trenes</div><div class="production-sublabel">ING: 4 + ARG: 1</div></div><div class="production-item"><div class="production-icons">🌾🌾🌾</div><div class="production-label">3 trigos</div><div class="production-sublabel">ING: 1 + ARG: 2</div></div></div><div class="total-box">Total mundial: <strong>5 trenes + 3 trigos</strong></div></div>';
             } else {
-                showSlide(currentSlide - 1);
+                r.innerHTML = '<div><div class="production-grid"><div class="production-item"><div class="production-icons">🚂🚂🚂🚂🚂🚂🚂🚂</div><div class="production-label" style="color: var(--azul-impulso);">8 trenes</div><div class="production-sublabel">ING: 8 (solo trenes)</div></div><div class="production-item"><div class="production-icons">🌾🌾🌾🌾</div><div class="production-label" style="color: var(--verde-activo);">4 trigos</div><div class="production-sublabel">ARG: 4 (solo trigo)</div></div></div><div class="total-box" style="background: rgba(0,198,0,0.12); border: 2px solid var(--verde-activo);">Total mundial: <strong>8 trenes + 4 trigos</strong> — <span style="color: var(--verde-activo);">+3 trenes y +1 trigo!</span></div></div>';
             }
-        });
+        }
+
+        // Interactive Ricardo slide
+        function showRicardo(mode) {
+            const btns = document.querySelectorAll('#slide-ricardo .trade-btn');
+            btns.forEach(b => b.classList.remove('active'));
+            event.target.classList.add('active');
+            const r = document.getElementById('ricardo-result');
+            if (mode === 'sin') {
+                r.innerHTML = '<div><div class="production-grid"><div class="production-item"><div class="production-icons">🚂🚂🚂🚂 🚂🚂</div><div class="production-label">6 trenes</div><div class="production-sublabel">ING: 4 + ARG: 2</div></div><div class="production-item"><div class="production-icons">🌾🌾🌾🌾🌾</div><div class="production-label">5 trigos</div><div class="production-sublabel">ING: 3 + ARG: 2</div></div></div><div class="total-box">Total mundial: <strong>6 trenes + 5 trigos</strong></div></div>';
+            } else {
+                r.innerHTML = '<div><div class="production-grid"><div class="production-item"><div class="production-icons">🚂🚂🚂🚂🚂🚂🚂🚂</div><div class="production-label" style="color: var(--azul-impulso);">8 trenes</div><div class="production-sublabel">ING: 8 (solo trenes)</div></div><div class="production-item"><div class="production-icons">🌾🌾🌾🌾🌾🌾</div><div class="production-label" style="color: var(--verde-activo);">6 trigos</div><div class="production-sublabel">ARG: 6 (solo trigo)</div></div></div><div class="total-box" style="background: rgba(0,198,0,0.12); border: 2px solid var(--verde-activo);">Total mundial: <strong>8 trenes + 6 trigos</strong> — <span style="color: var(--verde-activo);">+2 trenes y +1 trigo!</span></div></div>';
+            }
+        }
     </script>
 </body>
 </html>
