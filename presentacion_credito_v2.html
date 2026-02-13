@@ -1,0 +1,980 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>El Crédito como Motor de la Producción - VetaCap</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Albert+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --azul-impulso: #1036E2;
+            --verde-activo: #00C600;
+            --azul-respaldo: #021751;
+            --blanco: #FFFFFF;
+            --negro: #000000;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Albert Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--azul-respaldo);
+            color: var(--blanco);
+            overflow: hidden;
+        }
+
+        .slide-container {
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .slide {
+            display: none;
+            width: 100%;
+            height: 100%;
+            padding: 60px 80px;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .slide.active {
+            display: flex;
+        }
+
+        /* Fondos */
+        .bg-respaldo { background: var(--azul-respaldo); color: var(--blanco); }
+        .bg-impulso { background: var(--azul-impulso); color: var(--blanco); }
+        .bg-verde { background: var(--verde-activo); color: var(--blanco); }
+        .bg-blanco { background: var(--blanco); color: var(--azul-respaldo); }
+
+        /* Fondo con imagen */
+        .bg-imagen {
+            background-size: cover;
+            background-position: center;
+            position: relative;
+        }
+
+        .bg-imagen::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, rgba(2, 23, 81, 0.85) 0%, rgba(2, 23, 81, 0.7) 100%);
+        }
+
+        .bg-imagen > * {
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Tipografía */
+        h1 {
+            font-size: 4rem;
+            font-weight: 700;
+            line-height: 1.1;
+            margin-bottom: 30px;
+        }
+
+        h2 {
+            font-size: 2.8rem;
+            font-weight: 600;
+            margin-bottom: 25px;
+        }
+
+        h3 {
+            font-size: 2rem;
+            font-weight: 500;
+            margin-bottom: 20px;
+            opacity: 0.9;
+        }
+
+        p, li {
+            font-size: 1.6rem;
+            line-height: 1.6;
+            margin-bottom: 15px;
+        }
+
+        .subtitle {
+            font-size: 1.8rem;
+            opacity: 0.8;
+            font-weight: 400;
+        }
+
+        .highlight {
+            color: var(--verde-activo);
+        }
+
+        .bg-blanco .highlight {
+            color: var(--azul-impulso);
+        }
+
+        blockquote {
+            font-size: 1.8rem;
+            font-style: italic;
+            border-left: 4px solid var(--verde-activo);
+            padding-left: 30px;
+            margin: 30px 0;
+            opacity: 0.95;
+        }
+
+        blockquote cite {
+            display: block;
+            font-size: 1.2rem;
+            margin-top: 15px;
+            font-style: normal;
+            opacity: 0.7;
+        }
+
+        ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        ul li {
+            padding-left: 35px;
+            position: relative;
+            margin-bottom: 20px;
+        }
+
+        ul li::before {
+            content: "▸";
+            position: absolute;
+            left: 0;
+            color: var(--verde-activo);
+            font-size: 1.4rem;
+        }
+
+        .bg-verde ul li::before,
+        .bg-impulso ul li::before {
+            color: var(--blanco);
+        }
+
+        /* Tablas */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 30px 0;
+            font-size: 1.4rem;
+        }
+
+        th, td {
+            padding: 20px 25px;
+            text-align: left;
+            border-bottom: 1px solid rgba(255,255,255,0.2);
+        }
+
+        .bg-blanco th,
+        .bg-blanco td {
+            border-bottom: 1px solid rgba(0,0,0,0.1);
+        }
+
+        th {
+            font-weight: 600;
+            opacity: 0.7;
+            font-size: 1.1rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* Gráficos de barras */
+        .bar-chart {
+            margin: 40px 0;
+        }
+
+        .bar-row {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .bar-label {
+            width: 180px;
+            font-size: 1.3rem;
+            font-weight: 500;
+        }
+
+        .bar-container {
+            flex: 1;
+            height: 40px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 5px;
+            overflow: hidden;
+            margin: 0 20px;
+        }
+
+        .bg-blanco .bar-container {
+            background: rgba(0,0,0,0.05);
+        }
+
+        .bar {
+            height: 100%;
+            background: var(--verde-activo);
+            border-radius: 5px;
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            padding-right: 15px;
+            font-weight: 600;
+            font-size: 1.1rem;
+            color: white;
+            transition: width 0.8s ease;
+        }
+
+        .bar.azul {
+            background: var(--azul-impulso);
+        }
+
+        .bar-value {
+            width: 80px;
+            text-align: right;
+            font-size: 1.3rem;
+            font-weight: 600;
+        }
+
+        /* Diagrama flujo */
+        .flow-diagram {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 20px;
+            margin: 40px 0;
+            flex-wrap: wrap;
+        }
+
+        .flow-box {
+            background: rgba(255,255,255,0.1);
+            padding: 25px 35px;
+            border-radius: 10px;
+            font-size: 1.3rem;
+            font-weight: 500;
+            text-align: center;
+        }
+
+        .bg-blanco .flow-box {
+            background: rgba(16, 54, 226, 0.1);
+        }
+
+        .flow-arrow {
+            font-size: 2rem;
+            color: var(--verde-activo);
+        }
+
+        /* Dos columnas */
+        .two-cols {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            margin-top: 30px;
+        }
+
+        /* Logo */
+        .logo-img {
+            height: 50px;
+            width: auto;
+            object-fit: contain;
+        }
+
+        .logo-img.grande {
+            height: 80px;
+            width: auto;
+            max-width: 300px;
+            object-fit: contain;
+        }
+
+        .logo-container {
+            position: absolute;
+            top: 40px;
+            left: 60px;
+        }
+
+        /* Navegación */
+        .nav-hint {
+            position: fixed;
+            bottom: 30px;
+            right: 40px;
+            font-size: 0.9rem;
+            opacity: 0.5;
+        }
+
+        .slide-counter {
+            position: fixed;
+            bottom: 30px;
+            left: 40px;
+            font-size: 0.9rem;
+            opacity: 0.5;
+        }
+
+        /* Portada especial */
+        .portada {
+            text-align: center;
+        }
+
+        .portada h1 {
+            font-size: 4.5rem;
+            margin-bottom: 20px;
+        }
+
+        /* Número grande */
+        .big-number {
+            font-size: 8rem;
+            font-weight: 800;
+            color: var(--verde-activo);
+            line-height: 1;
+        }
+
+        .bg-blanco .big-number {
+            color: var(--azul-impulso);
+        }
+
+        /* Reglas */
+        .regla-num {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: var(--verde-activo);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 10px;
+        }
+
+        .bg-blanco .regla-num {
+            color: var(--azul-impulso);
+        }
+
+        /* Texto tachado */
+        .tachado {
+            text-decoration: line-through;
+            opacity: 0.5;
+        }
+
+        /* Círculo virtuoso */
+        .circulo {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 15px;
+            margin: 30px 0;
+        }
+
+        .circulo-item {
+            background: rgba(255,255,255,0.1);
+            padding: 20px 40px;
+            border-radius: 50px;
+            font-size: 1.2rem;
+        }
+
+        .bg-blanco .circulo-item {
+            background: rgba(16, 54, 226, 0.08);
+        }
+
+        .circulo-arrow {
+            font-size: 1.5rem;
+            color: var(--verde-activo);
+        }
+
+        /* Frase final */
+        .frase-final {
+            font-size: 2.2rem;
+            line-height: 1.5;
+            text-align: center;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .frase-final em {
+            color: var(--verde-activo);
+            font-style: normal;
+        }
+
+        /* Layout con imagen lateral */
+        .slide-con-imagen {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0;
+            padding: 0;
+        }
+
+        .slide-con-imagen .contenido {
+            padding: 60px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .slide-con-imagen .imagen {
+            background-size: cover;
+            background-position: center;
+        }
+
+        /* Imagen de fondo para slides específicas */
+        .bg-monumental {
+            background-image: url('img_monumental.jpg');
+        }
+
+        .bg-ciudad {
+            background-image: url('https://upload.wikimedia.org/wikipedia/commons/thumb/6/6d/Buenos_Aires_-_Microcentro_-_Congreso_de_la_Naci%C3%B3n_%28panorama%29.jpg/1280px-Buenos_Aires_-_Microcentro_-_Congreso_de_la_Naci%C3%B3n_%28panorama%29.jpg');
+        }
+
+        .bg-construccion {
+            background-image: url('https://upload.wikimedia.org/wikipedia/commons/thumb/c/c4/Tower_crane_in_Brisbane_under_a_blue_sky.jpg/800px-Tower_crane_in_Brisbane_under_a_blue_sky.jpg');
+        }
+
+        /* Icono estadio SVG inline */
+        .icono-estadio {
+            width: 120px;
+            height: 120px;
+            margin-bottom: 30px;
+        }
+
+        /* Stats grandes */
+        .stat-box {
+            text-align: center;
+            padding: 30px;
+        }
+
+        .stat-numero {
+            font-size: 5rem;
+            font-weight: 800;
+            color: var(--verde-activo);
+            line-height: 1;
+        }
+
+        .stat-label {
+            font-size: 1.3rem;
+            opacity: 0.8;
+            margin-top: 10px;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 40px;
+            margin-top: 40px;
+        }
+
+        /* Responsive */
+        @media (max-width: 1200px) {
+            h1 { font-size: 3rem; }
+            h2 { font-size: 2.2rem; }
+            p, li { font-size: 1.3rem; }
+            .slide { padding: 40px 50px; }
+            .slide-con-imagen { grid-template-columns: 1fr; }
+            .slide-con-imagen .imagen { display: none; }
+        }
+    </style>
+</head>
+<body>
+    <div class="slide-container">
+
+        <!-- SLIDE 1: PORTADA -->
+        <div class="slide bg-respaldo portada active">
+            <div class="logo-container">
+                <img src="https://vetacap.com.ar/wp-content/uploads/2024/11/cropped-Vetacap-logo-ok-1.png" alt="VetaCap" class="logo-img">
+            </div>
+            <h1>El Crédito como Motor<br>de la Producción</h1>
+            <p class="subtitle">Cómo el mercado de capitales impulsa la economía real</p>
+        </div>
+
+        <!-- SLIDE 2: EL MITO -->
+        <div class="slide bg-blanco">
+            <h2>"Endeudarse es malo"</h2>
+            <h3>¿Cuántas veces escuchaste esto?</h3>
+            <ul>
+                <li>"No te endeudes"</li>
+                <li>"La deuda es el camino a la ruina"</li>
+                <li>"Si no tenés la plata, no lo compres"</li>
+            </ul>
+        </div>
+
+        <!-- SLIDE 3: LA PREGUNTA -->
+        <div class="slide bg-imagen bg-construccion">
+            <h2>Entonces... ¿cómo crecen las empresas?</h2>
+            <p>¿Cómo se construyen fábricas, estadios, rutas?</p>
+            <p style="font-size: 2.2rem; margin-top: 30px;">¿Esperando a "juntar la plata"?</p>
+        </div>
+
+        <!-- SLIDE 4: LA LÓGICA -->
+        <div class="slide bg-blanco">
+            <h2>El crédito es una <span class="highlight">herramienta</span>, no un problema</h2>
+            <blockquote>
+                "El dinero es un puente entre el presente y el futuro"
+                <cite>— Irving Fisher, economista (1867-1947)</cite>
+            </blockquote>
+            <div class="flow-diagram">
+                <div class="flow-box">Crédito HOY</div>
+                <span class="flow-arrow">→</span>
+                <div class="flow-box">Inversión</div>
+                <span class="flow-arrow">→</span>
+                <div class="flow-box">Mayores ingresos</div>
+                <span class="flow-arrow">→</span>
+                <div class="flow-box">Pago del crédito</div>
+            </div>
+        </div>
+
+        <!-- SLIDE 5: CASO RIVER TITULO -->
+        <div class="slide bg-imagen bg-monumental">
+            <h3>Un ejemplo concreto:</h3>
+            <h1>La ampliación del<br><span class="highlight">Monumental</span></h1>
+        </div>
+
+        <!-- SLIDE 6: CASO RIVER NÚMEROS -->
+        <div class="slide bg-blanco">
+            <h2>River Plate - Ampliación del Estadio (2026)</h2>
+            <div class="stats-grid">
+                <div class="stat-box">
+                    <div class="stat-numero">+100</div>
+                    <div class="stat-label">millones de USD<br>de inversión</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-numero">101K</div>
+                    <div class="stat-label">espectadores<br>de capacidad</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-numero">36</div>
+                    <div class="stat-label">meses<br>de obra</div>
+                </div>
+            </div>
+            <h3 style="margin-top: 40px;">¿Cómo lo financia?</h3>
+            <ul>
+                <li>Crédito de largo plazo con bancos internacionales</li>
+                <li>Venta de naming rights por 10 años</li>
+            </ul>
+        </div>
+
+        <!-- SLIDE 7: CASO RIVER CLAVE -->
+        <div class="slide bg-verde">
+            <h2>El crédito se paga con los ingresos que genera la propia obra</h2>
+            <ul>
+                <li><strong>16.000 ubicaciones nuevas</strong> → Más entradas vendidas</li>
+                <li><strong>Naming rights</strong> → Ingreso garantizado por 10 años</li>
+                <li><strong>Eventos y shows</strong> → Mayor capacidad = más ingresos</li>
+            </ul>
+            <p style="margin-top: 40px; opacity: 0.9; font-size: 1.5rem;">El club no compromete sus recursos operativos actuales.</p>
+        </div>
+
+        <!-- SLIDE 8: REGLA 1 -->
+        <div class="slide bg-blanco">
+            <p class="regla-num">Regla #1</p>
+            <h2>No mires solo tu facturación actual</h2>
+            <p class="tachado" style="font-size: 1.4rem;">"¿Puedo pagar esta cuota con lo que facturo hoy?"</p>
+            <p style="font-size: 1.8rem; margin-top: 20px;"><strong class="highlight">La pregunta correcta:</strong><br>"¿Cuánto voy a facturar gracias a esta inversión?"</p>
+            <blockquote style="margin-top: 40px;">
+                Modigliani y Miller (Nobel 1985 y 1990) demostraron que el valor de una empresa depende de sus proyectos, no de cómo se financia.
+            </blockquote>
+        </div>
+
+        <!-- SLIDE 9: REGLA 2 -->
+        <div class="slide bg-blanco">
+            <p class="regla-num">Regla #2</p>
+            <h2>Calzá los plazos</h2>
+            <p><strong class="highlight">Inversión de largo plazo → Deuda de largo plazo</strong></p>
+            <table>
+                <tr>
+                    <th>Tipo de inversión</th>
+                    <th>Plazo sugerido</th>
+                </tr>
+                <tr>
+                    <td>Maquinaria</td>
+                    <td>3-7 años</td>
+                </tr>
+                <tr>
+                    <td>Construcción / Obra</td>
+                    <td>10-20 años</td>
+                </tr>
+                <tr>
+                    <td>Capital de trabajo</td>
+                    <td>Corto plazo (&lt; 1 año)</td>
+                </tr>
+            </table>
+            <p><strong>El error común:</strong> Financiar una fábrica con un préstamo a 12 meses.</p>
+        </div>
+
+        <!-- SLIDE 10: REGLA 3 -->
+        <div class="slide bg-blanco">
+            <p class="regla-num">Regla #3</p>
+            <h2>La deuda para gastos corrientes no es mala... si es puntual</h2>
+            <div class="two-cols">
+                <div>
+                    <h3 class="highlight">Situación normal</h3>
+                    <ul>
+                        <li>Necesitás pagar sueldos el 5</li>
+                        <li>Cobrás el 15</li>
+                        <li>Tomás un crédito "puente" de 10 días</li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 style="color: #c00;">Situación peligrosa</h3>
+                    <ul>
+                        <li>Todos los meses necesitás crédito para sueldos</li>
+                        <li>El crédito tapa un problema estructural</li>
+                    </ul>
+                </div>
+            </div>
+            <p style="margin-top: 30px; text-align: center;"><strong>La diferencia:</strong> Un puente vs. un parche permanente.</p>
+        </div>
+
+        <!-- SLIDE 11: RESUMEN PARTE 1 -->
+        <div class="slide bg-impulso">
+            <h2>Tres reglas del endeudamiento inteligente</h2>
+            <ul>
+                <li><strong>Mirá los ingresos futuros</strong>, no solo los actuales</li>
+                <li><strong>Calzá los plazos</strong> de la deuda con la inversión</li>
+                <li><strong>Deuda corriente puntual está bien</strong>, sistemática no</li>
+            </ul>
+        </div>
+
+        <!-- SLIDE 12: TRANSICIÓN -->
+        <div class="slide bg-respaldo">
+            <h2>Pero... ¿de dónde sale ese crédito?</h2>
+            <p>Los bancos prestan plata.<br>El mercado de capitales canaliza fondos.</p>
+            <p style="font-size: 2.2rem; margin-top: 40px;"><strong class="highlight">¿Y quién pone esa plata ahí?</strong></p>
+        </div>
+
+        <!-- SLIDE 13: DOS CARAS -->
+        <div class="slide bg-blanco">
+            <h2>Las dos caras de la misma moneda</h2>
+            <table>
+                <tr>
+                    <th>El que necesita financiamiento</th>
+                    <th>El que tiene ahorros</th>
+                </tr>
+                <tr>
+                    <td>River ampliando el estadio</td>
+                    <td>Vos eligiendo dónde invertir</td>
+                </tr>
+                <tr>
+                    <td>Una PyME comprando maquinaria</td>
+                    <td>Un jubilado buscando renta</td>
+                </tr>
+            </table>
+            <p style="text-align: center; margin-top: 40px; font-size: 1.8rem;"><strong class="highlight">Sin ahorristas, no hay crédito.</strong></p>
+        </div>
+
+        <!-- SLIDE 14: PARTE 2 TITULO -->
+        <div class="slide bg-respaldo">
+            <h3>PARTE 2</h3>
+            <h1>El rol del <span class="highlight">ahorrista</span></h1>
+        </div>
+
+        <!-- SLIDE 15: MITO CASINO -->
+        <div class="slide bg-blanco">
+            <h2>"El mercado de capitales es un casino"</h2>
+            <h3>Otro mito popular:</h3>
+            <ul>
+                <li>"Las finanzas no generan valor"</li>
+                <li>"Es todo especulación"</li>
+                <li>"Es plata que va y viene sin producir nada"</li>
+            </ul>
+            <p style="font-size: 2rem; margin-top: 40px;"><strong class="highlight">¿Es así?</strong></p>
+        </div>
+
+        <!-- SLIDE 16: FUNCIÓN DEL AHORRO -->
+        <div class="slide bg-blanco">
+            <h2>¿Qué hace el ahorrista sin darse cuenta?</h2>
+            <p>Cuando decidís <strong class="highlight">no gastar</strong> tu plata hoy:</p>
+            <ul>
+                <li>Liberás recursos para que otros los usen</li>
+                <li>Transferís consumo presente a consumo futuro</li>
+                <li>Financiás proyectos de inversión</li>
+            </ul>
+            <blockquote>
+                Friedrich Hayek (Nobel 1974) explicó que el sistema financiero coordina decisiones entre personas que no se conocen, a través del tiempo.
+            </blockquote>
+        </div>
+
+        <!-- SLIDE 17: AHORRISTA FINANCIADOR -->
+        <div class="slide bg-verde">
+            <h2>Cuando elegís "lo que más te conviene"...</h2>
+            <p>...estás financiando la economía real:</p>
+            <ul>
+                <li><strong>Comprás una ON</strong> → Financiás una empresa que construye una fábrica</li>
+                <li><strong>Comprás acciones</strong> → Capitalizás una empresa que innova</li>
+                <li><strong>Comprás cheques</strong> → Financiás el capital de trabajo de una PyME</li>
+            </ul>
+            <p style="margin-top: 40px; font-size: 1.8rem;"><strong>No es caridad. Es buscar tu mejor rendimiento.</strong><br>Y eso está perfecto.</p>
+        </div>
+
+        <!-- SLIDE 18: RENTABILIDAD SEÑAL -->
+        <div class="slide bg-blanco">
+            <h2>Si una inversión es rentable... ¿qué significa?</h2>
+            <p>Significa que hay una <strong class="highlight">necesidad insatisfecha</strong> en la sociedad.</p>
+            <ul>
+                <li>Una empresa que gana plata → está resolviendo un problema que la gente valora</li>
+                <li>Un proyecto rentable → está usando recursos de forma eficiente</li>
+            </ul>
+            <blockquote>
+                "Los precios son señales envueltas en incentivos"
+                <cite>— Alex Tabarrok, economista</cite>
+            </blockquote>
+            <p><strong class="highlight">El ahorrista, buscando su beneficio, financia lo que la sociedad necesita.</strong></p>
+        </div>
+
+        <!-- SLIDE 19: CÍRCULO VIRTUOSO -->
+        <div class="slide bg-blanco">
+            <h2>El círculo virtuoso</h2>
+            <div class="circulo">
+                <div class="circulo-item">Ahorrista busca rendimiento</div>
+                <span class="circulo-arrow">↓</span>
+                <div class="circulo-item">Financia proyectos rentables</div>
+                <span class="circulo-arrow">↓</span>
+                <div class="circulo-item">Proyectos satisfacen necesidades</div>
+                <span class="circulo-arrow">↓</span>
+                <div class="circulo-item">Economía crece</div>
+                <span class="circulo-arrow">↓</span>
+                <div class="circulo-item">Más oportunidades de ahorro e inversión</div>
+            </div>
+            <p style="text-align: center;"><strong class="highlight">El sistema funciona cuando cada uno busca su beneficio.</strong></p>
+        </div>
+
+        <!-- SLIDE 20: PARTE 3 TITULO -->
+        <div class="slide bg-imagen bg-ciudad">
+            <h3>PARTE 3</h3>
+            <h1>El mercado de capitales <span class="highlight">argentino</span></h1>
+        </div>
+
+        <!-- SLIDE 21: TAMAÑO MERCADO -->
+        <div class="slide bg-blanco">
+            <h2>¿Qué tan grande es nuestro mercado?</h2>
+            <h3>Capitalización bursátil como % del PBI</h3>
+            <div class="bar-chart">
+                <div class="bar-row">
+                    <span class="bar-label">Estados Unidos</span>
+                    <div class="bar-container">
+                        <div class="bar" style="width: 100%;">159%</div>
+                    </div>
+                </div>
+                <div class="bar-row">
+                    <span class="bar-label">Chile</span>
+                    <div class="bar-container">
+                        <div class="bar" style="width: 46%;">73%</div>
+                    </div>
+                </div>
+                <div class="bar-row">
+                    <span class="bar-label">Brasil</span>
+                    <div class="bar-container">
+                        <div class="bar" style="width: 40%;">63%</div>
+                    </div>
+                </div>
+                <div class="bar-row">
+                    <span class="bar-label">Colombia</span>
+                    <div class="bar-container">
+                        <div class="bar" style="width: 27%;">43%</div>
+                    </div>
+                </div>
+                <div class="bar-row">
+                    <span class="bar-label"><strong>Argentina</strong></span>
+                    <div class="bar-container">
+                        <div class="bar azul" style="width: 6%;">9%</div>
+                    </div>
+                </div>
+            </div>
+            <p style="font-size: 1.1rem; opacity: 0.6;">Fuente: UTDT, First Capital, IAMC</p>
+        </div>
+
+        <!-- SLIDE 22: CRÉDITO BANCARIO -->
+        <div class="slide bg-blanco">
+            <h2>Préstamos bancarios como % del PBI</h2>
+            <div class="bar-chart">
+                <div class="bar-row">
+                    <span class="bar-label">Chile</span>
+                    <div class="bar-container">
+                        <div class="bar" style="width: 100%;">83%</div>
+                    </div>
+                </div>
+                <div class="bar-row">
+                    <span class="bar-label">Brasil</span>
+                    <div class="bar-container">
+                        <div class="bar" style="width: 92%;">76%</div>
+                    </div>
+                </div>
+                <div class="bar-row">
+                    <span class="bar-label">Paraguay</span>
+                    <div class="bar-container">
+                        <div class="bar" style="width: 61%;">51%</div>
+                    </div>
+                </div>
+                <div class="bar-row">
+                    <span class="bar-label">Perú</span>
+                    <div class="bar-container">
+                        <div class="bar" style="width: 58%;">48%</div>
+                    </div>
+                </div>
+                <div class="bar-row">
+                    <span class="bar-label"><strong>Argentina</strong></span>
+                    <div class="bar-container">
+                        <div class="bar azul" style="width: 13%;">11%</div>
+                    </div>
+                </div>
+            </div>
+            <p style="text-align: center; margin-top: 30px;"><strong class="highlight">Menos mercado de capitales + menos crédito bancario<br>= empresas con pocas opciones</strong></p>
+        </div>
+
+        <!-- SLIDE 23: ACTORES -->
+        <div class="slide bg-blanco">
+            <h2>¿Quiénes participan en el mercado?</h2>
+            <div class="two-cols">
+                <div>
+                    <h3 class="highlight">Regulador</h3>
+                    <p>CNV (Comisión Nacional de Valores)</p>
+
+                    <h3 class="highlight" style="margin-top: 30px;">Mercado</h3>
+                    <p>BYMA (Bolsas y Mercados Argentinos)</p>
+                </div>
+                <div>
+                    <h3 class="highlight">Intermediarios</h3>
+                    <ul>
+                        <li>Bancos</li>
+                        <li><strong>ALyCs</strong> (como VetaCap)</li>
+                        <li>Sociedades de Bolsa</li>
+                    </ul>
+
+                    <h3 class="highlight" style="margin-top: 30px;">Vehículos</h3>
+                    <p>FCIs (Fondos Comunes de Inversión)</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE 24: RENTA VARIABLE -->
+        <div class="slide bg-impulso">
+            <h2>Renta Variable</h2>
+            <p class="subtitle">El rendimiento depende del desempeño de la empresa</p>
+            <div style="margin-top: 40px;">
+                <h3>Acciones</h3>
+                <p>Participación en el capital de una empresa.<br>Ganás si la empresa gana (dividendos + valorización).</p>
+
+                <h3 style="margin-top: 30px;">CEDEARs</h3>
+                <p>Certificados que representan acciones extranjeras.<br>Invertís en Apple, Google, etc. en pesos desde Argentina.</p>
+            </div>
+        </div>
+
+        <!-- SLIDE 25: RENTA FIJA -->
+        <div class="slide bg-verde">
+            <h2>Renta Fija</h2>
+            <p class="subtitle">El rendimiento está predeterminado</p>
+            <div style="margin-top: 40px;">
+                <p><strong>Obligaciones Negociables (ONs)</strong> — Deuda de empresas privadas</p>
+                <p><strong>Bonos soberanos</strong> — Deuda del Estado nacional o provincial</p>
+                <p><strong>Cheques de pago diferido</strong> — Cheques que se negocian antes del vencimiento</p>
+                <p><strong>Pagarés bursátiles</strong> — Promesas de pago de empresas (especialmente PyMEs)</p>
+            </div>
+        </div>
+
+        <!-- SLIDE 26: OPORTUNIDAD -->
+        <div class="slide bg-blanco">
+            <h2>Un mercado chico = <span class="highlight">una oportunidad grande</span></h2>
+            <p>Argentina tiene:</p>
+            <ul>
+                <li>Empresas que necesitan financiamiento</li>
+                <li>Ahorristas que buscan rendimiento</li>
+                <li>Poca conexión entre ambos</li>
+            </ul>
+            <p style="font-size: 1.8rem; margin-top: 40px;"><strong class="highlight">El mercado de capitales es el puente que falta construir.</strong></p>
+        </div>
+
+        <!-- SLIDE 27: RESUMEN FINAL -->
+        <div class="slide bg-impulso">
+            <h2>Mensajes clave</h2>
+            <ul>
+                <li><strong>El crédito bien usado impulsa la producción</strong><br><span style="opacity: 0.8; font-size: 1.3rem;">No mires solo el presente, mirá el futuro que la inversión genera</span></li>
+                <li style="margin-top: 25px;"><strong>El ahorrista financia el desarrollo (sin darse cuenta)</strong><br><span style="opacity: 0.8; font-size: 1.3rem;">Buscando tu beneficio, canalizás recursos a donde hacen falta</span></li>
+                <li style="margin-top: 25px;"><strong>Argentina tiene enorme potencial</strong><br><span style="opacity: 0.8; font-size: 1.3rem;">Nuestro mercado de capitales es 5x menor que el promedio regional</span></li>
+            </ul>
+        </div>
+
+        <!-- SLIDE 28: FRASE CIERRE -->
+        <div class="slide bg-respaldo">
+            <p class="frase-final">
+                "El mercado de capitales no es un casino.<br><br>
+                Es el <em>puente</em> entre quien tiene una idea<br>
+                y quien tiene el ahorro para financiarla."
+            </p>
+        </div>
+
+        <!-- SLIDE 29: CONTACTO -->
+        <div class="slide bg-respaldo portada">
+            <img src="https://vetacap.com.ar/wp-content/uploads/2024/11/cropped-Vetacap-logo-ok-1.png" alt="VetaCap" class="logo-img grande" style="margin-bottom: 40px; display: block; margin-left: auto; margin-right: auto;">
+            <h2>Conectamos finanzas con economía real</h2>
+            <p style="margin-top: 40px;">www.vetacap.com.ar</p>
+        </div>
+
+    </div>
+
+    <div class="slide-counter">
+        <span id="current">1</span> / <span id="total">29</span>
+    </div>
+
+    <div class="nav-hint">
+        ← → para navegar | F para pantalla completa
+    </div>
+
+    <script>
+        const slides = document.querySelectorAll('.slide');
+        let currentSlide = 0;
+        const total = slides.length;
+
+        document.getElementById('total').textContent = total;
+
+        function showSlide(n) {
+            slides[currentSlide].classList.remove('active');
+            currentSlide = (n + total) % total;
+            slides[currentSlide].classList.add('active');
+            document.getElementById('current').textContent = currentSlide + 1;
+        }
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowRight' || e.key === ' ' || e.key === 'Enter') {
+                showSlide(currentSlide + 1);
+            } else if (e.key === 'ArrowLeft') {
+                showSlide(currentSlide - 1);
+            } else if (e.key === 'Home') {
+                showSlide(0);
+            } else if (e.key === 'End') {
+                showSlide(total - 1);
+            } else if (e.key === 'f' || e.key === 'F') {
+                if (document.fullscreenElement) {
+                    document.exitFullscreen();
+                } else {
+                    document.documentElement.requestFullscreen();
+                }
+            }
+        });
+
+        // Touch support
+        let touchStartX = 0;
+        document.addEventListener('touchstart', (e) => {
+            touchStartX = e.touches[0].clientX;
+        });
+
+        document.addEventListener('touchend', (e) => {
+            const touchEndX = e.changedTouches[0].clientX;
+            const diff = touchStartX - touchEndX;
+            if (Math.abs(diff) > 50) {
+                if (diff > 0) {
+                    showSlide(currentSlide + 1);
+                } else {
+                    showSlide(currentSlide - 1);
+                }
+            }
+        });
+
+        // Click to advance
+        document.querySelector('.slide-container').addEventListener('click', (e) => {
+            if (e.clientX > window.innerWidth / 2) {
+                showSlide(currentSlide + 1);
+            } else {
+                showSlide(currentSlide - 1);
+            }
+        });
+    </script>
+</body>
+</html>

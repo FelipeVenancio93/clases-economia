@@ -1,0 +1,1159 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>El Crédito como Motor de la Producción - Versión Académica - VetaCap</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Albert+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --azul-impulso: #1036E2;
+            --verde-activo: #00C600;
+            --azul-respaldo: #021751;
+            --blanco: #FFFFFF;
+            --negro: #000000;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Albert Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--azul-respaldo);
+            color: var(--blanco);
+            overflow: hidden;
+        }
+
+        .slide-container {
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .slide {
+            display: none;
+            width: 100%;
+            height: 100%;
+            padding: 60px 80px;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .slide.active {
+            display: flex;
+        }
+
+        /* Fondos */
+        .bg-respaldo { background: var(--azul-respaldo); color: var(--blanco); }
+        .bg-impulso { background: var(--azul-impulso); color: var(--blanco); }
+        .bg-verde { background: var(--verde-activo); color: var(--blanco); }
+        .bg-blanco { background: var(--blanco); color: var(--azul-respaldo); }
+
+        /* Fondo con imagen */
+        .bg-imagen {
+            background-size: cover;
+            background-position: center;
+            position: relative;
+        }
+
+        .bg-imagen::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, rgba(2, 23, 81, 0.88) 0%, rgba(2, 23, 81, 0.75) 100%);
+        }
+
+        .bg-imagen > * {
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Tipografía */
+        h1 {
+            font-size: 3.8rem;
+            font-weight: 700;
+            line-height: 1.1;
+            margin-bottom: 30px;
+        }
+
+        h2 {
+            font-size: 2.6rem;
+            font-weight: 600;
+            margin-bottom: 25px;
+        }
+
+        h3 {
+            font-size: 1.8rem;
+            font-weight: 500;
+            margin-bottom: 20px;
+            opacity: 0.9;
+        }
+
+        p, li {
+            font-size: 1.5rem;
+            line-height: 1.6;
+            margin-bottom: 15px;
+        }
+
+        .subtitle {
+            font-size: 1.6rem;
+            opacity: 0.8;
+            font-weight: 400;
+        }
+
+        .highlight {
+            color: var(--verde-activo);
+        }
+
+        .bg-blanco .highlight {
+            color: var(--azul-impulso);
+        }
+
+        blockquote {
+            font-size: 1.6rem;
+            font-style: italic;
+            border-left: 4px solid var(--verde-activo);
+            padding-left: 30px;
+            margin: 25px 0;
+            opacity: 0.95;
+        }
+
+        blockquote cite {
+            display: block;
+            font-size: 1.1rem;
+            margin-top: 12px;
+            font-style: normal;
+            opacity: 0.7;
+        }
+
+        /* Citas académicas */
+        .cita-paper {
+            background: rgba(255,255,255,0.08);
+            padding: 25px 30px;
+            border-radius: 10px;
+            margin: 20px 0;
+            border-left: 4px solid var(--verde-activo);
+        }
+
+        .bg-blanco .cita-paper {
+            background: rgba(16, 54, 226, 0.06);
+            border-left-color: var(--azul-impulso);
+        }
+
+        .cita-paper .titulo {
+            font-weight: 600;
+            font-size: 1.2rem;
+            margin-bottom: 8px;
+        }
+
+        .cita-paper .autores {
+            font-size: 1rem;
+            opacity: 0.7;
+            margin-bottom: 12px;
+        }
+
+        .cita-paper .contenido {
+            font-size: 1.25rem;
+            line-height: 1.5;
+        }
+
+        ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        ul li {
+            padding-left: 35px;
+            position: relative;
+            margin-bottom: 18px;
+        }
+
+        ul li::before {
+            content: "▸";
+            position: absolute;
+            left: 0;
+            color: var(--verde-activo);
+            font-size: 1.4rem;
+        }
+
+        .bg-verde ul li::before,
+        .bg-impulso ul li::before {
+            color: var(--blanco);
+        }
+
+        /* Tablas */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 25px 0;
+            font-size: 1.3rem;
+        }
+
+        th, td {
+            padding: 18px 22px;
+            text-align: left;
+            border-bottom: 1px solid rgba(255,255,255,0.2);
+        }
+
+        .bg-blanco th,
+        .bg-blanco td {
+            border-bottom: 1px solid rgba(0,0,0,0.1);
+        }
+
+        th {
+            font-weight: 600;
+            opacity: 0.7;
+            font-size: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* Gráficos de barras */
+        .bar-chart {
+            margin: 35px 0;
+        }
+
+        .bar-row {
+            display: flex;
+            align-items: center;
+            margin-bottom: 18px;
+        }
+
+        .bar-label {
+            width: 180px;
+            font-size: 1.2rem;
+            font-weight: 500;
+        }
+
+        .bar-container {
+            flex: 1;
+            height: 38px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 5px;
+            overflow: hidden;
+            margin: 0 20px;
+        }
+
+        .bg-blanco .bar-container {
+            background: rgba(0,0,0,0.05);
+        }
+
+        .bar {
+            height: 100%;
+            background: var(--verde-activo);
+            border-radius: 5px;
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            padding-right: 15px;
+            font-weight: 600;
+            font-size: 1rem;
+            color: white;
+            transition: width 0.8s ease;
+        }
+
+        .bar.azul {
+            background: var(--azul-impulso);
+        }
+
+        /* Diagrama flujo */
+        .flow-diagram {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+            margin: 35px 0;
+            flex-wrap: wrap;
+        }
+
+        .flow-box {
+            background: rgba(255,255,255,0.1);
+            padding: 20px 28px;
+            border-radius: 10px;
+            font-size: 1.2rem;
+            font-weight: 500;
+            text-align: center;
+        }
+
+        .bg-blanco .flow-box {
+            background: rgba(16, 54, 226, 0.1);
+        }
+
+        .flow-arrow {
+            font-size: 1.8rem;
+            color: var(--verde-activo);
+        }
+
+        /* Dos columnas */
+        .two-cols {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 50px;
+            margin-top: 25px;
+        }
+
+        /* Logo */
+        .logo-img {
+            height: 50px;
+            width: auto;
+            object-fit: contain;
+        }
+
+        .logo-img.grande {
+            height: 80px;
+            width: auto;
+            max-width: 300px;
+            object-fit: contain;
+        }
+
+        .logo-container {
+            position: absolute;
+            top: 40px;
+            left: 60px;
+        }
+
+        /* Navegación */
+        .nav-hint {
+            position: fixed;
+            bottom: 30px;
+            right: 40px;
+            font-size: 0.9rem;
+            opacity: 0.5;
+        }
+
+        .slide-counter {
+            position: fixed;
+            bottom: 30px;
+            left: 40px;
+            font-size: 0.9rem;
+            opacity: 0.5;
+        }
+
+        /* Portada especial */
+        .portada {
+            text-align: center;
+        }
+
+        .portada h1 {
+            font-size: 4rem;
+            margin-bottom: 20px;
+        }
+
+        /* Número grande */
+        .big-number {
+            font-size: 7rem;
+            font-weight: 800;
+            color: var(--verde-activo);
+            line-height: 1;
+        }
+
+        .bg-blanco .big-number {
+            color: var(--azul-impulso);
+        }
+
+        /* Reglas */
+        .regla-num {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--verde-activo);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 10px;
+        }
+
+        .bg-blanco .regla-num {
+            color: var(--azul-impulso);
+        }
+
+        /* Texto tachado */
+        .tachado {
+            text-decoration: line-through;
+            opacity: 0.5;
+        }
+
+        /* Círculo virtuoso */
+        .circulo {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 12px;
+            margin: 25px 0;
+        }
+
+        .circulo-item {
+            background: rgba(255,255,255,0.1);
+            padding: 16px 35px;
+            border-radius: 50px;
+            font-size: 1.1rem;
+        }
+
+        .bg-blanco .circulo-item {
+            background: rgba(16, 54, 226, 0.08);
+        }
+
+        .circulo-arrow {
+            font-size: 1.3rem;
+            color: var(--verde-activo);
+        }
+
+        /* Frase final */
+        .frase-final {
+            font-size: 2rem;
+            line-height: 1.5;
+            text-align: center;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .frase-final em {
+            color: var(--verde-activo);
+            font-style: normal;
+        }
+
+        /* Imagen de fondo para slides específicas */
+        .bg-monumental {
+            background-image: url('img_monumental.jpg');
+        }
+
+        .bg-ciudad {
+            background-image: url('https://upload.wikimedia.org/wikipedia/commons/thumb/6/6d/Buenos_Aires_-_Microcentro_-_Congreso_de_la_Naci%C3%B3n_%28panorama%29.jpg/1280px-Buenos_Aires_-_Microcentro_-_Congreso_de_la_Naci%C3%B3n_%28panorama%29.jpg');
+        }
+
+        /* Stats grandes */
+        .stat-box {
+            text-align: center;
+            padding: 25px;
+        }
+
+        .stat-numero {
+            font-size: 4.5rem;
+            font-weight: 800;
+            color: var(--verde-activo);
+            line-height: 1;
+        }
+
+        .stat-label {
+            font-size: 1.2rem;
+            opacity: 0.8;
+            margin-top: 10px;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 35px;
+            margin-top: 35px;
+        }
+
+        /* Conceptos teóricos */
+        .concepto-box {
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.15);
+            padding: 25px;
+            border-radius: 12px;
+            margin: 15px 0;
+        }
+
+        .bg-blanco .concepto-box {
+            background: rgba(16, 54, 226, 0.03);
+            border-color: rgba(16, 54, 226, 0.15);
+        }
+
+        .concepto-box h4 {
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-bottom: 12px;
+            color: var(--verde-activo);
+        }
+
+        .bg-blanco .concepto-box h4 {
+            color: var(--azul-impulso);
+        }
+
+        /* Ecuación/Fórmula */
+        .formula {
+            font-family: 'Times New Roman', serif;
+            font-size: 1.8rem;
+            text-align: center;
+            padding: 20px;
+            background: rgba(255,255,255,0.05);
+            border-radius: 8px;
+            margin: 20px 0;
+        }
+
+        .bg-blanco .formula {
+            background: rgba(16, 54, 226, 0.05);
+        }
+
+        /* Nota al pie académica */
+        .nota-academica {
+            font-size: 1rem;
+            opacity: 0.6;
+            margin-top: 30px;
+            padding-top: 15px;
+            border-top: 1px solid rgba(255,255,255,0.2);
+        }
+
+        .bg-blanco .nota-academica {
+            border-top-color: rgba(0,0,0,0.1);
+        }
+
+        /* Timeline/Historia */
+        .timeline {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            margin: 25px 0;
+        }
+
+        .timeline-item {
+            display: flex;
+            gap: 20px;
+            align-items: flex-start;
+        }
+
+        .timeline-year {
+            font-weight: 700;
+            font-size: 1.1rem;
+            color: var(--verde-activo);
+            min-width: 60px;
+        }
+
+        .bg-blanco .timeline-year {
+            color: var(--azul-impulso);
+        }
+
+        /* Responsive */
+        @media (max-width: 1200px) {
+            h1 { font-size: 2.8rem; }
+            h2 { font-size: 2rem; }
+            p, li { font-size: 1.2rem; }
+            .slide { padding: 40px 50px; }
+            .two-cols { grid-template-columns: 1fr; gap: 30px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="slide-container">
+
+        <!-- SLIDE 1: PORTADA -->
+        <div class="slide bg-respaldo portada active">
+            <div class="logo-container">
+                <img src="https://vetacap.com.ar/wp-content/uploads/2024/11/cropped-Vetacap-logo-ok-1.png" alt="VetaCap" class="logo-img">
+            </div>
+            <h1>El Crédito como Motor<br>de la Producción</h1>
+            <p class="subtitle">Un análisis desde la teoría económica y financiera</p>
+            <p style="margin-top: 40px; font-size: 1.2rem; opacity: 0.6;">Versión Académica</p>
+        </div>
+
+        <!-- SLIDE 2: INTRODUCCIÓN TEÓRICA -->
+        <div class="slide bg-blanco">
+            <h2>El problema fundamental</h2>
+            <p>La economía enfrenta un desafío de coordinación intertemporal:</p>
+            <div class="two-cols" style="margin-top: 30px;">
+                <div class="concepto-box">
+                    <h4>Agentes con excedentes</h4>
+                    <p>Individuos y empresas con recursos que no necesitan consumir hoy</p>
+                </div>
+                <div class="concepto-box">
+                    <h4>Agentes con necesidades</h4>
+                    <p>Individuos y empresas con proyectos productivos pero sin recursos inmediatos</p>
+                </div>
+            </div>
+            <p style="margin-top: 30px; text-align: center;"><strong class="highlight">¿Cómo conectarlos eficientemente?</strong></p>
+        </div>
+
+        <!-- SLIDE 3: FISHER - TEORÍA DEL INTERÉS -->
+        <div class="slide bg-blanco">
+            <h2>La teoría del interés de Fisher</h2>
+            <div class="cita-paper">
+                <div class="titulo">"The Theory of Interest"</div>
+                <div class="autores">Irving Fisher (1930)</div>
+                <div class="contenido">
+                    "El tipo de interés es el precio que equilibra la impaciencia por consumir hoy con las oportunidades de inversión que prometen consumo futuro."
+                </div>
+            </div>
+            <div class="concepto-box">
+                <h4>Concepto clave: Preferencia temporal</h4>
+                <p>Los individuos prefieren consumir hoy antes que mañana. El interés es la "recompensa por esperar".</p>
+            </div>
+            <p class="nota-academica">Fisher, I. (1930). The Theory of Interest. New York: Macmillan.</p>
+        </div>
+
+        <!-- SLIDE 4: EL CRÉDITO COMO PUENTE -->
+        <div class="slide bg-impulso">
+            <h2>El crédito como puente intertemporal</h2>
+            <blockquote>
+                "El dinero es un puente entre el presente y el futuro"
+                <cite>— Irving Fisher</cite>
+            </blockquote>
+            <div class="flow-diagram">
+                <div class="flow-box">Recursos HOY<br><small>(del ahorrista)</small></div>
+                <span class="flow-arrow">→</span>
+                <div class="flow-box">Inversión<br><small>(del productor)</small></div>
+                <span class="flow-arrow">→</span>
+                <div class="flow-box">Producción<br><small>(bienes/servicios)</small></div>
+                <span class="flow-arrow">→</span>
+                <div class="flow-box">Repago + Interés<br><small>(al ahorrista)</small></div>
+            </div>
+            <p style="text-align: center; margin-top: 30px;">El crédito permite <strong>adelantar</strong> una inversión que generará ingresos futuros.</p>
+        </div>
+
+        <!-- SLIDE 5: CASO RIVER TITULO -->
+        <div class="slide bg-imagen bg-monumental">
+            <h3>Aplicación empírica:</h3>
+            <h1>La ampliación del<br><span class="highlight">Estadio Monumental</span></h1>
+            <p style="margin-top: 30px; font-size: 1.3rem;">Un caso de financiamiento de inversión productiva en Argentina (2026)</p>
+        </div>
+
+        <!-- SLIDE 6: CASO RIVER NÚMEROS -->
+        <div class="slide bg-blanco">
+            <h2>River Plate: Estructura de financiamiento</h2>
+            <div class="stats-grid">
+                <div class="stat-box">
+                    <div class="stat-numero">+100</div>
+                    <div class="stat-label">millones USD<br>inversión total</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-numero">101K</div>
+                    <div class="stat-label">capacidad<br>nueva</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-numero">36</div>
+                    <div class="stat-label">meses<br>de ejecución</div>
+                </div>
+            </div>
+            <h3 style="margin-top: 35px;">Fuentes de financiamiento:</h3>
+            <ul>
+                <li><strong>Deuda bancaria internacional</strong> — Crédito de largo plazo</li>
+                <li><strong>Naming rights</strong> — Contrato a 10 años (flujo garantizado)</li>
+            </ul>
+            <p class="nota-academica">Fuentes: Infobae, ESPN, comunicados oficiales del Club Atlético River Plate (enero 2026)</p>
+        </div>
+
+        <!-- SLIDE 7: MODIGLIANI-MILLER -->
+        <div class="slide bg-blanco">
+            <h2>El Teorema de Modigliani-Miller</h2>
+            <div class="cita-paper">
+                <div class="titulo">"The Cost of Capital, Corporation Finance and the Theory of Investment"</div>
+                <div class="autores">Franco Modigliani & Merton Miller (1958) — American Economic Review</div>
+                <div class="contenido">
+                    En mercados perfectos, el valor de una empresa depende únicamente de sus activos y proyectos de inversión, no de cómo se financia.
+                </div>
+            </div>
+            <div class="concepto-box">
+                <h4>Implicancia práctica</h4>
+                <p>Lo que importa es la <strong>calidad del proyecto</strong>, no si se financia con deuda o capital propio. La estructura de capital es "irrelevante" en ausencia de impuestos y costos de quiebra.</p>
+            </div>
+            <p class="nota-academica">Modigliani, F. & Miller, M. (1958). AER, 48(3), 261-297. Premios Nobel 1985 y 1990.</p>
+        </div>
+
+        <!-- SLIDE 8: APLICACIÓN MM A RIVER -->
+        <div class="slide bg-verde">
+            <h2>Aplicando Modigliani-Miller al caso River</h2>
+            <p>La pregunta correcta NO es:</p>
+            <p class="tachado" style="font-size: 1.3rem;">"¿El club puede pagar las cuotas con su facturación actual?"</p>
+            <p style="margin-top: 25px;">La pregunta correcta ES:</p>
+            <p style="font-size: 1.5rem;"><strong>"¿El proyecto genera valor presente neto positivo?"</strong></p>
+            <div class="formula" style="margin-top: 30px; background: rgba(255,255,255,0.15);">
+                VPN = Σ (Flujos futuros / (1+r)ᵗ) - Inversión inicial
+            </div>
+            <p style="margin-top: 25px;">Si VPN > 0, el proyecto crea valor independientemente de cómo se financie.</p>
+        </div>
+
+        <!-- SLIDE 9: CALCE DE PLAZOS -->
+        <div class="slide bg-blanco">
+            <p class="regla-num">Principio fundamental</p>
+            <h2>El calce de plazos (Asset-Liability Matching)</h2>
+            <p>La teoría financiera establece que el plazo del financiamiento debe corresponder con el plazo de maduración del activo:</p>
+            <table>
+                <tr>
+                    <th>Tipo de activo</th>
+                    <th>Vida útil</th>
+                    <th>Financiamiento óptimo</th>
+                </tr>
+                <tr>
+                    <td>Capital de trabajo</td>
+                    <td>&lt; 1 año</td>
+                    <td>Crédito corto plazo</td>
+                </tr>
+                <tr>
+                    <td>Maquinaria y equipos</td>
+                    <td>3-10 años</td>
+                    <td>Crédito mediano plazo</td>
+                </tr>
+                <tr>
+                    <td>Inmuebles / Infraestructura</td>
+                    <td>20-50 años</td>
+                    <td>Crédito largo plazo / Bonos</td>
+                </tr>
+            </table>
+            <p style="margin-top: 20px;"><strong class="highlight">Error típico:</strong> Financiar activos de largo plazo con deuda de corto plazo → riesgo de refinanciación.</p>
+        </div>
+
+        <!-- SLIDE 10: STIGLITZ-WEISS -->
+        <div class="slide bg-blanco">
+            <h2>El racionamiento de crédito</h2>
+            <div class="cita-paper">
+                <div class="titulo">"Credit Rationing in Markets with Imperfect Information"</div>
+                <div class="autores">Joseph Stiglitz & Andrew Weiss (1981) — American Economic Review</div>
+                <div class="contenido">
+                    En mercados con información asimétrica, los bancos pueden racionar el crédito en lugar de subir las tasas, porque tasas más altas atraen proyectos más riesgosos (selección adversa).
+                </div>
+            </div>
+            <div class="two-cols">
+                <div class="concepto-box">
+                    <h4>Selección adversa</h4>
+                    <p>A tasas altas, solo aplican los proyectos más riesgosos</p>
+                </div>
+                <div class="concepto-box">
+                    <h4>Riesgo moral</h4>
+                    <p>Tasas altas incentivan comportamientos más arriesgados</p>
+                </div>
+            </div>
+            <p class="nota-academica">Stiglitz, J. & Weiss, A. (1981). AER, 71(3), 393-410. Premio Nobel Stiglitz 2001.</p>
+        </div>
+
+        <!-- SLIDE 11: IMPLICANCIAS STIGLITZ-WEISS -->
+        <div class="slide bg-impulso">
+            <h2>Implicancias para el tomador de crédito</h2>
+            <p>El modelo Stiglitz-Weiss explica por qué:</p>
+            <ul>
+                <li>No siempre conseguís crédito aunque estés dispuesto a pagar más</li>
+                <li>Los bancos piden garantías y analizan tu historial</li>
+                <li>Las PyMEs tienen más dificultades de acceso al crédito</li>
+            </ul>
+            <div class="concepto-box" style="margin-top: 30px; background: rgba(255,255,255,0.1);">
+                <h4 style="color: white;">Lección práctica</h4>
+                <p>La señalización es clave: demostrar que tu proyecto es de bajo riesgo (garantías, historial, transparencia) mejora tu acceso al crédito más que ofrecer pagar tasas altas.</p>
+            </div>
+        </div>
+
+        <!-- SLIDE 12: TRANSICIÓN PARTE 2 -->
+        <div class="slide bg-respaldo">
+            <h2>Segunda parte</h2>
+            <h1>El rol del <span class="highlight">ahorrista</span> en la asignación de recursos</h1>
+            <p style="margin-top: 30px; opacity: 0.8;">¿Cómo el sistema financiero coordina decisiones descentralizadas?</p>
+        </div>
+
+        <!-- SLIDE 13: HAYEK - CONOCIMIENTO -->
+        <div class="slide bg-blanco">
+            <h2>Hayek y el problema del conocimiento</h2>
+            <div class="cita-paper">
+                <div class="titulo">"The Use of Knowledge in Society"</div>
+                <div class="autores">Friedrich Hayek (1945) — American Economic Review</div>
+                <div class="contenido">
+                    "El problema económico de la sociedad no es simplemente un problema de asignación de recursos 'dados'. Es un problema de utilización del conocimiento que no está dado a nadie en su totalidad."
+                </div>
+            </div>
+            <p style="margin-top: 25px;">El conocimiento relevante está <strong>disperso</strong> entre millones de agentes. Ningún planificador central puede reunirlo.</p>
+            <p class="nota-academica">Hayek, F. (1945). AER, 35(4), 519-530. Premio Nobel 1974.</p>
+        </div>
+
+        <!-- SLIDE 14: PRECIOS COMO SEÑALES -->
+        <div class="slide bg-blanco">
+            <h2>Los precios como sistema de información</h2>
+            <blockquote>
+                "Los precios son señales envueltas en incentivos"
+                <cite>— Alex Tabarrok</cite>
+            </blockquote>
+            <p>En el mercado de capitales:</p>
+            <ul>
+                <li><strong>Tasas de interés altas</strong> → Señalan escasez de ahorro o alto riesgo</li>
+                <li><strong>Tasas de interés bajas</strong> → Señalan abundancia de ahorro</li>
+                <li><strong>Precios de acciones</strong> → Agregan información sobre el valor futuro esperado</li>
+            </ul>
+            <div class="concepto-box" style="margin-top: 25px;">
+                <h4>El ahorrista como "votante"</h4>
+                <p>Al elegir dónde invertir, el ahorrista "vota" con su capital por ciertos proyectos, canalizando recursos hacia donde la sociedad los valora más.</p>
+            </div>
+        </div>
+
+        <!-- SLIDE 15: EFICIENCIA DE MERCADO -->
+        <div class="slide bg-blanco">
+            <h2>La hipótesis de mercados eficientes</h2>
+            <div class="cita-paper">
+                <div class="titulo">"Efficient Capital Markets: A Review of Theory and Empirical Work"</div>
+                <div class="autores">Eugene Fama (1970) — Journal of Finance</div>
+                <div class="contenido">
+                    Los precios de los activos reflejan toda la información disponible. Los mercados agregan el conocimiento disperso de millones de participantes.
+                </div>
+            </div>
+            <p style="margin-top: 25px;"><strong class="highlight">Implicancia:</strong> Cuando un ahorrista busca su mejor rendimiento ajustado por riesgo, está contribuyendo a que los precios reflejen información verdadera.</p>
+            <p class="nota-academica">Fama, E. (1970). Journal of Finance, 25(2), 383-417. Premio Nobel 2013.</p>
+        </div>
+
+        <!-- SLIDE 16: CÍRCULO VIRTUOSO TEÓRICO -->
+        <div class="slide bg-verde">
+            <h2>El mecanismo de coordinación</h2>
+            <div class="circulo">
+                <div class="circulo-item">Ahorrista busca maximizar rendimiento ajustado por riesgo</div>
+                <span class="circulo-arrow">↓</span>
+                <div class="circulo-item">Capital fluye hacia proyectos con mayor VPN esperado</div>
+                <span class="circulo-arrow">↓</span>
+                <div class="circulo-item">Proyectos rentables = necesidades sociales insatisfechas</div>
+                <span class="circulo-arrow">↓</span>
+                <div class="circulo-item">Producción aumenta, economía crece</div>
+                <span class="circulo-arrow">↓</span>
+                <div class="circulo-item">Mayor riqueza genera más ahorro disponible</div>
+            </div>
+            <p style="text-align: center; margin-top: 20px;"><strong>Adam Smith + Hayek:</strong> La búsqueda del interés individual coordina la asignación de recursos.</p>
+        </div>
+
+        <!-- SLIDE 17: INSTRUMENTOS -->
+        <div class="slide bg-blanco">
+            <h2>Instrumentos del mercado de capitales</h2>
+            <p>Cada instrumento cumple una función específica en la intermediación:</p>
+            <div class="two-cols">
+                <div>
+                    <h3 class="highlight">Renta Variable</h3>
+                    <ul>
+                        <li><strong>Acciones:</strong> Participación en el capital y resultados</li>
+                        <li><strong>CEDEARs:</strong> Acceso a mercados internacionales</li>
+                    </ul>
+                    <p style="font-size: 1.1rem; opacity: 0.7; margin-top: 15px;">Rendimiento incierto, alineación de incentivos</p>
+                </div>
+                <div>
+                    <h3 class="highlight">Renta Fija</h3>
+                    <ul>
+                        <li><strong>ONs:</strong> Deuda corporativa</li>
+                        <li><strong>Bonos:</strong> Deuda soberana</li>
+                        <li><strong>Cheques/Pagarés:</strong> Financiamiento PyME</li>
+                    </ul>
+                    <p style="font-size: 1.1rem; opacity: 0.7; margin-top: 15px;">Rendimiento predeterminado, prioridad de cobro</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE 18: PARTE 3 - MERCADO ARGENTINO -->
+        <div class="slide bg-respaldo">
+            <h3>Tercera parte</h3>
+            <h1>El mercado de capitales <span class="highlight">argentino</span></h1>
+            <p style="margin-top: 30px; opacity: 0.8;">Diagnóstico cuantitativo y oportunidades</p>
+        </div>
+
+        <!-- SLIDE 19: DESARROLLO FINANCIERO -->
+        <div class="slide bg-blanco">
+            <h2>Desarrollo financiero y crecimiento económico</h2>
+            <div class="cita-paper">
+                <div class="titulo">"Finance and Growth: Theory and Evidence"</div>
+                <div class="autores">Ross Levine (2005) — Handbook of Economic Growth</div>
+                <div class="contenido">
+                    Existe evidencia robusta de que el desarrollo del sistema financiero causa crecimiento económico, no solo lo acompaña. Mercados financieros más profundos facilitan la asignación eficiente del capital.
+                </div>
+            </div>
+            <p style="margin-top: 20px;"><strong class="highlight">Pregunta clave:</strong> ¿Qué tan desarrollado está el sistema financiero argentino?</p>
+            <p class="nota-academica">Levine, R. (2005). Handbook of Economic Growth, Vol. 1A, Chapter 12.</p>
+        </div>
+
+        <!-- SLIDE 20: CAPITALIZACIÓN BURSÁTIL -->
+        <div class="slide bg-blanco">
+            <h2>Capitalización bursátil como % del PBI</h2>
+            <div class="bar-chart">
+                <div class="bar-row">
+                    <span class="bar-label">Estados Unidos</span>
+                    <div class="bar-container">
+                        <div class="bar" style="width: 100%;">159%</div>
+                    </div>
+                </div>
+                <div class="bar-row">
+                    <span class="bar-label">Chile</span>
+                    <div class="bar-container">
+                        <div class="bar" style="width: 46%;">73%</div>
+                    </div>
+                </div>
+                <div class="bar-row">
+                    <span class="bar-label">Brasil</span>
+                    <div class="bar-container">
+                        <div class="bar" style="width: 40%;">63%</div>
+                    </div>
+                </div>
+                <div class="bar-row">
+                    <span class="bar-label">Colombia</span>
+                    <div class="bar-container">
+                        <div class="bar" style="width: 27%;">43%</div>
+                    </div>
+                </div>
+                <div class="bar-row">
+                    <span class="bar-label"><strong>Argentina</strong></span>
+                    <div class="bar-container">
+                        <div class="bar azul" style="width: 6%;">9%</div>
+                    </div>
+                </div>
+            </div>
+            <p style="text-align: center;"><strong class="highlight">Argentina: ~5x menor que el promedio regional</strong></p>
+            <p class="nota-academica">Fuentes: UTDT, First Capital, IAMC, Banco Mundial (2024-2025)</p>
+        </div>
+
+        <!-- SLIDE 21: CRÉDITO BANCARIO -->
+        <div class="slide bg-blanco">
+            <h2>Crédito bancario como % del PBI</h2>
+            <div class="bar-chart">
+                <div class="bar-row">
+                    <span class="bar-label">Chile</span>
+                    <div class="bar-container">
+                        <div class="bar" style="width: 100%;">83%</div>
+                    </div>
+                </div>
+                <div class="bar-row">
+                    <span class="bar-label">Brasil</span>
+                    <div class="bar-container">
+                        <div class="bar" style="width: 92%;">76%</div>
+                    </div>
+                </div>
+                <div class="bar-row">
+                    <span class="bar-label">Paraguay</span>
+                    <div class="bar-container">
+                        <div class="bar" style="width: 61%;">51%</div>
+                    </div>
+                </div>
+                <div class="bar-row">
+                    <span class="bar-label">Perú</span>
+                    <div class="bar-container">
+                        <div class="bar" style="width: 58%;">48%</div>
+                    </div>
+                </div>
+                <div class="bar-row">
+                    <span class="bar-label"><strong>Argentina</strong></span>
+                    <div class="bar-container">
+                        <div class="bar azul" style="width: 13%;">11%</div>
+                    </div>
+                </div>
+            </div>
+            <p style="text-align: center;"><strong class="highlight">Doble restricción:</strong> Poco mercado de capitales + poco crédito bancario</p>
+        </div>
+
+        <!-- SLIDE 22: CONSECUENCIAS -->
+        <div class="slide bg-impulso">
+            <h2>Consecuencias del subdesarrollo financiero</h2>
+            <ul>
+                <li><strong>Empresas dependen de autofinanciamiento</strong> → Crecimiento más lento</li>
+                <li><strong>Proyectos rentables no se ejecutan</strong> → Pérdida de bienestar social</li>
+                <li><strong>PyMEs especialmente afectadas</strong> → Mayor informalidad</li>
+                <li><strong>Ahorristas con pocas opciones</strong> → Fuga de capitales, dolarización</li>
+            </ul>
+            <div class="concepto-box" style="margin-top: 30px; background: rgba(255,255,255,0.1);">
+                <h4 style="color: white;">Círculo vicioso</h4>
+                <p>Inestabilidad → Desconfianza → Poco ahorro local → Poco crédito → Poco crecimiento → Inestabilidad</p>
+            </div>
+        </div>
+
+        <!-- SLIDE 23: ESTRUCTURA INSTITUCIONAL -->
+        <div class="slide bg-blanco">
+            <h2>Estructura institucional argentina</h2>
+            <div class="two-cols">
+                <div>
+                    <h3 class="highlight">Regulación</h3>
+                    <p><strong>CNV</strong> (Comisión Nacional de Valores)</p>
+                    <p style="font-size: 1.1rem; opacity: 0.7;">Supervisión y regulación del mercado</p>
+
+                    <h3 class="highlight" style="margin-top: 25px;">Infraestructura</h3>
+                    <p><strong>BYMA</strong> (Bolsas y Mercados Argentinos)</p>
+                    <p style="font-size: 1.1rem; opacity: 0.7;">Negociación, compensación y liquidación</p>
+                </div>
+                <div>
+                    <h3 class="highlight">Intermediarios</h3>
+                    <ul>
+                        <li>Bancos (cuenta de inversión)</li>
+                        <li><strong>ALyCs</strong> — Agentes de Liquidación y Compensación</li>
+                        <li>ANs — Agentes de Negociación</li>
+                    </ul>
+
+                    <h3 class="highlight" style="margin-top: 25px;">Vehículos colectivos</h3>
+                    <p><strong>FCIs</strong> (Fondos Comunes de Inversión)</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE 24: OPORTUNIDAD -->
+        <div class="slide bg-blanco">
+            <h2>La oportunidad de convergencia</h2>
+            <p>Si Argentina convergiera al promedio regional:</p>
+            <div class="stats-grid">
+                <div class="stat-box">
+                    <div class="stat-numero">5x</div>
+                    <div class="stat-label">crecimiento potencial<br>del mercado</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-numero">+40%</div>
+                    <div class="stat-label">crédito/PBI<br>adicional</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-numero">∞</div>
+                    <div class="stat-label">proyectos<br>viabilizados</div>
+                </div>
+            </div>
+            <p style="margin-top: 35px; text-align: center; font-size: 1.4rem;">
+                <strong class="highlight">Condiciones necesarias:</strong> Estabilidad macroeconómica, reglas claras, respeto a los contratos.
+            </p>
+        </div>
+
+        <!-- SLIDE 25: RESUMEN TEÓRICO -->
+        <div class="slide bg-impulso">
+            <h2>Síntesis teórica</h2>
+            <div class="timeline">
+                <div class="timeline-item">
+                    <span class="timeline-year" style="color: white;">Fisher</span>
+                    <span>El crédito conecta presente y futuro, permitiendo inversiones productivas</span>
+                </div>
+                <div class="timeline-item">
+                    <span class="timeline-year" style="color: white;">M&M</span>
+                    <span>El valor depende del proyecto, no de la estructura de financiamiento</span>
+                </div>
+                <div class="timeline-item">
+                    <span class="timeline-year" style="color: white;">S&W</span>
+                    <span>La información asimétrica explica el racionamiento crediticio</span>
+                </div>
+                <div class="timeline-item">
+                    <span class="timeline-year" style="color: white;">Hayek</span>
+                    <span>Los precios coordinan conocimiento disperso entre millones de agentes</span>
+                </div>
+                <div class="timeline-item">
+                    <span class="timeline-year" style="color: white;">Fama</span>
+                    <span>Los mercados agregan información en los precios</span>
+                </div>
+                <div class="timeline-item">
+                    <span class="timeline-year" style="color: white;">Levine</span>
+                    <span>El desarrollo financiero causa crecimiento económico</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE 26: MENSAJES CLAVE -->
+        <div class="slide bg-blanco">
+            <h2>Mensajes clave</h2>
+            <ul>
+                <li style="margin-bottom: 25px;">
+                    <strong class="highlight">El crédito bien estructurado impulsa la producción</strong><br>
+                    <span style="opacity: 0.7; font-size: 1.2rem;">El valor de un proyecto depende de sus flujos futuros, no de la facturación actual (Fisher, M&M)</span>
+                </li>
+                <li style="margin-bottom: 25px;">
+                    <strong class="highlight">El ahorrista es un asignador de recursos</strong><br>
+                    <span style="opacity: 0.7; font-size: 1.2rem;">Buscando su beneficio, canaliza capital hacia proyectos socialmente valiosos (Hayek, Fama)</span>
+                </li>
+                <li style="margin-bottom: 25px;">
+                    <strong class="highlight">Argentina tiene enorme potencial de desarrollo financiero</strong><br>
+                    <span style="opacity: 0.7; font-size: 1.2rem;">Un mercado 5x subdesarrollado representa una oportunidad de crecimiento (Levine)</span>
+                </li>
+            </ul>
+        </div>
+
+        <!-- SLIDE 27: CITA CIERRE -->
+        <div class="slide bg-respaldo">
+            <p class="frase-final">
+                "El mercado de capitales no es un casino.<br><br>
+                Es el <em>mecanismo institucional</em> que coordina<br>
+                el conocimiento disperso de millones de agentes<br>
+                para asignar recursos escasos a sus usos más valiosos."
+            </p>
+        </div>
+
+        <!-- SLIDE 28: BIBLIOGRAFÍA -->
+        <div class="slide bg-blanco" style="font-size: 0.95rem;">
+            <h2>Referencias bibliográficas</h2>
+            <div class="two-cols" style="gap: 40px;">
+                <div>
+                    <p><strong>Fama, E.</strong> (1970). "Efficient Capital Markets". <em>Journal of Finance</em>, 25(2).</p>
+                    <p><strong>Fisher, I.</strong> (1930). <em>The Theory of Interest</em>. Macmillan.</p>
+                    <p><strong>Hayek, F.</strong> (1945). "The Use of Knowledge in Society". <em>AER</em>, 35(4).</p>
+                </div>
+                <div>
+                    <p><strong>Levine, R.</strong> (2005). "Finance and Growth". <em>Handbook of Economic Growth</em>.</p>
+                    <p><strong>Modigliani, F. & Miller, M.</strong> (1958). "The Cost of Capital". <em>AER</em>, 48(3).</p>
+                    <p><strong>Stiglitz, J. & Weiss, A.</strong> (1981). "Credit Rationing". <em>AER</em>, 71(3).</p>
+                </div>
+            </div>
+            <p style="margin-top: 30px; text-align: center; opacity: 0.6;">
+                <strong>Premios Nobel citados:</strong> Hayek (1974), Modigliani (1985), Miller (1990), Stiglitz (2001), Fama (2013)
+            </p>
+        </div>
+
+        <!-- SLIDE 29: CONTACTO -->
+        <div class="slide bg-respaldo portada">
+            <img src="https://vetacap.com.ar/wp-content/uploads/2024/11/cropped-Vetacap-logo-ok-1.png" alt="VetaCap" class="logo-img grande" style="margin-bottom: 40px; display: block; margin-left: auto; margin-right: auto;">
+            <h2>Conectamos finanzas con economía real</h2>
+            <p style="margin-top: 40px;">www.vetacap.com.ar</p>
+            <p style="margin-top: 20px; font-size: 1rem; opacity: 0.6;">Agente de Liquidación y Compensación — CNV</p>
+        </div>
+
+    </div>
+
+    <div class="slide-counter">
+        <span id="current">1</span> / <span id="total">29</span>
+    </div>
+
+    <div class="nav-hint">
+        ← → para navegar | F para pantalla completa
+    </div>
+
+    <script>
+        const slides = document.querySelectorAll('.slide');
+        let currentSlide = 0;
+        const total = slides.length;
+
+        document.getElementById('total').textContent = total;
+
+        function showSlide(n) {
+            slides[currentSlide].classList.remove('active');
+            currentSlide = (n + total) % total;
+            slides[currentSlide].classList.add('active');
+            document.getElementById('current').textContent = currentSlide + 1;
+        }
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowRight' || e.key === ' ' || e.key === 'Enter') {
+                showSlide(currentSlide + 1);
+            } else if (e.key === 'ArrowLeft') {
+                showSlide(currentSlide - 1);
+            } else if (e.key === 'Home') {
+                showSlide(0);
+            } else if (e.key === 'End') {
+                showSlide(total - 1);
+            } else if (e.key === 'f' || e.key === 'F') {
+                if (document.fullscreenElement) {
+                    document.exitFullscreen();
+                } else {
+                    document.documentElement.requestFullscreen();
+                }
+            }
+        });
+
+        // Touch support
+        let touchStartX = 0;
+        document.addEventListener('touchstart', (e) => {
+            touchStartX = e.touches[0].clientX;
+        });
+
+        document.addEventListener('touchend', (e) => {
+            const touchEndX = e.changedTouches[0].clientX;
+            const diff = touchStartX - touchEndX;
+            if (Math.abs(diff) > 50) {
+                if (diff > 0) {
+                    showSlide(currentSlide + 1);
+                } else {
+                    showSlide(currentSlide - 1);
+                }
+            }
+        });
+
+        // Click to advance
+        document.querySelector('.slide-container').addEventListener('click', (e) => {
+            if (e.clientX > window.innerWidth / 2) {
+                showSlide(currentSlide + 1);
+            } else {
+                showSlide(currentSlide - 1);
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VetaCap - Material Educativo</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --azul-impulso: #1036E2;
+            --verde-activo: #00C600;
+            --azul-respaldo: #021751;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, var(--azul-respaldo) 0%, #0a1628 100%);
+            min-height: 100vh;
+            color: white;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .logo-triangle {
+            width: 0;
+            height: 0;
+            border-left: 20px solid transparent;
+            border-right: 20px solid transparent;
+            border-bottom: 35px solid var(--verde-activo);
+        }
+
+        .logo-text {
+            font-size: 2.5rem;
+            font-weight: 700;
+            letter-spacing: 2px;
+        }
+
+        .tagline {
+            color: rgba(255,255,255,0.7);
+            font-size: 1.1rem;
+            margin-top: 10px;
+        }
+
+        h1 {
+            font-size: 2rem;
+            margin-bottom: 10px;
+            color: white;
+        }
+
+        .subtitle {
+            color: rgba(255,255,255,0.6);
+            font-size: 1rem;
+        }
+
+        .presentations {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .presentation-card {
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 12px;
+            padding: 25px 30px;
+            text-decoration: none;
+            color: white;
+            transition: all 0.3s ease;
+            display: block;
+        }
+
+        .presentation-card:hover {
+            background: rgba(255,255,255,0.1);
+            border-color: var(--verde-activo);
+            transform: translateX(10px);
+        }
+
+        .card-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 12px;
+        }
+
+        .card-icon {
+            width: 45px;
+            height: 45px;
+            background: var(--azul-impulso);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.3rem;
+        }
+
+        .card-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+        }
+
+        .card-description {
+            color: rgba(255,255,255,0.6);
+            font-size: 0.95rem;
+            line-height: 1.5;
+            margin-left: 60px;
+        }
+
+        .card-badge {
+            display: inline-block;
+            background: var(--verde-activo);
+            color: white;
+            font-size: 0.7rem;
+            font-weight: 600;
+            padding: 4px 10px;
+            border-radius: 20px;
+            margin-left: 10px;
+            text-transform: uppercase;
+        }
+
+        .section-title {
+            font-size: 1rem;
+            color: rgba(255,255,255,0.5);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 20px;
+            margin-top: 40px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 60px;
+            padding-top: 30px;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            color: rgba(255,255,255,0.4);
+            font-size: 0.9rem;
+        }
+
+        footer a {
+            color: var(--verde-activo);
+            text-decoration: none;
+        }
+
+        @media (max-width: 600px) {
+            .logo-text {
+                font-size: 2rem;
+            }
+
+            .card-title {
+                font-size: 1.1rem;
+            }
+
+            .card-description {
+                margin-left: 0;
+                margin-top: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="logo">
+                <div class="logo-triangle"></div>
+                <span class="logo-text">VetaCap</span>
+            </div>
+            <p class="tagline">Conectamos finanzas con economía real</p>
+        </header>
+
+        <h1>Material Educativo</h1>
+        <p class="subtitle">Presentaciones sobre economía, finanzas y mercado de capitales</p>
+
+        <div class="section-title">Mercado de Capitales y Crédito</div>
+
+        <div class="presentations">
+            <a href="presentacion_credito_v2.html" class="presentation-card">
+                <div class="card-header">
+                    <div class="card-icon">💰</div>
+                    <span class="card-title">El Crédito como Motor de la Producción</span>
+                    <span class="card-badge">Divulgación</span>
+                </div>
+                <p class="card-description">Cómo el mercado de capitales impulsa la economía real. Versión accesible para público general.</p>
+            </a>
+
+            <a href="presentacion_credito_academica.html" class="presentation-card">
+                <div class="card-header">
+                    <div class="card-icon">📚</div>
+                    <span class="card-title">El Crédito como Motor de la Producción</span>
+                    <span class="card-badge">Académica</span>
+                </div>
+                <p class="card-description">Versión con mayor profundidad teórica y referencias bibliográficas para contextos universitarios.</p>
+            </a>
+
+            <a href="presentacion_sgr_deuda_pyme.html" class="presentation-card">
+                <div class="card-header">
+                    <div class="card-icon">🏭</div>
+                    <span class="card-title">SGR y Financiamiento PyME</span>
+                </div>
+                <p class="card-description">Sociedades de Garantía Recíproca y alternativas de financiamiento para pequeñas y medianas empresas.</p>
+            </a>
+        </div>
+
+        <div class="section-title">Política Económica</div>
+
+        <div class="presentations">
+            <a href="presentacion_politica_fiscal.html" class="presentation-card">
+                <div class="card-header">
+                    <div class="card-icon">📊</div>
+                    <span class="card-title">Política Fiscal Argentina</span>
+                </div>
+                <p class="card-description">Análisis del gasto público, recaudación tributaria, federalismo fiscal y desafíos estructurales de Argentina.</p>
+            </a>
+
+            <a href="presentacion_coordinacion_fiscal_monetaria.html" class="presentation-card">
+                <div class="card-header">
+                    <div class="card-icon">🏛️</div>
+                    <span class="card-title">Coordinación Fiscal y Monetaria</span>
+                </div>
+                <p class="card-description">La relación entre política fiscal y monetaria. Dominancia fiscal, independencia del banco central y experiencias internacionales.</p>
+            </a>
+        </div>
+
+        <footer>
+            <p><strong>VetaCap</strong> - Agente de Liquidación y Compensación</p>
+            <p style="margin-top: 8px;"><a href="https://www.vetacap.com.ar" target="_blank">www.vetacap.com.ar</a></p>
+        </footer>
+    </div>
+</body>
+</html>

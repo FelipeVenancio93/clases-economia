@@ -1,0 +1,1199 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Coordinación Fiscal y Monetaria - Lecciones de Argentina</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Albert+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --azul-impulso: #1036E2;
+            --verde-activo: #00C600;
+            --azul-respaldo: #021751;
+            --blanco: #FFFFFF;
+            --negro: #000000;
+            --rojo-alerta: #DC2626;
+            --amarillo: #F59E0B;
+            --naranja: #EA580C;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Albert Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--azul-respaldo);
+            color: var(--blanco);
+            overflow: hidden;
+        }
+
+        .slide-container {
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .slide {
+            display: none;
+            width: 100%;
+            height: 100%;
+            padding: 60px 80px;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .slide.active {
+            display: flex;
+        }
+
+        /* Fondos */
+        .bg-respaldo { background: var(--azul-respaldo); color: var(--blanco); }
+        .bg-impulso { background: var(--azul-impulso); color: var(--blanco); }
+        .bg-verde { background: var(--verde-activo); color: var(--blanco); }
+        .bg-blanco { background: var(--blanco); color: var(--azul-respaldo); }
+        .bg-oscuro { background: #0a0a0a; color: var(--blanco); }
+        .bg-rojo { background: var(--rojo-alerta); color: var(--blanco); }
+
+        /* Tipografía */
+        h1 {
+            font-size: 3.8rem;
+            font-weight: 700;
+            line-height: 1.1;
+            margin-bottom: 30px;
+        }
+
+        h2 {
+            font-size: 2.6rem;
+            font-weight: 600;
+            margin-bottom: 25px;
+        }
+
+        h3 {
+            font-size: 1.8rem;
+            font-weight: 500;
+            margin-bottom: 20px;
+            opacity: 0.9;
+        }
+
+        p, li {
+            font-size: 1.5rem;
+            line-height: 1.6;
+            margin-bottom: 15px;
+        }
+
+        .subtitle {
+            font-size: 1.6rem;
+            opacity: 0.8;
+            font-weight: 400;
+        }
+
+        .highlight {
+            color: var(--verde-activo);
+        }
+
+        .bg-blanco .highlight {
+            color: var(--azul-impulso);
+        }
+
+        .highlight-red {
+            color: var(--rojo-alerta);
+        }
+
+        .highlight-yellow {
+            color: var(--amarillo);
+        }
+
+        blockquote {
+            font-size: 1.7rem;
+            font-style: italic;
+            border-left: 4px solid var(--verde-activo);
+            padding-left: 30px;
+            margin: 25px 0;
+            opacity: 0.95;
+        }
+
+        blockquote cite {
+            display: block;
+            font-size: 1.1rem;
+            margin-top: 12px;
+            font-style: normal;
+            opacity: 0.7;
+        }
+
+        ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        ul li {
+            padding-left: 35px;
+            position: relative;
+            margin-bottom: 18px;
+        }
+
+        ul li::before {
+            content: "▸";
+            position: absolute;
+            left: 0;
+            color: var(--verde-activo);
+            font-size: 1.4rem;
+        }
+
+        .bg-verde ul li::before,
+        .bg-impulso ul li::before,
+        .bg-rojo ul li::before {
+            color: var(--blanco);
+        }
+
+        /* Tablas */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 25px 0;
+            font-size: 1.3rem;
+        }
+
+        th, td {
+            padding: 18px 22px;
+            text-align: left;
+            border-bottom: 1px solid rgba(255,255,255,0.2);
+        }
+
+        .bg-blanco th,
+        .bg-blanco td {
+            border-bottom: 1px solid rgba(0,0,0,0.1);
+        }
+
+        th {
+            font-weight: 600;
+            opacity: 0.7;
+            font-size: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* Fórmula/Ecuación */
+        .formula {
+            font-size: 2rem;
+            text-align: center;
+            padding: 30px;
+            background: rgba(255,255,255,0.08);
+            border-radius: 12px;
+            margin: 25px 0;
+            font-weight: 500;
+            letter-spacing: 2px;
+        }
+
+        .bg-blanco .formula {
+            background: rgba(16, 54, 226, 0.06);
+        }
+
+        .formula-grande {
+            font-size: 2.5rem;
+            padding: 40px;
+        }
+
+        /* Diagrama flujo */
+        .flow-diagram {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+            margin: 35px 0;
+            flex-wrap: wrap;
+        }
+
+        .flow-box {
+            background: rgba(255,255,255,0.1);
+            padding: 20px 28px;
+            border-radius: 10px;
+            font-size: 1.2rem;
+            font-weight: 500;
+            text-align: center;
+        }
+
+        .bg-blanco .flow-box {
+            background: rgba(16, 54, 226, 0.1);
+        }
+
+        .flow-arrow {
+            font-size: 1.8rem;
+            color: var(--verde-activo);
+        }
+
+        /* Dos columnas */
+        .two-cols {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 50px;
+            margin-top: 25px;
+        }
+
+        /* Tres columnas */
+        .three-cols {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 30px;
+            margin-top: 25px;
+        }
+
+        /* Concepto box */
+        .concepto-box {
+            background: rgba(255,255,255,0.08);
+            padding: 25px;
+            border-radius: 12px;
+            text-align: center;
+        }
+
+        .bg-blanco .concepto-box {
+            background: rgba(16, 54, 226, 0.06);
+        }
+
+        .concepto-box h4 {
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-bottom: 12px;
+            color: var(--verde-activo);
+        }
+
+        .bg-blanco .concepto-box h4 {
+            color: var(--azul-impulso);
+        }
+
+        .concepto-box p {
+            font-size: 1.15rem;
+            margin-bottom: 0;
+        }
+
+        /* Cita académica */
+        .cita-paper {
+            background: rgba(255,255,255,0.06);
+            padding: 25px 30px;
+            border-radius: 10px;
+            margin: 20px 0;
+            border-left: 4px solid var(--verde-activo);
+        }
+
+        .bg-blanco .cita-paper {
+            background: rgba(16, 54, 226, 0.04);
+            border-left-color: var(--azul-impulso);
+        }
+
+        .cita-paper .titulo {
+            font-weight: 600;
+            font-size: 1.15rem;
+            margin-bottom: 8px;
+        }
+
+        .cita-paper .autores {
+            font-size: 0.95rem;
+            opacity: 0.7;
+            margin-bottom: 12px;
+        }
+
+        .cita-paper .contenido {
+            font-size: 1.2rem;
+            line-height: 1.5;
+            font-style: italic;
+        }
+
+        /* Stats */
+        .stat-box {
+            text-align: center;
+            padding: 25px;
+        }
+
+        .stat-numero {
+            font-size: 4.5rem;
+            font-weight: 800;
+            color: var(--verde-activo);
+            line-height: 1;
+        }
+
+        .bg-blanco .stat-numero {
+            color: var(--azul-impulso);
+        }
+
+        .stat-numero.rojo {
+            color: var(--rojo-alerta);
+        }
+
+        .stat-label {
+            font-size: 1.2rem;
+            opacity: 0.8;
+            margin-top: 10px;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 35px;
+            margin-top: 35px;
+        }
+
+        .stats-grid-4 {
+            grid-template-columns: repeat(4, 1fr);
+        }
+
+        /* Navegación */
+        .nav-hint {
+            position: fixed;
+            bottom: 30px;
+            right: 40px;
+            font-size: 0.9rem;
+            opacity: 0.5;
+        }
+
+        .slide-counter {
+            position: fixed;
+            bottom: 30px;
+            left: 40px;
+            font-size: 0.9rem;
+            opacity: 0.5;
+        }
+
+        /* Portada */
+        .portada {
+            text-align: center;
+        }
+
+        .portada h1 {
+            font-size: 4.2rem;
+            margin-bottom: 20px;
+        }
+
+        /* Sección título */
+        .seccion-titulo {
+            text-align: center;
+        }
+
+        .seccion-titulo h3 {
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            font-size: 1.2rem;
+            opacity: 0.7;
+            margin-bottom: 15px;
+        }
+
+        /* Timeline */
+        .timeline {
+            display: flex;
+            flex-direction: column;
+            gap: 18px;
+            margin: 25px 0;
+        }
+
+        .timeline-item {
+            display: flex;
+            gap: 20px;
+            align-items: flex-start;
+        }
+
+        .timeline-year {
+            font-weight: 700;
+            font-size: 1rem;
+            color: var(--verde-activo);
+            min-width: 70px;
+        }
+
+        .bg-blanco .timeline-year {
+            color: var(--azul-impulso);
+        }
+
+        /* Versus */
+        .versus {
+            display: grid;
+            grid-template-columns: 1fr auto 1fr;
+            gap: 25px;
+            align-items: center;
+            margin: 25px 0;
+        }
+
+        .versus-center {
+            font-size: 2.5rem;
+            font-weight: 800;
+            opacity: 0.3;
+        }
+
+        /* Problema/Solución */
+        .problema-box {
+            background: rgba(220, 38, 38, 0.15);
+            border-left: 4px solid var(--rojo-alerta);
+            padding: 20px 25px;
+            border-radius: 0 10px 10px 0;
+            margin: 12px 0;
+        }
+
+        .solucion-box {
+            background: rgba(0, 198, 0, 0.15);
+            border-left: 4px solid var(--verde-activo);
+            padding: 20px 25px;
+            border-radius: 0 10px 10px 0;
+            margin: 12px 0;
+        }
+
+        .bg-blanco .problema-box {
+            background: rgba(220, 38, 38, 0.08);
+        }
+
+        .bg-blanco .solucion-box {
+            background: rgba(0, 198, 0, 0.08);
+        }
+
+        /* Nota académica */
+        .nota-academica {
+            font-size: 0.95rem;
+            opacity: 0.6;
+            margin-top: 25px;
+            padding-top: 15px;
+            border-top: 1px solid rgba(255,255,255,0.15);
+        }
+
+        .bg-blanco .nota-academica {
+            border-top-color: rgba(0,0,0,0.1);
+        }
+
+        /* Era badge */
+        .era-badge {
+            padding: 8px 20px;
+            border-radius: 25px;
+            font-size: 1rem;
+            font-weight: 600;
+            display: inline-block;
+            margin-bottom: 15px;
+        }
+
+        .era-badge.crisis { background: var(--rojo-alerta); color: white; }
+        .era-badge.estabilidad { background: var(--verde-activo); color: white; }
+        .era-badge.transicion { background: var(--amarillo); color: black; }
+
+        /* Inflation meter */
+        .inflation-meter {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            margin: 25px 0;
+        }
+
+        .meter-row {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .meter-label {
+            min-width: 100px;
+            font-weight: 600;
+            font-size: 1.1rem;
+        }
+
+        .meter-bar-container {
+            flex: 1;
+            height: 30px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 15px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .bg-blanco .meter-bar-container {
+            background: rgba(0,0,0,0.05);
+        }
+
+        .meter-bar {
+            height: 100%;
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            padding-right: 10px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: white;
+            transition: width 0.5s ease;
+        }
+
+        .meter-bar.low { background: var(--verde-activo); }
+        .meter-bar.medium { background: var(--amarillo); color: black; }
+        .meter-bar.high { background: var(--naranja); }
+        .meter-bar.extreme { background: var(--rojo-alerta); }
+
+        /* Responsive */
+        @media (max-width: 1200px) {
+            h1 { font-size: 2.8rem; }
+            h2 { font-size: 2rem; }
+            p, li { font-size: 1.2rem; }
+            .slide { padding: 40px 50px; }
+            .two-cols, .three-cols { grid-template-columns: 1fr; gap: 25px; }
+            .stats-grid { grid-template-columns: repeat(2, 1fr); }
+        }
+    </style>
+</head>
+<body>
+    <div class="slide-container">
+
+        <!-- SLIDE 1: PORTADA -->
+        <div class="slide bg-respaldo portada active">
+            <h1>Coordinación Fiscal y Monetaria</h1>
+            <p class="subtitle">Lecciones de la Historia Económica Argentina</p>
+            <p style="margin-top: 40px; opacity: 0.6;">Basado en Sargent & Wallace (1981) y la experiencia argentina</p>
+        </div>
+
+        <!-- SLIDE 2: LA PREGUNTA CENTRAL -->
+        <div class="slide bg-blanco">
+            <h2>La pregunta central</h2>
+            <blockquote style="font-size: 2rem;">
+                "¿Puede un banco central controlar la inflación si el gobierno tiene déficit crónicos?"
+            </blockquote>
+            <p style="margin-top: 30px;">Esta pregunta, aparentemente técnica, ha definido el destino económico de Argentina durante décadas.</p>
+            <p>La respuesta, según Sargent y Wallace, es <strong class="highlight-red">no</strong>... a menos que haya coordinación.</p>
+        </div>
+
+        <!-- SLIDE 3: TRANSICIÓN -->
+        <div class="slide bg-respaldo seccion-titulo">
+            <h3>Parte 1</h3>
+            <h1>El Marco Teórico</h1>
+            <p class="subtitle">Sargent, Wallace y la "aritmética desagradable"</p>
+        </div>
+
+        <!-- SLIDE 4: EL PAPER -->
+        <div class="slide bg-blanco">
+            <h2>"Some Unpleasant Monetarist Arithmetic"</h2>
+            <div class="cita-paper">
+                <div class="titulo">Federal Reserve Bank of Minneapolis - Quarterly Review, 1981</div>
+                <div class="autores">Thomas Sargent & Neil Wallace</div>
+                <div class="contenido">
+                    "La autoridad fiscal establece sus déficits y superávits actuales y futuros y así determina la cantidad de ingresos que debe obtener a través de la creación de bonos y dinero. La autoridad monetaria enfrenta entonces la demanda de bonos del público y puede determinar la composición de los pasivos del gobierno pero no su nivel."
+                </div>
+            </div>
+            <p style="margin-top: 20px;"><strong class="highlight">Traducción:</strong> Si el fisco no coopera, el banco central no puede controlar la inflación.</p>
+        </div>
+
+        <!-- SLIDE 5: LA RESTRICCIÓN INTERTEMPORAL -->
+        <div class="slide bg-blanco">
+            <h2>La restricción presupuestaria intertemporal</h2>
+            <p>El gobierno enfrenta una restricción que no puede violar:</p>
+            <div class="formula formula-grande">
+                Deuda<sub>hoy</sub> = Σ (Superávits futuros) + Σ (Señoreaje futuro)
+            </div>
+            <p style="text-align: center; margin-top: 20px;">En palabras simples:</p>
+            <div class="solucion-box">
+                <p style="font-size: 1.3rem; margin: 0;"><strong>Toda deuda debe pagarse eventualmente</strong>, ya sea con superávits fiscales genuinos o con el "impuesto inflacionario" (señoreaje).</p>
+            </div>
+            <p class="nota-academica">El señoreaje es el ingreso que obtiene el gobierno por emitir dinero. Con inflación alta, equivale a un impuesto a quienes tienen pesos.</p>
+        </div>
+
+        <!-- SLIDE 6: LOS DOS REGÍMENES -->
+        <div class="slide bg-blanco">
+            <h2>Dos regímenes posibles</h2>
+            <div class="versus">
+                <div class="concepto-box" style="border: 3px solid var(--verde-activo);">
+                    <h4>Dominancia Monetaria</h4>
+                    <p style="font-size: 1.1rem;">El Banco Central fija la política monetaria.</p>
+                    <p style="font-size: 1.1rem;">El Tesoro <strong>ajusta</strong> sus déficits.</p>
+                    <div class="solucion-box" style="margin-top: 15px; padding: 12px;">
+                        <p style="margin: 0; font-size: 1rem;"><strong>Inflación bajo control</strong></p>
+                    </div>
+                </div>
+                <div class="versus-center">vs</div>
+                <div class="concepto-box" style="border: 3px solid var(--rojo-alerta);">
+                    <h4>Dominancia Fiscal</h4>
+                    <p style="font-size: 1.1rem;">El Tesoro fija sus déficits.</p>
+                    <p style="font-size: 1.1rem;">El Banco Central <strong>ajusta</strong> su emisión.</p>
+                    <div class="problema-box" style="margin-top: 15px; padding: 12px;">
+                        <p style="margin: 0; font-size: 1rem;"><strong>Inflación inevitable</strong></p>
+                    </div>
+                </div>
+            </div>
+            <p style="text-align: center; margin-top: 25px;"><strong class="highlight">La pregunta no es si el BC es "independiente", sino quién mueve primero.</strong></p>
+        </div>
+
+        <!-- SLIDE 7: EL INSIGHT CLAVE -->
+        <div class="slide bg-impulso">
+            <h2>El insight clave de Sargent-Wallace</h2>
+            <blockquote style="border-left-color: white; font-size: 1.9rem;">
+                "Incluso si el banco central intenta ser 'duro' y no emitir hoy, si el déficit persiste, la deuda crece. Eventualmente, esa deuda deberá monetizarse. Una política monetaria restrictiva hoy puede generar <em>más</em> inflación mañana."
+            </blockquote>
+            <p style="margin-top: 30px; text-align: center; font-size: 1.3rem;">
+                <strong>El intento de controlar la inflación sin arreglar el déficit puede empeorar las cosas.</strong>
+            </p>
+        </div>
+
+        <!-- SLIDE 8: OTROS PAPERS RELEVANTES -->
+        <div class="slide bg-blanco">
+            <h2>Otros aportes teóricos relevantes</h2>
+            <div class="timeline">
+                <div class="timeline-item">
+                    <span class="timeline-year">1956</span>
+                    <div><strong>Phillip Cagan</strong> — "The Monetary Dynamics of Hyperinflation". Modeló cómo las expectativas de inflación pueden volverse auto-cumplidas.</div>
+                </div>
+                <div class="timeline-item">
+                    <span class="timeline-year">1974</span>
+                    <div><strong>Robert Barro</strong> — "Are Government Bonds Net Wealth?". La equivalencia ricardiana: si la deuda se pagará con impuestos futuros, el sector privado ajusta su ahorro.</div>
+                </div>
+                <div class="timeline-item">
+                    <span class="timeline-year">1981</span>
+                    <div><strong>Sargent & Wallace</strong> — "Unpleasant Monetarist Arithmetic". La dominancia fiscal elimina la independencia monetaria.</div>
+                </div>
+                <div class="timeline-item">
+                    <span class="timeline-year">1995</span>
+                    <div><strong>Michael Woodford</strong> — "Price Level Determinacy Without Control of a Monetary Aggregate". La teoría fiscal del nivel de precios.</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE 9: TRANSICIÓN HISTORIA -->
+        <div class="slide bg-respaldo seccion-titulo">
+            <h3>Parte 2</h3>
+            <h1>Argentina como <span class="highlight">Laboratorio</span></h1>
+            <p class="subtitle">50 años de experimentos en (des)coordinación</p>
+        </div>
+
+        <!-- SLIDE 10: ERA ALFONSÍN -->
+        <div class="slide bg-blanco">
+            <span class="era-badge crisis">CRISIS</span>
+            <h2>1983-1989: La hiperinflación alfonsinista</h2>
+            <p>El caso más puro de <strong class="highlight-red">dominancia fiscal</strong> en Argentina.</p>
+            <div class="stats-grid" style="margin-top: 20px;">
+                <div class="stat-box">
+                    <div class="stat-numero rojo" style="font-size: 3.5rem;">8-10%</div>
+                    <div class="stat-label">déficit fiscal<br>promedio (% PBI)</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-numero rojo" style="font-size: 3.5rem;">80%</div>
+                    <div class="stat-label">del déficit financiado<br>con emisión</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-numero rojo" style="font-size: 3.5rem;">3.079%</div>
+                    <div class="stat-label">inflación<br>en 1989</div>
+                </div>
+            </div>
+            <div class="problema-box" style="margin-top: 20px;">
+                <p style="margin: 0;"><strong>El diagnóstico de Sargent-Wallace:</strong> Con déficits de dos dígitos y sin acceso a crédito externo (post-default 1982), la monetización era matemáticamente inevitable.</p>
+            </div>
+        </div>
+
+        <!-- SLIDE 12: EL PLAN AUSTRAL -->
+        <div class="slide bg-blanco">
+            <h2>El Plan Austral (1985): un intento de coordinación</h2>
+            <p>El equipo de Sourrouille intentó romper la inercia inflacionaria:</p>
+            <ul>
+                <li><strong>Congelamiento</strong> de precios, salarios y tipo de cambio</li>
+                <li><strong>Nueva moneda</strong> (Austral = 1.000 pesos)</li>
+                <li><strong>Compromiso fiscal</strong> de reducir el déficit</li>
+                <li><strong>Prohibición</strong> de financiamiento del BCRA al Tesoro</li>
+            </ul>
+            <div class="solucion-box" style="margin-top: 15px;">
+                <p style="margin: 0;"><strong>Resultado inicial:</strong> Inflación bajó de 30% mensual a 2% mensual.</p>
+            </div>
+            <div class="problema-box" style="margin-top: 10px;">
+                <p style="margin: 0;"><strong>Resultado final:</strong> Sin ajuste fiscal estructural, la inflación volvió. En 1989: hiperinflación.</p>
+            </div>
+        </div>
+
+        <!-- SLIDE 13: LECCIÓN AUSTRAL -->
+        <div class="slide bg-rojo">
+            <h2>La lección del Plan Austral</h2>
+            <blockquote style="border-left-color: white; font-size: 2rem;">
+                "Un plan de estabilización sin sustento fiscal es como construir una casa sobre arena."
+            </blockquote>
+            <p style="margin-top: 30px; text-align: center;">
+                El Austral demostró que los <strong>"trucos"</strong> (congelamientos, cambios de moneda) no funcionan si no se arregla el problema de fondo: <strong>el déficit crónico</strong>.
+            </p>
+            <p style="text-align: center; margin-top: 20px; opacity: 0.8;">
+                Sargent estudió cuatro hiperinflaciones (Alemania, Austria, Hungría, Polonia 1920s) y encontró el mismo patrón: todas terminaron cuando se arregló el fisco.
+            </p>
+        </div>
+
+        <!-- SLIDE 14: CONVERTIBILIDAD INTRO -->
+        <div class="slide bg-blanco">
+            <span class="era-badge estabilidad">ESTABILIDAD</span>
+            <h2>1991-2001: La Convertibilidad</h2>
+            <p>El experimento más radical de <strong class="highlight">coordinación forzada</strong>.</p>
+            <div class="formula" style="margin-top: 25px;">
+                1 Peso = 1 Dólar (por ley)
+            </div>
+            <p style="text-align: center;"><strong class="highlight">El BCRA no puede emitir pesos sin respaldo en dólares.</strong></p>
+            <div class="two-cols" style="margin-top: 25px;">
+                <div class="solucion-box">
+                    <h4 style="color: var(--verde-activo);">Lo que logró</h4>
+                    <p style="margin: 0;">Eliminó la dominancia fiscal... mientras duró.</p>
+                </div>
+                <div class="problema-box">
+                    <h4 style="color: var(--rojo-alerta);">El problema</h4>
+                    <p style="margin: 0;">No eliminó el déficit, solo cambió su financiamiento.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE 15: CONVERTIBILIDAD - LA TRAMPA -->
+        <div class="slide bg-blanco">
+            <h2>La trampa de la Convertibilidad</h2>
+            <p>Sin emisión, el déficit solo podía financiarse con <strong class="highlight-red">deuda</strong>:</p>
+            <table>
+                <tr>
+                    <th>Año</th>
+                    <th>Deuda pública (% PBI)</th>
+                    <th>Déficit fiscal (% PBI)</th>
+                </tr>
+                <tr>
+                    <td>1991</td>
+                    <td>29%</td>
+                    <td>-1,5%</td>
+                </tr>
+                <tr>
+                    <td>1995</td>
+                    <td>34%</td>
+                    <td>-2,9%</td>
+                </tr>
+                <tr>
+                    <td>1998</td>
+                    <td>38%</td>
+                    <td>-2,4%</td>
+                </tr>
+                <tr>
+                    <td><strong>2001</strong></td>
+                    <td><strong class="highlight-red">54%</strong></td>
+                    <td><strong class="highlight-red">-5,4%</strong></td>
+                </tr>
+            </table>
+            <p style="margin-top: 15px;"><strong class="highlight">Lección de Sargent-Wallace:</strong> La restricción presupuestaria no desaparece. Si no emitís, te endeudás. Si no podés endeudarte más... default.</p>
+        </div>
+
+        <!-- SLIDE 16: COLAPSO 2001 -->
+        <div class="slide bg-rojo">
+            <h2>Diciembre de 2001: El colapso</h2>
+            <div class="stats-grid">
+                <div class="stat-box">
+                    <div class="stat-numero" style="color: white; font-size: 3rem;">US$ 132 B</div>
+                    <div class="stat-label">default de deuda<br>(el mayor de la historia)</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-numero" style="color: white; font-size: 3rem;">-11%</div>
+                    <div class="stat-label">caída del PBI<br>en 2002</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-numero" style="color: white; font-size: 3rem;">57%</div>
+                    <div class="stat-label">pobreza<br>en 2002</div>
+                </div>
+            </div>
+            <p style="text-align: center; margin-top: 30px;">
+                La Convertibilidad demostró que <strong>prohibir la emisión no alcanza</strong>.<br>
+                Sin equilibrio fiscal genuino, el ajuste llega igual, pero más violento.
+            </p>
+        </div>
+
+        <!-- SLIDE 17: POST-CRISIS -->
+        <div class="slide bg-blanco">
+            <span class="era-badge transicion">TRANSICIÓN</span>
+            <h2>2002-2008: La excepción histórica</h2>
+            <p>Por primera vez en décadas, Argentina logró <strong class="highlight">superávit fiscal sostenido</strong>:</p>
+            <div class="stats-grid" style="margin-top: 20px;">
+                <div class="stat-box">
+                    <div class="stat-numero" style="font-size: 3rem;">+3%</div>
+                    <div class="stat-label">superávit primario<br>promedio (% PBI)</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-numero" style="font-size: 3rem;">8%</div>
+                    <div class="stat-label">crecimiento<br>promedio anual</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-numero" style="font-size: 3rem;">10%</div>
+                    <div class="stat-label">inflación<br>promedio anual</div>
+                </div>
+            </div>
+            <div class="solucion-box" style="margin-top: 20px;">
+                <p style="margin: 0;"><strong>¿Cómo?</strong> Devaluación licuó gasto + retenciones récord a exportaciones + default redujo intereses de deuda. No fue "mérito", fue contexto excepcional.</p>
+            </div>
+        </div>
+
+        <!-- SLIDE 18: VUELTA AL DÉFICIT -->
+        <div class="slide bg-blanco">
+            <h2>2008-2015: El retorno de la dominancia fiscal</h2>
+            <p>A partir de 2008, el gasto público creció sistemáticamente más rápido que los ingresos:</p>
+            <div class="flow-diagram">
+                <div class="flow-box">Gasto público<br><small>+8% real/año</small></div>
+                <span class="flow-arrow">→</span>
+                <div class="flow-box" style="background: rgba(245,158,11,0.2);">Déficit creciente<br><small>de 0% a -5% PBI</small></div>
+                <span class="flow-arrow">→</span>
+                <div class="flow-box" style="background: rgba(220,38,38,0.2);">Emisión monetaria<br><small>Adelantos BCRA</small></div>
+            </div>
+            <p style="margin-top: 20px;"><strong>Instrumentos utilizados:</strong></p>
+            <ul>
+                <li>Adelantos transitorios del BCRA al Tesoro (límites violados sistemáticamente)</li>
+                <li>Uso de reservas internacionales para pagar deuda</li>
+                <li>"Contabilidad creativa" para ocultar el déficit real</li>
+            </ul>
+            <p class="nota-academica">La inflación, medida por consultoras privadas, pasó de 10% (2008) a 40% (2015).</p>
+        </div>
+
+        <!-- SLIDE 19: MACRI -->
+        <div class="slide bg-blanco">
+            <span class="era-badge transicion">TRANSICIÓN</span>
+            <h2>2016-2019: El intento gradualista</h2>
+            <p>El gobierno de Macri intentó reducir la dominancia fiscal <strong>gradualmente</strong>:</p>
+            <div class="two-cols" style="margin-top: 20px;">
+                <div>
+                    <h4 class="highlight">Lo que se intentó</h4>
+                    <ul style="font-size: 1.1rem;">
+                        <li>Reducir déficit fiscal "de a poco"</li>
+                        <li>Metas de inflación con BCRA "independiente"</li>
+                        <li>Financiar déficit con deuda externa</li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="highlight-red">Lo que pasó</h4>
+                    <ul style="font-size: 1.1rem;">
+                        <li>Déficit bajó poco (de 5% a 3,8%)</li>
+                        <li>Inflación nunca bajó de 25%</li>
+                        <li>Deuda creció de 53% a 90% del PBI</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="problema-box" style="margin-top: 20px;">
+                <p style="margin: 0;"><strong>Diagnóstico Sargent-Wallace:</strong> Con déficit persistente, las metas de inflación son "wishful thinking". El mercado lo entendió en abril 2018: corrida cambiaria, FMI, crisis.</p>
+            </div>
+        </div>
+
+        <!-- SLIDE 20: FERNÁNDEZ -->
+        <div class="slide bg-blanco">
+            <span class="era-badge crisis">CRISIS</span>
+            <h2>2020-2023: Dominancia fiscal extrema</h2>
+            <p>La pandemia y las políticas posteriores generaron un caso de libro de texto:</p>
+            <table>
+                <tr>
+                    <th>Año</th>
+                    <th>Déficit (% PBI)</th>
+                    <th>Emisión BCRA</th>
+                    <th>Inflación</th>
+                </tr>
+                <tr>
+                    <td>2020</td>
+                    <td>-6,4%</td>
+                    <td>7% del PBI</td>
+                    <td>36%</td>
+                </tr>
+                <tr>
+                    <td>2021</td>
+                    <td>-3,0%</td>
+                    <td>3,5% del PBI</td>
+                    <td>51%</td>
+                </tr>
+                <tr>
+                    <td>2022</td>
+                    <td>-2,4%</td>
+                    <td>2,5% del PBI</td>
+                    <td>95%</td>
+                </tr>
+                <tr>
+                    <td><strong>2023</strong></td>
+                    <td><strong>-4,4%</strong></td>
+                    <td><strong>3% del PBI</strong></td>
+                    <td><strong class="highlight-red">211%</strong></td>
+                </tr>
+            </table>
+            <p class="nota-academica">La inflación de 2023 fue la más alta desde 1991 (cuando terminó la hiperinflación).</p>
+        </div>
+
+        <!-- SLIDE 21: MILEI -->
+        <div class="slide bg-blanco">
+            <span class="era-badge estabilidad">¿ESTABILIDAD?</span>
+            <h2>2024: El experimento del "déficit cero"</h2>
+            <p>El gobierno de Milei aplicó el enfoque Sargent-Wallace de manera explícita:</p>
+            <div class="stats-grid" style="margin-top: 20px;">
+                <div class="stat-box">
+                    <div class="stat-numero" style="font-size: 3rem;">+1,8%</div>
+                    <div class="stat-label">superávit primario<br>(% PBI)</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-numero" style="font-size: 3rem;">0%</div>
+                    <div class="stat-label">emisión monetaria<br>para el Tesoro</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-numero" style="font-size: 3rem;">118%</div>
+                    <div class="stat-label">inflación 2024<br>(vs 211% en 2023)</div>
+                </div>
+            </div>
+            <div class="solucion-box" style="margin-top: 20px;">
+                <p style="margin: 0;"><strong>La hipótesis:</strong> Con déficit cero y sin emisión, la inflación debería converger a niveles bajos. Es la primera prueba "limpia" del modelo en Argentina.</p>
+            </div>
+            <p class="nota-academica">La inflación mensual cayó de 25% (dic-2023) a ~3% (dic-2024). La pregunta es si es sostenible.</p>
+        </div>
+
+        <!-- SLIDE 22: TRANSICIÓN LECCIONES -->
+        <div class="slide bg-respaldo seccion-titulo">
+            <h3>Parte 3</h3>
+            <h1>Lecciones para la <span class="highlight">Coordinación</span></h1>
+        </div>
+
+        <!-- SLIDE 23: LECCIÓN 1 -->
+        <div class="slide bg-verde">
+            <h2>Lección #1: La independencia del BCRA es condición necesaria, no suficiente</h2>
+            <blockquote style="border-left-color: white;">
+                "Puedes tener el banco central más independiente del mundo, pero si el Tesoro tiene déficits que no puede financiar con deuda, la independencia es una ilusión."
+                <cite>— Thomas Sargent</cite>
+            </blockquote>
+            <p style="margin-top: 25px;"><strong>Ejemplos:</strong></p>
+            <ul>
+                <li><strong>Argentina 2016-2019:</strong> BCRA con metas de inflación + déficit persistente = fracaso</li>
+                <li><strong>Brasil 1990s:</strong> BCRA independiente + Ley de Responsabilidad Fiscal = éxito</li>
+            </ul>
+        </div>
+
+        <!-- SLIDE 24: LECCIÓN 2 -->
+        <div class="slide bg-impulso">
+            <h2>Lección #2: El "timing" importa</h2>
+            <p>Sargent-Wallace mostraron que una política monetaria restrictiva hoy puede generar <strong>más</strong> inflación mañana:</p>
+            <div class="flow-diagram" style="margin-top: 25px;">
+                <div class="flow-box" style="background: rgba(255,255,255,0.2);">BCRA no emite</div>
+                <span class="flow-arrow" style="color: white;">→</span>
+                <div class="flow-box" style="background: rgba(255,255,255,0.2);">Tesoro se endeuda</div>
+                <span class="flow-arrow" style="color: white;">→</span>
+                <div class="flow-box" style="background: rgba(255,255,255,0.2);">Deuda crece</div>
+            </div>
+            <div class="flow-diagram">
+                <div class="flow-box" style="background: rgba(255,255,255,0.2);">Mercado duda</div>
+                <span class="flow-arrow" style="color: white;">→</span>
+                <div class="flow-box" style="background: rgba(255,255,255,0.2);">Se cierra el crédito</div>
+                <span class="flow-arrow" style="color: white;">→</span>
+                <div class="flow-box" style="background: rgba(220,38,38,0.4);">Emisión forzada</div>
+            </div>
+            <p style="text-align: center; margin-top: 20px;"><strong>Moraleja:</strong> Mejor ajustar el déficit hoy que monetizar la deuda mañana.</p>
+        </div>
+
+        <!-- SLIDE 25: LECCIÓN 3 -->
+        <div class="slide bg-blanco">
+            <h2>Lección #3: Las expectativas importan</h2>
+            <div class="cita-paper">
+                <div class="titulo">"The Ends of Four Big Inflations"</div>
+                <div class="autores">Thomas Sargent (1981)</div>
+                <div class="contenido">
+                    "Las cuatro hiperinflaciones terminaron abruptamente cuando los gobiernos realizaron reformas fiscales creíbles. No fue un proceso gradual. Las expectativas se ajustaron rápidamente."
+                </div>
+            </div>
+            <p style="margin-top: 20px;"><strong class="highlight">Implicancia:</strong> Si el público cree que el ajuste fiscal es permanente, las expectativas de inflación caen rápido. Si no cree, la inflación persiste aunque hoy haya superávit.</p>
+            <p><strong>Argentina 2024:</strong> La credibilidad del "déficit cero" es clave. Si el mercado duda que sea sostenible post-elecciones, la inflación no bajará tanto.</p>
+        </div>
+
+        <!-- SLIDE 26: LECCIÓN 4 -->
+        <div class="slide bg-blanco">
+            <h2>Lección #4: El régimen cambiario no es neutral</h2>
+            <div class="three-cols">
+                <div class="concepto-box">
+                    <h4>Tipo de cambio flexible</h4>
+                    <p style="font-size: 1rem;">El ajuste ante shocks se hace vía devaluación. Permite política monetaria independiente.</p>
+                    <p style="font-size: 0.9rem; margin-top: 10px;"><strong>Riesgo:</strong> Puede amplificar la inflación.</p>
+                </div>
+                <div class="concepto-box">
+                    <h4>Tipo de cambio fijo</h4>
+                    <p style="font-size: 1rem;">Ancla las expectativas. Pero elimina la válvula de escape y requiere ajuste fiscal perfecto.</p>
+                    <p style="font-size: 0.9rem; margin-top: 10px;"><strong>Riesgo:</strong> Crisis de balanza de pagos.</p>
+                </div>
+                <div class="concepto-box">
+                    <h4>Dolarización</h4>
+                    <p style="font-size: 1rem;">Elimina completamente la opción de emitir. La coordinación es "forzada" para siempre.</p>
+                    <p style="font-size: 0.9rem; margin-top: 10px;"><strong>Riesgo:</strong> Sin herramientas ante shocks.</p>
+                </div>
+            </div>
+            <p style="text-align: center; margin-top: 20px;"><strong class="highlight">Ningún régimen cambiario sustituye la disciplina fiscal.</strong></p>
+        </div>
+
+        <!-- SLIDE 27: SÍNTESIS -->
+        <div class="slide bg-impulso">
+            <h2>Síntesis: Condiciones para la estabilidad</h2>
+            <ul>
+                <li style="margin-bottom: 20px;">
+                    <strong>Equilibrio fiscal sostenible</strong><br>
+                    <span style="opacity: 0.8; font-size: 1.2rem;">No basta con superávit un año. Debe ser estructural y creíble.</span>
+                </li>
+                <li style="margin-bottom: 20px;">
+                    <strong>Banco Central que no financia al Tesoro</strong><br>
+                    <span style="opacity: 0.8; font-size: 1.2rem;">No adelantos transitorios, no compra de bonos en primario, no "contabilidad creativa".</span>
+                </li>
+                <li style="margin-bottom: 20px;">
+                    <strong>Deuda sostenible</strong><br>
+                    <span style="opacity: 0.8; font-size: 1.2rem;">Si la deuda es impagable, el mercado anticipa monetización o default.</span>
+                </li>
+                <li>
+                    <strong>Instituciones que garanticen permanencia</strong><br>
+                    <span style="opacity: 0.8; font-size: 1.2rem;">Leyes de responsabilidad fiscal, reglas fiscales con dientes, consenso político.</span>
+                </li>
+            </ul>
+        </div>
+
+        <!-- SLIDE 28: COMPARACIÓN INTERNACIONAL -->
+        <div class="slide bg-blanco">
+            <h2>Comparación: ¿Por qué otros países pudieron?</h2>
+            <table>
+                <tr>
+                    <th>País</th>
+                    <th>Mecanismo de coordinación</th>
+                    <th>Inflación 2024</th>
+                </tr>
+                <tr>
+                    <td>Chile</td>
+                    <td>Regla fiscal + fondo soberano + BCRA independiente</td>
+                    <td>4%</td>
+                </tr>
+                <tr>
+                    <td>Brasil</td>
+                    <td>Ley de Responsabilidad Fiscal (2000) + metas de inflación</td>
+                    <td>4%</td>
+                </tr>
+                <tr>
+                    <td>Perú</td>
+                    <td>Dolarización parcial + disciplina fiscal + BCRA técnico</td>
+                    <td>3%</td>
+                </tr>
+                <tr>
+                    <td>Colombia</td>
+                    <td>Regla fiscal + flotación + BCRA independiente</td>
+                    <td>6%</td>
+                </tr>
+            </table>
+            <p class="nota-academica">La diferencia no es "cultural". Es institucional. Estos países lograron mecanismos de coordinación que sobreviven a los cambios de gobierno.</p>
+        </div>
+
+        <!-- SLIDE 29: REFLEXIÓN FINAL -->
+        <div class="slide bg-respaldo">
+            <blockquote style="font-size: 2rem; text-align: center; border-left: none; padding: 0; max-width: 1000px; margin: 0 auto;">
+                "Argentina no tiene un problema de política monetaria.<br><br>
+                Argentina tiene un problema de política fiscal que se manifiesta en la política monetaria."
+                <cite style="text-align: center; margin-top: 20px;">— Adaptación del argumento de Sargent & Wallace</cite>
+            </blockquote>
+        </div>
+
+        <!-- SLIDE 30: CITA COOLIDGE -->
+        <div class="slide bg-impulso">
+            <blockquote style="font-size: 2rem; text-align: center; border-left: none; padding: 0; max-width: 1000px; margin: 0 auto;">
+                "Nada es más fácil que gastar dinero público. No parece pertenecer a nadie.<br><br>
+                La tentación de otorgárselo a alguien es abrumadora."
+                <cite style="text-align: center; margin-top: 20px;">— Calvin Coolidge, Presidente de EE.UU. (1923-1929)</cite>
+            </blockquote>
+            <p style="text-align: center; margin-top: 40px; opacity: 0.7; font-size: 1.2rem;">
+                Coolidge presidió la "era de prosperidad" de los años 20, caracterizada por<br>superávit fiscal y reducción de deuda pública.
+            </p>
+        </div>
+
+        <!-- SLIDE 31: PREGUNTAS ABIERTAS -->
+        <div class="slide bg-blanco">
+            <h2>Preguntas para la discusión</h2>
+            <ul>
+                <li style="margin-bottom: 25px;">
+                    <strong>¿Es suficiente el "déficit cero" o se necesitan reformas estructurales (jubilaciones, empleo público)?</strong>
+                </li>
+                <li style="margin-bottom: 25px;">
+                    <strong>¿Cómo se construye credibilidad fiscal en un país con 50 años de déficit crónico?</strong>
+                </li>
+                <li style="margin-bottom: 25px;">
+                    <strong>¿Dolarización como solución permanente o como "camisa de fuerza" que generará crisis futuras?</strong>
+                </li>
+                <li>
+                    <strong>¿Qué instituciones podrían garantizar la coordinación fiscal-monetaria más allá de los ciclos políticos?</strong>
+                </li>
+            </ul>
+        </div>
+
+        <!-- SLIDE 31: BIBLIOGRAFÍA -->
+        <div class="slide bg-blanco" style="font-size: 0.9rem;">
+            <h2>Referencias</h2>
+            <div class="two-cols" style="gap: 35px;">
+                <div>
+                    <p><strong>Sargent, T. & Wallace, N.</strong> (1981). Some Unpleasant Monetarist Arithmetic. Federal Reserve Bank of Minneapolis Quarterly Review.</p>
+                    <p><strong>Sargent, T.</strong> (1982). The Ends of Four Big Inflations. In Inflation: Causes and Effects, NBER.</p>
+                    <p><strong>Cagan, P.</strong> (1956). The Monetary Dynamics of Hyperinflation. In Studies in the Quantity Theory of Money.</p>
+                    <p><strong>Barro, R.</strong> (1974). Are Government Bonds Net Wealth? Journal of Political Economy.</p>
+                </div>
+                <div>
+                    <p><strong>Woodford, M.</strong> (1995). Price Level Determinacy Without Control of a Monetary Aggregate. Carnegie-Rochester Series on Public Policy.</p>
+                    <p><strong>Kiguel, M. & Liviatan, N.</strong> (1992). The Business Cycle Associated with Exchange Rate-Based Stabilizations. World Bank Economic Review.</p>
+                    <p><strong>BCRA</strong>. Informes de política monetaria (varios años).</p>
+                    <p><strong>Ministerio de Economía</strong>. Datos fiscales históricos.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE 32: CIERRE -->
+        <div class="slide bg-respaldo portada">
+            <h1>Gracias</h1>
+            <p class="subtitle" style="margin-top: 20px;">¿Preguntas?</p>
+        </div>
+
+    </div>
+
+    <div class="slide-counter">
+        <span id="current">1</span> / <span id="total">32</span>
+    </div>
+
+    <div class="nav-hint">
+        ← → para navegar | F para pantalla completa
+    </div>
+
+    <script>
+        const slides = document.querySelectorAll('.slide');
+        let currentSlide = 0;
+        const total = slides.length;
+
+        document.getElementById('total').textContent = total;
+
+        function showSlide(n) {
+            slides[currentSlide].classList.remove('active');
+            currentSlide = (n + total) % total;
+            slides[currentSlide].classList.add('active');
+            document.getElementById('current').textContent = currentSlide + 1;
+        }
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowRight' || e.key === ' ' || e.key === 'Enter') {
+                showSlide(currentSlide + 1);
+            } else if (e.key === 'ArrowLeft') {
+                showSlide(currentSlide - 1);
+            } else if (e.key === 'Home') {
+                showSlide(0);
+            } else if (e.key === 'End') {
+                showSlide(total - 1);
+            } else if (e.key === 'f' || e.key === 'F') {
+                if (document.fullscreenElement) {
+                    document.exitFullscreen();
+                } else {
+                    document.documentElement.requestFullscreen();
+                }
+            }
+        });
+
+        // Touch support
+        let touchStartX = 0;
+        document.addEventListener('touchstart', (e) => {
+            touchStartX = e.touches[0].clientX;
+        });
+
+        document.addEventListener('touchend', (e) => {
+            const touchEndX = e.changedTouches[0].clientX;
+            const diff = touchStartX - touchEndX;
+            if (Math.abs(diff) > 50) {
+                if (diff > 0) {
+                    showSlide(currentSlide + 1);
+                } else {
+                    showSlide(currentSlide - 1);
+                }
+            }
+        });
+
+        // Click to advance
+        document.querySelector('.slide-container').addEventListener('click', (e) => {
+            if (e.clientX > window.innerWidth / 2) {
+                showSlide(currentSlide + 1);
+            } else {
+                showSlide(currentSlide - 1);
+            }
+        });
+    </script>
+</body>
+</html>

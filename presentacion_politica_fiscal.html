@@ -1,0 +1,2475 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Política Fiscal - Una Introducción</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Albert+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --azul-impulso: #1036E2;
+            --verde-activo: #00C600;
+            --azul-respaldo: #021751;
+            --blanco: #FFFFFF;
+            --negro: #000000;
+            --rojo-alerta: #DC2626;
+            --amarillo: #F59E0B;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Albert Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--azul-respaldo);
+            color: var(--blanco);
+            overflow: hidden;
+        }
+
+        .slide-container {
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .slide {
+            display: none;
+            width: 100%;
+            height: 100%;
+            padding: 60px 80px;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .slide.active {
+            display: flex;
+        }
+
+        /* Fondos */
+        .bg-respaldo { background: var(--azul-respaldo); color: var(--blanco); }
+        .bg-impulso { background: var(--azul-impulso); color: var(--blanco); }
+        .bg-verde { background: var(--verde-activo); color: var(--blanco); }
+        .bg-blanco { background: var(--blanco); color: var(--azul-respaldo); }
+        .bg-oscuro { background: #0a0a0a; color: var(--blanco); }
+
+        /* Tipografía */
+        h1 {
+            font-size: 3.8rem;
+            font-weight: 700;
+            line-height: 1.1;
+            margin-bottom: 30px;
+        }
+
+        h2 {
+            font-size: 2.6rem;
+            font-weight: 600;
+            margin-bottom: 25px;
+        }
+
+        h3 {
+            font-size: 1.8rem;
+            font-weight: 500;
+            margin-bottom: 20px;
+            opacity: 0.9;
+        }
+
+        p, li {
+            font-size: 1.5rem;
+            line-height: 1.6;
+            margin-bottom: 15px;
+        }
+
+        .subtitle {
+            font-size: 1.6rem;
+            opacity: 0.8;
+            font-weight: 400;
+        }
+
+        .highlight {
+            color: var(--verde-activo);
+        }
+
+        .bg-blanco .highlight {
+            color: var(--azul-impulso);
+        }
+
+        .highlight-red {
+            color: var(--rojo-alerta);
+        }
+
+        .highlight-yellow {
+            color: var(--amarillo);
+        }
+
+        blockquote {
+            font-size: 1.7rem;
+            font-style: italic;
+            border-left: 4px solid var(--verde-activo);
+            padding-left: 30px;
+            margin: 25px 0;
+            opacity: 0.95;
+        }
+
+        blockquote cite {
+            display: block;
+            font-size: 1.1rem;
+            margin-top: 12px;
+            font-style: normal;
+            opacity: 0.7;
+        }
+
+        ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        ul li {
+            padding-left: 35px;
+            position: relative;
+            margin-bottom: 18px;
+        }
+
+        ul li::before {
+            content: "▸";
+            position: absolute;
+            left: 0;
+            color: var(--verde-activo);
+            font-size: 1.4rem;
+        }
+
+        .bg-verde ul li::before,
+        .bg-impulso ul li::before {
+            color: var(--blanco);
+        }
+
+        /* Tablas */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 25px 0;
+            font-size: 1.3rem;
+        }
+
+        th, td {
+            padding: 18px 22px;
+            text-align: left;
+            border-bottom: 1px solid rgba(255,255,255,0.2);
+        }
+
+        .bg-blanco th,
+        .bg-blanco td {
+            border-bottom: 1px solid rgba(0,0,0,0.1);
+        }
+
+        th {
+            font-weight: 600;
+            opacity: 0.7;
+            font-size: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* Fórmula/Ecuación */
+        .formula {
+            font-size: 2rem;
+            text-align: center;
+            padding: 30px;
+            background: rgba(255,255,255,0.08);
+            border-radius: 12px;
+            margin: 25px 0;
+            font-weight: 500;
+            letter-spacing: 2px;
+        }
+
+        .bg-blanco .formula {
+            background: rgba(16, 54, 226, 0.06);
+        }
+
+        .formula-grande {
+            font-size: 2.5rem;
+            padding: 40px;
+        }
+
+        /* Diagrama flujo */
+        .flow-diagram {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+            margin: 35px 0;
+            flex-wrap: wrap;
+        }
+
+        .flow-box {
+            background: rgba(255,255,255,0.1);
+            padding: 20px 28px;
+            border-radius: 10px;
+            font-size: 1.2rem;
+            font-weight: 500;
+            text-align: center;
+        }
+
+        .bg-blanco .flow-box {
+            background: rgba(16, 54, 226, 0.1);
+        }
+
+        .flow-arrow {
+            font-size: 1.8rem;
+            color: var(--verde-activo);
+        }
+
+        /* Dos columnas */
+        .two-cols {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 50px;
+            margin-top: 25px;
+        }
+
+        /* Tres columnas */
+        .three-cols {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 30px;
+            margin-top: 25px;
+        }
+
+        /* Concepto box */
+        .concepto-box {
+            background: rgba(255,255,255,0.08);
+            padding: 25px;
+            border-radius: 12px;
+            text-align: center;
+        }
+
+        .bg-blanco .concepto-box {
+            background: rgba(16, 54, 226, 0.06);
+        }
+
+        .concepto-box h4 {
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-bottom: 12px;
+            color: var(--verde-activo);
+        }
+
+        .bg-blanco .concepto-box h4 {
+            color: var(--azul-impulso);
+        }
+
+        .concepto-box p {
+            font-size: 1.15rem;
+            margin-bottom: 0;
+        }
+
+        /* Cita académica */
+        .cita-paper {
+            background: rgba(255,255,255,0.06);
+            padding: 25px 30px;
+            border-radius: 10px;
+            margin: 20px 0;
+            border-left: 4px solid var(--verde-activo);
+        }
+
+        .bg-blanco .cita-paper {
+            background: rgba(16, 54, 226, 0.04);
+            border-left-color: var(--azul-impulso);
+        }
+
+        .cita-paper .titulo {
+            font-weight: 600;
+            font-size: 1.15rem;
+            margin-bottom: 8px;
+        }
+
+        .cita-paper .autores {
+            font-size: 0.95rem;
+            opacity: 0.7;
+            margin-bottom: 12px;
+        }
+
+        .cita-paper .contenido {
+            font-size: 1.2rem;
+            line-height: 1.5;
+            font-style: italic;
+        }
+
+        /* Gráficos de barras */
+        .bar-chart {
+            margin: 30px 0;
+        }
+
+        .bar-row {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .bar-label {
+            width: 120px;
+            font-size: 1.1rem;
+            font-weight: 500;
+        }
+
+        .bar-container {
+            flex: 1;
+            height: 35px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 5px;
+            overflow: hidden;
+            margin: 0 15px;
+        }
+
+        .bg-blanco .bar-container {
+            background: rgba(0,0,0,0.05);
+        }
+
+        .bar {
+            height: 100%;
+            background: var(--verde-activo);
+            border-radius: 5px;
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            padding-right: 12px;
+            font-weight: 600;
+            font-size: 0.95rem;
+            color: white;
+        }
+
+        .bar.rojo {
+            background: var(--rojo-alerta);
+        }
+
+        .bar.azul {
+            background: var(--azul-impulso);
+        }
+
+        .bar.amarillo {
+            background: var(--amarillo);
+            color: #000;
+        }
+
+        /* Stats */
+        .stat-box {
+            text-align: center;
+            padding: 25px;
+        }
+
+        .stat-numero {
+            font-size: 4.5rem;
+            font-weight: 800;
+            color: var(--verde-activo);
+            line-height: 1;
+        }
+
+        .bg-blanco .stat-numero {
+            color: var(--azul-impulso);
+        }
+
+        .stat-numero.rojo {
+            color: var(--rojo-alerta);
+        }
+
+        .stat-label {
+            font-size: 1.2rem;
+            opacity: 0.8;
+            margin-top: 10px;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 35px;
+            margin-top: 35px;
+        }
+
+        .stats-grid-4 {
+            grid-template-columns: repeat(4, 1fr);
+        }
+
+        /* Navegación */
+        .nav-hint {
+            position: fixed;
+            bottom: 30px;
+            right: 40px;
+            font-size: 0.9rem;
+            opacity: 0.5;
+        }
+
+        .slide-counter {
+            position: fixed;
+            bottom: 30px;
+            left: 40px;
+            font-size: 0.9rem;
+            opacity: 0.5;
+        }
+
+        /* Portada */
+        .portada {
+            text-align: center;
+        }
+
+        .portada h1 {
+            font-size: 4.2rem;
+            margin-bottom: 20px;
+        }
+
+        /* Sección título */
+        .seccion-titulo {
+            text-align: center;
+        }
+
+        .seccion-titulo h3 {
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            font-size: 1.2rem;
+            opacity: 0.7;
+            margin-bottom: 15px;
+        }
+
+        /* Timeline */
+        .timeline {
+            display: flex;
+            flex-direction: column;
+            gap: 18px;
+            margin: 25px 0;
+        }
+
+        .timeline-item {
+            display: flex;
+            gap: 20px;
+            align-items: flex-start;
+        }
+
+        .timeline-year {
+            font-weight: 700;
+            font-size: 1rem;
+            color: var(--verde-activo);
+            min-width: 50px;
+        }
+
+        .bg-blanco .timeline-year {
+            color: var(--azul-impulso);
+        }
+
+        /* Versus */
+        .versus {
+            display: grid;
+            grid-template-columns: 1fr auto 1fr;
+            gap: 25px;
+            align-items: center;
+            margin: 25px 0;
+        }
+
+        .versus-center {
+            font-size: 2.5rem;
+            font-weight: 800;
+            opacity: 0.3;
+        }
+
+        /* Problema/Solución */
+        .problema-box {
+            background: rgba(220, 38, 38, 0.15);
+            border-left: 4px solid var(--rojo-alerta);
+            padding: 20px 25px;
+            border-radius: 0 10px 10px 0;
+            margin: 12px 0;
+        }
+
+        .solucion-box {
+            background: rgba(0, 198, 0, 0.15);
+            border-left: 4px solid var(--verde-activo);
+            padding: 20px 25px;
+            border-radius: 0 10px 10px 0;
+            margin: 12px 0;
+        }
+
+        .bg-blanco .problema-box {
+            background: rgba(220, 38, 38, 0.08);
+        }
+
+        .bg-blanco .solucion-box {
+            background: rgba(0, 198, 0, 0.08);
+        }
+
+        /* Nota académica */
+        .nota-academica {
+            font-size: 0.95rem;
+            opacity: 0.6;
+            margin-top: 25px;
+            padding-top: 15px;
+            border-top: 1px solid rgba(255,255,255,0.15);
+        }
+
+        .bg-blanco .nota-academica {
+            border-top-color: rgba(0,0,0,0.1);
+        }
+
+        /* Anexo badge */
+        .anexo-badge {
+            background: var(--amarillo);
+            color: #000;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            display: inline-block;
+            margin-bottom: 20px;
+        }
+
+        /* Grilla fiscal de círculos */
+        .fiscal-grid {
+            display: grid;
+            grid-template-columns: repeat(10, 1fr);
+            gap: 10px;
+            max-width: 700px;
+            margin: 20px auto;
+        }
+
+        .year-dot {
+            width: 52px;
+            height: 52px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            font-size: 0.85rem;
+            color: white;
+            transition: transform 0.2s;
+        }
+
+        .year-dot:hover {
+            transform: scale(1.15);
+            z-index: 10;
+        }
+
+        .year-dot.deficit {
+            background: var(--rojo-alerta);
+        }
+
+        .year-dot.superavit {
+            background: var(--verde-activo);
+            box-shadow: 0 0 12px rgba(0, 198, 0, 0.5);
+        }
+
+        .year-dot span {
+            opacity: 0.9;
+        }
+
+        .fiscal-legend {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            margin-top: 25px;
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 1.1rem;
+        }
+
+        .legend-dot {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+        }
+
+        .legend-dot.deficit {
+            background: var(--rojo-alerta);
+        }
+
+        .legend-dot.superavit {
+            background: var(--verde-activo);
+        }
+
+        /* Medidor de barras (evolución histórica) */
+        .inflation-meter {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin: 25px 0;
+        }
+
+        .meter-row {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .meter-label {
+            min-width: 80px;
+            font-weight: 600;
+            font-size: 1.1rem;
+        }
+
+        .meter-bar-container {
+            flex: 1;
+            height: 30px;
+            background: rgba(0,0,0,0.05);
+            border-radius: 15px;
+            overflow: hidden;
+        }
+
+        .meter-bar {
+            height: 100%;
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            padding-right: 12px;
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: white;
+        }
+
+        .meter-bar.low { background: var(--verde-activo); }
+        .meter-bar.medium { background: var(--amarillo); color: #000; }
+        .meter-bar.high { background: #EA580C; }
+        .meter-bar.extreme { background: var(--rojo-alerta); }
+
+        /* Gráficos de anillo/rosca (donut) */
+        .donut-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 40px;
+            margin: 20px 0;
+        }
+
+        .donut-chart {
+            position: relative;
+            width: 280px;
+            height: 280px;
+        }
+
+        .donut-chart svg {
+            transform: rotate(-90deg);
+        }
+
+        .donut-segment {
+            fill: none;
+            stroke-width: 50;
+        }
+
+        .donut-center {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+        }
+
+        .donut-center-number {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: var(--azul-impulso);
+        }
+
+        .donut-center-label {
+            font-size: 0.9rem;
+            opacity: 0.7;
+        }
+
+        .donut-legend {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .donut-legend-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 1.1rem;
+        }
+
+        .donut-legend-color {
+            width: 20px;
+            height: 20px;
+            border-radius: 4px;
+            flex-shrink: 0;
+        }
+
+        .donut-legend-value {
+            font-weight: 700;
+            min-width: 45px;
+        }
+
+        /* Gráfico de columnas */
+        .column-chart-container {
+            display: flex;
+            justify-content: center;
+            margin: 20px 0;
+        }
+
+        .column-chart {
+            display: flex;
+            align-items: flex-end;
+            justify-content: space-around;
+            height: 320px;
+            padding: 20px 30px;
+            border-bottom: 2px solid rgba(0,0,0,0.2);
+            gap: 20px;
+        }
+
+        .column-wrapper {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+            height: 100%;
+            justify-content: flex-end;
+        }
+
+        .column-bar {
+            width: 70px;
+            border-radius: 8px 8px 0 0;
+            display: flex;
+            align-items: flex-start;
+            justify-content: center;
+            padding-top: 10px;
+            font-weight: 700;
+            font-size: 1rem;
+            color: white;
+            transition: height 0.3s;
+            min-height: 40px;
+        }
+
+        .column-bar.low { background: var(--verde-activo); }
+        .column-bar.medium { background: var(--naranja); }
+        .column-bar.high { background: #EF4444; }
+        .column-bar.extreme { background: var(--rojo-alerta); }
+
+        .column-value {
+            font-weight: 700;
+        }
+
+        .column-label {
+            font-size: 1rem;
+            font-weight: 600;
+            text-align: center;
+            color: #333;
+        }
+
+        /* Maraña tributaria - PyME vs impuestos */
+        .marana-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 30px;
+            margin: 20px 0;
+        }
+
+        .pyme-side {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .pyme-icon {
+            background: rgba(16, 54, 226, 0.08);
+            padding: 25px;
+            border-radius: 20px;
+        }
+
+        .pyme-label {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--azul-impulso);
+            margin: 0;
+        }
+
+        .marana-arrow {
+            font-size: 2rem;
+            font-weight: 800;
+            color: var(--azul-respaldo);
+            opacity: 0.3;
+        }
+
+        .tax-grid-marana {
+            display: grid;
+            grid-template-columns: repeat(15, 1fr);
+            gap: 5px;
+            max-width: 500px;
+            padding: 20px;
+            background: rgba(220, 38, 38, 0.05);
+            border-radius: 15px;
+            border: 2px dashed rgba(220, 38, 38, 0.2);
+        }
+
+        .tax-dot {
+            width: 22px;
+            height: 22px;
+            border-radius: 50%;
+            background: var(--rojo-alerta);
+            opacity: 0.7;
+            transition: transform 0.2s, opacity 0.2s;
+        }
+
+        .tax-dot:hover {
+            transform: scale(1.3);
+            opacity: 1;
+        }
+
+        /* Recaudación concentrada */
+        .recaudacion-container {
+            display: flex;
+            align-items: flex-start;
+            justify-content: center;
+            gap: 40px;
+            margin: 25px 0;
+        }
+
+        .main-taxes-side, .other-taxes-side {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .main-taxes-grid {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 12px;
+            padding: 25px;
+            background: rgba(0, 198, 0, 0.08);
+            border-radius: 15px;
+            border: 3px solid var(--verde-activo);
+        }
+
+        .main-tax-dot {
+            width: 65px;
+            height: 65px;
+            border-radius: 50%;
+            background: var(--verde-activo);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.75rem;
+            font-weight: 700;
+            box-shadow: 0 4px 15px rgba(0, 198, 0, 0.4);
+            transition: transform 0.2s;
+        }
+
+        .main-tax-dot:hover {
+            transform: scale(1.1);
+        }
+
+        .other-taxes-grid {
+            display: grid;
+            grid-template-columns: repeat(15, 1fr);
+            gap: 3px;
+            padding: 15px;
+            background: rgba(220, 38, 38, 0.05);
+            border-radius: 12px;
+            border: 2px dashed rgba(220, 38, 38, 0.3);
+            max-width: 320px;
+        }
+
+        .other-tax-dot {
+            width: 14px;
+            height: 14px;
+            border-radius: 50%;
+            background: var(--rojo-alerta);
+            opacity: 0.5;
+        }
+
+        .recaudacion-vs {
+            font-size: 1.8rem;
+            font-weight: 800;
+            color: var(--azul-respaldo);
+            opacity: 0.25;
+            margin-top: 80px;
+        }
+
+        .recaudacion-label {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 2px;
+        }
+
+        .recaudacion-pct {
+            font-size: 2.5rem;
+            font-weight: 800;
+        }
+
+        .recaudacion-text {
+            font-size: 1rem;
+            opacity: 0.7;
+        }
+
+        .recaudacion-count {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-top: 5px;
+            padding: 4px 12px;
+            background: rgba(0,0,0,0.05);
+            border-radius: 20px;
+        }
+
+        /* Responsive */
+        @media (max-width: 1200px) {
+            h1 { font-size: 2.8rem; }
+            h2 { font-size: 2rem; }
+            p, li { font-size: 1.2rem; }
+            .slide { padding: 40px 50px; }
+            .two-cols, .three-cols { grid-template-columns: 1fr; gap: 25px; }
+            .stats-grid { grid-template-columns: repeat(2, 1fr); }
+        }
+    </style>
+</head>
+<body>
+    <div class="slide-container">
+
+        <!-- SLIDE 1: PORTADA -->
+        <div class="slide bg-respaldo portada active">
+            <h1>Política Fiscal</h1>
+            <p class="subtitle">Herramientas del Estado para influir en la economía</p>
+        </div>
+
+        <!-- SLIDE 2: CONTEXTO - CICLO ECONÓMICO -->
+        <div class="slide bg-blanco">
+            <h2>Las economías no crecen en línea recta</h2>
+            <p>Todas las economías atraviesan <strong class="highlight">ciclos</strong>: períodos de expansión seguidos de contracciones.</p>
+            <div class="flow-diagram" style="margin-top: 40px;">
+                <div class="flow-box">Expansión<br><small>empleo, consumo</small></div>
+                <span class="flow-arrow">→</span>
+                <div class="flow-box">Auge<br><small>máximo</small></div>
+                <span class="flow-arrow">→</span>
+                <div class="flow-box" style="background: rgba(220,38,38,0.1);">Recesión<br><small>caída actividad</small></div>
+                <span class="flow-arrow">→</span>
+                <div class="flow-box" style="background: rgba(220,38,38,0.15);">Valle<br><small>mínimo</small></div>
+                <span class="flow-arrow">→</span>
+                <div class="flow-box">Recuperación<br><small>vuelta a crecer</small></div>
+            </div>
+            <p style="text-align: center; margin-top: 30px;"><strong class="highlight">¿Puede el gobierno hacer algo al respecto?</strong></p>
+        </div>
+
+        <!-- SLIDE 3: KEYNES Y LA ESTABILIZACIÓN -->
+        <div class="slide bg-blanco">
+            <h2>La revolución keynesiana</h2>
+            <div class="cita-paper">
+                <div class="titulo">"The General Theory of Employment, Interest and Money"</div>
+                <div class="autores">John Maynard Keynes (1936)</div>
+                <div class="contenido">
+                    "El Estado tendrá que ejercer una influencia orientadora sobre la propensión a consumir (...) una socialización bastante completa de las inversiones será el único medio de aproximarse a la ocupación plena."
+                </div>
+            </div>
+            <p style="margin-top: 25px;">Keynes propuso que el gobierno puede y debe intervenir para <strong class="highlight">suavizar el ciclo económico</strong>: estimular en recesiones, enfriar en auges.</p>
+            <p class="nota-academica">Keynes, J.M. (1936). The General Theory. Capítulo 24. Esta obra fundó la macroeconomía moderna.</p>
+        </div>
+
+        <!-- SLIDE 4: DEFINICIÓN POLÍTICA FISCAL -->
+        <div class="slide bg-impulso">
+            <h2>¿Qué es la Política Fiscal?</h2>
+            <p>El uso del <strong>gasto público</strong> y los <strong>impuestos</strong> para influir en la economía.</p>
+            <div class="three-cols" style="margin-top: 40px;">
+                <div class="concepto-box" style="background: rgba(255,255,255,0.15);">
+                    <h4 style="color: white;">¿Cuánto se gasta?</h4>
+                    <p>Nivel total del gasto público</p>
+                </div>
+                <div class="concepto-box" style="background: rgba(255,255,255,0.15);">
+                    <h4 style="color: white;">¿En qué se gasta?</h4>
+                    <p>Composición del gasto</p>
+                </div>
+                <div class="concepto-box" style="background: rgba(255,255,255,0.15);">
+                    <h4 style="color: white;">¿Cómo se financia?</h4>
+                    <p>Impuestos, deuda, emisión</p>
+                </div>
+            </div>
+            <p style="text-align: center; margin-top: 35px; font-size: 1.3rem;">Todo esto se plasma en la <strong>Ley de Presupuesto</strong>.</p>
+        </div>
+
+        <!-- SLIDE 5: TRANSICIÓN RESTRICCIÓN -->
+        <div class="slide bg-respaldo seccion-titulo">
+            <h3>Parte 1</h3>
+            <h1>La Restricción <span class="highlight">Presupuestaria</span></h1>
+            <p class="subtitle">Una ley ineludible</p>
+        </div>
+
+        <!-- SLIDE 7: LA RESTRICCIÓN -->
+        <div class="slide bg-blanco">
+            <h2>La restricción presupuestaria del gobierno</h2>
+            <p>El gobierno, como cualquier agente económico, enfrenta una restricción: <strong>no puede gastar más de lo que financia</strong>.</p>
+            <div class="formula formula-grande">
+                Gastos = Impuestos + Deuda + Emisión
+            </div>
+            <p style="text-align: center;">Estas son las <strong class="highlight">únicas tres fuentes</strong> de financiamiento del gasto público.</p>
+            <p class="nota-academica">Esta identidad contable es ineludible. No es una opinión ideológica, es aritmética.</p>
+        </div>
+
+        <!-- SLIDE 8: LAS TRES FUENTES -->
+        <div class="slide bg-blanco">
+            <h2>Las tres fuentes de financiamiento</h2>
+            <div class="three-cols">
+                <div class="concepto-box">
+                    <h4>Impuestos (T)</h4>
+                    <p>Transferencia coercitiva del sector privado al público. No genera obligación futura.</p>
+                </div>
+                <div class="concepto-box">
+                    <h4>Deuda (ΔD)</h4>
+                    <p>Préstamo que deberá devolverse con intereses. Traslada la carga al futuro.</p>
+                </div>
+                <div class="concepto-box">
+                    <h4>Emisión (ΔM)</h4>
+                    <p>Creación de dinero. Genera inflación (impuesto inflacionario).</p>
+                </div>
+            </div>
+            <p style="text-align: center; margin-top: 30px;"><strong class="highlight">No hay almuerzo gratis:</strong> cada fuente tiene su costo.</p>
+        </div>
+
+        <!-- SLIDE 9: RESULTADO FISCAL -->
+        <div class="slide bg-blanco">
+            <h2>El resultado fiscal</h2>
+            <div class="formula">
+                Resultado = Ingresos − Gastos
+            </div>
+            <div class="two-cols" style="margin-top: 30px;">
+                <div class="solucion-box">
+                    <h4 style="color: var(--verde-activo); margin-bottom: 10px;">Superávit (Resultado > 0)</h4>
+                    <p style="font-size: 1.2rem; margin: 0;">El gobierno recauda más de lo que gasta. Puede ahorrar o pagar deuda.</p>
+                </div>
+                <div class="problema-box">
+                    <h4 style="color: var(--rojo-alerta); margin-bottom: 10px;">Déficit (Resultado < 0)</h4>
+                    <p style="font-size: 1.2rem; margin: 0;">El gobierno gasta más de lo que recauda. Debe financiarlo con deuda o emisión.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE 10: DÉFICIT - PREGUNTA -->
+        <div class="slide bg-respaldo">
+            <h2>Entonces...</h2>
+            <h1>¿El déficit fiscal es <span class="highlight-red">malo</span>?</h1>
+        </div>
+
+        <!-- SLIDE 11: DÉFICIT NO ES MALO PER SE -->
+        <div class="slide bg-blanco">
+            <h2>El déficit no es malo en sí mismo</h2>
+            <p>Igual que la deuda para una empresa (como vimos con River), el déficit puede ser una <strong class="highlight">herramienta legítima</strong>.</p>
+            <p style="margin-top: 20px;"><strong>Depende de:</strong></p>
+            <ul>
+                <li><strong>Situación del ciclo:</strong> En recesión, puede ser necesario estimular la economía</li>
+                <li><strong>Nivel de endeudamiento:</strong> Cuanto más endeudado, menos margen</li>
+                <li><strong>Destino del gasto:</strong> Inversión productiva vs. gasto corriente</li>
+                <li><strong>Frecuencia:</strong> ¿Es puntual o crónico?</li>
+            </ul>
+        </div>
+
+        <!-- SLIDE 12: LA CLAVE - FRECUENCIA -->
+        <div class="slide bg-verde">
+            <h2>La clave: ¿puntual o crónico?</h2>
+            <div class="versus">
+                <div class="concepto-box" style="background: rgba(255,255,255,0.2);">
+                    <h4 style="color: white;">Déficit puntual</h4>
+                    <p>Respuesta a una recesión o emergencia. Se compensa con superávit en tiempos buenos.</p>
+                </div>
+                <div class="versus-center">vs</div>
+                <div class="concepto-box" style="background: rgba(255,255,255,0.2); border: 2px solid rgba(255,255,255,0.5);">
+                    <h4 style="color: white;">Déficit crónico</h4>
+                    <p>Sistemático, año tras año. Acumula deuda sin límite. Insostenible.</p>
+                </div>
+            </div>
+            <p style="text-align: center; margin-top: 25px; font-size: 1.4rem;">
+                <strong>El problema no es el déficit. Es el déficit sistemático.</strong>
+            </p>
+        </div>
+
+        <!-- SLIDE 13: CITA REAGAN -->
+        <div class="slide bg-blanco">
+            <blockquote style="font-size: 2rem;">
+                "El gobierno es como un bebé: un canal alimenticio con gran apetito en un extremo y ninguna responsabilidad en el otro."
+                <cite>— Ronald Reagan, Presidente de EE.UU. (1981-1989)</cite>
+            </blockquote>
+            <p style="margin-top: 30px;">Reagan, aunque conservador, enfrentó déficits récord. Su frase captura un problema central: <strong class="highlight">la tentación política de gastar sin pagar el costo</strong>.</p>
+        </div>
+
+        <!-- SLIDE 14: ARGENTINA - DÉFICIT CRÓNICO -->
+        <div class="slide bg-blanco">
+            <h2>Argentina: un caso de déficit crónico</h2>
+            <p style="margin-bottom: 20px;">Resultado fiscal de Argentina, año por año (1965-2024):</p>
+
+            <div class="fiscal-grid">
+                <!-- Fila 1: 1965-1974 -->
+                <div class="year-dot deficit" title="1965"><span>65</span></div>
+                <div class="year-dot deficit" title="1966"><span>66</span></div>
+                <div class="year-dot deficit" title="1967"><span>67</span></div>
+                <div class="year-dot deficit" title="1968"><span>68</span></div>
+                <div class="year-dot deficit" title="1969"><span>69</span></div>
+                <div class="year-dot deficit" title="1970"><span>70</span></div>
+                <div class="year-dot deficit" title="1971"><span>71</span></div>
+                <div class="year-dot deficit" title="1972"><span>72</span></div>
+                <div class="year-dot deficit" title="1973"><span>73</span></div>
+                <div class="year-dot deficit" title="1974"><span>74</span></div>
+                <!-- Fila 2: 1975-1984 -->
+                <div class="year-dot deficit" title="1975"><span>75</span></div>
+                <div class="year-dot deficit" title="1976"><span>76</span></div>
+                <div class="year-dot deficit" title="1977"><span>77</span></div>
+                <div class="year-dot deficit" title="1978"><span>78</span></div>
+                <div class="year-dot deficit" title="1979"><span>79</span></div>
+                <div class="year-dot deficit" title="1980"><span>80</span></div>
+                <div class="year-dot deficit" title="1981"><span>81</span></div>
+                <div class="year-dot deficit" title="1982"><span>82</span></div>
+                <div class="year-dot deficit" title="1983"><span>83</span></div>
+                <div class="year-dot deficit" title="1984"><span>84</span></div>
+                <!-- Fila 3: 1985-1994 -->
+                <div class="year-dot deficit" title="1985"><span>85</span></div>
+                <div class="year-dot deficit" title="1986"><span>86</span></div>
+                <div class="year-dot deficit" title="1987"><span>87</span></div>
+                <div class="year-dot deficit" title="1988"><span>88</span></div>
+                <div class="year-dot deficit" title="1989"><span>89</span></div>
+                <div class="year-dot deficit" title="1990"><span>90</span></div>
+                <div class="year-dot deficit" title="1991"><span>91</span></div>
+                <div class="year-dot deficit" title="1992"><span>92</span></div>
+                <div class="year-dot deficit" title="1993"><span>93</span></div>
+                <div class="year-dot deficit" title="1994"><span>94</span></div>
+                <!-- Fila 4: 1995-2004 -->
+                <div class="year-dot deficit" title="1995"><span>95</span></div>
+                <div class="year-dot deficit" title="1996"><span>96</span></div>
+                <div class="year-dot deficit" title="1997"><span>97</span></div>
+                <div class="year-dot deficit" title="1998"><span>98</span></div>
+                <div class="year-dot deficit" title="1999"><span>99</span></div>
+                <div class="year-dot deficit" title="2000"><span>00</span></div>
+                <div class="year-dot deficit" title="2001"><span>01</span></div>
+                <div class="year-dot deficit" title="2002"><span>02</span></div>
+                <div class="year-dot superavit" title="2003"><span>03</span></div>
+                <div class="year-dot superavit" title="2004"><span>04</span></div>
+                <!-- Fila 5: 2005-2014 -->
+                <div class="year-dot superavit" title="2005"><span>05</span></div>
+                <div class="year-dot superavit" title="2006"><span>06</span></div>
+                <div class="year-dot superavit" title="2007"><span>07</span></div>
+                <div class="year-dot superavit" title="2008"><span>08</span></div>
+                <div class="year-dot deficit" title="2009"><span>09</span></div>
+                <div class="year-dot deficit" title="2010"><span>10</span></div>
+                <div class="year-dot deficit" title="2011"><span>11</span></div>
+                <div class="year-dot deficit" title="2012"><span>12</span></div>
+                <div class="year-dot deficit" title="2013"><span>13</span></div>
+                <div class="year-dot deficit" title="2014"><span>14</span></div>
+                <!-- Fila 6: 2015-2024 -->
+                <div class="year-dot deficit" title="2015"><span>15</span></div>
+                <div class="year-dot deficit" title="2016"><span>16</span></div>
+                <div class="year-dot deficit" title="2017"><span>17</span></div>
+                <div class="year-dot deficit" title="2018"><span>18</span></div>
+                <div class="year-dot deficit" title="2019"><span>19</span></div>
+                <div class="year-dot deficit" title="2020"><span>20</span></div>
+                <div class="year-dot deficit" title="2021"><span>21</span></div>
+                <div class="year-dot deficit" title="2022"><span>22</span></div>
+                <div class="year-dot deficit" title="2023"><span>23</span></div>
+                <div class="year-dot superavit" title="2024"><span>24</span></div>
+            </div>
+
+            <div class="fiscal-legend">
+                <div class="legend-item">
+                    <div class="legend-dot superavit"></div>
+                    <span>Superávit (7 años)</span>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-dot deficit"></div>
+                    <span>Déficit (53 años)</span>
+                </div>
+            </div>
+
+            <p class="nota-academica">Fuente: Ministerio de Economía, IARAF. Superávits: 2003-2008 (boom commodities + licuación post-devaluación) y 2024.</p>
+        </div>
+
+        <!-- SLIDE 15: TRANSICIÓN FISCAL-MONETARIO -->
+        <div class="slide bg-respaldo seccion-titulo">
+            <h3>Parte 2</h3>
+            <h1>Cuando el déficit se come a la <span class="highlight">política monetaria</span></h1>
+            <p class="subtitle">La dominancia fiscal</p>
+        </div>
+
+        <!-- SLIDE 16: VÍNCULO FISCAL-MONETARIO -->
+        <div class="slide bg-blanco">
+            <h2>El vínculo entre política fiscal y monetaria</h2>
+            <p>Recordemos la restricción presupuestaria:</p>
+            <div class="formula">
+                Gastos = Impuestos + <span class="highlight">Deuda</span> + <span class="highlight-red">Emisión</span>
+            </div>
+            <p style="margin-top: 25px;">Si hay déficit y no se puede emitir deuda (mercados cerrados, default), queda una sola opción:</p>
+            <div class="formula" style="background: rgba(220,38,38,0.1); border-left: 4px solid var(--rojo-alerta);">
+                Déficit = Emisión monetaria
+            </div>
+            <p style="text-align: center;"><strong class="highlight-red">El Banco Central pierde independencia.</strong></p>
+        </div>
+
+        <!-- SLIDE 17: SARGENT & WALLACE -->
+        <div class="slide bg-blanco">
+            <h2>La aritmética monetarista desagradable</h2>
+            <div class="cita-paper">
+                <div class="titulo">"Some Unpleasant Monetarist Arithmetic"</div>
+                <div class="autores">Thomas Sargent & Neil Wallace (1981) — Federal Reserve Bank of Minneapolis</div>
+                <div class="contenido">
+                    "Cuando la política fiscal domina, la autoridad monetaria no puede controlar la inflación. Déficits persistentes terminan siendo financiados con emisión, más tarde o más temprano."
+                </div>
+            </div>
+            <p style="margin-top: 20px;"><strong class="highlight">Dominancia fiscal:</strong> Cuando el déficit crónico fuerza al Banco Central a emitir, eliminando su capacidad de controlar la inflación.</p>
+            <p class="nota-academica">Sargent ganó el Nobel en 2011. Este paper es fundamental para entender la inflación argentina.</p>
+        </div>
+
+        <!-- SLIDE 17b: SARGENT & WALLACE - LÓGICA -->
+        <div class="slide bg-blanco">
+            <h2>La lógica del paper: un juego de dos jugadores</h2>
+            <p>Sargent y Wallace modelan la interacción entre <strong class="highlight">autoridad fiscal</strong> (Tesoro) y <strong class="highlight">autoridad monetaria</strong> (Banco Central) como un juego:</p>
+            <div class="two-cols" style="margin-top: 25px;">
+                <div class="concepto-box">
+                    <h4>Escenario A: Dominancia monetaria</h4>
+                    <p>El Banco Central fija la cantidad de dinero. El Tesoro debe ajustar su déficit a lo que puede financiar con deuda.</p>
+                    <p style="margin-top: 10px;"><strong class="highlight">Resultado:</strong> Inflación controlada</p>
+                </div>
+                <div class="concepto-box" style="border: 2px solid var(--rojo-alerta);">
+                    <h4>Escenario B: Dominancia fiscal</h4>
+                    <p>El Tesoro fija su déficit. El Banco Central debe emitir lo necesario para financiarlo.</p>
+                    <p style="margin-top: 10px;"><strong class="highlight-red">Resultado:</strong> Inflación endógena</p>
+                </div>
+            </div>
+            <p style="text-align: center; margin-top: 25px;"><strong>El punto clave:</strong> Si el déficit es fijo, la inflación no es elección del Banco Central.</p>
+        </div>
+
+        <!-- SLIDE 17c: SARGENT & WALLACE - ARGENTINA -->
+        <div class="slide bg-blanco">
+            <h2>El caso argentino: dominancia fiscal en acción</h2>
+            <p style="margin-bottom: 20px;">Argentina vivió el modelo de Sargent-Wallace en su versión más extrema:</p>
+            <table>
+                <tr>
+                    <th>Período</th>
+                    <th>Déficit fiscal</th>
+                    <th>Financiamiento BCRA</th>
+                    <th>Inflación anual</th>
+                </tr>
+                <tr>
+                    <td>1983-1985</td>
+                    <td>~10% PBI</td>
+                    <td>~75% del déficit</td>
+                    <td>600-700%</td>
+                </tr>
+                <tr>
+                    <td>1986-1988</td>
+                    <td>~7% PBI</td>
+                    <td>~80% del déficit</td>
+                    <td>90-400%</td>
+                </tr>
+                <tr>
+                    <td><strong class="highlight-red">1989</strong></td>
+                    <td>~8% PBI</td>
+                    <td>~90% del déficit</td>
+                    <td><strong class="highlight-red">3.079%</strong></td>
+                </tr>
+                <tr>
+                    <td><strong class="highlight-red">1990</strong></td>
+                    <td>~5% PBI</td>
+                    <td>~85% del déficit</td>
+                    <td><strong class="highlight-red">2.314%</strong></td>
+                </tr>
+            </table>
+            <p class="nota-academica">Fuente: BCRA, Ministerio de Economía. La hiperinflación fue el resultado directo de la dominancia fiscal.</p>
+        </div>
+
+        <!-- SLIDE 17d: SARGENT & WALLACE - LECCIÓN -->
+        <div class="slide bg-impulso">
+            <h2>La lección de Sargent-Wallace</h2>
+            <blockquote style="border-left-color: white; font-size: 1.8rem;">
+                "Un banco central que intenta controlar la inflación sin que el fisco coopere es como alguien que intenta llenar una bañera sin poner el tapón."
+                <cite>— Adaptación didáctica del argumento de Sargent & Wallace</cite>
+            </blockquote>
+            <div class="stats-grid" style="margin-top: 35px;">
+                <div class="stat-box">
+                    <div class="stat-numero" style="color: white; font-size: 3.5rem;">1989</div>
+                    <div class="stat-label">Argentina: hiperinflación<br>por dominancia fiscal</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-numero" style="color: white; font-size: 3.5rem;">1923</div>
+                    <div class="stat-label">Alemania: hiperinflación<br>por reparaciones de guerra</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-numero" style="color: white; font-size: 3.5rem;">2008</div>
+                    <div class="stat-label">Zimbabwe: hiperinflación<br>por colapso fiscal</div>
+                </div>
+            </div>
+            <p style="text-align: center; margin-top: 25px;">Todos los casos de hiperinflación tienen la misma raíz: <strong>dominancia fiscal.</strong></p>
+        </div>
+
+        <!-- SLIDE 18: FRIEDMAN -->
+        <div class="slide bg-impulso">
+            <blockquote style="font-size: 2rem; border-left-color: white;">
+                "La inflación es siempre y en todas partes un fenómeno monetario, en el sentido de que es y solo puede ser producida por un aumento más rápido de la cantidad de dinero que de la producción."
+                <cite>— Milton Friedman, Nobel de Economía 1976</cite>
+            </blockquote>
+            <p style="margin-top: 30px;">Pero Friedman también sabía que la emisión monetaria excesiva suele tener una <strong>causa fiscal</strong>: gobiernos que gastan más de lo que recaudan.</p>
+        </div>
+
+        <!-- SLIDE 19: EL CÍRCULO VICIOSO -->
+        <div class="slide bg-blanco">
+            <h2>El círculo vicioso de la dominancia fiscal</h2>
+            <div class="flow-diagram">
+                <div class="flow-box" style="background: rgba(220,38,38,0.1);">Déficit crónico</div>
+                <span class="flow-arrow">→</span>
+                <div class="flow-box" style="background: rgba(220,38,38,0.15);">Sin acceso a crédito</div>
+                <span class="flow-arrow">→</span>
+                <div class="flow-box" style="background: rgba(220,38,38,0.2);">Emisión monetaria</div>
+            </div>
+            <div class="flow-diagram">
+                <div class="flow-box" style="background: rgba(220,38,38,0.25);">Inflación</div>
+                <span class="flow-arrow">→</span>
+                <div class="flow-box" style="background: rgba(220,38,38,0.2);">Caída recaudación real</div>
+                <span class="flow-arrow">→</span>
+                <div class="flow-box" style="background: rgba(220,38,38,0.15);">Mayor déficit</div>
+            </div>
+            <p style="text-align: center; margin-top: 25px;"><strong class="highlight-red">El déficit fiscal crónico puede terminar destruyendo la moneda.</strong></p>
+        </div>
+
+        <!-- SLIDE 20: ALFONSÍN -->
+        <div class="slide bg-blanco">
+            <blockquote style="font-size: 1.8rem;">
+                "Con la democracia se come, se cura y se educa."
+                <cite>— Raúl Alfonsín, Presidente de Argentina (1983-1989)</cite>
+            </blockquote>
+            <p style="margin-top: 30px;">Alfonsín asumió con la promesa de un Estado presente. Pero sin recursos genuinos, terminó su mandato con <strong class="highlight-red">hiperinflación del 3.000%</strong> anual.</p>
+            <p>La lección: las buenas intenciones no alcanzan si no se respeta la restricción presupuestaria.</p>
+        </div>
+
+        <!-- SLIDE 21: TRANSICIÓN CLASIFICACIÓN -->
+        <div class="slide bg-respaldo seccion-titulo">
+            <h3>Parte 3</h3>
+            <h1>Clasificación de la <span class="highlight">Política Fiscal</span></h1>
+        </div>
+
+        <!-- SLIDE 22: CLASIFICACIÓN PF -->
+        <div class="slide bg-blanco">
+            <h2>Tres formas de clasificar la política fiscal</h2>
+            <div class="three-cols">
+                <div class="concepto-box">
+                    <h4>Por efecto en demanda</h4>
+                    <p><strong>Expansiva:</strong> ↑ gasto o ↓ impuestos<br><strong>Contractiva:</strong> ↓ gasto o ↑ impuestos</p>
+                </div>
+                <div class="concepto-box">
+                    <h4>Por efecto en el ciclo</h4>
+                    <p><strong>Contracíclica:</strong> suaviza el ciclo<br><strong>Procíclica:</strong> amplifica el ciclo</p>
+                </div>
+                <div class="concepto-box">
+                    <h4>Por efecto distributivo</h4>
+                    <p><strong>Progresiva:</strong> reduce desigualdad<br><strong>Regresiva:</strong> aumenta desigualdad</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE 23: CONTRACÍCLICA -->
+        <div class="slide bg-verde">
+            <h2>La política fiscal contracíclica</h2>
+            <blockquote style="border-left-color: white;">
+                "El momento de reparar el techo es cuando brilla el sol."
+                <cite>— John F. Kennedy, Presidente de EE.UU.</cite>
+            </blockquote>
+            <p style="margin-top: 25px;"><strong>En recesión:</strong> Política expansiva (↑ gasto, ↓ impuestos) → Déficit aceptable</p>
+            <p><strong>En auge:</strong> Política contractiva (↓ gasto, ↑ impuestos) → Superávit para ahorrar</p>
+            <p style="margin-top: 20px; font-size: 1.3rem;">El problema: políticamente es fácil expandir en recesión, pero difícil contraer en auge.</p>
+        </div>
+
+        <!-- SLIDE 24: TRANSICIÓN IMPUESTOS -->
+        <div class="slide bg-respaldo seccion-titulo">
+            <h3>Parte 4</h3>
+            <h1>Los <span class="highlight">Impuestos</span></h1>
+            <p class="subtitle">Eficacia, eficiencia y redistribución</p>
+        </div>
+
+        <!-- SLIDE 25: CRITERIOS IMPUESTOS -->
+        <div class="slide bg-blanco">
+            <h2>Tres criterios para evaluar impuestos</h2>
+            <div class="three-cols">
+                <div class="concepto-box">
+                    <h4>Eficacia</h4>
+                    <p>¿Recauda lo suficiente? ¿Es fácil de cobrar?</p>
+                </div>
+                <div class="concepto-box">
+                    <h4>Eficiencia</h4>
+                    <p>¿Distorsiona poco las decisiones económicas?</p>
+                </div>
+                <div class="concepto-box">
+                    <h4>Equidad</h4>
+                    <p>¿Es justo? ¿Paga más el que más tiene?</p>
+                </div>
+            </div>
+            <p style="text-align: center; margin-top: 30px;"><strong class="highlight">No existe el impuesto perfecto.</strong> Siempre hay trade-offs.</p>
+        </div>
+
+        <!-- SLIDE 26: CLASIFICACIÓN IMPUESTOS -->
+        <div class="slide bg-blanco">
+            <h2>Clasificación según el ingreso</h2>
+            <table>
+                <tr>
+                    <th>Tipo</th>
+                    <th>Definición</th>
+                    <th>Ejemplo</th>
+                </tr>
+                <tr>
+                    <td><strong class="highlight">Progresivo</strong></td>
+                    <td>Paga más % quien más gana</td>
+                    <td>Impuesto a las Ganancias (con escalas)</td>
+                </tr>
+                <tr>
+                    <td><strong>Proporcional</strong></td>
+                    <td>Todos pagan el mismo %</td>
+                    <td>Flat tax (no existe en Argentina)</td>
+                </tr>
+                <tr>
+                    <td><strong class="highlight-red">Regresivo</strong></td>
+                    <td>Paga más % quien menos gana</td>
+                    <td>IVA</td>
+                </tr>
+            </table>
+        </div>
+
+        <!-- SLIDE 27: EJEMPLO IVA -->
+        <div class="slide bg-blanco">
+            <h2>¿Por qué el IVA es regresivo?</h2>
+            <div class="two-cols">
+                <div>
+                    <h3 style="color: var(--rojo-alerta);">Juan (ingreso bajo)</h3>
+                    <p>Gana $500.000/mes</p>
+                    <p>Consume todo: $500.000</p>
+                    <p>IVA pagado (21%): $105.000</p>
+                    <p><strong>% sobre ingreso: 21%</strong></p>
+                </div>
+                <div>
+                    <h3 class="highlight">María (ingreso alto)</h3>
+                    <p>Gana $5.000.000/mes</p>
+                    <p>Consume: $2.500.000</p>
+                    <p>IVA pagado (21%): $525.000</p>
+                    <p><strong>% sobre ingreso: 10,5%</strong></p>
+                </div>
+            </div>
+            <p style="text-align: center; margin-top: 30px;"><strong class="highlight-red">Mismo impuesto, pero Juan paga el doble en proporción a su ingreso.</strong></p>
+        </div>
+
+        <!-- SLIDE 28: ESTRUCTURA TRIBUTARIA ARGENTINA -->
+        <div class="slide bg-blanco">
+            <h2>Estructura tributaria argentina</h2>
+            <p>Los 10 tributos principales aportan el 92% de la recaudación total:</p>
+            <div class="bar-chart">
+                <div class="bar-row">
+                    <span class="bar-label">IVA</span>
+                    <div class="bar-container">
+                        <div class="bar" style="width: 100%;">32,8%</div>
+                    </div>
+                </div>
+                <div class="bar-row">
+                    <span class="bar-label">Seg. Social</span>
+                    <div class="bar-container">
+                        <div class="bar azul" style="width: 66%;">21,8%</div>
+                    </div>
+                </div>
+                <div class="bar-row">
+                    <span class="bar-label">Ganancias</span>
+                    <div class="bar-container">
+                        <div class="bar azul" style="width: 60%;">19,8%</div>
+                    </div>
+                </div>
+                <div class="bar-row">
+                    <span class="bar-label">Créditos/Déb.</span>
+                    <div class="bar-container">
+                        <div class="bar amarillo" style="width: 22%;">7,2%</div>
+                    </div>
+                </div>
+                <div class="bar-row">
+                    <span class="bar-label">Exportaciones</span>
+                    <div class="bar-container">
+                        <div class="bar amarillo" style="width: 14%;">4,6%</div>
+                    </div>
+                </div>
+            </div>
+            <p class="nota-academica">Fuente: AFIP, datos 2024. El "impuesto al cheque" es distorsivo y las retenciones desincentivan exportaciones.</p>
+        </div>
+
+        <!-- SLIDE 29: 155 TRIBUTOS - LA MARAÑA -->
+        <div class="slide bg-blanco">
+            <h2>La maraña tributaria argentina</h2>
+            <p style="text-align: center; margin-bottom: 15px;">Una PyME enfrenta <strong class="highlight">155 tributos</strong> entre Nación, provincias y municipios</p>
+
+            <div class="marana-container">
+                <!-- PyME icon -->
+                <div class="pyme-side">
+                    <div class="pyme-icon">
+                        <svg viewBox="0 0 100 100" width="120" height="120">
+                            <!-- Building -->
+                            <rect x="20" y="30" width="60" height="65" fill="#1036E2" rx="3"/>
+                            <!-- Windows -->
+                            <rect x="28" y="40" width="12" height="10" fill="#fff" rx="1"/>
+                            <rect x="44" y="40" width="12" height="10" fill="#fff" rx="1"/>
+                            <rect x="60" y="40" width="12" height="10" fill="#fff" rx="1"/>
+                            <rect x="28" y="55" width="12" height="10" fill="#fff" rx="1"/>
+                            <rect x="44" y="55" width="12" height="10" fill="#fff" rx="1"/>
+                            <rect x="60" y="55" width="12" height="10" fill="#fff" rx="1"/>
+                            <!-- Door -->
+                            <rect x="40" y="72" width="20" height="23" fill="#00C600" rx="2"/>
+                            <!-- Roof/Sign -->
+                            <rect x="30" y="22" width="40" height="12" fill="#021751" rx="2"/>
+                            <text x="50" y="31" text-anchor="middle" fill="white" font-size="8" font-weight="bold">PyME</text>
+                        </svg>
+                    </div>
+                    <p class="pyme-label">Tu empresa</p>
+                </div>
+
+                <!-- Arrow -->
+                <div class="marana-arrow">
+                    <span>vs</span>
+                </div>
+
+                <!-- Tax grid - 155 circles -->
+                <div class="tax-grid-marana">
+                    <!-- 155 small circles representing taxes -->
+                    <div class="tax-dot"></div><div class="tax-dot"></div><div class="tax-dot"></div><div class="tax-dot"></div><div class="tax-dot"></div><div class="tax-dot"></div><div class="tax-dot"></div><div class="tax-dot"></div><div class="tax-dot"></div><div class="tax-dot"></div><div class="tax-dot"></div><div class="tax-dot"></div><div class="tax-dot"></div><div class="tax-dot"></div><div class="tax-dot"></div><div class="tax-dot"></div><div class="tax-dot"></div><div class="tax-dot"></div><div class="tax-dot"></div><div class="tax-dot"></div><div class="tax-dot"></div><div class="tax-dot"></div><div class="tax-dot"></div><div class="tax-dot"></div><div class="tax-dot"></div><div class="tax-dot"></div><div class="tax-dot"></div><div class="tax-dot"></div><div class="tax-dot"></div><div class="tax-dot"></div><div class="tax-dot"></div><div class="tax-dot"></div><div class="tax-dot"></div><div class="tax-dot"></div><div class="tax-dot"></div><div class="tax-dot"></div><div class="tax-dot"></div><div class="tax-dot"></div><div class="tax-dot"></div><div class="tax-dot"></div><div class="tax-dot"></div><div class="tax-dot"></div><div class="tax-dot"></div><div class="tax-dot"></div><div class="tax-dot"></div><div class="tax-dot"></div><div class="tax-dot"></div><div class="tax-dot"></div><div class="tax-dot"></div><div class="tax-dot"></div><div class="tax-dot"></div><div class="tax-dot"></div><div class="tax-dot"></div><div class="tax-dot"></div><div class="tax-dot"></div><div class="tax-dot"></div><div class="tax-dot"></div><div class="tax-dot"></div><div class="tax-dot"></div><div class="tax-dot"></div><div class="tax-dot"></div><div class="tax-dot"></div><div class="tax-dot"></div><div class="tax-dot"></div><div class="tax-dot"></div><div class="tax-dot"></div><div class="tax-dot"></div><div class="tax-dot"></div><div class="tax-dot"></div><div class="tax-dot"></div><div class="tax-dot"></div><div class="tax-dot"></div><div class="tax-dot"></div><div class="tax-dot"></div><div class="tax-dot"></div><div class="tax-dot"></div><div class="tax-dot"></div><div class="tax-dot"></div><div class="tax-dot"></div><div class="tax-dot"></div><div class="tax-dot"></div><div class="tax-dot"></div><div class="tax-dot"></div><div class="tax-dot"></div><div class="tax-dot"></div><div class="tax-dot"></div><div class="tax-dot"></div><div class="tax-dot"></div><div class="tax-dot"></div><div class="tax-dot"></div><div class="tax-dot"></div><div class="tax-dot"></div><div class="tax-dot"></div><div class="tax-dot"></div><div class="tax-dot"></div><div class="tax-dot"></div><div class="tax-dot"></div><div class="tax-dot"></div><div class="tax-dot"></div><div class="tax-dot"></div><div class="tax-dot"></div><div class="tax-dot"></div><div class="tax-dot"></div><div class="tax-dot"></div><div class="tax-dot"></div><div class="tax-dot"></div><div class="tax-dot"></div><div class="tax-dot"></div><div class="tax-dot"></div><div class="tax-dot"></div><div class="tax-dot"></div><div class="tax-dot"></div><div class="tax-dot"></div><div class="tax-dot"></div><div class="tax-dot"></div><div class="tax-dot"></div><div class="tax-dot"></div><div class="tax-dot"></div><div class="tax-dot"></div><div class="tax-dot"></div><div class="tax-dot"></div><div class="tax-dot"></div><div class="tax-dot"></div><div class="tax-dot"></div><div class="tax-dot"></div><div class="tax-dot"></div><div class="tax-dot"></div><div class="tax-dot"></div><div class="tax-dot"></div><div class="tax-dot"></div><div class="tax-dot"></div><div class="tax-dot"></div><div class="tax-dot"></div><div class="tax-dot"></div><div class="tax-dot"></div><div class="tax-dot"></div><div class="tax-dot"></div><div class="tax-dot"></div><div class="tax-dot"></div><div class="tax-dot"></div><div class="tax-dot"></div><div class="tax-dot"></div><div class="tax-dot"></div><div class="tax-dot"></div><div class="tax-dot"></div><div class="tax-dot"></div><div class="tax-dot"></div><div class="tax-dot"></div><div class="tax-dot"></div>
+                </div>
+            </div>
+            <p class="nota-academica">Fuente: IARAF, Vademécum Tributario 2024.</p>
+        </div>
+
+        <!-- SLIDE 30: LA REALIDAD DE LA RECAUDACIÓN -->
+        <div class="slide bg-blanco">
+            <h2>Pero la recaudación está concentrada</h2>
+            <p style="text-align: center; margin-bottom: 20px;">De esos 155 tributos, solo <strong class="highlight">10 aportan el 92%</strong> de la recaudación</p>
+
+            <div class="recaudacion-container">
+                <!-- 10 main taxes = 92% -->
+                <div class="main-taxes-side">
+                    <div class="main-taxes-grid">
+                        <div class="main-tax-dot" title="IVA">IVA</div>
+                        <div class="main-tax-dot" title="Seg. Social">SS</div>
+                        <div class="main-tax-dot" title="Ganancias">GAN</div>
+                        <div class="main-tax-dot" title="Cheque">CHQ</div>
+                        <div class="main-tax-dot" title="Retenciones">RET</div>
+                        <div class="main-tax-dot" title="Combustibles">COMB</div>
+                        <div class="main-tax-dot" title="Bienes Personales">BBPP</div>
+                        <div class="main-tax-dot" title="Internos">INT</div>
+                        <div class="main-tax-dot" title="Aranceles">ARAN</div>
+                        <div class="main-tax-dot" title="Otros nacionales">OTRO</div>
+                    </div>
+                    <div class="recaudacion-label">
+                        <span class="recaudacion-pct highlight">92%</span>
+                        <span class="recaudacion-text">de la recaudación</span>
+                        <span class="recaudacion-count">10 tributos</span>
+                    </div>
+                </div>
+
+                <!-- Separator -->
+                <div class="recaudacion-vs">vs</div>
+
+                <!-- 145 other taxes = 8% -->
+                <div class="other-taxes-side">
+                    <div class="other-taxes-grid">
+                        <div class="other-tax-dot"></div><div class="other-tax-dot"></div><div class="other-tax-dot"></div><div class="other-tax-dot"></div><div class="other-tax-dot"></div><div class="other-tax-dot"></div><div class="other-tax-dot"></div><div class="other-tax-dot"></div><div class="other-tax-dot"></div><div class="other-tax-dot"></div><div class="other-tax-dot"></div><div class="other-tax-dot"></div><div class="other-tax-dot"></div><div class="other-tax-dot"></div><div class="other-tax-dot"></div><div class="other-tax-dot"></div><div class="other-tax-dot"></div><div class="other-tax-dot"></div><div class="other-tax-dot"></div><div class="other-tax-dot"></div><div class="other-tax-dot"></div><div class="other-tax-dot"></div><div class="other-tax-dot"></div><div class="other-tax-dot"></div><div class="other-tax-dot"></div><div class="other-tax-dot"></div><div class="other-tax-dot"></div><div class="other-tax-dot"></div><div class="other-tax-dot"></div><div class="other-tax-dot"></div><div class="other-tax-dot"></div><div class="other-tax-dot"></div><div class="other-tax-dot"></div><div class="other-tax-dot"></div><div class="other-tax-dot"></div><div class="other-tax-dot"></div><div class="other-tax-dot"></div><div class="other-tax-dot"></div><div class="other-tax-dot"></div><div class="other-tax-dot"></div><div class="other-tax-dot"></div><div class="other-tax-dot"></div><div class="other-tax-dot"></div><div class="other-tax-dot"></div><div class="other-tax-dot"></div><div class="other-tax-dot"></div><div class="other-tax-dot"></div><div class="other-tax-dot"></div><div class="other-tax-dot"></div><div class="other-tax-dot"></div><div class="other-tax-dot"></div><div class="other-tax-dot"></div><div class="other-tax-dot"></div><div class="other-tax-dot"></div><div class="other-tax-dot"></div><div class="other-tax-dot"></div><div class="other-tax-dot"></div><div class="other-tax-dot"></div><div class="other-tax-dot"></div><div class="other-tax-dot"></div><div class="other-tax-dot"></div><div class="other-tax-dot"></div><div class="other-tax-dot"></div><div class="other-tax-dot"></div><div class="other-tax-dot"></div><div class="other-tax-dot"></div><div class="other-tax-dot"></div><div class="other-tax-dot"></div><div class="other-tax-dot"></div><div class="other-tax-dot"></div><div class="other-tax-dot"></div><div class="other-tax-dot"></div><div class="other-tax-dot"></div><div class="other-tax-dot"></div><div class="other-tax-dot"></div><div class="other-tax-dot"></div><div class="other-tax-dot"></div><div class="other-tax-dot"></div><div class="other-tax-dot"></div><div class="other-tax-dot"></div><div class="other-tax-dot"></div><div class="other-tax-dot"></div><div class="other-tax-dot"></div><div class="other-tax-dot"></div><div class="other-tax-dot"></div><div class="other-tax-dot"></div><div class="other-tax-dot"></div><div class="other-tax-dot"></div><div class="other-tax-dot"></div><div class="other-tax-dot"></div><div class="other-tax-dot"></div><div class="other-tax-dot"></div><div class="other-tax-dot"></div><div class="other-tax-dot"></div><div class="other-tax-dot"></div><div class="other-tax-dot"></div><div class="other-tax-dot"></div><div class="other-tax-dot"></div><div class="other-tax-dot"></div><div class="other-tax-dot"></div><div class="other-tax-dot"></div><div class="other-tax-dot"></div><div class="other-tax-dot"></div><div class="other-tax-dot"></div><div class="other-tax-dot"></div><div class="other-tax-dot"></div><div class="other-tax-dot"></div><div class="other-tax-dot"></div><div class="other-tax-dot"></div><div class="other-tax-dot"></div><div class="other-tax-dot"></div><div class="other-tax-dot"></div><div class="other-tax-dot"></div><div class="other-tax-dot"></div><div class="other-tax-dot"></div><div class="other-tax-dot"></div><div class="other-tax-dot"></div><div class="other-tax-dot"></div><div class="other-tax-dot"></div><div class="other-tax-dot"></div><div class="other-tax-dot"></div><div class="other-tax-dot"></div><div class="other-tax-dot"></div><div class="other-tax-dot"></div><div class="other-tax-dot"></div><div class="other-tax-dot"></div><div class="other-tax-dot"></div><div class="other-tax-dot"></div><div class="other-tax-dot"></div><div class="other-tax-dot"></div><div class="other-tax-dot"></div><div class="other-tax-dot"></div><div class="other-tax-dot"></div><div class="other-tax-dot"></div><div class="other-tax-dot"></div><div class="other-tax-dot"></div><div class="other-tax-dot"></div><div class="other-tax-dot"></div><div class="other-tax-dot"></div><div class="other-tax-dot"></div><div class="other-tax-dot"></div><div class="other-tax-dot"></div><div class="other-tax-dot"></div>
+                    </div>
+                    <div class="recaudacion-label">
+                        <span class="recaudacion-pct highlight-red">8%</span>
+                        <span class="recaudacion-text">de la recaudación</span>
+                        <span class="recaudacion-count">145 tributos</span>
+                    </div>
+                </div>
+            </div>
+
+            <p style="text-align: center; margin-top: 20px;"><strong class="highlight-red">145 impuestos que solo agregan complejidad y costo de cumplimiento.</strong></p>
+            <p class="nota-academica">Fuente: IARAF, Vademécum Tributario 2024.</p>
+        </div>
+
+        <!-- SLIDE 31: TRANSICIÓN INERCIA -->
+        <div class="slide bg-respaldo seccion-titulo">
+            <h3>Parte 5</h3>
+            <h1><span class="highlight">Inercia Fiscal</span> y Federalismo</h1>
+            <p class="subtitle">Por qué es tan difícil cambiar</p>
+        </div>
+
+        <!-- SLIDE 31: INERCIA FISCAL -->
+        <div class="slide bg-blanco">
+            <h2>La inercia fiscal</h2>
+            <p>La mayor parte del gasto público está <strong class="highlight-red">"comprometido"</strong> por leyes, contratos o derechos adquiridos.</p>
+            <div class="stats-grid" style="margin-top: 30px;">
+                <div class="stat-box">
+                    <div class="stat-numero rojo">64%</div>
+                    <div class="stat-label">gasto de<br>rigidez alta</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-numero" style="color: var(--amarillo);">25%</div>
+                    <div class="stat-label">gasto de<br>rigidez media</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-numero">11%</div>
+                    <div class="stat-label">gasto<br>flexible</div>
+                </div>
+            </div>
+            <p style="text-align: center; margin-top: 25px;"><strong>Solo 1 de cada 10 pesos del presupuesto es realmente discrecional.</strong></p>
+            <p class="nota-academica">Fuente: OPC (Oficina de Presupuesto del Congreso), datos 2021.</p>
+        </div>
+
+        <!-- SLIDE 32: QUÉ ES RÍGIDO -->
+        <div class="slide bg-blanco">
+            <h2>¿Qué gastos son rígidos?</h2>
+            <table>
+                <tr>
+                    <th>Rubro</th>
+                    <th>% del gasto rígido</th>
+                    <th>Por qué</th>
+                </tr>
+                <tr>
+                    <td>Jubilaciones y pensiones</td>
+                    <td>~52%</td>
+                    <td>Ley de movilidad, derechos adquiridos</td>
+                </tr>
+                <tr>
+                    <td>Salarios públicos</td>
+                    <td>~15%</td>
+                    <td>Estabilidad del empleo público</td>
+                </tr>
+                <tr>
+                    <td>Intereses de deuda</td>
+                    <td>~10%</td>
+                    <td>Contratos firmados</td>
+                </tr>
+                <tr>
+                    <td>Transferencias a provincias</td>
+                    <td>~3%</td>
+                    <td>Coparticipación constitucional</td>
+                </tr>
+            </table>
+            <p style="margin-top: 20px;"><strong class="highlight">Implicancia:</strong> Ajustar el gasto rápidamente requiere reformas estructurales (jubilaciones, empleo público), no solo "recortes".</p>
+        </div>
+
+        <!-- SLIDE 33: BUCHANAN - PUBLIC CHOICE -->
+        <div class="slide bg-blanco">
+            <h2>El problema de la acción colectiva</h2>
+            <div class="cita-paper">
+                <div class="titulo">"The Calculus of Consent"</div>
+                <div class="autores">James Buchanan & Gordon Tullock (1962)</div>
+                <div class="contenido">
+                    "Los beneficios del gasto público están concentrados en grupos organizados, mientras que los costos (impuestos) están dispersos entre millones de contribuyentes."
+                </div>
+            </div>
+            <p style="margin-top: 20px;"><strong class="highlight">Ejemplo:</strong> Un subsidio a Tierra del Fuego beneficia mucho a 50.000 personas y cuesta $100/año a cada argentino. ¿Quién protesta?</p>
+            <p class="nota-academica">Buchanan ganó el Nobel en 1986 por fundar la "Public Choice" o economía política.</p>
+        </div>
+
+        <!-- SLIDE 33b: BUCHANAN - LÓGICA DE LA DISPERSIÓN -->
+        <div class="slide bg-blanco">
+            <h2>La asimetría de la acción política</h2>
+            <p>Buchanan identificó por qué los programas de gasto público tienden a crecer:</p>
+            <div class="two-cols" style="margin-top: 25px;">
+                <div class="concepto-box" style="border: 2px solid var(--verde-activo);">
+                    <h4>Beneficiarios</h4>
+                    <ul style="font-size: 1.1rem;">
+                        <li><strong>Pocos</strong> (miles)</li>
+                        <li><strong>Ganan mucho</strong> individualmente</li>
+                        <li><strong>Organizados</strong> (sindicatos, cámaras)</li>
+                        <li><strong>Incentivo fuerte</strong> para defender el beneficio</li>
+                    </ul>
+                </div>
+                <div class="concepto-box" style="border: 2px solid var(--rojo-alerta);">
+                    <h4>Contribuyentes</h4>
+                    <ul style="font-size: 1.1rem;">
+                        <li><strong>Muchos</strong> (millones)</li>
+                        <li><strong>Pierden poco</strong> individualmente</li>
+                        <li><strong>Dispersos</strong> (no organizados)</li>
+                        <li><strong>Incentivo débil</strong> para oponerse</li>
+                    </ul>
+                </div>
+            </div>
+            <p style="text-align: center; margin-top: 25px;"><strong class="highlight-red">Resultado:</strong> Los políticos tienen incentivos a crear programas de gasto, no a eliminarlos.</p>
+        </div>
+
+        <!-- SLIDE 33c: BUCHANAN - EJEMPLO SUBSIDIOS ENERGÍA -->
+        <div class="slide bg-blanco">
+            <h2>Ejemplo: Los subsidios a la energía en Argentina</h2>
+            <p>Un caso clásico de beneficios concentrados y costos dispersos:</p>
+            <div class="stats-grid" style="margin-top: 25px;">
+                <div class="stat-box">
+                    <div class="stat-numero" style="font-size: 3rem;">US$ 15.000 M</div>
+                    <div class="stat-label">subsidios energéticos<br>anuales (2022)</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-numero" style="font-size: 3rem;">70%</div>
+                    <div class="stat-label">benefició a hogares<br>de AMBA</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-numero rojo" style="font-size: 3rem;">20 años</div>
+                    <div class="stat-label">de congelamiento<br>tarifario</div>
+                </div>
+            </div>
+            <div class="problema-box" style="margin-top: 20px;">
+                <p style="font-size: 1.15rem; margin: 0;"><strong>El problema de Buchanan:</strong> Los 8 millones de usuarios de AMBA tenían un incentivo enorme para defender subsidios que les ahorraban miles de pesos/mes. Los 40 millones de argentinos que pagaban vía impuestos e inflación estaban dispersos y desorganizados.</p>
+            </div>
+            <p class="nota-academica">Fuente: Ministerio de Economía, ASAP. Los subsidios energéticos llegaron a representar 3% del PBI.</p>
+        </div>
+
+        <!-- SLIDE 34: FEDERALISMO -->
+        <div class="slide bg-blanco">
+            <h2>El federalismo fiscal argentino</h2>
+            <p>Argentina tiene un sistema federal con <strong class="highlight">tres niveles de gobierno</strong>: Nación, provincias y municipios.</p>
+            <div class="problema-box" style="margin-top: 25px;">
+                <h4 style="color: var(--rojo-alerta); margin-bottom: 10px;">El problema del "common pool"</h4>
+                <p style="font-size: 1.2rem; margin: 0;">Las provincias gastan, pero gran parte se financia con recursos nacionales (coparticipación). Incentivo a gastar de más y reclamar más transferencias.</p>
+            </div>
+            <p style="margin-top: 20px;"><strong>Dato:</strong> Las provincias ejecutan ~50% del gasto público pero recaudan solo ~20% de los impuestos.</p>
+        </div>
+
+        <!-- SLIDE 35: COPARTICIPACIÓN -->
+        <div class="slide bg-blanco">
+            <h2>La coparticipación federal</h2>
+            <div class="flow-diagram">
+                <div class="flow-box">Nación recauda<br><small>(IVA, Ganancias, etc.)</small></div>
+                <span class="flow-arrow">→</span>
+                <div class="flow-box">Masa coparticipable</div>
+                <span class="flow-arrow">→</span>
+                <div class="flow-box">Distribución automática<br><small>(según coeficientes fijos)</small></div>
+            </div>
+            <p style="margin-top: 25px;"><strong class="highlight">El problema:</strong> Los coeficientes se fijaron en 1988 y no reflejan la realidad actual. Algunas provincias reciben más de lo que generan, otras menos.</p>
+            <p>Resultado: desalineación entre quien gasta, quien recauda y quien decide.</p>
+        </div>
+
+        <!-- SLIDE 36: RESUMEN TEÓRICO -->
+        <div class="slide bg-impulso">
+            <h2>Síntesis: las lecciones clave</h2>
+            <ul>
+                <li><strong>La restricción presupuestaria es ineludible</strong> — No hay almuerzo gratis</li>
+                <li><strong>El déficit puntual puede ser herramienta</strong> — El crónico es veneno</li>
+                <li><strong>El déficit crónico termina en emisión</strong> — Dominancia fiscal (Sargent & Wallace)</li>
+                <li><strong>Los impuestos implican trade-offs</strong> — Eficacia vs. eficiencia vs. equidad</li>
+                <li><strong>El gasto es rígido por diseño</strong> — Reformar es políticamente costoso</li>
+                <li><strong>El federalismo crea incentivos perversos</strong> — Common pool problem</li>
+            </ul>
+        </div>
+
+        <!-- SLIDE 37: TRANSICIÓN ANEXO -->
+        <div class="slide bg-oscuro seccion-titulo">
+            <span class="anexo-badge">ANEXO</span>
+            <h1>El contexto fiscal <span class="highlight">argentino</span></h1>
+            <p class="subtitle">Datos actualizados 2024-2025</p>
+        </div>
+
+        <!-- SLIDE 38: SITUACIÓN 2024 -->
+        <div class="slide bg-blanco">
+            <span class="anexo-badge">ANEXO</span>
+            <h2>2024: El año del ajuste fiscal</h2>
+            <p>Por primera vez desde 2010, el Gobierno Nacional logró <strong class="highlight">superávit fiscal</strong>.</p>
+            <div class="stats-grid" style="margin-top: 25px;">
+                <div class="stat-box">
+                    <div class="stat-numero">+1,8%</div>
+                    <div class="stat-label">superávit primario<br>(% PBI)</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-numero">-27%</div>
+                    <div class="stat-label">caída real del<br>gasto primario</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-numero">16,9%</div>
+                    <div class="stat-label">gasto/PBI<br>(mínimo desde 2004)</div>
+                </div>
+            </div>
+            <p class="nota-academica">Fuente: IARAF, Ministerio de Economía. Datos a diciembre 2024.</p>
+        </div>
+
+        <!-- SLIDE 39: CÓMO SE LOGRÓ -->
+        <div class="slide bg-blanco">
+            <span class="anexo-badge">ANEXO</span>
+            <h2>¿Cómo se logró el ajuste?</h2>
+            <p>Principales rubros de reducción del gasto (variación real 2024 vs 2023):</p>
+            <div class="bar-chart">
+                <div class="bar-row">
+                    <span class="bar-label">Obra pública</span>
+                    <div class="bar-container">
+                        <div class="bar rojo" style="width: 100%;">-73%</div>
+                    </div>
+                </div>
+                <div class="bar-row">
+                    <span class="bar-label">Subsidios energía</span>
+                    <div class="bar-container">
+                        <div class="bar rojo" style="width: 55%;">-40%</div>
+                    </div>
+                </div>
+                <div class="bar-row">
+                    <span class="bar-label">Transf. provincias</span>
+                    <div class="bar-container">
+                        <div class="bar rojo" style="width: 48%;">-35%</div>
+                    </div>
+                </div>
+                <div class="bar-row">
+                    <span class="bar-label">Salarios públicos</span>
+                    <div class="bar-container">
+                        <div class="bar rojo" style="width: 34%;">-25%</div>
+                    </div>
+                </div>
+                <div class="bar-row">
+                    <span class="bar-label">Jubilaciones</span>
+                    <div class="bar-container">
+                        <div class="bar rojo" style="width: 27%;">-20%</div>
+                    </div>
+                </div>
+            </div>
+            <p style="margin-top: 15px;"><strong class="highlight">Único rubro que subió:</strong> AUH (+71% real)</p>
+        </div>
+
+        <!-- SLIDE 40: PROVINCIAS -->
+        <div class="slide bg-blanco">
+            <span class="anexo-badge">ANEXO</span>
+            <h2>Las provincias: del déficit al superávit</h2>
+            <p>El consolidado provincial también mejoró:</p>
+            <div class="two-cols" style="margin-top: 25px;">
+                <div class="concepto-box">
+                    <h4>2023</h4>
+                    <p style="font-size: 2rem;"><strong class="highlight-red">-0,3% PBI</strong></p>
+                    <p>Déficit fiscal consolidado</p>
+                </div>
+                <div class="concepto-box">
+                    <h4>2024</h4>
+                    <p style="font-size: 2rem;"><strong class="highlight">+0,1% PBI</strong></p>
+                    <p>Superávit fiscal consolidado</p>
+                </div>
+            </div>
+            <p style="margin-top: 25px;"><strong>Sin embargo:</strong> 6 provincias siguieron en déficit (Buenos Aires, Chaco, Catamarca, Tierra del Fuego, Río Negro, Entre Ríos).</p>
+            <p class="nota-academica">Fuente: IARAF, informe abril 2025.</p>
+        </div>
+
+        <!-- SLIDE 41: PRESIÓN TRIBUTARIA -->
+        <div class="slide bg-blanco">
+            <span class="anexo-badge">ANEXO</span>
+            <h2>Presión tributaria consolidada</h2>
+            <p style="text-align: center;">Impuestos totales (todos los niveles de gobierno) como % del PBI:</p>
+            <div style="display: flex; gap: 30px; margin-top: 10px;">
+                <!-- Columna Latinoamérica -->
+                <div style="flex: 1;">
+                    <h4 style="color: var(--azul-impulso); margin-bottom: 10px; text-align: center;">Latinoamérica</h4>
+                    <div class="bar-chart" style="font-size: 0.9rem;">
+                        <div class="bar-row">
+                            <span class="bar-label">Brasil</span>
+                            <div class="bar-container">
+                                <div class="bar" style="width: 100%;">33%</div>
+                            </div>
+                        </div>
+                        <div class="bar-row">
+                            <span class="bar-label"><strong>Argentina</strong></span>
+                            <div class="bar-container">
+                                <div class="bar azul" style="width: 88%;">29%</div>
+                            </div>
+                        </div>
+                        <div class="bar-row">
+                            <span class="bar-label">Uruguay</span>
+                            <div class="bar-container">
+                                <div class="bar" style="width: 88%;">29%</div>
+                            </div>
+                        </div>
+                        <div class="bar-row">
+                            <span class="bar-label">Chile</span>
+                            <div class="bar-container">
+                                <div class="bar" style="width: 64%;">21%</div>
+                            </div>
+                        </div>
+                        <div class="bar-row">
+                            <span class="bar-label">Colombia</span>
+                            <div class="bar-container">
+                                <div class="bar" style="width: 58%;">19%</div>
+                            </div>
+                        </div>
+                        <div class="bar-row">
+                            <span class="bar-label">México</span>
+                            <div class="bar-container">
+                                <div class="bar" style="width: 52%;">17%</div>
+                            </div>
+                        </div>
+                        <div class="bar-row">
+                            <span class="bar-label">Perú</span>
+                            <div class="bar-container">
+                                <div class="bar" style="width: 48%;">16%</div>
+                            </div>
+                        </div>
+                        <div class="bar-row">
+                            <span class="bar-label">Paraguay</span>
+                            <div class="bar-container">
+                                <div class="bar verde" style="width: 42%;">14%</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Columna OCDE -->
+                <div style="flex: 1;">
+                    <h4 style="color: var(--azul-impulso); margin-bottom: 10px; text-align: center;">OCDE (referencia)</h4>
+                    <div class="bar-chart" style="font-size: 0.9rem;">
+                        <div class="bar-row">
+                            <span class="bar-label">Francia</span>
+                            <div class="bar-container">
+                                <div class="bar extreme" style="width: 100%;">45%</div>
+                            </div>
+                        </div>
+                        <div class="bar-row">
+                            <span class="bar-label">Italia</span>
+                            <div class="bar-container">
+                                <div class="bar high" style="width: 93%;">42%</div>
+                            </div>
+                        </div>
+                        <div class="bar-row">
+                            <span class="bar-label">Alemania</span>
+                            <div class="bar-container">
+                                <div class="bar high" style="width: 84%;">38%</div>
+                            </div>
+                        </div>
+                        <div class="bar-row">
+                            <span class="bar-label">España</span>
+                            <div class="bar-container">
+                                <div class="bar medium" style="width: 82%;">37%</div>
+                            </div>
+                        </div>
+                        <div class="bar-row">
+                            <span class="bar-label"><em>Promedio OCDE</em></span>
+                            <div class="bar-container">
+                                <div class="bar medium" style="width: 76%;">34%</div>
+                            </div>
+                        </div>
+                        <div class="bar-row">
+                            <span class="bar-label">EE.UU.</span>
+                            <div class="bar-container">
+                                <div class="bar" style="width: 60%;">27%</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <p style="margin-top: 10px; text-align: center;"><strong class="highlight">Argentina tiene la 2da presión tributaria más alta de Latinoamérica</strong>, similar a Uruguay, pero menor que el promedio OCDE.</p>
+            <p class="nota-academica">Fuentes: OCDE Revenue Statistics 2024, CEPAL Panorama Fiscal de América Latina 2024, IARAF. Datos 2023.</p>
+        </div>
+
+        <!-- SLIDE 42: COMPOSICIÓN DEL GASTO NACIONAL -->
+        <div class="slide bg-blanco">
+            <span class="anexo-badge">ANEXO</span>
+            <h2>¿En qué gasta el Estado Nacional?</h2>
+            <p style="text-align: center;">Composición del gasto primario de la Administración Nacional (2024):</p>
+            <div class="donut-container">
+                <div class="donut-chart">
+                    <svg viewBox="0 0 200 200" width="280" height="280">
+                        <!-- Jubilaciones 44% -->
+                        <circle class="donut-segment" cx="100" cy="100" r="70" stroke="#1036E2" stroke-dasharray="193.2 439.8" stroke-dashoffset="0"/>
+                        <!-- Prog. sociales 15% -->
+                        <circle class="donut-segment" cx="100" cy="100" r="70" stroke="#3B82F6" stroke-dasharray="65.9 439.8" stroke-dashoffset="-193.2"/>
+                        <!-- Salarios 12% -->
+                        <circle class="donut-segment" cx="100" cy="100" r="70" stroke="#60A5FA" stroke-dasharray="52.8 439.8" stroke-dashoffset="-259.1"/>
+                        <!-- Subsidios 10% -->
+                        <circle class="donut-segment" cx="100" cy="100" r="70" stroke="#93C5FD" stroke-dasharray="44 439.8" stroke-dashoffset="-311.9"/>
+                        <!-- Transf. prov 8% -->
+                        <circle class="donut-segment" cx="100" cy="100" r="70" stroke="#BFDBFE" stroke-dasharray="35.2 439.8" stroke-dashoffset="-355.9"/>
+                        <!-- Otros 11% -->
+                        <circle class="donut-segment" cx="100" cy="100" r="70" stroke="#F59E0B" stroke-dasharray="48.4 439.8" stroke-dashoffset="-391.1"/>
+                    </svg>
+                </div>
+                <div class="donut-legend">
+                    <div class="legend-item">
+                        <span class="legend-color" style="background: #1036E2;"></span>
+                        <span class="legend-text"><strong>Jubilaciones:</strong> 44%</span>
+                    </div>
+                    <div class="legend-item">
+                        <span class="legend-color" style="background: #3B82F6;"></span>
+                        <span class="legend-text"><strong>Prog. sociales:</strong> 15%</span>
+                    </div>
+                    <div class="legend-item">
+                        <span class="legend-color" style="background: #60A5FA;"></span>
+                        <span class="legend-text"><strong>Salarios:</strong> 12%</span>
+                    </div>
+                    <div class="legend-item">
+                        <span class="legend-color" style="background: #93C5FD;"></span>
+                        <span class="legend-text"><strong>Subsidios:</strong> 10%</span>
+                    </div>
+                    <div class="legend-item">
+                        <span class="legend-color" style="background: #BFDBFE;"></span>
+                        <span class="legend-text"><strong>Transf. provincias:</strong> 8%</span>
+                    </div>
+                    <div class="legend-item">
+                        <span class="legend-color" style="background: #F59E0B;"></span>
+                        <span class="legend-text"><strong>Otros:</strong> 11%</span>
+                    </div>
+                </div>
+            </div>
+            <p style="text-align: center;"><strong class="highlight-red">59%</strong> del gasto son jubilaciones + programas sociales. Muy difícil de ajustar.</p>
+            <p class="nota-academica">Fuente: OPC, ejecución presupuestaria 2024. No incluye intereses de deuda.</p>
+        </div>
+
+        <!-- SLIDE 43: COMPOSICIÓN RECAUDACIÓN -->
+        <div class="slide bg-blanco">
+            <span class="anexo-badge">ANEXO</span>
+            <h2>¿De dónde vienen los ingresos?</h2>
+            <p style="text-align: center;">Composición de la recaudación tributaria nacional (2024):</p>
+            <div class="donut-container">
+                <div class="donut-chart">
+                    <svg viewBox="0 0 200 200" width="260" height="260">
+                        <!-- IVA 32.8% - Azul oscuro -->
+                        <circle class="donut-segment" cx="100" cy="100" r="70"
+                            stroke="#1036E2"
+                            stroke-dasharray="144.3 439.8"
+                            stroke-dashoffset="0"/>
+                        <!-- Seg. Social 21.8% - Azul medio -->
+                        <circle class="donut-segment" cx="100" cy="100" r="70"
+                            stroke="#3B82F6"
+                            stroke-dasharray="95.9 439.8"
+                            stroke-dashoffset="-144.3"/>
+                        <!-- Ganancias 19.8% - Azul claro -->
+                        <circle class="donut-segment" cx="100" cy="100" r="70"
+                            stroke="#60A5FA"
+                            stroke-dasharray="87.1 439.8"
+                            stroke-dashoffset="-240.2"/>
+                        <!-- Cheque 7.2% -->
+                        <circle class="donut-segment" cx="100" cy="100" r="70"
+                            stroke="#F59E0B"
+                            stroke-dasharray="31.7 439.8"
+                            stroke-dashoffset="-327.3"/>
+                        <!-- Retenciones 4.6% -->
+                        <circle class="donut-segment" cx="100" cy="100" r="70"
+                            stroke="#EF4444"
+                            stroke-dasharray="20.2 439.8"
+                            stroke-dashoffset="-359.0"/>
+                        <!-- Otros 13.8% -->
+                        <circle class="donut-segment" cx="100" cy="100" r="70"
+                            stroke="#8B5CF6"
+                            stroke-dasharray="60.7 439.8"
+                            stroke-dashoffset="-379.2"/>
+                    </svg>
+                </div>
+                <div class="donut-legend">
+                    <div class="legend-item">
+                        <span class="legend-color" style="background: #1036E2;"></span>
+                        <span class="legend-text"><strong>IVA:</strong> 32,8%</span>
+                    </div>
+                    <div class="legend-item">
+                        <span class="legend-color" style="background: #3B82F6;"></span>
+                        <span class="legend-text"><strong>Seg. Social:</strong> 21,8%</span>
+                    </div>
+                    <div class="legend-item">
+                        <span class="legend-color" style="background: #60A5FA;"></span>
+                        <span class="legend-text"><strong>Ganancias:</strong> 19,8%</span>
+                    </div>
+                    <div class="legend-item">
+                        <span class="legend-color" style="background: #F59E0B;"></span>
+                        <span class="legend-text"><strong>Cheque:</strong> 7,2%</span>
+                    </div>
+                    <div class="legend-item">
+                        <span class="legend-color" style="background: #EF4444;"></span>
+                        <span class="legend-text"><strong>Retenciones:</strong> 4,6%</span>
+                    </div>
+                    <div class="legend-item">
+                        <span class="legend-color" style="background: #8B5CF6;"></span>
+                        <span class="legend-text"><strong>Otros:</strong> 13,8%</span>
+                    </div>
+                </div>
+            </div>
+            <p style="text-align: center; margin-top: 10px;"><strong class="highlight">Tres impuestos</strong> (IVA, Seg. Social, Ganancias) aportan el <strong>75%</strong> de la recaudación.</p>
+            <p class="nota-academica">Fuente: AFIP/ARCA, Informe de Recaudación Anual 2024.</p>
+        </div>
+
+        <!-- SLIDE 44: INGRESOS PROVINCIALES -->
+        <div class="slide bg-blanco">
+            <span class="anexo-badge">ANEXO</span>
+            <h2>¿De dónde sacan plata las provincias?</h2>
+            <p style="text-align: center;">Estructura promedio de ingresos provinciales:</p>
+            <div class="donut-container">
+                <div class="donut-chart">
+                    <svg viewBox="0 0 200 200" width="260" height="260">
+                        <!-- Coparticipación 45% -->
+                        <circle class="donut-segment" cx="100" cy="100" r="70"
+                            stroke="#DC2626"
+                            stroke-dasharray="197.9 439.8"
+                            stroke-dashoffset="0"/>
+                        <!-- Otras transferencias 25% -->
+                        <circle class="donut-segment" cx="100" cy="100" r="70"
+                            stroke="#F59E0B"
+                            stroke-dasharray="110.0 439.8"
+                            stroke-dashoffset="-197.9"/>
+                        <!-- Recursos propios 30% -->
+                        <circle class="donut-segment" cx="100" cy="100" r="70"
+                            stroke="#00C600"
+                            stroke-dasharray="131.9 439.8"
+                            stroke-dashoffset="-307.9"/>
+                    </svg>
+                </div>
+                <div class="donut-legend">
+                    <div class="legend-item">
+                        <span class="legend-color" style="background: #DC2626;"></span>
+                        <span class="legend-text"><strong>Coparticipación:</strong> 45%</span>
+                    </div>
+                    <div class="legend-item">
+                        <span class="legend-color" style="background: #F59E0B;"></span>
+                        <span class="legend-text"><strong>Otras transferencias discrecionales del gobierno nacional:</strong> 25%</span>
+                    </div>
+                    <div class="legend-item">
+                        <span class="legend-color" style="background: #00C600;"></span>
+                        <span class="legend-text"><strong>Recursos propios:</strong> 30%</span>
+                    </div>
+                </div>
+            </div>
+            <div class="problema-box" style="margin-top: 15px;">
+                <p style="margin: 0;"><strong>El problema del "common pool":</strong> En promedio, el 70% de los ingresos provinciales vienen de Nación. Las provincias gastan plata que no recaudan → incentivo a gastar de más.</p>
+            </div>
+            <p class="nota-academica">Fuente: Centro CEPA, Ministerio de Economía. Datos 2023-2024.</p>
+        </div>
+
+        <!-- SLIDE 45: DEPENDENCIA PROVINCIAL -->
+        <div class="slide bg-blanco">
+            <span class="anexo-badge">ANEXO</span>
+            <h2>Dependencia de fondos nacionales por provincia</h2>
+            <p>% de ingresos que provienen de Nación:</p>
+            <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 25px; margin-top: 20px;">
+                <!-- Muy alta -->
+                <div style="background: #FEE2E2; padding: 20px; border-radius: 10px; border-left: 5px solid #DC2626;">
+                    <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 12px;">
+                        <span style="width: 24px; height: 24px; background: #DC2626; display: inline-block; border-radius: 4px;"></span>
+                        <strong style="font-size: 1.1rem; color: #DC2626;">Muy alta (>85%)</strong>
+                    </div>
+                    <div style="font-size: 1rem; line-height: 1.6;">
+                        La Rioja <strong>91%</strong> | Formosa <strong>90%</strong><br>
+                        Sgo. del Estero <strong>87%</strong> | Corrientes <strong>87%</strong><br>
+                        Jujuy <strong>85%</strong>
+                    </div>
+                </div>
+                <!-- Alta -->
+                <div style="background: #FEF3C7; padding: 20px; border-radius: 10px; border-left: 5px solid #F59E0B;">
+                    <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 12px;">
+                        <span style="width: 24px; height: 24px; background: #F59E0B; display: inline-block; border-radius: 4px;"></span>
+                        <strong style="font-size: 1.1rem; color: #D97706;">Alta (70-85%)</strong>
+                    </div>
+                    <div style="font-size: 1rem; line-height: 1.6;">
+                        Chaco <strong>84%</strong> | Catamarca <strong>83%</strong><br>
+                        Misiones <strong>79%</strong> | San Juan <strong>78%</strong><br>
+                        Tucumán <strong>76%</strong> | Salta <strong>74%</strong>
+                    </div>
+                </div>
+                <!-- Media -->
+                <div style="background: #DBEAFE; padding: 20px; border-radius: 10px; border-left: 5px solid #3B82F6;">
+                    <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 12px;">
+                        <span style="width: 24px; height: 24px; background: #3B82F6; display: inline-block; border-radius: 4px;"></span>
+                        <strong style="font-size: 1.1rem; color: #2563EB;">Media (50-70%)</strong>
+                    </div>
+                    <div style="font-size: 1rem; line-height: 1.6;">
+                        Santa Fe <strong>58%</strong> | Córdoba <strong>56%</strong><br>
+                        Buenos Aires <strong>54%</strong> | Mendoza <strong>52%</strong>
+                    </div>
+                </div>
+                <!-- Baja -->
+                <div style="background: #D1FAE5; padding: 20px; border-radius: 10px; border-left: 5px solid #00C600;">
+                    <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 12px;">
+                        <span style="width: 24px; height: 24px; background: #00C600; display: inline-block; border-radius: 4px;"></span>
+                        <strong style="font-size: 1.1rem; color: #059669;">Baja (<50%)</strong>
+                    </div>
+                    <div style="font-size: 1rem; line-height: 1.6;">
+                        <strong style="color: #059669;">CABA 16%</strong> | Neuquén <strong>35%</strong><br>
+                        Chubut <strong>38%</strong> | Santa Cruz <strong>42%</strong>
+                    </div>
+                </div>
+            </div>
+            <p class="nota-academica">Fuente: Centro CEPA. CABA financia 84% de su presupuesto con recursos propios (IIBB, ABL, patentes).</p>
+        </div>
+
+        <!-- SLIDE 46: GASTO PROVINCIAL -->
+        <div class="slide bg-blanco">
+            <span class="anexo-badge">ANEXO</span>
+            <h2>¿En qué gastan las provincias?</h2>
+            <p>Composición del gasto provincial consolidado:</p>
+            <div class="stats-grid" style="margin-top: 20px;">
+                <div class="stat-box">
+                    <div class="stat-numero rojo" style="font-size: 3.5rem;">45%</div>
+                    <div class="stat-label">Salarios<br>(docentes, salud, policía)</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-numero" style="font-size: 3.5rem;">20%</div>
+                    <div class="stat-label">Jubilaciones<br>provinciales</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-numero" style="font-size: 3.5rem;">15%</div>
+                    <div class="stat-label">Bienes y<br>servicios</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-numero" style="font-size: 3.5rem; color: #6B7280;">20%</div>
+                    <div class="stat-label">Resto<br>(obra pública, transferencias, etc.)</div>
+                </div>
+            </div>
+            <div class="problema-box" style="margin-top: 20px;">
+                <p style="margin: 0;"><strong>Rigidez extrema:</strong> El 65% del gasto provincial son salarios + jubilaciones. En 2024, el 80% del aumento del gasto fue por salarios.</p>
+            </div>
+            <p class="nota-academica">Fuente: IARAF, informe 2025. Las provincias financian educación, salud y seguridad pública.</p>
+        </div>
+
+        <!-- SLIDE 47: GASTO CONSOLIDADO POR NIVEL -->
+        <div class="slide bg-blanco">
+            <span class="anexo-badge">ANEXO</span>
+            <h2>Gasto público consolidado por nivel de gobierno</h2>
+            <p style="text-align: center;">Distribución del gasto público total (2024):</p>
+            <div class="donut-container">
+                <div class="donut-chart">
+                    <svg viewBox="0 0 200 200" width="280" height="280">
+                        <!-- Nación 50% -->
+                        <circle class="donut-segment" cx="100" cy="100" r="70"
+                            stroke="#1036E2"
+                            stroke-dasharray="219.9 439.8"
+                            stroke-dashoffset="0"/>
+                        <!-- Provincias 40% -->
+                        <circle class="donut-segment" cx="100" cy="100" r="70"
+                            stroke="#00C600"
+                            stroke-dasharray="175.9 439.8"
+                            stroke-dashoffset="-219.9"/>
+                        <!-- Municipios 10% -->
+                        <circle class="donut-segment" cx="100" cy="100" r="70"
+                            stroke="#F59E0B"
+                            stroke-dasharray="44.0 439.8"
+                            stroke-dashoffset="-395.8"/>
+                    </svg>
+                    <div class="donut-center">
+                        <div class="donut-center-number">33,5%</div>
+                        <div class="donut-center-label">del PBI</div>
+                    </div>
+                </div>
+                <div class="donut-legend">
+                    <div class="legend-item">
+                        <span class="legend-color" style="background: #1036E2;"></span>
+                        <span class="legend-text"><strong>Nación:</strong> 50% (~17% PBI)</span>
+                    </div>
+                    <div class="legend-item">
+                        <span class="legend-color" style="background: #00C600;"></span>
+                        <span class="legend-text"><strong>Provincias:</strong> 40% (~13% PBI)</span>
+                    </div>
+                    <div class="legend-item">
+                        <span class="legend-color" style="background: #F59E0B;"></span>
+                        <span class="legend-text"><strong>Municipios:</strong> 10% (~3,5% PBI)</span>
+                    </div>
+                </div>
+            </div>
+            <p style="text-align: center; margin-top: 15px;">Mayor ajuste anual registrado: <strong class="highlight-red">-7,1 puntos del PBI</strong> (vs 40,6% en 2023)</p>
+            <p class="nota-academica">Fuente: IARAF, OPC. El gasto de 2024 fue el mínimo desde 2004.</p>
+        </div>
+
+        <!-- SLIDE 51: EVOLUCIÓN HISTÓRICA GASTO -->
+        <div class="slide bg-blanco">
+            <span class="anexo-badge">ANEXO</span>
+            <h2>Evolución del gasto público consolidado (% PBI)</h2>
+            <div class="inflation-meter" style="margin-top: 20px;">
+                <div class="meter-row">
+                    <span class="meter-label">2004</span>
+                    <div class="meter-bar-container">
+                        <div class="meter-bar low" style="width: 65%;">26%</div>
+                    </div>
+                </div>
+                <div class="meter-row">
+                    <span class="meter-label">2008</span>
+                    <div class="meter-bar-container">
+                        <div class="meter-bar medium" style="width: 75%;">30%</div>
+                    </div>
+                </div>
+                <div class="meter-row">
+                    <span class="meter-label">2015</span>
+                    <div class="meter-bar-container">
+                        <div class="meter-bar high" style="width: 100%;">40%</div>
+                    </div>
+                </div>
+                <div class="meter-row">
+                    <span class="meter-label">2019</span>
+                    <div class="meter-bar-container">
+                        <div class="meter-bar high" style="width: 95%;">38%</div>
+                    </div>
+                </div>
+                <div class="meter-row">
+                    <span class="meter-label">2023</span>
+                    <div class="meter-bar-container">
+                        <div class="meter-bar extreme" style="width: 100%;">40,6%</div>
+                    </div>
+                </div>
+                <div class="meter-row">
+                    <span class="meter-label"><strong>2024</strong></span>
+                    <div class="meter-bar-container">
+                        <div class="meter-bar low" style="width: 84%;">33,5%</div>
+                    </div>
+                </div>
+            </div>
+            <p style="text-align: center; margin-top: 15px;">El gasto creció 14 puntos del PBI entre 2004 y 2015. En 2024 volvió a niveles de 2008.</p>
+            <p class="nota-academica">Fuente: IARAF, OPC. Incluye Nación + provincias + municipios.</p>
+        </div>
+
+        <!-- SLIDE 52: DESAFÍOS -->
+        <div class="slide bg-blanco">
+            <span class="anexo-badge">ANEXO</span>
+            <h2>Desafíos pendientes</h2>
+            <ul>
+                <li><strong>Sostenibilidad:</strong> ¿El ajuste es permanente o se revierte con el ciclo político?</li>
+                <li><strong>Calidad del ajuste:</strong> Recortó inversión pública más que gasto corriente</li>
+                <li><strong>Reforma tributaria:</strong> Sigue pendiente simplificar los 155 tributos</li>
+                <li><strong>Coparticipación:</strong> Régimen de 1988 sigue sin reformarse</li>
+                <li><strong>Gasto provincial:</strong> Provincias subieron gasto 13% real en 2025</li>
+                <li><strong>Deuda:</strong> Alto stock y vencimientos concentrados en 2025-2027</li>
+            </ul>
+            <p class="nota-academica">Fuentes: IARAF, OPC, AFIP, Ministerio de Economía, Centro CEPA.</p>
+        </div>
+
+        <!-- SLIDE 53: FUENTES DEL ANEXO -->
+        <div class="slide bg-oscuro">
+            <span class="anexo-badge">ANEXO</span>
+            <h2>Fuentes de datos utilizadas</h2>
+            <div class="two-cols" style="margin-top: 20px; font-size: 1.1rem;">
+                <div>
+                    <p><strong>Gasto e ingresos nacionales:</strong></p>
+                    <ul style="font-size: 1rem;">
+                        <li>OPC - Oficina de Presupuesto del Congreso</li>
+                        <li>Ministerio de Economía (MECON)</li>
+                        <li>AFIP/ARCA - Informes de recaudación</li>
+                    </ul>
+                    <p style="margin-top: 15px;"><strong>Finanzas provinciales:</strong></p>
+                    <ul style="font-size: 1rem;">
+                        <li>IARAF - Instituto Argentino de Análisis Fiscal</li>
+                        <li>Centro CEPA</li>
+                        <li>IERAL - Fundación Mediterránea</li>
+                    </ul>
+                </div>
+                <div>
+                    <p><strong>Deuda pública:</strong></p>
+                    <ul style="font-size: 1rem;">
+                        <li>Secretaría de Finanzas - Boletines mensuales</li>
+                        <li>OPC - Informes de deuda</li>
+                        <li>BCRA - Informes monetarios</li>
+                    </ul>
+                    <p style="margin-top: 15px;"><strong>Links útiles:</strong></p>
+                    <ul style="font-size: 1rem;">
+                        <li>iaraf.org</li>
+                        <li>opc.gob.ar</li>
+                        <li>argentina.gob.ar/economia</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE 54: CITA CIERRE -->
+        <div class="slide bg-respaldo">
+            <blockquote style="font-size: 2rem; text-align: center; border-left: none; padding: 0; max-width: 900px; margin: 0 auto;">
+                "El presupuesto no es simplemente un asunto de aritmética, sino que es <em>una expresión de los valores de una sociedad</em> y de las decisiones que toma sobre su futuro."
+                <cite style="text-align: center;">— Jacob Lew, Secretario del Tesoro de EE.UU. (2013-2017)</cite>
+            </blockquote>
+        </div>
+
+        <!-- SLIDE 44: MENSAJES FINALES -->
+        <div class="slide bg-impulso">
+            <h2>Mensajes para llevar</h2>
+            <ul>
+                <li style="margin-bottom: 22px;">
+                    <strong>La política fiscal es una herramienta poderosa</strong><br>
+                    <span style="opacity: 0.8; font-size: 1.2rem;">Puede suavizar recesiones y estabilizar la economía (Keynes)</span>
+                </li>
+                <li style="margin-bottom: 22px;">
+                    <strong>Pero tiene límites infranqueables</strong><br>
+                    <span style="opacity: 0.8; font-size: 1.2rem;">La restricción presupuestaria no perdona. El déficit crónico destruye (Sargent & Wallace)</span>
+                </li>
+                <li style="margin-bottom: 22px;">
+                    <strong>Reformar es políticamente difícil</strong><br>
+                    <span style="opacity: 0.8; font-size: 1.2rem;">Beneficios concentrados, costos dispersos (Buchanan)</span>
+                </li>
+                <li>
+                    <strong>Argentina está en un punto de inflexión</strong><br>
+                    <span style="opacity: 0.8; font-size: 1.2rem;">Primer superávit en 14 años. ¿Se sostiene?</span>
+                </li>
+            </ul>
+        </div>
+
+        <!-- SLIDE 45: BIBLIOGRAFÍA -->
+        <div class="slide bg-blanco" style="font-size: 0.9rem;">
+            <h2>Referencias</h2>
+            <div class="two-cols" style="gap: 35px;">
+                <div>
+                    <p><strong>Buchanan, J. & Tullock, G.</strong> (1962). The Calculus of Consent.</p>
+                    <p><strong>Friedman, M.</strong> (1963). A Monetary History of the United States.</p>
+                    <p><strong>Keynes, J.M.</strong> (1936). The General Theory of Employment, Interest and Money.</p>
+                </div>
+                <div>
+                    <p><strong>Sargent, T. & Wallace, N.</strong> (1981). Some Unpleasant Monetarist Arithmetic.</p>
+                    <p><strong>IARAF</strong> (2025). Informes de coyuntura fiscal. www.iaraf.org</p>
+                    <p><strong>OPC</strong> (2021). Rigidez del gasto público nacional.</p>
+                </div>
+            </div>
+            <p style="margin-top: 25px; text-align: center; opacity: 0.6;">
+                <strong>Premios Nobel citados:</strong> Friedman (1976), Buchanan (1986), Sargent (2011)
+            </p>
+        </div>
+
+        <!-- SLIDE 46: CIERRE -->
+        <div class="slide bg-respaldo portada">
+            <h1>Gracias</h1>
+            <p class="subtitle" style="margin-top: 20px;">¿Preguntas?</p>
+        </div>
+
+    </div>
+
+    <div class="slide-counter">
+        <span id="current">1</span> / <span id="total">62</span>
+    </div>
+
+    <div class="nav-hint">
+        ← → para navegar | F para pantalla completa
+    </div>
+
+    <script>
+        const slides = document.querySelectorAll('.slide');
+        let currentSlide = 0;
+        const total = slides.length;
+
+        document.getElementById('total').textContent = total;
+
+        function showSlide(n) {
+            slides[currentSlide].classList.remove('active');
+            currentSlide = (n + total) % total;
+            slides[currentSlide].classList.add('active');
+            document.getElementById('current').textContent = currentSlide + 1;
+        }
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowRight' || e.key === ' ' || e.key === 'Enter') {
+                showSlide(currentSlide + 1);
+            } else if (e.key === 'ArrowLeft') {
+                showSlide(currentSlide - 1);
+            } else if (e.key === 'Home') {
+                showSlide(0);
+            } else if (e.key === 'End') {
+                showSlide(total - 1);
+            } else if (e.key === 'f' || e.key === 'F') {
+                if (document.fullscreenElement) {
+                    document.exitFullscreen();
+                } else {
+                    document.documentElement.requestFullscreen();
+                }
+            }
+        });
+
+        // Touch support
+        let touchStartX = 0;
+        document.addEventListener('touchstart', (e) => {
+            touchStartX = e.touches[0].clientX;
+        });
+
+        document.addEventListener('touchend', (e) => {
+            const touchEndX = e.changedTouches[0].clientX;
+            const diff = touchStartX - touchEndX;
+            if (Math.abs(diff) > 50) {
+                if (diff > 0) {
+                    showSlide(currentSlide + 1);
+                } else {
+                    showSlide(currentSlide - 1);
+                }
+            }
+        });
+
+        // Click to advance
+        document.querySelector('.slide-container').addEventListener('click', (e) => {
+            if (e.clientX > window.innerWidth / 2) {
+                showSlide(currentSlide + 1);
+            } else {
+                showSlide(currentSlide - 1);
+            }
+        });
+    </script>
+</body>
+</html>
