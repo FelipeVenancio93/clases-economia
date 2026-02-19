@@ -1,0 +1,1921 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mercado de Cambios - Tipo de cambio, ataques especulativos y la particularidad argentina</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Albert+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --azul-impulso: #1036E2;
+            --verde-activo: #00C600;
+            --azul-respaldo: #021751;
+            --blanco: #FFFFFF;
+            --negro: #000000;
+            --rojo-alerta: #DC2626;
+            --amarillo: #F59E0B;
+            --naranja: #EA580C;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Albert Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--azul-respaldo);
+            color: var(--blanco);
+            overflow: hidden;
+        }
+
+        .slide-container {
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .slide {
+            display: none;
+            width: 100%;
+            height: 100%;
+            padding: 60px 80px;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .slide.active {
+            display: flex;
+        }
+
+        /* Fondos */
+        .bg-respaldo { background: var(--azul-respaldo); color: var(--blanco); }
+        .bg-impulso { background: var(--azul-impulso); color: var(--blanco); }
+        .bg-verde { background: var(--verde-activo); color: var(--blanco); }
+        .bg-blanco { background: var(--blanco); color: var(--azul-respaldo); }
+        .bg-oscuro { background: #0a0a0a; color: var(--blanco); }
+        .bg-rojo { background: var(--rojo-alerta); color: var(--blanco); }
+
+        /* Tipografia */
+        h1 {
+            font-size: 3.8rem;
+            font-weight: 700;
+            line-height: 1.1;
+            margin-bottom: 30px;
+        }
+
+        h2 {
+            font-size: 2.6rem;
+            font-weight: 600;
+            margin-bottom: 25px;
+        }
+
+        h3 {
+            font-size: 1.8rem;
+            font-weight: 500;
+            margin-bottom: 20px;
+            opacity: 0.9;
+        }
+
+        p, li {
+            font-size: 1.5rem;
+            line-height: 1.6;
+            margin-bottom: 15px;
+        }
+
+        .subtitle {
+            font-size: 1.6rem;
+            opacity: 0.8;
+            font-weight: 400;
+        }
+
+        .highlight {
+            color: var(--verde-activo);
+        }
+
+        .bg-blanco .highlight {
+            color: var(--azul-impulso);
+        }
+
+        .highlight-red {
+            color: var(--rojo-alerta);
+        }
+
+        .highlight-yellow {
+            color: var(--amarillo);
+        }
+
+        blockquote {
+            font-size: 1.7rem;
+            font-style: italic;
+            border-left: 4px solid var(--verde-activo);
+            padding-left: 30px;
+            margin: 25px 0;
+            opacity: 0.95;
+        }
+
+        blockquote cite {
+            display: block;
+            font-size: 1.1rem;
+            margin-top: 12px;
+            font-style: normal;
+            opacity: 0.7;
+        }
+
+        ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        ul li {
+            padding-left: 35px;
+            position: relative;
+            margin-bottom: 18px;
+        }
+
+        ul li::before {
+            content: "\25B8";
+            position: absolute;
+            left: 0;
+            color: var(--verde-activo);
+            font-size: 1.4rem;
+        }
+
+        .bg-verde ul li::before,
+        .bg-impulso ul li::before,
+        .bg-rojo ul li::before {
+            color: var(--blanco);
+        }
+
+        /* Tablas */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 25px 0;
+            font-size: 1.3rem;
+        }
+
+        th, td {
+            padding: 18px 22px;
+            text-align: left;
+            border-bottom: 1px solid rgba(255,255,255,0.2);
+        }
+
+        .bg-blanco th,
+        .bg-blanco td {
+            border-bottom: 1px solid rgba(0,0,0,0.1);
+        }
+
+        th {
+            font-weight: 600;
+            opacity: 0.7;
+            font-size: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* Formula/Ecuacion */
+        .formula {
+            font-size: 2rem;
+            text-align: center;
+            padding: 30px;
+            background: rgba(255,255,255,0.08);
+            border-radius: 12px;
+            margin: 25px 0;
+            font-weight: 500;
+            letter-spacing: 2px;
+        }
+
+        .bg-blanco .formula {
+            background: rgba(16, 54, 226, 0.06);
+        }
+
+        .formula-grande {
+            font-size: 2.5rem;
+            padding: 40px;
+        }
+
+        /* Diagrama flujo */
+        .flow-diagram {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+            margin: 35px 0;
+            flex-wrap: wrap;
+        }
+
+        .flow-box {
+            background: rgba(255,255,255,0.1);
+            padding: 20px 28px;
+            border-radius: 10px;
+            font-size: 1.2rem;
+            font-weight: 500;
+            text-align: center;
+        }
+
+        .bg-blanco .flow-box {
+            background: rgba(16, 54, 226, 0.1);
+        }
+
+        .flow-arrow {
+            font-size: 1.8rem;
+            color: var(--verde-activo);
+        }
+
+        .bg-blanco .flow-arrow {
+            color: var(--azul-impulso);
+        }
+
+        /* Dos columnas */
+        .two-cols {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 50px;
+            margin-top: 25px;
+        }
+
+        /* Tres columnas */
+        .three-cols {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 30px;
+            margin-top: 25px;
+        }
+
+        /* Concepto box */
+        .concepto-box {
+            background: rgba(255,255,255,0.08);
+            padding: 25px;
+            border-radius: 12px;
+            text-align: center;
+        }
+
+        .bg-blanco .concepto-box {
+            background: rgba(16, 54, 226, 0.06);
+        }
+
+        .concepto-box h4 {
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-bottom: 12px;
+            color: var(--verde-activo);
+        }
+
+        .bg-blanco .concepto-box h4 {
+            color: var(--azul-impulso);
+        }
+
+        .concepto-box p {
+            font-size: 1.15rem;
+            margin-bottom: 0;
+        }
+
+        /* Cita academica */
+        .cita-paper {
+            background: rgba(255,255,255,0.06);
+            padding: 25px 30px;
+            border-radius: 10px;
+            margin: 20px 0;
+            border-left: 4px solid var(--verde-activo);
+        }
+
+        .bg-blanco .cita-paper {
+            background: rgba(16, 54, 226, 0.04);
+            border-left-color: var(--azul-impulso);
+        }
+
+        .cita-paper .titulo {
+            font-weight: 600;
+            font-size: 1.15rem;
+            margin-bottom: 8px;
+        }
+
+        .cita-paper .autores {
+            font-size: 0.95rem;
+            opacity: 0.7;
+            margin-bottom: 12px;
+        }
+
+        .cita-paper .contenido {
+            font-size: 1.2rem;
+            line-height: 1.5;
+            font-style: italic;
+        }
+
+        /* Stats */
+        .stat-box {
+            text-align: center;
+            padding: 25px;
+        }
+
+        .stat-numero {
+            font-size: 4.5rem;
+            font-weight: 800;
+            color: var(--verde-activo);
+            line-height: 1;
+        }
+
+        .bg-blanco .stat-numero {
+            color: var(--azul-impulso);
+        }
+
+        .stat-numero.rojo {
+            color: var(--rojo-alerta);
+        }
+
+        .stat-label {
+            font-size: 1.2rem;
+            opacity: 0.8;
+            margin-top: 10px;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 35px;
+            margin-top: 35px;
+        }
+
+        .stats-grid-4 {
+            grid-template-columns: repeat(4, 1fr);
+        }
+
+        /* Navegacion */
+        .nav-hint {
+            position: fixed;
+            bottom: 30px;
+            right: 40px;
+            font-size: 0.9rem;
+            opacity: 0.5;
+        }
+
+        .slide-counter {
+            position: fixed;
+            bottom: 30px;
+            left: 40px;
+            font-size: 0.9rem;
+            opacity: 0.5;
+        }
+
+        /* Portada */
+        .portada {
+            text-align: center;
+        }
+
+        .portada h1 {
+            font-size: 4.2rem;
+            margin-bottom: 20px;
+        }
+
+        /* Seccion titulo */
+        .seccion-titulo {
+            text-align: center;
+        }
+
+        .seccion-titulo h3 {
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            font-size: 1.2rem;
+            opacity: 0.7;
+            margin-bottom: 15px;
+        }
+
+        /* Timeline */
+        .timeline {
+            display: flex;
+            flex-direction: column;
+            gap: 18px;
+            margin: 25px 0;
+        }
+
+        .timeline-item {
+            display: flex;
+            gap: 20px;
+            align-items: flex-start;
+        }
+
+        .timeline-year {
+            font-weight: 700;
+            font-size: 1rem;
+            color: var(--verde-activo);
+            min-width: 70px;
+        }
+
+        .bg-blanco .timeline-year {
+            color: var(--azul-impulso);
+        }
+
+        /* Versus */
+        .versus {
+            display: grid;
+            grid-template-columns: 1fr auto 1fr;
+            gap: 25px;
+            align-items: center;
+            margin: 25px 0;
+        }
+
+        .versus-center {
+            font-size: 2.5rem;
+            font-weight: 800;
+            opacity: 0.3;
+        }
+
+        /* Problema/Solucion */
+        .problema-box {
+            background: rgba(220, 38, 38, 0.15);
+            border-left: 4px solid var(--rojo-alerta);
+            padding: 20px 25px;
+            border-radius: 0 10px 10px 0;
+            margin: 12px 0;
+        }
+
+        .solucion-box {
+            background: rgba(0, 198, 0, 0.15);
+            border-left: 4px solid var(--verde-activo);
+            padding: 20px 25px;
+            border-radius: 0 10px 10px 0;
+            margin: 12px 0;
+        }
+
+        .bg-blanco .problema-box {
+            background: rgba(220, 38, 38, 0.08);
+        }
+
+        .bg-blanco .solucion-box {
+            background: rgba(0, 198, 0, 0.08);
+        }
+
+        /* Nota academica */
+        .nota-academica {
+            font-size: 0.95rem;
+            opacity: 0.6;
+            margin-top: 25px;
+            padding-top: 15px;
+            border-top: 1px solid rgba(255,255,255,0.15);
+        }
+
+        .bg-blanco .nota-academica {
+            border-top-color: rgba(0,0,0,0.1);
+        }
+
+        /* Era badge */
+        .era-badge {
+            padding: 8px 20px;
+            border-radius: 25px;
+            font-size: 1rem;
+            font-weight: 600;
+            display: inline-block;
+            margin-bottom: 15px;
+        }
+
+        .era-badge.crisis { background: var(--rojo-alerta); color: white; }
+        .era-badge.estabilidad { background: var(--verde-activo); color: white; }
+        .era-badge.transicion { background: var(--amarillo); color: black; }
+
+        /* Bar chart */
+        .bar-chart {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin: 25px 0;
+        }
+
+        .bar-row {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .bar-label {
+            min-width: 120px;
+            font-weight: 600;
+            font-size: 1rem;
+            text-align: right;
+        }
+
+        .bar-container {
+            flex: 1;
+            height: 35px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 8px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .bg-blanco .bar-container {
+            background: rgba(0,0,0,0.05);
+        }
+
+        .bar {
+            height: 100%;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            padding-right: 12px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: white;
+        }
+
+        .bar.azul { background: var(--azul-impulso); }
+        .bar.verde { background: var(--verde-activo); }
+        .bar.rojo { background: var(--rojo-alerta); }
+        .bar.amarillo { background: var(--amarillo); color: black; }
+
+        /* Frase final */
+        .frase-final {
+            text-align: center;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .frase-final blockquote {
+            font-size: 2.2rem;
+            border-left: none;
+            padding: 0;
+            text-align: center;
+        }
+
+        /* SVG charts */
+        .chart-container {
+            display: flex;
+            justify-content: center;
+            margin: 20px 0;
+        }
+
+        .chart-container svg {
+            max-width: 100%;
+            height: auto;
+        }
+
+        .chart-container svg text {
+            font-family: 'Albert Sans', sans-serif;
+        }
+
+        /* Big number */
+        .big-number {
+            font-size: 6rem;
+            font-weight: 800;
+            text-align: center;
+            line-height: 1;
+            margin: 20px 0;
+        }
+
+        /* Circulo virtuoso */
+        .circulo {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            margin: 25px 0;
+            flex-wrap: wrap;
+        }
+
+        .circulo-item {
+            background: rgba(255,255,255,0.1);
+            padding: 18px 24px;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            font-weight: 500;
+        }
+
+        .circulo-arrow {
+            font-size: 1.5rem;
+            color: var(--verde-activo);
+        }
+
+        /* Actor cards */
+        .actor-card {
+            background: rgba(255,255,255,0.08);
+            padding: 25px;
+            border-radius: 12px;
+            text-align: center;
+        }
+
+        .actor-card .icono {
+            font-size: 2.5rem;
+            margin-bottom: 12px;
+        }
+
+        .actor-card h4 {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 10px;
+            color: var(--verde-activo);
+        }
+
+        .actor-card p {
+            font-size: 1rem;
+            margin-bottom: 0;
+        }
+
+        /* Responsive */
+        @media (max-width: 1200px) {
+            h1 { font-size: 2.8rem; }
+            h2 { font-size: 2rem; }
+            p, li { font-size: 1.2rem; }
+            .slide { padding: 40px 50px; }
+            .two-cols, .three-cols { grid-template-columns: 1fr; gap: 25px; }
+            .stats-grid { grid-template-columns: repeat(2, 1fr); }
+        }
+        @media (max-width: 768px) {
+            .slide { padding: 25px 20px; }
+            h1 { font-size: 2rem; }
+            h2 { font-size: 1.5rem; }
+            h3 { font-size: 1.2rem; }
+            p, li { font-size: 0.95rem; line-height: 1.5; margin-bottom: 10px; }
+            .subtitle { font-size: 1rem; }
+            blockquote { font-size: 1.15rem; padding-left: 18px; margin: 15px 0; }
+            blockquote cite { font-size: 0.85rem; }
+            .portada h1 { font-size: 2.2rem; }
+            .two-cols, .three-cols { grid-template-columns: 1fr; gap: 15px; }
+            .stats-grid { grid-template-columns: repeat(2, 1fr); gap: 15px; margin-top: 20px; }
+            .stats-grid-4 { grid-template-columns: repeat(2, 1fr); }
+            .stat-numero { font-size: 2.8rem; }
+            .stat-label { font-size: 0.95rem; }
+            .stat-box { padding: 15px; }
+            .concepto-box { padding: 15px; }
+            .concepto-box h4 { font-size: 1.05rem; }
+            .concepto-box p { font-size: 0.95rem; }
+            .problema-box, .solucion-box { padding: 12px 15px; margin: 8px 0; }
+            .cita-paper { padding: 15px 18px; margin: 12px 0; }
+            .cita-paper .titulo { font-size: 1rem; }
+            .cita-paper .autores { font-size: 0.8rem; }
+            .cita-paper .contenido { font-size: 1rem; }
+            .nota-academica { font-size: 0.8rem; margin-top: 15px; padding-top: 10px; }
+            .formula { font-size: 1.3rem; padding: 18px; margin: 15px 0; }
+            .formula-grande { font-size: 1.6rem; padding: 22px; }
+            .flow-diagram { gap: 8px; margin: 20px 0; }
+            .flow-box { padding: 12px 16px; font-size: 0.95rem; }
+            .flow-arrow { font-size: 1.3rem; }
+            .versus { grid-template-columns: 1fr; gap: 10px; }
+            .versus-center { font-size: 1.8rem; text-align: center; }
+            .bar-label { width: 90px; font-size: 0.85rem; }
+            .bar-container { height: 28px; margin: 0 8px; }
+            .bar { font-size: 0.75rem; padding-right: 8px; }
+            .frase-final blockquote { font-size: 1.5rem; }
+            .big-number { font-size: 3.5rem; }
+            .chart-container svg { max-height: 280px; }
+            table { font-size: 1rem; }
+            th, td { padding: 10px 12px; }
+            th { font-size: 0.8rem; }
+            .timeline-item { gap: 12px; }
+            .timeline-year { min-width: 55px; font-size: 0.9rem; }
+            .timeline-item div { font-size: 0.95rem; }
+            .nav-hint { bottom: 15px; right: 15px; font-size: 0.75rem; }
+            .slide-counter { bottom: 15px; left: 15px; font-size: 0.75rem; }
+            ul li { padding-left: 25px; margin-bottom: 12px; }
+            ul li::before { font-size: 1.1rem; }
+        }
+    </style>
+</head>
+<body>
+    <div class="slide-container">
+
+        <!-- SLIDE 1: PORTADA -->
+        <div class="slide bg-respaldo portada active">
+            <h1>Mercado de Cambios</h1>
+            <p class="subtitle">Tipo de cambio, ataques especulativos y la particularidad argentina</p>
+        </div>
+
+        <!-- SLIDE 2: QUE ES UNA DIVISA -->
+        <div class="slide bg-blanco">
+            <h2>Pregunta: &iquest;Qu&eacute; es una divisa?</h2>
+            <p style="margin-top: 20px;">Una <strong class="highlight">divisa</strong> es moneda extranjera: d&oacute;lares, euros, reales, yuanes. Pero no es solo &ldquo;billetes de otro pa&iacute;s&rdquo;.</p>
+            <p>Una divisa es un <strong>activo financiero</strong> y un <strong>medio de pago internacional</strong>. Cada vez que compr&aacute;s algo importado, pag&aacute;s una suscripci&oacute;n en d&oacute;lares o viaj&aacute;s al exterior, est&aacute;s participando del mercado de cambios.</p>
+            <div class="solucion-box" style="margin-top: 25px;">
+                <p style="margin: 0; font-size: 1.3rem;"><strong>Cada vez que pag&aacute;s en una moneda distinta a la tuya, est&aacute;s en el mercado de cambios.</strong></p>
+            </div>
+            <p class="nota-academica">El mercado de divisas (forex) es el mercado financiero m&aacute;s grande del mundo: m&aacute;s de USD 7,5 billones diarios de volumen (BIS, 2022).</p>
+        </div>
+
+        <!-- SLIDE 3: QUE ES EL TIPO DE CAMBIO -->
+        <div class="slide bg-blanco">
+            <h2>Pregunta: &iquest;Qu&eacute; es el tipo de cambio?</h2>
+            <p>El tipo de cambio es el <strong class="highlight">precio de una moneda en t&eacute;rminos de otra</strong>.</p>
+            <div class="formula" style="margin: 30px 0;">
+                Si el d&oacute;lar cotiza a $1.200 &rarr; necesit&aacute;s $1.200 para comprar 1 USD
+            </div>
+            <div class="two-cols" style="margin-top: 25px;">
+                <div class="concepto-box">
+                    <h4>Tipo de cambio bilateral</h4>
+                    <p>El precio de una moneda espec&iacute;fica contra otra. Ejemplo: peso/d&oacute;lar, euro/d&oacute;lar.</p>
+                </div>
+                <div class="concepto-box">
+                    <h4>Tipo de cambio multilateral</h4>
+                    <p>Promedio ponderado del valor de una moneda contra m&uacute;ltiples monedas de socios comerciales.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE 4: QUIEN DEMANDA Y QUIEN OFRECE -->
+        <div class="slide bg-blanco">
+            <h2>&iquest;Qui&eacute;n demanda divisas y qui&eacute;n las ofrece?</h2>
+            <div class="two-cols" style="margin-top: 20px;">
+                <div>
+                    <h3 style="color: var(--rojo-alerta); opacity: 1; font-size: 1.5rem; margin-bottom: 15px;">Demanda de USD</h3>
+                    <ul>
+                        <li><strong>Importadores</strong> &mdash; necesitan d&oacute;lares para pagar bienes del exterior</li>
+                        <li><strong>Ahorristas</strong> &mdash; compran d&oacute;lares como reserva de valor</li>
+                        <li><strong>Turistas argentinos en el exterior</strong> &mdash; gastan en moneda extranjera</li>
+                        <li><strong>Empresas que pagan deuda en USD</strong> &mdash; servicio de deuda externa</li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 style="color: var(--verde-activo); opacity: 1; font-size: 1.5rem; margin-bottom: 15px;">Oferta de USD</h3>
+                    <ul>
+                        <li><strong>Exportadores</strong> &mdash; liquidan d&oacute;lares de sus ventas</li>
+                        <li><strong>Turistas extranjeros en Argentina</strong> &mdash; traen divisas y las cambian</li>
+                        <li><strong>Inversores extranjeros</strong> &mdash; ingresan capitales al pa&iacute;s</li>
+                        <li><strong>Organismos internacionales</strong> &mdash; desembolsos de pr&eacute;stamos (FMI, BM)</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE 5: OFERTA Y DEMANDA DE DIVISAS (SVG) -->
+        <div class="slide bg-blanco">
+            <h2>Oferta y demanda de divisas</h2>
+            <div class="chart-container">
+                <svg viewBox="0 0 600 400" width="600" height="400">
+                    <!-- Axes -->
+                    <line x1="80" y1="30" x2="80" y2="340" stroke="#021751" stroke-width="2"/>
+                    <line x1="80" y1="340" x2="560" y2="340" stroke="#021751" stroke-width="2"/>
+                    <!-- Y-axis label -->
+                    <text x="20" y="185" fill="#021751" font-size="13" font-weight="600" text-anchor="middle" transform="rotate(-90, 20, 185)">Tipo de cambio ($/USD)</text>
+                    <!-- X-axis label -->
+                    <text x="320" y="380" fill="#021751" font-size="13" font-weight="600" text-anchor="middle">Cantidad de USD</text>
+                    <!-- Supply curve (S) - upward sloping - verde-activo -->
+                    <line x1="120" y1="300" x2="500" y2="80" stroke="#00C600" stroke-width="3"/>
+                    <text x="510" y="78" fill="#00C600" font-size="16" font-weight="700">S</text>
+                    <!-- Demand curve (D) - downward sloping - azul-impulso -->
+                    <line x1="120" y1="80" x2="500" y2="300" stroke="#1036E2" stroke-width="3"/>
+                    <text x="510" y="298" fill="#1036E2" font-size="16" font-weight="700">D</text>
+                    <!-- Intersection point E* at (310, 190) -->
+                    <circle cx="310" cy="190" r="6" fill="#021751"/>
+                    <text x="322" y="182" fill="#021751" font-size="15" font-weight="700">E*</text>
+                    <!-- Dashed lines to axes -->
+                    <line x1="310" y1="190" x2="310" y2="340" stroke="#021751" stroke-width="1.5" stroke-dasharray="6,4"/>
+                    <line x1="80" y1="190" x2="310" y2="190" stroke="#021751" stroke-width="1.5" stroke-dasharray="6,4"/>
+                    <!-- Axis labels for equilibrium -->
+                    <text x="310" y="358" fill="#021751" font-size="12" font-weight="500" text-anchor="middle">Q*</text>
+                    <text x="65" y="194" fill="#021751" font-size="12" font-weight="500" text-anchor="end">TC*</text>
+                </svg>
+            </div>
+            <p style="text-align: center;">Como cualquier mercado, el precio de equilibrio surge de la interacci&oacute;n entre oferta y demanda.</p>
+        </div>
+
+        <!-- SLIDE 6: PREGUNTA REGIMEN CAMBIARIO -->
+        <div class="slide bg-impulso seccion-titulo">
+            <h2>Pregunta</h2>
+            <h1>&iquest;Qui&eacute;n decide cu&aacute;nto vale el d&oacute;lar?</h1>
+            <p class="subtitle">&iquest;El mercado? &iquest;El gobierno? &iquest;Los dos?</p>
+        </div>
+
+        <!-- SLIDE 7: TIPO DE CAMBIO FLOTANTE -->
+        <div class="slide bg-blanco">
+            <h2>Tipo de cambio flotante</h2>
+            <p>El precio lo determina el <strong class="highlight">mercado libremente</strong>. El Banco Central no interviene (o interviene marginalmente).</p>
+            <div class="chart-container">
+                <svg viewBox="0 0 600 350" width="550" height="320">
+                    <!-- Axes -->
+                    <line x1="80" y1="30" x2="80" y2="290" stroke="#021751" stroke-width="2"/>
+                    <line x1="80" y1="290" x2="540" y2="290" stroke="#021751" stroke-width="2"/>
+                    <text x="20" y="160" fill="#021751" font-size="12" font-weight="600" text-anchor="middle" transform="rotate(-90, 20, 160)">TC ($/USD)</text>
+                    <text x="310" y="325" fill="#021751" font-size="12" font-weight="600" text-anchor="middle">Cantidad de USD</text>
+                    <!-- S curve -->
+                    <line x1="120" y1="260" x2="470" y2="70" stroke="#00C600" stroke-width="2.5"/>
+                    <text x="478" y="68" fill="#00C600" font-size="15" font-weight="700">S</text>
+                    <!-- D curve -->
+                    <line x1="120" y1="70" x2="470" y2="260" stroke="#1036E2" stroke-width="2.5"/>
+                    <text x="478" y="258" fill="#1036E2" font-size="15" font-weight="700">D</text>
+                    <!-- Intersection -->
+                    <circle cx="295" cy="165" r="5" fill="#021751"/>
+                    <!-- Double-headed arrow showing free movement -->
+                    <path d="M 295 130 L 295 95" stroke="#021751" stroke-width="2" fill="none" marker-end="url(#arrowUp7)"/>
+                    <path d="M 295 200 L 295 235" stroke="#021751" stroke-width="2" fill="none" marker-end="url(#arrowDown7)"/>
+                    <defs>
+                        <marker id="arrowUp7" markerWidth="8" markerHeight="8" refX="4" refY="4" orient="auto"><path d="M 0 8 L 4 0 L 8 8" fill="#021751"/></marker>
+                        <marker id="arrowDown7" markerWidth="8" markerHeight="8" refX="4" refY="4" orient="auto"><path d="M 0 0 L 4 8 L 8 0" fill="#021751"/></marker>
+                    </defs>
+                    <!-- Label -->
+                    <text x="350" y="165" fill="#021751" font-size="13" font-weight="500">El mercado encuentra</text>
+                    <text x="350" y="182" fill="#021751" font-size="13" font-weight="500">su equilibrio</text>
+                </svg>
+            </div>
+            <p><strong>Ejemplos:</strong> Estados Unidos, Eurozona, Brasil (con matices).</p>
+        </div>
+
+        <!-- SLIDE 8: TIPO DE CAMBIO FIJO -->
+        <div class="slide bg-blanco">
+            <h2>Tipo de cambio fijo</h2>
+            <p>El Banco Central se compromete a mantener un <strong class="highlight">precio determinado</strong>.</p>
+            <div class="chart-container">
+                <svg viewBox="0 0 600 380" width="580" height="365">
+                    <!-- Axes -->
+                    <line x1="80" y1="30" x2="80" y2="310" stroke="#021751" stroke-width="2"/>
+                    <line x1="80" y1="310" x2="550" y2="310" stroke="#021751" stroke-width="2"/>
+                    <text x="20" y="170" fill="#021751" font-size="12" font-weight="600" text-anchor="middle" transform="rotate(-90, 20, 170)">TC ($/USD)</text>
+                    <text x="315" y="345" fill="#021751" font-size="12" font-weight="600" text-anchor="middle">Cantidad de USD</text>
+                    <!-- S curve -->
+                    <line x1="120" y1="280" x2="480" y2="60" stroke="#00C600" stroke-width="2.5"/>
+                    <text x="488" y="58" fill="#00C600" font-size="15" font-weight="700">S</text>
+                    <!-- D curve -->
+                    <line x1="120" y1="60" x2="480" y2="280" stroke="#1036E2" stroke-width="2.5"/>
+                    <text x="488" y="278" fill="#1036E2" font-size="15" font-weight="700">D</text>
+                    <!-- Equilibrium intersection at ~300, 170 -->
+                    <!-- Fixed rate line BELOW equilibrium at y=220 -->
+                    <line x1="80" y1="220" x2="530" y2="220" stroke="#DC2626" stroke-width="2.5" stroke-dasharray="8,4"/>
+                    <text x="535" y="218" fill="#DC2626" font-size="13" font-weight="700">E_fijo</text>
+                    <!-- At y=220: S intersects at x~187, D intersects at x~413 -->
+                    <!-- Qs point on S curve at y=220 -->
+                    <circle cx="187" cy="220" r="4" fill="#00C600"/>
+                    <!-- Qd point on D curve at y=220 -->
+                    <circle cx="413" cy="220" r="4" fill="#1036E2"/>
+                    <!-- Dashed lines down to axis -->
+                    <line x1="187" y1="220" x2="187" y2="310" stroke="#021751" stroke-width="1" stroke-dasharray="4,3"/>
+                    <line x1="413" y1="220" x2="413" y2="310" stroke="#021751" stroke-width="1" stroke-dasharray="4,3"/>
+                    <text x="187" y="328" fill="#021751" font-size="11" text-anchor="middle">Qs</text>
+                    <text x="413" y="328" fill="#021751" font-size="11" text-anchor="middle">Qd</text>
+                    <!-- Gap bracket/highlight -->
+                    <rect x="187" y="225" width="226" height="8" fill="rgba(220,38,38,0.25)" rx="2"/>
+                    <line x1="187" y1="240" x2="413" y2="240" stroke="#DC2626" stroke-width="1.5"/>
+                    <line x1="187" y1="236" x2="187" y2="244" stroke="#DC2626" stroke-width="1.5"/>
+                    <line x1="413" y1="236" x2="413" y2="244" stroke="#DC2626" stroke-width="1.5"/>
+                    <!-- Gap label -->
+                    <text x="300" y="260" fill="#DC2626" font-size="12" font-weight="600" text-anchor="middle">Exceso de demanda</text>
+                    <text x="300" y="276" fill="#DC2626" font-size="11" text-anchor="middle">El BC vende reservas</text>
+                    <!-- Reservas arrow -->
+                    <text x="300" y="63" fill="#021751" font-size="12" font-weight="600" text-anchor="middle">Reservas</text>
+                    <defs>
+                        <marker id="arrowDown8" markerWidth="8" markerHeight="8" refX="4" refY="4" orient="auto"><path d="M 0 0 L 4 8 L 8 0" fill="#021751"/></marker>
+                    </defs>
+                    <line x1="300" y1="70" x2="300" y2="215" stroke="#021751" stroke-width="1.5" stroke-dasharray="5,3" marker-end="url(#arrowDown8)"/>
+                </svg>
+            </div>
+            <p><strong>Ejemplos:</strong> Convertibilidad (1991-2001), Hong Kong, Arabia Saudita.</p>
+        </div>
+
+        <!-- SLIDE 9: FLOTACION ADMINISTRADA -->
+        <div class="slide bg-blanco">
+            <h2>Flotaci&oacute;n administrada y bandas</h2>
+            <p>El <strong class="highlight">caso intermedio</strong>. El Banco Central interviene pero sin compromiso r&iacute;gido.</p>
+            <ul style="margin-top: 25px;">
+                <li><strong>Crawling peg:</strong> devaluaci&oacute;n gradual programada. El tipo de cambio sube a un ritmo preestablecido.</li>
+                <li><strong>Bandas cambiarias:</strong> el tipo de cambio puede moverse dentro de un rango (piso y techo). El BC solo interviene en los l&iacute;mites.</li>
+                <li><strong>Flotaci&oacute;n sucia:</strong> el BC interviene discrecionalmente, sin regla expl&iacute;cita, comprando o vendiendo divisas seg&uacute;n le convenga.</li>
+            </ul>
+            <div class="solucion-box" style="margin-top: 25px;">
+                <p style="margin: 0; font-size: 1.3rem;">La mayor&iacute;a de los pa&iacute;ses del mundo operan con alg&uacute;n grado de administraci&oacute;n cambiaria.</p>
+            </div>
+        </div>
+
+        <!-- SLIDE 10: TRILEMA DE MUNDELL-FLEMING -->
+        <div class="slide bg-respaldo">
+            <h2>El trilema de Mundell-Fleming</h2>
+            <h3>No pod&eacute;s tener las tres cosas a la vez</h3>
+            <div class="three-cols" style="margin-top: 30px;">
+                <div class="concepto-box">
+                    <h4 style="color: var(--verde-activo);">1</h4>
+                    <p style="font-size: 1.3rem; font-weight: 600;">Tipo de cambio fijo</p>
+                </div>
+                <div class="concepto-box">
+                    <h4 style="color: var(--verde-activo);">2</h4>
+                    <p style="font-size: 1.3rem; font-weight: 600;">Libre movilidad de capitales</p>
+                </div>
+                <div class="concepto-box">
+                    <h4 style="color: var(--verde-activo);">3</h4>
+                    <p style="font-size: 1.3rem; font-weight: 600;">Pol&iacute;tica monetaria independiente</p>
+                </div>
+            </div>
+            <p style="text-align: center; margin-top: 35px; font-size: 1.8rem; font-weight: 600;">Eleg&iacute;s dos. La tercera la sacrific&aacute;s.</p>
+            <p class="nota-academica">Mundell, R. (1963) &mdash; &ldquo;Capital Mobility and Stabilization Policy under Fixed and Flexible Exchange Rates&rdquo;, Canadian Journal of Economics.</p>
+        </div>
+
+        <!-- SLIDE 11: PREGUNTA ATAQUE ESPECULATIVO -->
+        <div class="slide bg-impulso seccion-titulo">
+            <h2>Pregunta</h2>
+            <h1>&iquest;Qu&eacute; es un &lsquo;ataque especulativo&rsquo;?</h1>
+            <p class="subtitle">&iquest;Qui&eacute;nes son los &ldquo;especuladores&rdquo;?</p>
+        </div>
+
+        <!-- SLIDE 12: MODELO DE KRUGMAN -->
+        <div class="slide bg-blanco">
+            <h2>El modelo de Krugman (1979)</h2>
+            <blockquote>
+                &ldquo;&iquest;Por qu&eacute; los tipos de cambio fijos colapsan de golpe y no gradualmente?&rdquo;
+                <cite>Krugman (1979) &mdash; &ldquo;A Model of Balance-of-Payments Crises&rdquo;, Journal of Money, Credit and Banking</cite>
+            </blockquote>
+            <p style="margin-top: 25px;"><strong class="highlight">El setup:</strong></p>
+            <ul>
+                <li>Un gobierno <strong>fija el tipo de cambio</strong></li>
+                <li>Pero tiene un <strong>d&eacute;ficit fiscal</strong> que financia con emisi&oacute;n</li>
+                <li>Usa <strong>reservas internacionales</strong> para sostener el tipo de cambio fijo</li>
+                <li>Las reservas son <strong class="highlight-red">finitas</strong></li>
+            </ul>
+        </div>
+
+        <!-- SLIDE 13: EL EQUILIBRIO FRAGIL (SVG) -->
+        <div class="slide bg-blanco">
+            <h2>El equilibrio fr&aacute;gil</h2>
+            <div class="chart-container">
+                <svg viewBox="0 0 600 370" width="570" height="350">
+                    <!-- Axes -->
+                    <line x1="80" y1="30" x2="80" y2="300" stroke="#021751" stroke-width="2"/>
+                    <line x1="80" y1="300" x2="540" y2="300" stroke="#021751" stroke-width="2"/>
+                    <text x="20" y="165" fill="#021751" font-size="12" font-weight="600" text-anchor="middle" transform="rotate(-90, 20, 165)">TC ($/USD)</text>
+                    <text x="310" y="335" fill="#021751" font-size="12" font-weight="600" text-anchor="middle">Cantidad de USD</text>
+                    <!-- S curve -->
+                    <line x1="120" y1="270" x2="470" y2="60" stroke="#00C600" stroke-width="2.5"/>
+                    <text x="478" y="58" fill="#00C600" font-size="15" font-weight="700">S</text>
+                    <!-- D curve -->
+                    <line x1="120" y1="60" x2="470" y2="270" stroke="#1036E2" stroke-width="2.5"/>
+                    <text x="478" y="268" fill="#1036E2" font-size="15" font-weight="700">D</text>
+                    <!-- Fixed rate at y=210 (below equilibrium ~165) -->
+                    <line x1="80" y1="210" x2="520" y2="210" stroke="#DC2626" stroke-width="2.5" stroke-dasharray="8,4"/>
+                    <text x="525" y="208" fill="#DC2626" font-size="12" font-weight="700">E_fijo</text>
+                    <!-- Qs at y=210 on S: approx x=195 -->
+                    <!-- Qd at y=210 on D: approx x=395 -->
+                    <!-- Shaded gap area -->
+                    <rect x="195" y="200" width="200" height="20" fill="rgba(220,38,38,0.15)" rx="3"/>
+                    <line x1="195" y1="225" x2="395" y2="225" stroke="#DC2626" stroke-width="1.5"/>
+                    <line x1="195" y1="221" x2="195" y2="229" stroke="#DC2626" stroke-width="1.5"/>
+                    <line x1="395" y1="221" x2="395" y2="229" stroke="#DC2626" stroke-width="1.5"/>
+                    <text x="295" y="248" fill="#DC2626" font-size="12" font-weight="600" text-anchor="middle">El BC cubre la diferencia</text>
+                    <text x="295" y="264" fill="#DC2626" font-size="11" text-anchor="middle">con reservas</text>
+                </svg>
+            </div>
+            <p style="text-align: center; font-size: 1.4rem; font-weight: 500;">Mientras haya reservas, el sistema se sostiene.</p>
+        </div>
+
+        <!-- SLIDE 14: LA EMISION DESPLAZA LA DEMANDA (SVG) -->
+        <div class="slide bg-blanco">
+            <h2>La emisi&oacute;n desplaza la demanda</h2>
+            <div class="chart-container">
+                <svg viewBox="0 0 600 370" width="570" height="350">
+                    <!-- Axes -->
+                    <line x1="80" y1="30" x2="80" y2="300" stroke="#021751" stroke-width="2"/>
+                    <line x1="80" y1="300" x2="540" y2="300" stroke="#021751" stroke-width="2"/>
+                    <text x="20" y="165" fill="#021751" font-size="12" font-weight="600" text-anchor="middle" transform="rotate(-90, 20, 165)">TC ($/USD)</text>
+                    <text x="310" y="335" fill="#021751" font-size="12" font-weight="600" text-anchor="middle">Cantidad de USD</text>
+                    <!-- S curve -->
+                    <line x1="120" y1="270" x2="470" y2="60" stroke="#00C600" stroke-width="2.5"/>
+                    <text x="478" y="58" fill="#00C600" font-size="15" font-weight="700">S</text>
+                    <!-- Original D curve (dashed) -->
+                    <line x1="120" y1="60" x2="470" y2="270" stroke="#1036E2" stroke-width="2" stroke-dasharray="6,4" opacity="0.4"/>
+                    <text x="478" y="268" fill="#1036E2" font-size="14" font-weight="500" opacity="0.4">D</text>
+                    <!-- Shifted D' curve (further right, +70px shift) -->
+                    <line x1="190" y1="60" x2="540" y2="270" stroke="#1036E2" stroke-width="2.5"/>
+                    <text x="545" y="268" fill="#1036E2" font-size="15" font-weight="700">D'</text>
+                    <!-- Shift arrow -->
+                    <defs>
+                        <marker id="arrowRight14" markerWidth="8" markerHeight="8" refX="4" refY="4" orient="auto"><path d="M 0 0 L 8 4 L 0 8" fill="#1036E2"/></marker>
+                    </defs>
+                    <line x1="340" y1="120" x2="395" y2="120" stroke="#1036E2" stroke-width="2" marker-end="url(#arrowRight14)"/>
+                    <!-- Fixed rate at y=210 -->
+                    <line x1="80" y1="210" x2="530" y2="210" stroke="#DC2626" stroke-width="2.5" stroke-dasharray="8,4"/>
+                    <text x="535" y="208" fill="#DC2626" font-size="12" font-weight="700">E_fijo</text>
+                    <!-- Qs at y=210 on S: ~195 (same as before) -->
+                    <!-- Qd' at y=210 on D': ~465 (larger gap) -->
+                    <rect x="195" y="200" width="270" height="20" fill="rgba(220,38,38,0.2)" rx="3"/>
+                    <line x1="195" y1="225" x2="465" y2="225" stroke="#DC2626" stroke-width="1.5"/>
+                    <line x1="195" y1="221" x2="195" y2="229" stroke="#DC2626" stroke-width="1.5"/>
+                    <line x1="465" y1="221" x2="465" y2="229" stroke="#DC2626" stroke-width="1.5"/>
+                    <text x="330" y="248" fill="#DC2626" font-size="12" font-weight="600" text-anchor="middle">Brecha A&Uacute;N MAYOR</text>
+                </svg>
+            </div>
+            <p style="text-align: center;"><strong class="highlight-red">M&aacute;s emisi&oacute;n &rarr; m&aacute;s demanda de d&oacute;lares &rarr; m&aacute;s reservas necesarias</strong></p>
+            <p style="text-align: center;">El stock de reservas se achica cada vez m&aacute;s r&aacute;pido.</p>
+        </div>
+
+        <!-- SLIDE 15: EL MOMENTO DEL ATAQUE (SVG) -->
+        <div class="slide bg-blanco">
+            <h2>El momento del ataque</h2>
+            <div class="chart-container">
+                <svg viewBox="0 0 600 380" width="570" height="360">
+                    <!-- Axes -->
+                    <line x1="80" y1="30" x2="80" y2="310" stroke="#021751" stroke-width="2"/>
+                    <line x1="80" y1="310" x2="540" y2="310" stroke="#021751" stroke-width="2"/>
+                    <text x="20" y="170" fill="#021751" font-size="12" font-weight="600" text-anchor="middle" transform="rotate(-90, 20, 170)">TC ($/USD)</text>
+                    <text x="310" y="345" fill="#021751" font-size="12" font-weight="600" text-anchor="middle">Cantidad de USD</text>
+                    <!-- S curve -->
+                    <line x1="120" y1="280" x2="470" y2="60" stroke="#00C600" stroke-width="2.5"/>
+                    <text x="478" y="58" fill="#00C600" font-size="15" font-weight="700">S</text>
+                    <!-- Shifted D' curve -->
+                    <line x1="190" y1="60" x2="540" y2="280" stroke="#1036E2" stroke-width="2.5"/>
+                    <text x="545" y="278" fill="#1036E2" font-size="15" font-weight="700">D'</text>
+                    <!-- Fixed rate at y=220 (below true equilibrium) -->
+                    <line x1="80" y1="220" x2="530" y2="220" stroke="#DC2626" stroke-width="2" stroke-dasharray="8,4"/>
+                    <text x="535" y="218" fill="#DC2626" font-size="11" font-weight="700">E_fijo</text>
+                    <!-- Market equilibrium of S and D' intersection -->
+                    <!-- S: y = 280 - (220/350)*(x-120) = 280 - 0.6286*(x-120) -->
+                    <!-- D': y = 60 + (220/350)*(x-190) = 60 + 0.6286*(x-190) -->
+                    <!-- Intersection: 280-0.6286(x-120) = 60+0.6286(x-190) -->
+                    <!-- 280-0.6286x+75.43 = 60+0.6286x-119.43 -->
+                    <!-- 355.43-0.6286x = -59.43+0.6286x -->
+                    <!-- 414.86 = 1.2572x => x=330 => y=280-0.6286*210=280-132=148 -->
+                    <circle cx="330" cy="148" r="5" fill="#021751"/>
+                    <text x="340" y="140" fill="#021751" font-size="12" font-weight="600">E_mercado</text>
+                    <!-- Dashed line from E_mercado to y-axis -->
+                    <line x1="80" y1="148" x2="325" y2="148" stroke="#021751" stroke-width="1" stroke-dasharray="4,3"/>
+                    <!-- Big vertical arrow from E_fijo up to E_mercado -->
+                    <defs>
+                        <marker id="arrowUp15" markerWidth="10" markerHeight="10" refX="5" refY="5" orient="auto"><path d="M 0 10 L 5 0 L 10 10" fill="#DC2626"/></marker>
+                    </defs>
+                    <line x1="160" y1="218" x2="160" y2="152" stroke="#DC2626" stroke-width="3" marker-end="url(#arrowUp15)"/>
+                    <text x="110" y="185" fill="#DC2626" font-size="13" font-weight="700" text-anchor="middle">SALTO</text>
+                    <!-- Near-empty reserves indicator -->
+                    <rect x="390" y="55" width="130" height="40" fill="rgba(220,38,38,0.12)" rx="6"/>
+                    <text x="455" y="72" fill="#DC2626" font-size="11" font-weight="600" text-anchor="middle">Reservas casi</text>
+                    <text x="455" y="87" fill="#DC2626" font-size="11" font-weight="600" text-anchor="middle">agotadas</text>
+                </svg>
+            </div>
+            <p style="text-align: center;"><strong>Los agentes anticipan el agotamiento &rarr; corren todos al mismo tiempo</strong></p>
+            <div class="problema-box" style="margin-top: 10px;">
+                <p style="margin: 0; font-size: 1.3rem; text-align: center;"><strong>El ataque no ocurre cuando las reservas se agotan. Ocurre ANTES.</strong></p>
+            </div>
+        </div>
+
+        <!-- SLIDE 16: LA PROFECIA AUTOCUMPLIDA -->
+        <div class="slide bg-impulso">
+            <h2>La profec&iacute;a autocumplida</h2>
+            <p style="text-align: center; font-size: 1.8rem; font-weight: 600; margin-bottom: 30px;">Lo racional individualmente genera el colapso colectivo</p>
+            <div class="flow-diagram">
+                <div class="flow-box" style="background: rgba(255,255,255,0.2);">Creo que el TC<br>va a subir</div>
+                <span class="flow-arrow" style="color: white;">&rarr;</span>
+                <div class="flow-box" style="background: rgba(255,255,255,0.2);">Compro<br>d&oacute;lares</div>
+                <span class="flow-arrow" style="color: white;">&rarr;</span>
+                <div class="flow-box" style="background: rgba(255,255,255,0.2);">El TC<br>sube</div>
+                <span class="flow-arrow" style="color: white;">&rarr;</span>
+                <div class="flow-box" style="background: rgba(255,255,255,0.2);">Ten&iacute;a<br>raz&oacute;n</div>
+            </div>
+            <p style="text-align: center; margin-top: 35px; font-size: 1.6rem; font-weight: 500;">Si todos creen que va a pasar, <strong>pasa</strong>.</p>
+        </div>
+
+        <!-- SLIDE 17: EL ESPECULADOR SOS VOS -->
+        <div class="slide bg-verde">
+            <h2>&ldquo;El especulador&rdquo; sos vos</h2>
+            <p style="font-size: 1.6rem; margin-bottom: 25px;">Un &ldquo;ataque especulativo&rdquo; no es solo George Soros.</p>
+            <ul>
+                <li>El almacenero que remarca precios &ldquo;por las dudas&rdquo;</li>
+                <li>El ahorrista que compra sus USD 200 del cupo</li>
+                <li>La PyME que adelanta importaciones</li>
+                <li>La familia que dolariza el ahorro del mes</li>
+            </ul>
+            <div class="solucion-box" style="margin-top: 30px; border-left-color: white; background: rgba(255,255,255,0.15);">
+                <p style="margin: 0; font-size: 1.4rem; font-weight: 600;">Millones de decisiones individuales racionales. Eso es un &ldquo;ataque especulativo&rdquo;.</p>
+            </div>
+        </div>
+
+        <!-- SLIDE 18: ARGENTINA LABORATORIO -->
+        <div class="slide bg-blanco">
+            <h2>Argentina: laboratorio de ataques cambiarios</h2>
+            <div class="timeline" style="margin-top: 25px;">
+                <div class="timeline-item">
+                    <span class="timeline-year">1975</span>
+                    <div><strong>Rodrigazo</strong> &mdash; Devaluaci&oacute;n masiva tras descontrol fiscal. El tipo de cambio oficial se duplic&oacute; de un d&iacute;a para otro.</div>
+                </div>
+                <div class="timeline-item">
+                    <span class="timeline-year">1981</span>
+                    <div><strong>Fin de la &ldquo;tablita&rdquo;</strong> de Mart&iacute;nez de Hoz &mdash; Crawling peg que colaps&oacute; cuando se agotaron las reservas.</div>
+                </div>
+                <div class="timeline-item">
+                    <span class="timeline-year">1989</span>
+                    <div><strong>Hiperinflaci&oacute;n</strong> &mdash; Dominancia fiscal extrema. El tipo de cambio libre se multiplic&oacute; 50 veces en un a&ntilde;o.</div>
+                </div>
+                <div class="timeline-item">
+                    <span class="timeline-year">2001</span>
+                    <div><strong>Fin de la Convertibilidad</strong> &mdash; D&eacute;ficit + deuda + TC fijo = colapso. Devaluaci&oacute;n de 200% en semanas.</div>
+                </div>
+                <div class="timeline-item">
+                    <span class="timeline-year">2011-2019</span>
+                    <div><strong>Cepos cambiarios</strong> &mdash; Restricciones a la compra de d&oacute;lares. Aparici&oacute;n del &ldquo;d&oacute;lar blue&rdquo; con brechas de hasta 100%.</div>
+                </div>
+            </div>
+            <p style="text-align: center; margin-top: 20px; font-weight: 500;">Cada episodio es una variaci&oacute;n del modelo de Krugman.</p>
+        </div>
+
+        <!-- SLIDE 19: PREGUNTA FUNCIONES DEL DINERO -->
+        <div class="slide bg-impulso seccion-titulo">
+            <h2>Pregunta</h2>
+            <h1>&iquest;Para qu&eacute; sirve el dinero?</h1>
+            <p class="subtitle">Tres funciones, una respuesta inc&oacute;moda.</p>
+        </div>
+
+        <!-- SLIDE 20: EL PESO MONEDA INCOMPLETA -->
+        <div class="slide bg-blanco">
+            <h2>El peso argentino: una moneda incompleta</h2>
+            <div class="three-cols" style="margin-top: 30px;">
+                <div class="concepto-box" style="border: 3px solid var(--verde-activo);">
+                    <h4>Unidad de cuenta</h4>
+                    <p style="font-size: 1.1rem;">Los precios se expresan en pesos</p>
+                    <p style="font-size: 2rem; margin-top: 10px; color: var(--verde-activo); font-weight: 700;">&#10003;</p>
+                </div>
+                <div class="concepto-box" style="border: 3px solid var(--amarillo);">
+                    <h4 style="color: var(--amarillo);">Medio de intercambio</h4>
+                    <p style="font-size: 1.1rem;">Pagamos en pesos (parcialmente)</p>
+                    <p style="font-size: 2rem; margin-top: 10px; color: var(--amarillo); font-weight: 700;">&#10003;</p>
+                </div>
+                <div class="concepto-box" style="border: 3px solid var(--rojo-alerta);">
+                    <h4 style="color: var(--rojo-alerta);">Reserva de valor</h4>
+                    <p style="font-size: 1.1rem;">&iquest;Ahorramos en pesos?</p>
+                    <p style="font-size: 2rem; margin-top: 10px; color: var(--rojo-alerta); font-weight: 700;">&#10007;</p>
+                </div>
+            </div>
+            <p style="text-align: center; margin-top: 30px; font-size: 1.4rem; font-weight: 500;">El peso cumple dos de tres funciones. La tercera la perdi&oacute; hace d&eacute;cadas.</p>
+        </div>
+
+        <!-- SLIDE 21: ECONOMIA BIMONETARIA -->
+        <div class="slide bg-blanco">
+            <h2>&iquest;Qu&eacute; es una econom&iacute;a bimonetaria?</h2>
+            <p>Cuando los agentes econ&oacute;micos usan <strong class="highlight">dos monedas en paralelo</strong> para distintas funciones.</p>
+            <p style="margin-top: 20px;"><strong class="highlight">El d&oacute;lar en Argentina se usa como:</strong></p>
+            <ul>
+                <li><strong>Reserva de valor</strong> &mdash; ahorro, dep&oacute;sitos, colch&oacute;n</li>
+                <li><strong>Referencia de precios de bienes durables</strong> &mdash; inmuebles, autos, maquinaria</li>
+                <li><strong>Unidad de cuenta inmobiliaria</strong> &mdash; los departamentos se publican y se venden en USD</li>
+                <li><strong>Refugio ante crisis</strong> &mdash; ante cualquier incertidumbre, la reacci&oacute;n es comprar d&oacute;lares</li>
+            </ul>
+            <div class="solucion-box" style="margin-top: 20px;">
+                <p style="margin: 0; font-size: 1.3rem;">El d&oacute;lar en Argentina no es solo &ldquo;inversi&oacute;n&rdquo;. Es la moneda que completa lo que el peso no puede.</p>
+            </div>
+        </div>
+
+        <!-- SLIDE 22: POR QUE SURGE LA BIMONETARIEDAD -->
+        <div class="slide bg-blanco">
+            <h2>&iquest;Por qu&eacute; surge la bimonetariedad?</h2>
+            <blockquote>
+                &ldquo;La dolarizaci&oacute;n financiera surge cuando la volatilidad de la inflaci&oacute;n dom&eacute;stica supera a la del tipo de cambio real.&rdquo;
+                <cite>Ize &amp; Levy-Yeyati (2003) &mdash; &ldquo;Financial Dollarization&rdquo;, Journal of International Economics</cite>
+            </blockquote>
+            <p style="margin-top: 20px;">El ahorrista racional compara dos riesgos:</p>
+            <div class="two-cols" style="margin-top: 15px;">
+                <div class="problema-box">
+                    <p style="margin: 0;"><strong>Riesgo 1:</strong> La incertidumbre de los precios en pesos (inflaci&oacute;n impredecible)</p>
+                </div>
+                <div class="solucion-box">
+                    <p style="margin: 0;"><strong>Riesgo 2:</strong> La incertidumbre del tipo de cambio (volatilidad del d&oacute;lar)</p>
+                </div>
+            </div>
+            <p style="margin-top: 20px;">Si la inflaci&oacute;n es m&aacute;s impredecible que el d&oacute;lar &rarr; conviene dolarizarse.</p>
+            <p style="text-align: center; margin-top: 15px; font-size: 1.4rem; font-weight: 600; color: var(--azul-impulso);">Dolarizar no es especular. Es ser racional.</p>
+        </div>
+
+        <!-- SLIDE 23: CONSECUENCIAS DE LA BIMONETARIEDAD -->
+        <div class="slide bg-blanco">
+            <h2>Consecuencias de la bimonetariedad</h2>
+            <div class="problema-box" style="margin-top: 15px;">
+                <p style="margin: 0;"><strong>1. Descalce de monedas</strong> &mdash; Ingresos en pesos, ahorros/deudas en d&oacute;lares. Una devaluaci&oacute;n es un shock patrimonial.</p>
+            </div>
+            <div class="problema-box">
+                <p style="margin: 0;"><strong>2. Amplificaci&oacute;n de crisis</strong> &mdash; Cualquier movimiento del TC afecta los balances de toda la econom&iacute;a.</p>
+            </div>
+            <div class="problema-box">
+                <p style="margin: 0;"><strong>3. P&eacute;rdida de se&ntilde;oreaje</strong> &mdash; El Estado pierde el beneficio de emitir la moneda en la que la gente ahorra.</p>
+            </div>
+            <div class="problema-box">
+                <p style="margin: 0;"><strong>4. Pol&iacute;tica monetaria debilitada</strong> &mdash; El BC tiene menos herramientas cuando la gente no demanda pesos.</p>
+            </div>
+            <p class="nota-academica">Calvo, G. &amp; Reinhart, C. (2002) &mdash; &ldquo;Fear of Floating&rdquo;, Quarterly Journal of Economics.</p>
+        </div>
+
+        <!-- SLIDE 24: EL DOLAR COMO TERMOMETRO -->
+        <div class="slide bg-respaldo">
+            <div class="frase-final">
+                <h2>El d&oacute;lar como term&oacute;metro</h2>
+                <blockquote style="font-size: 2rem; border-left: none; padding: 0; margin: 30px auto; max-width: 900px;">
+                    &ldquo;En Argentina, el tipo de cambio no es solo un precio relativo. Es un indicador de confianza, un disparador de expectativas, un organizador de la econom&iacute;a.&rdquo;
+                </blockquote>
+                <p style="margin-top: 25px; opacity: 0.85; font-size: 1.3rem;">Cuando sube el d&oacute;lar, no solo cambia el precio de los bienes importados. Cambia el humor, las decisiones de inversi&oacute;n, los precios de toda la econom&iacute;a.</p>
+            </div>
+        </div>
+
+        <!-- SLIDE 25: PREGUNTA TCR -->
+        <div class="slide bg-impulso seccion-titulo">
+            <h2>Pregunta</h2>
+            <h1>&iquest;Qu&eacute; es el tipo de cambio real?</h1>
+            <p class="subtitle">No es lo mismo que el tipo de cambio nominal.</p>
+        </div>
+
+        <!-- SLIDE 26: TCR LA FORMULA -->
+        <div class="slide bg-blanco">
+            <h2>Tipo de cambio real: la f&oacute;rmula</h2>
+            <div class="formula formula-grande">
+                TCR = (E &times; P*) / P
+            </div>
+            <div class="three-cols" style="margin-top: 20px;">
+                <div class="concepto-box">
+                    <h4>E</h4>
+                    <p>Tipo de cambio nominal (pesos por d&oacute;lar)</p>
+                </div>
+                <div class="concepto-box">
+                    <h4>P*</h4>
+                    <p>Precios internacionales</p>
+                </div>
+                <div class="concepto-box">
+                    <h4>P</h4>
+                    <p>Precios dom&eacute;sticos</p>
+                </div>
+            </div>
+            <div class="formula" style="margin-top: 25px; font-size: 1.3rem; letter-spacing: 1px;">
+                Si E = $1.000, un bien cuesta USD 10 afuera y $15.000 ac&aacute; &rarr; TCR = (1.000 &times; 10) / 15.000 = 0,67
+            </div>
+            <p style="text-align: center; margin-top: 15px;">Tus bienes son <strong class="highlight-red">&ldquo;caros en d&oacute;lares&rdquo;</strong>. El TCR mide el poder de compra relativo: &iquest;qu&eacute; tan baratos o caros somos comparados con el mundo?</p>
+        </div>
+
+        <!-- SLIDE 27: TCR Y COMPETITIVIDAD -->
+        <div class="slide bg-blanco">
+            <h2>TCR y competitividad</h2>
+            <div class="two-cols" style="margin-top: 20px;">
+                <div>
+                    <div class="problema-box" style="margin-bottom: 15px;">
+                        <p style="margin: 0 0 8px 0; font-weight: 700; color: var(--rojo-alerta);">TCR se aprecia / peso &ldquo;caro&rdquo;</p>
+                    </div>
+                    <ul>
+                        <li>Exportar es m&aacute;s dif&iacute;cil</li>
+                        <li>Importar es m&aacute;s barato</li>
+                        <li>La industria local compite con desventaja</li>
+                    </ul>
+                </div>
+                <div>
+                    <div class="solucion-box" style="margin-bottom: 15px;">
+                        <p style="margin: 0 0 8px 0; font-weight: 700; color: var(--verde-activo);">TCR se deprecia / peso &ldquo;barato&rdquo;</p>
+                    </div>
+                    <ul>
+                        <li>Exportar es m&aacute;s f&aacute;cil</li>
+                        <li>Importar es m&aacute;s caro</li>
+                        <li>La industria local tiene protecci&oacute;n de precio</li>
+                    </ul>
+                </div>
+            </div>
+            <p style="text-align: center; margin-top: 25px; font-size: 1.3rem;">Por eso en Argentina la discusi&oacute;n sobre si el d&oacute;lar est&aacute; &ldquo;caro&rdquo; o &ldquo;barato&rdquo; es tambi&eacute;n una discusi&oacute;n sobre <strong class="highlight">competitividad</strong>.</p>
+        </div>
+
+        <!-- SLIDE 28: BALASSA-SAMUELSON -->
+        <div class="slide bg-blanco">
+            <h2>Balassa-Samuelson: &iquest;por qu&eacute; los pa&iacute;ses ricos son &ldquo;m&aacute;s caros&rdquo;?</h2>
+            <blockquote>
+                En una econom&iacute;a hay dos sectores: el <strong>transable</strong> (exportable, compite internacionalmente) y el <strong>no transable</strong> (servicios locales, no se exportan).
+                <br><br>
+                Los pa&iacute;ses productivos tienen salarios altos en <strong>ambos</strong> sectores. Pero la productividad alta est&aacute; solo en el sector transable. Resultado: los servicios son caros &rarr; el pa&iacute;s es &ldquo;caro en d&oacute;lares&rdquo;.
+                <cite>Balassa, B. (1964) &mdash; &ldquo;The Purchasing-Power Parity Doctrine: A Reappraisal&rdquo;, Journal of Political Economy</cite>
+            </blockquote>
+            <div class="solucion-box" style="margin-top: 20px;">
+                <p style="margin: 0; font-size: 1.3rem;">Ser &ldquo;caro en d&oacute;lares&rdquo; no implica ser poco competitivo. <strong>Suiza y Noruega son caros y ultracompetitivos.</strong></p>
+            </div>
+        </div>
+
+        <!-- SLIDE 29: EL TC NO ES LA COMPETITIVIDAD -->
+        <div class="slide bg-verde">
+            <h2>El tipo de cambio NO es la competitividad</h2>
+            <p style="margin-bottom: 20px;">Factores que determinan la competitividad de un pa&iacute;s:</p>
+            <ul>
+                <li><strong>Productividad laboral</strong></li>
+                <li><strong>Infraestructura y log&iacute;stica</strong></li>
+                <li><strong>Calidad institucional</strong></li>
+                <li><strong>Capital humano y educaci&oacute;n</strong></li>
+                <li><strong>Innovaci&oacute;n y tecnolog&iacute;a</strong></li>
+                <li><strong>Tipo de cambio real</strong> &larr; es UNO m&aacute;s</li>
+            </ul>
+            <p class="nota-academica" style="border-top-color: rgba(255,255,255,0.2);">Porter, M. (1990) &mdash; <em>The Competitive Advantage of Nations</em>, Free Press.</p>
+            <p style="text-align: center; margin-top: 15px; font-size: 1.5rem; font-weight: 600;">Devaluar no te hace competitivo. Te hace barato. No es lo mismo.</p>
+        </div>
+
+        <!-- SLIDE 30: PELIGRO DE COMPETITIVIDAD POR TC -->
+        <div class="slide bg-blanco">
+            <h2>El peligro de la &ldquo;competitividad por tipo de cambio&rdquo;</h2>
+            <div class="flow-diagram" style="margin-top: 30px;">
+                <div class="flow-box">Devaluaci&oacute;n</div>
+                <span class="flow-arrow">&rarr;</span>
+                <div class="flow-box">Precios en<br>USD bajan</div>
+                <span class="flow-arrow">&rarr;</span>
+                <div class="flow-box" style="background: rgba(245,158,11,0.15);">Pero la inflaci&oacute;n<br>sube</div>
+                <span class="flow-arrow">&rarr;</span>
+                <div class="flow-box" style="background: rgba(220,38,38,0.15);">Se come la<br>devaluaci&oacute;n</div>
+                <span class="flow-arrow">&rarr;</span>
+                <div class="flow-box" style="background: rgba(220,38,38,0.25);">Volver a<br>devaluar</div>
+            </div>
+            <p style="text-align: center; margin-top: 25px; font-size: 1.1rem; opacity: 0.7;">Este es el concepto de <strong>pass-through</strong>: la transmisi&oacute;n de la devaluaci&oacute;n a precios internos.</p>
+            <p style="text-align: center; margin-top: 20px; font-size: 1.3rem;"><strong class="highlight">La competitividad genuina se construye con productividad, no con devaluaciones sucesivas.</strong></p>
+            <p style="text-align: center; opacity: 0.7;">Argentina lleva d&eacute;cadas intentando este atajo. Los resultados est&aacute;n a la vista.</p>
+        </div>
+
+        <!-- SLIDE 31: MENSAJES CLAVE -->
+        <div class="slide bg-impulso">
+            <h2>Mensajes clave</h2>
+            <ul style="margin-top: 20px;">
+                <li style="margin-bottom: 25px;">
+                    <strong>&ldquo;El mercado de cambios es un mercado como cualquier otro&rdquo;</strong><br>
+                    <span style="opacity: 0.8; font-size: 1.2rem;">Con oferta, demanda y un precio de equilibrio.</span>
+                </li>
+                <li style="margin-bottom: 25px;">
+                    <strong>&ldquo;Los ataques especulativos son millones de decisiones racionales&rdquo;</strong><br>
+                    <span style="opacity: 0.8; font-size: 1.2rem;">No es solo Soros. Somos todos, protegiendo nuestro patrimonio.</span>
+                </li>
+                <li style="margin-bottom: 25px;">
+                    <strong>&ldquo;Argentina es bimonetaria por razones estructurales&rdquo;</strong><br>
+                    <span style="opacity: 0.8; font-size: 1.2rem;">No por capricho. El peso no cumple la funci&oacute;n de reserva de valor.</span>
+                </li>
+                <li>
+                    <strong>&ldquo;La competitividad no se resuelve con el tipo de cambio&rdquo;</strong><br>
+                    <span style="opacity: 0.8; font-size: 1.2rem;">Es productividad, instituciones, infraestructura. El TCR es un factor m&aacute;s.</span>
+                </li>
+            </ul>
+        </div>
+
+        <!-- SLIDE 32: FRASE FINAL -->
+        <div class="slide bg-respaldo">
+            <div class="frase-final">
+                <blockquote style="font-size: 2.4rem; border-left: none; padding: 0; max-width: 950px; margin: 0 auto;">
+                    &ldquo;Un tipo de cambio no es solo un precio. En Argentina, es un term&oacute;metro de confianza.&rdquo;
+                </blockquote>
+            </div>
+        </div>
+
+        <!-- SLIDE 33: PORTADA ANEXO -->
+        <div class="slide bg-respaldo portada">
+            <h3 style="text-transform: uppercase; letter-spacing: 3px; opacity: 0.7;">Anexo</h3>
+            <h1>Papers en profundidad</h1>
+        </div>
+
+        <!-- ANNEX SLIDES START HERE (A1-A27 = slides 34-60) -->
+
+        <!-- ============================================== -->
+        <!-- A1. KRUGMAN (1979) — 5 slides (34-38)          -->
+        <!-- ============================================== -->
+
+        <!-- SLIDE 34: Krugman - El paper -->
+        <div class="slide bg-blanco">
+            <h2>Krugman (1979): El paper</h2>
+            <div class="cita-paper">
+                <div class="titulo">&ldquo;A Model of Balance of Payments Crises&rdquo;</div>
+                <div class="autores">Paul Krugman (1979) &mdash; Journal of Money, Credit and Banking</div>
+                <div class="contenido">
+                    Primer modelo formal que explica por qu&eacute; los tipos de cambio fijos colapsan de manera s&uacute;bita, mediante un ataque especulativo racional.
+                </div>
+            </div>
+            <div class="problema-box" style="margin-top: 25px;">
+                <p style="margin: 0;"><strong>&iquest;Por qu&eacute; los tipos de cambio fijos colapsan de golpe y no gradualmente?</strong></p>
+            </div>
+            <p style="margin-top: 20px;">Hasta Krugman, no exist&iacute;a un modelo formal que explicara el colapso s&uacute;bito de los reg&iacute;menes de tipo de cambio fijo. Los economistas observaban las crisis, pero no ten&iacute;an un marco te&oacute;rico para entender su din&aacute;mica.</p>
+        </div>
+
+        <!-- SLIDE 35: Krugman - Setup del modelo -->
+        <div class="slide bg-blanco">
+            <h2>El setup del modelo</h2>
+            <h3>Los supuestos de Krugman</h3>
+            <ul style="margin-top: 20px;">
+                <li>Un gobierno con <strong class="highlight">tipo de cambio fijo</strong> y <strong>d&eacute;ficit fiscal financiado con emisi&oacute;n monetaria</strong>.</li>
+                <li>Un stock de <strong>reservas internacionales finito</strong> en el Banco Central.</li>
+                <li>Dos reglas simples:</li>
+            </ul>
+            <div class="two-cols" style="margin-top: 20px;">
+                <div class="concepto-box">
+                    <h4>Regla 1</h4>
+                    <p>El BC vende reservas para sostener el tipo de cambio fijo. Cada vez que hay exceso de demanda de d&oacute;lares, el BC interviene.</p>
+                </div>
+                <div class="concepto-box">
+                    <h4>Regla 2</h4>
+                    <p>Cuando las reservas se agotan, el tipo de cambio pasa a flotar libremente. El BC ya no puede defender la paridad.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE 36: Krugman - Dinámica -->
+        <div class="slide bg-blanco">
+            <h2>La din&aacute;mica: cr&eacute;dito dom&eacute;stico y reservas</h2>
+            <p>El cr&eacute;dito dom&eacute;stico crece linealmente (por la emisi&oacute;n para cubrir el d&eacute;ficit). Las reservas caen en espejo (el BC las vende para sostener el tipo de cambio). En alg&uacute;n punto, las reservas llegan a cero.</p>
+            <div class="flow-diagram" style="margin-top: 30px;">
+                <div class="flow-box">D&eacute;ficit fiscal</div>
+                <span class="flow-arrow">&rarr;</span>
+                <div class="flow-box">Emisi&oacute;n monetaria</div>
+                <span class="flow-arrow">&rarr;</span>
+                <div class="flow-box">M&aacute;s demanda de USD</div>
+                <span class="flow-arrow">&rarr;</span>
+                <div class="flow-box">BC vende reservas</div>
+                <span class="flow-arrow">&rarr;</span>
+                <div class="flow-box" style="background: rgba(220,38,38,0.15);">Reservas caen</div>
+            </div>
+            <p class="nota-academica">El modelo asume que el gobierno no ajusta su pol&iacute;tica fiscal. Esta es la principal limitaci&oacute;n y lo que motiv&oacute; los modelos de segunda generaci&oacute;n.</p>
+        </div>
+
+        <!-- SLIDE 37: Krugman - El ataque -->
+        <div class="slide bg-blanco">
+            <h2>El ataque: &iquest;por qu&eacute; ocurre ANTES?</h2>
+            <p>Los agentes racionales <strong class="highlight">anticipan</strong> el agotamiento de las reservas. Si todos esperan al final, todos querr&aacute;n comprar d&oacute;lares al precio fijo cuando ya no haya reservas.</p>
+            <p>Entonces atacan <strong>antes</strong>, cuando las reservas todav&iacute;a alcanzan para comprar. El ataque es un <strong>salto discreto</strong>, no gradual.</p>
+            <div class="formula" style="margin: 30px 0;">
+                Reservas &gt; 0 &rarr; agentes anticipan agotamiento &rarr; compran HOY &rarr; colapso s&uacute;bito
+            </div>
+            <blockquote style="margin-top: 25px;">
+                &ldquo;La racionalidad individual produce el colapso colectivo.&rdquo;
+            </blockquote>
+            <p class="nota-academica">El ataque especulativo no es un fen&oacute;meno de p&aacute;nico irracional sino de optimizaci&oacute;n individual bajo expectativas racionales.</p>
+        </div>
+
+        <!-- SLIDE 38: Krugman - Legado -->
+        <div class="slide bg-impulso">
+            <h2>El legado de Krugman (1979)</h2>
+            <ul style="margin-top: 25px;">
+                <li style="margin-bottom: 22px;"><strong>Primer modelo formal de crisis cambiaria</strong> &mdash; fund&oacute; lo que se conoce como modelos de &ldquo;primera generaci&oacute;n&rdquo;.</li>
+                <li style="margin-bottom: 22px;"><strong>Demostr&oacute; que el ataque es racional, no irracional</strong> &mdash; los agentes optimizan individualmente, y el resultado agregado es el colapso.</li>
+                <li style="margin-bottom: 22px;"><strong>Limitaci&oacute;n principal:</strong> asume que el gobierno es pasivo y no ajusta el d&eacute;ficit fiscal. El gobierno sigue emitiendo hasta el final.</li>
+                <li><strong>Esto motiv&oacute; los modelos de &ldquo;segunda generaci&oacute;n&rdquo;</strong> (Obstfeld, 1996) donde el gobierno puede reaccionar y el ataque depende de las expectativas sobre esa reacci&oacute;n.</li>
+            </ul>
+        </div>
+
+        <!-- ============================================== -->
+        <!-- A2. MUNDELL (1963) — 3 slides (39-41)          -->
+        <!-- ============================================== -->
+
+        <!-- SLIDE 39: Mundell - El paper -->
+        <div class="slide bg-blanco">
+            <h2>Mundell (1963): El paper</h2>
+            <div class="cita-paper">
+                <div class="titulo">&ldquo;Capital Mobility and Stabilization Policy under Fixed and Flexible Exchange Rates&rdquo;</div>
+                <div class="autores">Robert Mundell (1963) &mdash; Canadian Journal of Economics and Political Science</div>
+                <div class="contenido">
+                    Estableci&oacute; las bases para entender qu&eacute; puede y qu&eacute; no puede hacer la pol&iacute;tica econ&oacute;mica en una econom&iacute;a abierta al mundo.
+                </div>
+            </div>
+            <div class="problema-box" style="margin-top: 25px;">
+                <p style="margin: 0;"><strong>&iquest;Qu&eacute; puede y qu&eacute; no puede hacer la pol&iacute;tica econ&oacute;mica en una econom&iacute;a abierta?</strong></p>
+            </div>
+            <p style="margin-top: 20px;">Bretton Woods segu&iacute;a vigente. Mundell hizo las preguntas fundamentales sobre las restricciones que enfrenta la pol&iacute;tica econ&oacute;mica cuando los capitales se mueven libremente entre pa&iacute;ses.</p>
+        </div>
+
+        <!-- SLIDE 40: Mundell - El trilema -->
+        <div class="slide bg-blanco">
+            <h2>El trilema imposible</h2>
+            <p>Un pa&iacute;s solo puede tener <strong class="highlight">dos de tres</strong> al mismo tiempo:</p>
+            <div class="three-cols" style="margin-top: 25px;">
+                <div class="concepto-box">
+                    <h4>TC Fijo</h4>
+                    <p>Estabilidad del tipo de cambio nominal.</p>
+                </div>
+                <div class="concepto-box">
+                    <h4>Libre movilidad de capitales</h4>
+                    <p>Sin restricciones a la entrada y salida de capitales.</p>
+                </div>
+                <div class="concepto-box">
+                    <h4>Pol&iacute;tica monetaria independiente</h4>
+                    <p>El BC fija la tasa de inter&eacute;s seg&uacute;n necesidades dom&eacute;sticas.</p>
+                </div>
+            </div>
+            <table style="margin-top: 30px;">
+                <tr>
+                    <th>Pa&iacute;s</th>
+                    <th>Elige</th>
+                    <th>Sacrifica</th>
+                </tr>
+                <tr>
+                    <td><strong>Argentina 1991-2001</strong></td>
+                    <td>TC fijo + capitales libres</td>
+                    <td>Pol&iacute;tica monetaria independiente</td>
+                </tr>
+                <tr>
+                    <td><strong>EEUU hoy</strong></td>
+                    <td>Capitales libres + pol&iacute;tica monetaria</td>
+                    <td>TC fijo (el d&oacute;lar flota)</td>
+                </tr>
+                <tr>
+                    <td><strong>China</strong></td>
+                    <td>TC administrado + pol&iacute;tica monetaria</td>
+                    <td>Libre movilidad de capitales</td>
+                </tr>
+            </table>
+        </div>
+
+        <!-- SLIDE 41: Mundell - Por qué importa -->
+        <div class="slide bg-respaldo">
+            <h2>&iquest;Por qu&eacute; importa hoy?</h2>
+            <blockquote style="margin-top: 30px;">
+                &ldquo;Todo debate de pol&iacute;tica cambiaria en Argentina es, en el fondo, una discusi&oacute;n sobre qu&eacute; v&eacute;rtice sacrificar.&rdquo;
+            </blockquote>
+            <p style="margin-top: 30px; font-size: 1.4rem;">El <strong>cepo cambiario</strong> es una forma de sacrificar la libre movilidad de capitales para intentar tener las otras dos.</p>
+            <div class="formula" style="margin-top: 30px;">
+                No hay soluci&oacute;n m&aacute;gica: siempre hay un trade-off.
+            </div>
+            <p class="nota-academica">El trilema de Mundell-Fleming es una de las proposiciones m&aacute;s robustas de la macroeconom&iacute;a internacional. Cada esquema cambiario argentino de los &uacute;ltimos 50 a&ntilde;os puede analizarse a trav&eacute;s de este lente.</p>
+        </div>
+
+        <!-- ============================================== -->
+        <!-- A3. IZE & LEVY-YEYATI (2003) — 4 slides (42-45) -->
+        <!-- ============================================== -->
+
+        <!-- SLIDE 42: Ize & Levy-Yeyati - El paper -->
+        <div class="slide bg-blanco">
+            <h2>Ize &amp; Levy-Yeyati (2003): El paper</h2>
+            <div class="cita-paper">
+                <div class="titulo">&ldquo;Financial Dollarization&rdquo;</div>
+                <div class="autores">Alain Ize &amp; Eduardo Levy-Yeyati (2003) &mdash; Journal of International Economics</div>
+                <div class="contenido">
+                    Un modelo de portafolio &oacute;ptimo que explica la dolarizaci&oacute;n financiera como una decisi&oacute;n racional de los agentes, no como un comportamiento irracional o especulativo.
+                </div>
+            </div>
+            <div class="problema-box" style="margin-top: 25px;">
+                <p style="margin: 0;"><strong>&iquest;Por qu&eacute; los agentes eligen ahorrar y endeudarse en d&oacute;lares? &iquest;Es irracional?</strong></p>
+            </div>
+        </div>
+
+        <!-- SLIDE 43: Ize & Levy-Yeyati - Framework -->
+        <div class="slide bg-blanco">
+            <h2>El framework: portafolio de m&iacute;nima varianza</h2>
+            <p>El ahorrista quiere <strong class="highlight">minimizar la variabilidad de su poder adquisitivo</strong>. Tiene dos opciones:</p>
+            <div class="two-cols" style="margin-top: 25px;">
+                <div class="concepto-box">
+                    <h4>Ahorrar en pesos</h4>
+                    <p>Riesgo: la <strong>inflaci&oacute;n</strong> erosiona el valor real. Si la inflaci&oacute;n es vol&aacute;til, el retorno real es impredecible.</p>
+                </div>
+                <div class="concepto-box">
+                    <h4>Ahorrar en d&oacute;lares</h4>
+                    <p>Riesgo: la <strong>volatilidad del tipo de cambio real</strong>. Si el TCR se mueve mucho, el poder de compra en d&oacute;lares tambi&eacute;n es incierto.</p>
+                </div>
+            </div>
+            <div class="formula" style="margin-top: 30px;">
+                El agente racional compara: Var(inflaci&oacute;n) vs. Var(TCR)
+            </div>
+        </div>
+
+        <!-- SLIDE 44: Ize & Levy-Yeyati - La regla clave -->
+        <div class="slide bg-blanco">
+            <h2>La regla clave</h2>
+            <div class="formula formula-grande" style="margin: 30px 0;">
+                Si Var(inflaci&oacute;n) &gt; Var(TCR) &rarr; conviene dolarizarse
+            </div>
+            <blockquote>
+                &ldquo;Si los precios en pesos son impredecibles pero el d&oacute;lar es relativamente estable en t&eacute;rminos de poder de compra, el d&oacute;lar protege mejor tu ahorro.&rdquo;
+            </blockquote>
+            <div class="solucion-box" style="margin-top: 25px;">
+                <p style="margin: 0;"><strong>En Argentina, esto se cumple hist&oacute;ricamente.</strong> La inflaci&oacute;n es m&aacute;s vol&aacute;til que el tipo de cambio real, lo que hace racional la preferencia por el d&oacute;lar como reserva de valor.</p>
+            </div>
+        </div>
+
+        <!-- SLIDE 45: Ize & Levy-Yeyati - Dolarizar no es especular -->
+        <div class="slide bg-impulso">
+            <h2>Dolarizar no es especular</h2>
+            <p style="margin-top: 20px; font-size: 1.4rem;">El paper demuestra que la dolarizaci&oacute;n es una <strong>respuesta racional</strong> a la inestabilidad macroecon&oacute;mica.</p>
+            <ul style="margin-top: 25px;">
+                <li style="margin-bottom: 22px;"><strong>No se soluciona prohibi&eacute;ndola (cepo)</strong> &mdash; la demanda de d&oacute;lares persiste porque la causa subyacente (volatilidad de la inflaci&oacute;n) no se resuelve.</li>
+                <li style="margin-bottom: 22px;"><strong>Se soluciona reduciendo la volatilidad de la inflaci&oacute;n</strong> &mdash; cuando Var(inflaci&oacute;n) baja, la dolarizaci&oacute;n cae naturalmente.</li>
+                <li><strong>Conexi&oacute;n con Krugman:</strong> el &ldquo;especulador&rdquo; que compra d&oacute;lares est&aacute; tomando la decisi&oacute;n racional que Ize y Levy-Yeyati formalizaron.</li>
+            </ul>
+        </div>
+
+        <!-- ============================================== -->
+        <!-- A4. CALVO & REINHART (2002) — 4 slides (46-49) -->
+        <!-- ============================================== -->
+
+        <!-- SLIDE 46: Calvo & Reinhart - El paper -->
+        <div class="slide bg-blanco">
+            <h2>Calvo &amp; Reinhart (2002): El paper</h2>
+            <div class="cita-paper">
+                <div class="titulo">&ldquo;Fear of Floating&rdquo;</div>
+                <div class="autores">Guillermo Calvo &amp; Carmen Reinhart (2002) &mdash; Quarterly Journal of Economics</div>
+                <div class="contenido">
+                    Un estudio emp&iacute;rico que demuestra que la mayor&iacute;a de los pa&iacute;ses que dicen tener tipo de cambio flotante en realidad intervienen activamente para evitar que el tipo de cambio se mueva.
+                </div>
+            </div>
+            <div class="problema-box" style="margin-top: 25px;">
+                <p style="margin: 0;"><strong>Los pa&iacute;ses que dicen tener tipo de cambio flotante, &iquest;realmente flotan?</strong></p>
+            </div>
+        </div>
+
+        <!-- SLIDE 47: Calvo & Reinhart - La evidencia -->
+        <div class="slide bg-blanco">
+            <h2>La evidencia</h2>
+            <p>Analizan 39 pa&iacute;ses que declaran tener tipo de cambio flotante:</p>
+            <div class="versus" style="margin-top: 25px;">
+                <div class="concepto-box">
+                    <h4>Lo que dicen</h4>
+                    <p>&ldquo;Tenemos tipo de cambio flotante&rdquo;</p>
+                    <p style="margin-top: 10px; font-size: 1rem; opacity: 0.8;">Volatilidad del TC: <strong>BAJA</strong></p>
+                </div>
+                <div class="versus-center">vs</div>
+                <div class="concepto-box">
+                    <h4>Lo que hacen</h4>
+                    <p>Intervienen activamente con reservas y tasas de inter&eacute;s</p>
+                    <p style="margin-top: 10px; font-size: 1rem; opacity: 0.8;">Volatilidad de reservas y tasas: <strong>ALTA</strong></p>
+                </div>
+            </div>
+            <div class="solucion-box" style="margin-top: 25px;">
+                <p style="margin: 0;"><strong>Conclusi&oacute;n:</strong> Intervienen activamente para que el tipo de cambio no se mueva. Dicen que flotan, pero no flotan.</p>
+            </div>
+        </div>
+
+        <!-- SLIDE 48: Calvo & Reinhart - Por qué miedo -->
+        <div class="slide bg-blanco">
+            <h2>&iquest;Por qu&eacute; les da miedo flotar?</h2>
+            <div class="three-cols" style="margin-top: 25px;">
+                <div class="concepto-box">
+                    <h4>Descalce de monedas</h4>
+                    <p>Deudas en USD, ingresos en moneda local. Una devaluaci&oacute;n aumenta el peso de la deuda y puede provocar quiebras generalizadas.</p>
+                </div>
+                <div class="concepto-box">
+                    <h4>Pass-through alto</h4>
+                    <p>La devaluaci&oacute;n se traslada r&aacute;pidamente a precios internos. Flotar implica importar volatilidad inflacionaria.</p>
+                </div>
+                <div class="concepto-box">
+                    <h4>Falta de credibilidad</h4>
+                    <p>El mercado &ldquo;castiga&rdquo; movimientos del TC con m&aacute;s volatilidad. Un BC sin credibilidad no puede darse el lujo de dejar flotar.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE 49: Calvo & Reinhart - Argentina -->
+        <div class="slide bg-respaldo">
+            <h2>Argentina y el miedo a flotar</h2>
+            <blockquote style="margin-top: 25px;">
+                &ldquo;Argentina es caso paradigm&aacute;tico: del fijo extremo (Convertibilidad) al cepo extremo, pasando por flotaciones que duran poco.&rdquo;
+            </blockquote>
+            <p style="margin-top: 25px; font-size: 1.3rem;">En econom&iacute;as bimonetarias con descalce, una devaluaci&oacute;n no es solo un cambio de precios relativos. Es un <strong>shock patrimonial</strong>.</p>
+            <div class="formula" style="margin-top: 25px;">
+                Devaluaci&oacute;n &rarr; deuda en USD sube en pesos &rarr; quiebras &rarr; recesi&oacute;n &rarr; m&aacute;s devaluaci&oacute;n
+            </div>
+            <p style="margin-top: 25px; text-align: center; font-size: 1.4rem;"><strong>El &ldquo;miedo a flotar&rdquo; tiene fundamento real.</strong></p>
+        </div>
+
+        <!-- ============================================== -->
+        <!-- A5. BALASSA (1964) — 3 slides (50-52)          -->
+        <!-- ============================================== -->
+
+        <!-- SLIDE 50: Balassa - El paper -->
+        <div class="slide bg-blanco">
+            <h2>Balassa (1964): El paper</h2>
+            <div class="cita-paper">
+                <div class="titulo">&ldquo;The Purchasing-Power Parity Doctrine: A Reappraisal&rdquo;</div>
+                <div class="autores">Bela Balassa (1964) &mdash; Journal of Political Economy</div>
+                <div class="contenido">
+                    Una reevaluaci&oacute;n de la doctrina de Paridad de Poder Adquisitivo que explica por qu&eacute; los pa&iacute;ses m&aacute;s productivos son sistem&aacute;ticamente &ldquo;m&aacute;s caros&rdquo; en d&oacute;lares.
+                </div>
+            </div>
+            <div class="problema-box" style="margin-top: 25px;">
+                <p style="margin: 0;"><strong>&iquest;Por qu&eacute; la Paridad de Poder Adquisitivo no se cumple? &iquest;Por qu&eacute; un caf&eacute; en Suiza cuesta 5 veces m&aacute;s que en Buenos Aires?</strong></p>
+            </div>
+        </div>
+
+        <!-- SLIDE 51: Balassa - El mecanismo -->
+        <div class="slide bg-blanco">
+            <h2>El mecanismo Balassa-Samuelson</h2>
+            <div class="two-cols" style="margin-top: 25px;">
+                <div class="concepto-box">
+                    <h4>Sector transable</h4>
+                    <p>Productividad <strong>ALTA</strong>.</p>
+                    <p>Salarios altos.</p>
+                    <p>Precios determinados internacionalmente.</p>
+                </div>
+                <div class="concepto-box">
+                    <h4>Sector no transable (servicios)</h4>
+                    <p>Productividad <strong>menor</strong>.</p>
+                    <p>Pero salarios <strong>TAMBI&Eacute;N altos</strong> (compiten por los mismos trabajadores).</p>
+                    <p>Precios suben para cubrir costos.</p>
+                </div>
+            </div>
+            <div class="solucion-box" style="margin-top: 25px;">
+                <p style="margin: 0;"><strong>Resultado:</strong> Los servicios en pa&iacute;ses productivos son caros &rarr; el pa&iacute;s &ldquo;es caro en d&oacute;lares&rdquo;.</p>
+            </div>
+        </div>
+
+        <!-- SLIDE 52: Balassa - La lección -->
+        <div class="slide bg-verde">
+            <h2>La lecci&oacute;n de Balassa</h2>
+            <ul style="margin-top: 25px;">
+                <li style="margin-bottom: 22px;"><strong>Ser &ldquo;caro en d&oacute;lares&rdquo; no implica ser poco competitivo.</strong></li>
+                <li style="margin-bottom: 22px;"><strong>Suiza, Noruega, Australia</strong> son caros y ultracompetitivos.</li>
+                <li style="margin-bottom: 22px;"><strong>Argentina barata en d&oacute;lares</strong> post-devaluaci&oacute;n no implica que sea m&aacute;s competitiva.</li>
+            </ul>
+            <div class="formula" style="margin-top: 25px;">
+                El TCR refleja productividad relativa, no solo pol&iacute;tica cambiaria.
+            </div>
+        </div>
+
+        <!-- ============================================== -->
+        <!-- A6. PORTER (1990) — 4 slides (53-56)           -->
+        <!-- ============================================== -->
+
+        <!-- SLIDE 53: Porter - El paper -->
+        <div class="slide bg-blanco">
+            <h2>Porter (1990): El paper</h2>
+            <div class="cita-paper">
+                <div class="titulo">&ldquo;The Competitive Advantage of Nations&rdquo;</div>
+                <div class="autores">Michael Porter (1990) &mdash; Harvard Business Review / Free Press</div>
+                <div class="contenido">
+                    Un marco te&oacute;rico integral que explica la competitividad de las naciones a trav&eacute;s de un sistema de cuatro factores interrelacionados, no de una sola variable.
+                </div>
+            </div>
+            <div class="problema-box" style="margin-top: 25px;">
+                <p style="margin: 0;"><strong>&iquest;Qu&eacute; determina que un pa&iacute;s sea competitivo? &iquest;Es solo el costo laboral o el tipo de cambio?</strong></p>
+            </div>
+        </div>
+
+        <!-- SLIDE 54: Porter - El diamante -->
+        <div class="slide bg-blanco">
+            <h2>El diamante de Porter</h2>
+            <div class="two-cols" style="margin-top: 20px;">
+                <div class="concepto-box">
+                    <h4>Condiciones de los factores</h4>
+                    <p>Capital humano, infraestructura, tecnolog&iacute;a, recursos naturales. La base productiva del pa&iacute;s.</p>
+                </div>
+                <div class="concepto-box">
+                    <h4>Condiciones de la demanda</h4>
+                    <p>Consumidores exigentes impulsan la innovaci&oacute;n. La demanda local sofisticada obliga a mejorar.</p>
+                </div>
+            </div>
+            <div class="two-cols" style="margin-top: 20px;">
+                <div class="concepto-box">
+                    <h4>Industrias relacionadas</h4>
+                    <p>Clusters y cadenas de proveedores de calidad. Un ecosistema productivo integrado.</p>
+                </div>
+                <div class="concepto-box">
+                    <h4>Estrategia y rivalidad</h4>
+                    <p>Competencia dom&eacute;stica intensa mejora a las empresas. La rivalidad local genera competitividad global.</p>
+                </div>
+            </div>
+            <p style="text-align: center; margin-top: 25px; font-size: 1.3rem;"><strong class="highlight">La competitividad es un sistema, no una variable.</strong></p>
+        </div>
+
+        <!-- SLIDE 55: Porter - El TC en el diamante -->
+        <div class="slide bg-blanco">
+            <h2>El TC en el diamante</h2>
+            <p style="margin-top: 20px;">El tipo de cambio afecta costos relativos, pero es solo <strong class="highlight">UN componente</strong> dentro de &ldquo;condiciones de los factores&rdquo;.</p>
+            <p>Un pa&iacute;s con buena infraestructura, capital humano e innovaci&oacute;n es competitivo con <strong>cualquier tipo de cambio</strong>.</p>
+            <blockquote style="margin-top: 25px;">
+                &ldquo;Alemania es el mayor exportador europeo con una moneda &lsquo;cara&rsquo; (el euro). Su competitividad viene de ingenier&iacute;a, marca y log&iacute;stica.&rdquo;
+            </blockquote>
+            <p class="nota-academica">Alemania export&oacute; USD 1,8 billones en 2023 con costos laborales entre los m&aacute;s altos del mundo. La competitividad no se explica por el precio de su moneda.</p>
+        </div>
+
+        <!-- SLIDE 56: Porter - El contra-ejemplo argentino -->
+        <div class="slide bg-impulso">
+            <h2>El contra-ejemplo argentino</h2>
+            <p style="margin-top: 25px; font-size: 1.4rem;">Argentina deval&uacute;a recurrentemente y <strong>no mejora su competitividad de forma sostenida</strong>.</p>
+            <p style="margin-top: 20px;">Porque la competitividad no se construye con un precio. Se construye con <strong>productividad, instituciones e innovaci&oacute;n</strong>.</p>
+            <div class="flow-diagram" style="margin-top: 30px;">
+                <div class="flow-box">Devaluaci&oacute;n</div>
+                <span class="flow-arrow" style="color: white;">&rarr;</span>
+                <div class="flow-box">Competitividad temporal</div>
+                <span class="flow-arrow" style="color: white;">&rarr;</span>
+                <div class="flow-box">Inflaci&oacute;n la erosiona</div>
+                <span class="flow-arrow" style="color: white;">&rarr;</span>
+                <div class="flow-box">Nueva devaluaci&oacute;n</div>
+            </div>
+            <blockquote style="margin-top: 30px; border-left-color: rgba(255,255,255,0.4);">
+                &ldquo;El tipo de cambio puede ser un analg&eacute;sico temporal. La productividad es la cura.&rdquo;
+            </blockquote>
+        </div>
+
+        <!-- ============================================== -->
+        <!-- A7. DORNBUSCH (1976) — 4 slides (57-60)        -->
+        <!-- ============================================== -->
+
+        <!-- SLIDE 57: Dornbusch - El paper -->
+        <div class="slide bg-blanco">
+            <h2>Dornbusch (1976): El paper</h2>
+            <div class="cita-paper">
+                <div class="titulo">&ldquo;Expectations and Exchange Rate Dynamics&rdquo;</div>
+                <div class="autores">Rudiger Dornbusch (1976) &mdash; Journal of Political Economy</div>
+                <div class="contenido">
+                    El modelo que explica por qu&eacute; los tipos de cambio sobrereaccionan (&ldquo;overshooting&rdquo;) ante shocks monetarios, y por qu&eacute; eso es racional.
+                </div>
+            </div>
+            <div class="problema-box" style="margin-top: 25px;">
+                <p style="margin: 0;"><strong>&iquest;Por qu&eacute; el tipo de cambio reacciona exageradamente ante shocks monetarios?</strong></p>
+            </div>
+        </div>
+
+        <!-- SLIDE 58: Dornbusch - Dos velocidades -->
+        <div class="slide bg-blanco">
+            <h2>El problema: dos velocidades</h2>
+            <div class="two-cols" style="margin-top: 30px;">
+                <div class="concepto-box">
+                    <h4>Mercados financieros</h4>
+                    <p>Ajustan <strong>INSTANT&Aacute;NEAMENTE</strong>.</p>
+                    <p>El d&oacute;lar se mueve al segundo. La informaci&oacute;n se incorpora en tiempo real.</p>
+                </div>
+                <div class="concepto-box">
+                    <h4>Precios de bienes</h4>
+                    <p>Ajustan <strong>LENTAMENTE</strong>.</p>
+                    <p>La inflaci&oacute;n tarda meses en reflejar cambios monetarios. Contratos, men&uacute;s, inercia.</p>
+                </div>
+            </div>
+            <div class="formula" style="margin-top: 30px;">
+                Este desacople de velocidades es la clave del modelo.
+            </div>
+        </div>
+
+        <!-- SLIDE 59: Dornbusch - El overshooting -->
+        <div class="slide bg-blanco">
+            <h2>El overshooting</h2>
+            <p>Ante un aumento de la oferta monetaria:</p>
+            <div class="flow-diagram" style="margin-top: 25px;">
+                <div class="flow-box">Shock monetario</div>
+                <span class="flow-arrow">&rarr;</span>
+                <div class="flow-box" style="background: rgba(220,38,38,0.15);">TC salta<br>(overshooting)</div>
+                <span class="flow-arrow">&rarr;</span>
+                <div class="flow-box">Precios se ajustan<br>gradualmente</div>
+                <span class="flow-arrow">&rarr;</span>
+                <div class="flow-box" style="background: rgba(0,198,0,0.12);">TC converge al<br>nuevo equilibrio</div>
+            </div>
+            <div class="two-cols" style="margin-top: 30px;">
+                <div class="problema-box">
+                    <p style="margin: 0;"><strong>Corto plazo:</strong> El TC salta M&Aacute;S ALL&Aacute; de su nuevo equilibrio de largo plazo. &ldquo;Exagera&rdquo;.</p>
+                </div>
+                <div class="solucion-box">
+                    <p style="margin: 0;"><strong>Largo plazo:</strong> A medida que los precios se ajustan, el TC vuelve gradualmente al nuevo equilibrio.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE 60: Dornbusch - Por qué importa -->
+        <div class="slide bg-respaldo">
+            <h2>&iquest;Por qu&eacute; importa Dornbusch?</h2>
+            <ul style="margin-top: 25px;">
+                <li style="margin-bottom: 22px;"><strong>Explica por qu&eacute; los mercados cambiarios parecen &ldquo;irracionales&rdquo; en el corto plazo:</strong> no lo son.</li>
+                <li style="margin-bottom: 22px;">Est&aacute;n reaccionando <strong>racionalmente</strong> a un mundo donde los precios no se ajustan al mismo tiempo.</li>
+                <li style="margin-bottom: 22px;">Cada salto cambiario en Argentina que parece excesivo tiene <strong>l&oacute;gica de Dornbusch:</strong> el TC sobrereacciona porque los precios todav&iacute;a no se movieron.</li>
+            </ul>
+            <div class="frase-final" style="margin-top: 30px;">
+                <blockquote style="font-size: 2.2rem; border-left: none; padding: 0; max-width: 950px; margin: 0 auto;">
+                    &ldquo;El mercado no exagera. Anticipa lo que los precios todav&iacute;a no reflejan.&rdquo;
+                </blockquote>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="slide-counter">
+        <span id="current">1</span> / <span id="total">60</span>
+    </div>
+
+    <div class="nav-hint">
+        &larr; &rarr; para navegar | F para pantalla completa
+    </div>
+
+    <script>
+        const slides = document.querySelectorAll('.slide');
+        let currentSlide = 0;
+        const total = slides.length;
+
+        document.getElementById('total').textContent = total;
+
+        function showSlide(n) {
+            slides[currentSlide].classList.remove('active');
+            currentSlide = (n + total) % total;
+            slides[currentSlide].classList.add('active');
+            document.getElementById('current').textContent = currentSlide + 1;
+        }
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowRight' || e.key === ' ' || e.key === 'Enter') {
+                showSlide(currentSlide + 1);
+            } else if (e.key === 'ArrowLeft') {
+                showSlide(currentSlide - 1);
+            } else if (e.key === 'Home') {
+                showSlide(0);
+            } else if (e.key === 'End') {
+                showSlide(total - 1);
+            } else if (e.key === 'f' || e.key === 'F') {
+                if (document.fullscreenElement) {
+                    document.exitFullscreen();
+                } else {
+                    document.documentElement.requestFullscreen();
+                }
+            }
+        });
+
+        // Touch support
+        let touchStartX = 0;
+        document.addEventListener('touchstart', (e) => {
+            touchStartX = e.touches[0].clientX;
+        });
+
+        document.addEventListener('touchend', (e) => {
+            const touchEndX = e.changedTouches[0].clientX;
+            const diff = touchStartX - touchEndX;
+            if (Math.abs(diff) > 50) {
+                if (diff > 0) {
+                    showSlide(currentSlide + 1);
+                } else {
+                    showSlide(currentSlide - 1);
+                }
+            }
+        });
+
+        // Click to advance
+        document.querySelector('.slide-container').addEventListener('click', (e) => {
+            if (e.clientX > window.innerWidth / 2) {
+                showSlide(currentSlide + 1);
+            } else {
+                showSlide(currentSlide - 1);
+            }
+        });
+    </script>
+</body>
+</html>
