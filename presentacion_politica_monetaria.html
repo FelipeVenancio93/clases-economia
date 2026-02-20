@@ -1,0 +1,2944 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pol&iacute;tica Monetaria - De la imprenta al manejo de expectativas</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Albert+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --azul-impulso: #1036E2;
+            --verde-activo: #00C600;
+            --azul-respaldo: #021751;
+            --blanco: #FFFFFF;
+            --negro: #000000;
+            --rojo-alerta: #DC2626;
+            --amarillo: #F59E0B;
+            --naranja: #EA580C;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Albert Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--azul-respaldo);
+            color: var(--blanco);
+            overflow: hidden;
+        }
+
+        .slide-container {
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .slide {
+            display: none;
+            width: 100%;
+            height: 100%;
+            padding: 60px 80px;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .slide.active {
+            display: flex;
+        }
+
+        /* Fondos */
+        .bg-respaldo { background: var(--azul-respaldo); color: var(--blanco); }
+        .bg-impulso { background: var(--azul-impulso); color: var(--blanco); }
+        .bg-verde { background: var(--verde-activo); color: var(--blanco); }
+        .bg-blanco { background: var(--blanco); color: var(--azul-respaldo); }
+        .bg-oscuro { background: #0a0a0a; color: var(--blanco); }
+
+        /* Tipograf&iacute;a */
+        h1 {
+            font-size: 3.8rem;
+            font-weight: 700;
+            line-height: 1.1;
+            margin-bottom: 30px;
+        }
+
+        h2 {
+            font-size: 2.6rem;
+            font-weight: 600;
+            margin-bottom: 25px;
+        }
+
+        h3 {
+            font-size: 1.8rem;
+            font-weight: 500;
+            margin-bottom: 20px;
+            opacity: 0.9;
+        }
+
+        p, li {
+            font-size: 1.5rem;
+            line-height: 1.6;
+            margin-bottom: 15px;
+        }
+
+        .subtitle {
+            font-size: 1.6rem;
+            opacity: 0.8;
+            font-weight: 400;
+        }
+
+        .highlight {
+            color: var(--verde-activo);
+        }
+
+        .bg-blanco .highlight {
+            color: var(--azul-impulso);
+        }
+
+        .highlight-red {
+            color: var(--rojo-alerta);
+        }
+
+        .highlight-yellow {
+            color: var(--amarillo);
+        }
+
+        blockquote {
+            font-size: 1.7rem;
+            font-style: italic;
+            border-left: 4px solid var(--verde-activo);
+            padding-left: 30px;
+            margin: 25px 0;
+            opacity: 0.95;
+        }
+
+        blockquote cite {
+            display: block;
+            font-size: 1.1rem;
+            margin-top: 12px;
+            font-style: normal;
+            opacity: 0.7;
+        }
+
+        ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        ul li {
+            padding-left: 35px;
+            position: relative;
+            margin-bottom: 18px;
+        }
+
+        ul li::before {
+            content: "\25B8";
+            position: absolute;
+            left: 0;
+            color: var(--verde-activo);
+            font-size: 1.4rem;
+        }
+
+        .bg-verde ul li::before,
+        .bg-impulso ul li::before {
+            color: var(--blanco);
+        }
+
+        /* Tablas */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 25px 0;
+            font-size: 1.3rem;
+        }
+
+        th, td {
+            padding: 18px 22px;
+            text-align: left;
+            border-bottom: 1px solid rgba(255,255,255,0.2);
+        }
+
+        .bg-blanco th,
+        .bg-blanco td {
+            border-bottom: 1px solid rgba(0,0,0,0.1);
+        }
+
+        th {
+            font-weight: 600;
+            opacity: 0.7;
+            font-size: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* F&oacute;rmula/Ecuaci&oacute;n */
+        .formula {
+            font-size: 2rem;
+            text-align: center;
+            padding: 30px;
+            background: rgba(255,255,255,0.08);
+            border-radius: 12px;
+            margin: 25px 0;
+            font-weight: 500;
+            letter-spacing: 2px;
+        }
+
+        .bg-blanco .formula {
+            background: rgba(16, 54, 226, 0.06);
+        }
+
+        .formula-grande {
+            font-size: 2.5rem;
+            padding: 40px;
+        }
+
+        /* Diagrama flujo */
+        .flow-diagram {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+            margin: 35px 0;
+            flex-wrap: wrap;
+        }
+
+        .flow-box {
+            background: rgba(255,255,255,0.1);
+            padding: 20px 28px;
+            border-radius: 10px;
+            font-size: 1.2rem;
+            font-weight: 500;
+            text-align: center;
+        }
+
+        .bg-blanco .flow-box {
+            background: rgba(16, 54, 226, 0.1);
+        }
+
+        .flow-arrow {
+            font-size: 1.8rem;
+            color: var(--verde-activo);
+        }
+
+        .bg-verde .flow-arrow {
+            color: var(--azul-respaldo);
+        }
+
+        .bg-impulso .flow-arrow {
+            color: var(--blanco);
+        }
+
+        /* Dos columnas */
+        .two-cols {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 50px;
+            margin-top: 25px;
+        }
+
+        /* Tres columnas */
+        .three-cols {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 30px;
+            margin-top: 25px;
+        }
+
+        /* Concepto box */
+        .concepto-box {
+            background: rgba(255,255,255,0.08);
+            padding: 25px;
+            border-radius: 12px;
+            text-align: center;
+        }
+
+        .bg-blanco .concepto-box {
+            background: rgba(16, 54, 226, 0.06);
+        }
+
+        .concepto-box h4 {
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-bottom: 12px;
+            color: var(--verde-activo);
+        }
+
+        .bg-blanco .concepto-box h4 {
+            color: var(--azul-impulso);
+        }
+
+        .bg-verde .concepto-box h4 { color: var(--azul-respaldo); }
+        .bg-verde .highlight { color: var(--azul-respaldo); }
+
+        .concepto-box p {
+            font-size: 1.15rem;
+            margin-bottom: 0;
+        }
+
+        /* Cita acad&eacute;mica */
+        .cita-paper {
+            background: rgba(255,255,255,0.06);
+            padding: 25px 30px;
+            border-radius: 10px;
+            margin: 20px 0;
+            border-left: 4px solid var(--verde-activo);
+        }
+
+        .bg-blanco .cita-paper {
+            background: rgba(16, 54, 226, 0.04);
+            border-left-color: var(--azul-impulso);
+        }
+
+        .cita-paper .titulo {
+            font-weight: 600;
+            font-size: 1.15rem;
+            margin-bottom: 8px;
+        }
+
+        .cita-paper .autores {
+            font-size: 0.95rem;
+            opacity: 0.7;
+            margin-bottom: 12px;
+        }
+
+        .cita-paper .contenido {
+            font-size: 1.2rem;
+            line-height: 1.5;
+            font-style: italic;
+        }
+
+        /* Gr&aacute;ficos de barras */
+        .bar-chart {
+            margin: 30px 0;
+        }
+
+        .bar-row {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .bar-label {
+            width: 120px;
+            font-size: 1.1rem;
+            font-weight: 500;
+        }
+
+        .bar-container {
+            flex: 1;
+            height: 35px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 5px;
+            overflow: hidden;
+            margin: 0 15px;
+        }
+
+        .bg-blanco .bar-container {
+            background: rgba(0,0,0,0.05);
+        }
+
+        .bar {
+            height: 100%;
+            background: var(--verde-activo);
+            border-radius: 5px;
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            padding-right: 12px;
+            font-weight: 600;
+            font-size: 0.95rem;
+            color: white;
+        }
+
+        .bar.rojo {
+            background: var(--rojo-alerta);
+        }
+
+        .bar.azul {
+            background: var(--azul-impulso);
+        }
+
+        .bar.amarillo {
+            background: var(--amarillo);
+            color: #000;
+        }
+
+        /* Stats */
+        .stat-box {
+            text-align: center;
+            padding: 25px;
+        }
+
+        .stat-numero {
+            font-size: 4.5rem;
+            font-weight: 800;
+            color: var(--verde-activo);
+            line-height: 1;
+        }
+
+        .bg-blanco .stat-numero {
+            color: var(--azul-impulso);
+        }
+
+        .stat-numero.rojo {
+            color: var(--rojo-alerta);
+        }
+
+        .stat-label {
+            font-size: 1.2rem;
+            opacity: 0.8;
+            margin-top: 10px;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 35px;
+            margin-top: 35px;
+        }
+
+        .stats-grid-4 {
+            grid-template-columns: repeat(4, 1fr);
+        }
+
+        /* Navegaci&oacute;n */
+        .nav-hint {
+            position: fixed;
+            bottom: 30px;
+            right: 40px;
+            font-size: 0.9rem;
+            opacity: 0.5;
+        }
+
+        .slide-counter {
+            position: fixed;
+            bottom: 30px;
+            left: 40px;
+            font-size: 0.9rem;
+            opacity: 0.5;
+        }
+
+        /* Portada */
+        .portada {
+            text-align: center;
+        }
+
+        .portada h1 {
+            font-size: 4.2rem;
+            margin-bottom: 20px;
+        }
+
+        /* Secci&oacute;n t&iacute;tulo */
+        .seccion-titulo {
+            text-align: center;
+        }
+
+        .seccion-titulo h3 {
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            font-size: 1.2rem;
+            opacity: 0.7;
+            margin-bottom: 15px;
+        }
+
+        /* Timeline */
+        .timeline {
+            display: flex;
+            flex-direction: column;
+            gap: 18px;
+            margin: 25px 0;
+        }
+
+        .timeline-item {
+            display: flex;
+            gap: 20px;
+            align-items: flex-start;
+        }
+
+        .timeline-year {
+            font-weight: 700;
+            font-size: 1rem;
+            color: var(--verde-activo);
+            min-width: 50px;
+        }
+
+        .bg-blanco .timeline-year {
+            color: var(--azul-impulso);
+        }
+
+        /* Versus */
+        .versus {
+            display: grid;
+            grid-template-columns: 1fr auto 1fr;
+            gap: 25px;
+            align-items: center;
+            margin: 25px 0;
+        }
+
+        .versus-center {
+            font-size: 2.5rem;
+            font-weight: 800;
+            opacity: 0.3;
+        }
+
+        /* Problema/Soluci&oacute;n */
+        .problema-box {
+            background: rgba(220, 38, 38, 0.15);
+            border-left: 4px solid var(--rojo-alerta);
+            padding: 20px 25px;
+            border-radius: 0 10px 10px 0;
+            margin: 12px 0;
+        }
+
+        .solucion-box {
+            background: rgba(0, 198, 0, 0.15);
+            border-left: 4px solid var(--verde-activo);
+            padding: 20px 25px;
+            border-radius: 0 10px 10px 0;
+            margin: 12px 0;
+        }
+
+        .bg-blanco .problema-box {
+            background: rgba(220, 38, 38, 0.08);
+        }
+
+        .bg-blanco .solucion-box {
+            background: rgba(0, 198, 0, 0.08);
+        }
+
+        /* Nota acad&eacute;mica */
+        .nota-academica {
+            font-size: 0.95rem;
+            opacity: 0.6;
+            margin-top: 25px;
+            padding-top: 15px;
+            border-top: 1px solid rgba(255,255,255,0.15);
+        }
+
+        .bg-blanco .nota-academica {
+            border-top-color: rgba(0,0,0,0.1);
+        }
+
+        /* Responsive */
+        @media (max-width: 1200px) {
+            h1 { font-size: 2.8rem; }
+            h2 { font-size: 2rem; }
+            p, li { font-size: 1.2rem; }
+            .slide { padding: 40px 50px; }
+            .two-cols, .three-cols { grid-template-columns: 1fr; gap: 25px; }
+            .stats-grid { grid-template-columns: repeat(2, 1fr); }
+        }
+        @media (max-width: 768px) {
+            .slide { padding: 25px 20px; }
+            h1 { font-size: 2rem; }
+            h2 { font-size: 1.5rem; }
+            h3 { font-size: 1.2rem; }
+            p, li { font-size: 0.95rem; line-height: 1.5; margin-bottom: 10px; }
+            .subtitle { font-size: 1rem; }
+            blockquote { font-size: 1.15rem; padding-left: 18px; margin: 15px 0; }
+            blockquote cite { font-size: 0.85rem; }
+            .portada h1 { font-size: 2.2rem; }
+            .two-cols, .three-cols { grid-template-columns: 1fr; gap: 15px; }
+            .stats-grid { grid-template-columns: repeat(2, 1fr); gap: 15px; margin-top: 20px; }
+            .stats-grid-4 { grid-template-columns: repeat(2, 1fr); }
+            .stat-numero { font-size: 2.8rem; }
+            .stat-label { font-size: 0.95rem; }
+            .stat-box { padding: 15px; }
+            .concepto-box { padding: 15px; }
+            .concepto-box h4 { font-size: 1.05rem; }
+            .concepto-box p { font-size: 0.95rem; }
+            .problema-box, .solucion-box { padding: 12px 15px; margin: 8px 0; }
+            .cita-paper { padding: 15px 18px; margin: 12px 0; }
+            .cita-paper .titulo { font-size: 1rem; }
+            .cita-paper .autores { font-size: 0.8rem; }
+            .cita-paper .contenido { font-size: 1rem; }
+            .nota-academica { font-size: 0.8rem; margin-top: 15px; padding-top: 10px; }
+            .formula { font-size: 1.3rem; padding: 18px; margin: 15px 0; }
+            .flow-diagram { gap: 8px; margin: 20px 0; }
+            .flow-box { padding: 12px 16px; font-size: 0.95rem; }
+            .flow-arrow { font-size: 1.3rem; }
+            .versus { grid-template-columns: 1fr; gap: 10px; }
+            .versus-center { font-size: 1.8rem; text-align: center; }
+            .bar-label { width: 90px; font-size: 0.85rem; }
+            .bar-container { height: 28px; margin: 0 8px; }
+            .bar { font-size: 0.75rem; padding-right: 8px; }
+            table { font-size: 1rem; }
+            th, td { padding: 10px 12px; }
+            th { font-size: 0.8rem; }
+            .nav-hint { bottom: 15px; right: 15px; font-size: 0.75rem; }
+            .slide-counter { bottom: 15px; left: 15px; font-size: 0.75rem; }
+            ul li { padding-left: 25px; margin-bottom: 12px; }
+            ul li::before { font-size: 1.1rem; }
+        }
+
+        /* Bibliografía */
+        .biblio-item {
+                font-size: 0.9rem;
+                margin-bottom: 12px;
+                line-height: 1.5;
+                padding-left: 20px;
+                text-indent: -20px;
+        }
+
+        .biblio-section {
+                margin-bottom: 20px;
+        }
+
+        .biblio-section h4 {
+                font-size: 1.1rem;
+                font-weight: 600;
+                margin-bottom: 12px;
+                color: var(--azul-impulso);
+                border-bottom: 1px solid rgba(0,0,0,0.1);
+                padding-bottom: 8px;
+        }
+
+        /* Anexo badge */
+        .anexo-badge {
+                background: var(--amarillo);
+                color: #000;
+                padding: 5px 15px;
+                border-radius: 20px;
+                font-size: 0.9rem;
+                font-weight: 600;
+                display: inline-block;
+                margin-bottom: 20px;
+        }
+
+        @media (max-width: 768px) {
+            .biblio-item { font-size: 0.8rem; }
+            .anexo-badge { font-size: 0.75rem; padding: 4px 12px; }
+        }
+    </style>
+</head>
+<body>
+    <script>if(sessionStorage.getItem('clases_auth')!=='true')window.location.replace('index.html');</script>
+    <div class="slide-container">
+
+        <!-- ===== SLIDE 1: PORTADA ===== -->
+        <div class="slide bg-respaldo portada active">
+            <h3 style="text-transform: uppercase; letter-spacing: 3px; font-size: 1.1rem; opacity: 0.6; margin-bottom: 25px;">Econom&iacute;a &mdash; Clase especial</h3>
+            <h1>Pol&iacute;tica <span class="highlight">Monetaria</span></h1>
+            <p class="subtitle">De la imprenta al manejo de expectativas</p>
+        </div>
+
+        <!-- ===== SLIDE 2: ¿QUÉ ES EL DINERO? — Funciones ===== -->
+        <div class="slide bg-blanco">
+            <h2>&iquest;Qu&eacute; es el <span class="highlight">dinero</span>?</h2>
+            <p>El dinero no es riqueza en s&iacute; mismo. Es una <strong>tecnolog&iacute;a social</strong> que resuelve el problema de la doble coincidencia de deseos del trueque. Cumple tres funciones esenciales:</p>
+
+            <div class="three-cols">
+                <div class="concepto-box">
+                    <h4>Medio de cambio</h4>
+                    <p>Facilita las transacciones eliminando la necesidad de que ambas partes deseen exactamente lo que la otra ofrece. Reduce los <strong>costos de transacci&oacute;n</strong> dr&aacute;sticamente.</p>
+                </div>
+                <div class="concepto-box">
+                    <h4>Unidad de cuenta</h4>
+                    <p>Permite expresar todos los precios en una misma medida. Sin esta funci&oacute;n, con <em>n</em> bienes necesitar&iacute;amos n(n&ndash;1)/2 precios relativos en vez de <em>n</em> precios.</p>
+                </div>
+                <div class="concepto-box">
+                    <h4>Reserva de valor</h4>
+                    <p>Permite <strong>trasladar poder de compra</strong> en el tiempo. Esta funci&oacute;n se deteriora con la inflaci&oacute;n: a mayor inflaci&oacute;n, peor reserva de valor.</p>
+                </div>
+            </div>
+
+            <p class="nota-academica">Referencia: Samuelson, P. &amp; Nordhaus, W. <em>Econom&iacute;a</em>, Cap. 25. Bernanke, B. &amp; Frank, R. <em>Principios de Econom&iacute;a</em>, Cap. 23.</p>
+        </div>
+
+        <!-- ===== SLIDE 3: AGREGADOS MONETARIOS ===== -->
+        <div class="slide bg-respaldo">
+            <h2>Los <span class="highlight">agregados monetarios</span>: &iquest;cu&aacute;nto dinero hay?</h2>
+            <p>No todo el &laquo;dinero&raquo; es igual. Los bancos centrales clasifican la oferta monetaria en capas seg&uacute;n su grado de <strong>liquidez</strong>:</p>
+
+            <div class="flow-diagram">
+                <div class="flow-box"><strong>M0 / Base monetaria</strong><br><small>Billetes + reservas bancarias</small></div>
+                <div class="flow-arrow">&rarr;</div>
+                <div class="flow-box"><strong>M1</strong><br><small>M0 + dep&oacute;sitos a la vista</small></div>
+                <div class="flow-arrow">&rarr;</div>
+                <div class="flow-box"><strong>M2</strong><br><small>M1 + dep&oacute;sitos a plazo</small></div>
+                <div class="flow-arrow">&rarr;</div>
+                <div class="flow-box"><strong>M3</strong><br><small>M2 + fondos institucionales</small></div>
+            </div>
+
+            <div class="two-cols" style="margin-top: 20px;">
+                <div class="problema-box">
+                    <h4 style="margin-bottom: 8px;">Concepto clave: multiplicador bancario</h4>
+                    <p style="font-size: 1.15rem;">Los bancos crean dinero al prestar. Si el encaje es 10%, un dep&oacute;sito de $100 puede generar hasta $1.000 en M1 a trav&eacute;s del sistema. El BC controla M0, pero M1&ndash;M3 dependen del comportamiento bancario y del p&uacute;blico.</p>
+                </div>
+                <div class="solucion-box">
+                    <h4 style="margin-bottom: 8px;">&iquest;Por qu&eacute; importa?</h4>
+                    <p style="font-size: 1.15rem;">La relaci&oacute;n entre base monetaria y oferta monetaria amplia <strong>no es mec&aacute;nica</strong>. En crisis financieras, el multiplicador colapsa: los bancos no prestan, el dinero no circula.</p>
+                </div>
+            </div>
+
+            <p class="nota-academica">Referencia: Samuelson &amp; Nordhaus, Cap. 25&ndash;26. Bernanke &amp; Frank, Cap. 23&ndash;24.</p>
+        </div>
+
+        <!-- ===== SLIDE 4: KEYNES — PREFERENCIA POR LA LIQUIDEZ ===== -->
+        <div class="slide bg-blanco">
+            <h2>Keynes: la <span class="highlight">preferencia por la liquidez</span></h2>
+
+            <div class="cita-paper">
+                <div class="titulo">&laquo;The General Theory of Employment, Interest and Money&raquo;</div>
+                <div class="autores">John Maynard Keynes (1936)</div>
+                <div class="contenido">
+                    &laquo;La tasa de inter&eacute;s no es el precio que equilibra la demanda de recursos para invertir con la disposici&oacute;n de abstenerse del consumo presente. Es el precio que equilibra el deseo de mantener riqueza en forma l&iacute;quida con la cantidad de liquidez disponible.&raquo;
+                </div>
+            </div>
+
+            <p style="margin-top: 20px;">Keynes identific&oacute; <strong>tres motivos</strong> para demandar dinero:</p>
+
+            <div class="three-cols">
+                <div class="concepto-box">
+                    <h4>Transacci&oacute;n</h4>
+                    <p>Dinero para compras cotidianas. Crece proporcionalmente con el <strong>ingreso</strong> (Y).</p>
+                </div>
+                <div class="concepto-box">
+                    <h4>Precauci&oacute;n</h4>
+                    <p>Reserva para imprevistos. Tambi&eacute;n depende del ingreso y del grado de <strong>incertidumbre</strong>.</p>
+                </div>
+                <div class="concepto-box">
+                    <h4>Especulaci&oacute;n</h4>
+                    <p>Preferencia por liquidez cuando se espera que los precios de los bonos <strong>caigan</strong> (tasas suban). Depende inversamente de <em>i</em>.</p>
+                </div>
+            </div>
+
+            <p class="nota-academica">Referencia: Samuelson &amp; Nordhaus, Cap. 26. Bernanke &amp; Frank, Cap. 24. Keynes, J.M. (1936). <em>The General Theory</em>, Cap. 13&ndash;15.</p>
+        </div>
+
+        <!-- ===== SLIDE 5: FRIEDMAN Y TOBIN — DEMANDA DE DINERO COMO PORTAFOLIO ===== -->
+        <div class="slide bg-impulso">
+            <h2>Friedman y Tobin: el dinero como <span class="highlight">activo de cartera</span></h2>
+
+            <div class="two-cols">
+                <div>
+                    <div class="cita-paper">
+                        <div class="titulo">&laquo;The Quantity Theory of Money: A Restatement&raquo;</div>
+                        <div class="autores">Milton Friedman (1956)</div>
+                        <div class="contenido">
+                            Friedman reformul&oacute; la demanda de dinero como una decisi&oacute;n de <strong>portfolio</strong>: el agente asigna su riqueza entre dinero, bonos, acciones y bienes f&iacute;sicos, comparando retornos relativos.
+                        </div>
+                    </div>
+                    <p style="margin-top: 15px;">Para Friedman, la demanda de dinero es una <strong>funci&oacute;n estable</strong> del ingreso permanente &mdash;no del ingreso corriente&mdash; y de los rendimientos de activos alternativos.</p>
+                </div>
+                <div>
+                    <div class="cita-paper">
+                        <div class="titulo">&laquo;Liquidity Preference as Behavior Towards Risk&raquo;</div>
+                        <div class="autores">James Tobin (1958) &mdash; <em>Review of Economic Studies</em></div>
+                        <div class="contenido">
+                            Tobin formaliz&oacute; la elecci&oacute;n entre dinero y bonos como un problema de <strong>media&ndash;varianza</strong>: el agente averso al riesgo diversifica, no va &laquo;todo o nada&raquo;.
+                        </div>
+                    </div>
+                    <p style="margin-top: 15px;">La demanda de dinero depende no solo de la tasa de inter&eacute;s, sino de la <strong>volatilidad</strong> esperada de los activos alternativos y de la <strong>aversi&oacute;n al riesgo</strong> del agente.</p>
+                </div>
+            </div>
+
+            <p class="nota-academica">Referencia: Samuelson &amp; Nordhaus, Cap. 26. Bernanke &amp; Frank, Cap. 24. Tobin recibi&oacute; el Nobel en 1981; Friedman en 1976.</p>
+        </div>
+
+        <!-- ===== SLIDE 6: MERCADO DE DINERO — EQUILIBRIO ===== -->
+        <div class="slide bg-blanco">
+            <h2>El mercado de dinero: <span class="highlight">oferta, demanda y equilibrio</span></h2>
+
+            <div class="two-cols">
+                <div>
+                    <p>La <strong>oferta monetaria</strong> (M<sup>s</sup>) es fijada por el Banco Central &mdash;representada como una l&iacute;nea vertical: no depende de la tasa de inter&eacute;s.</p>
+                    <p>La <strong>demanda de dinero</strong> (L) tiene pendiente negativa: a mayor tasa de inter&eacute;s, mayor costo de oportunidad de mantener dinero l&iacute;quido.</p>
+
+                    <div class="formula">
+                        M<sup>s</sup> = L(Y, i)
+                    </div>
+
+                    <p>El equilibrio determina la <strong>tasa de inter&eacute;s de mercado</strong>. Cuando el BC aumenta M<sup>s</sup>, la tasa baja; cuando la reduce, la tasa sube.</p>
+                </div>
+                <div>
+                    <svg viewBox="0 0 400 320" style="width: 100%; max-width: 400px; margin: 0 auto; display: block;">
+                        <!-- Ejes -->
+                        <line x1="60" y1="20" x2="60" y2="270" stroke="#021751" stroke-width="2"/>
+                        <line x1="60" y1="270" x2="380" y2="270" stroke="#021751" stroke-width="2"/>
+                        <!-- Labels ejes -->
+                        <text x="25" y="150" fill="#021751" font-size="14" font-family="Albert Sans" transform="rotate(-90,25,150)">Tasa de inter&eacute;s (i)</text>
+                        <text x="220" y="300" fill="#021751" font-size="14" font-family="Albert Sans" text-anchor="middle">Cantidad de dinero (M)</text>
+                        <!-- Oferta monetaria (vertical) -->
+                        <line x1="200" y1="40" x2="200" y2="260" stroke="#1036E2" stroke-width="3"/>
+                        <text x="210" y="45" fill="#1036E2" font-size="13" font-weight="600" font-family="Albert Sans">M&#x02E2;</text>
+                        <!-- Demanda de dinero (pendiente negativa) -->
+                        <line x1="80" y1="60" x2="350" y2="240" stroke="#DC2626" stroke-width="3"/>
+                        <text x="340" y="255" fill="#DC2626" font-size="13" font-weight="600" font-family="Albert Sans">L(Y,i)</text>
+                        <!-- Punto de equilibrio -->
+                        <circle cx="200" cy="140" r="7" fill="#00C600"/>
+                        <text x="215" y="135" fill="#00C600" font-size="13" font-weight="600" font-family="Albert Sans">E</text>
+                        <!-- Línea punteada al eje -->
+                        <line x1="60" y1="140" x2="200" y2="140" stroke="#021751" stroke-width="1" stroke-dasharray="6,4"/>
+                        <text x="40" y="145" fill="#021751" font-size="12" font-family="Albert Sans">i*</text>
+                    </svg>
+                </div>
+            </div>
+
+            <p class="nota-academica">Referencia: Samuelson &amp; Nordhaus, Cap. 26. Bernanke &amp; Frank, Cap. 24. Este gr&aacute;fico es el punto de partida del modelo IS&ndash;LM de Hicks (1937).</p>
+        </div>
+
+        <!-- ===== SLIDE 7: SECCIÓN TÍTULO — HERRAMIENTAS DEL BC ===== -->
+        <div class="slide bg-impulso seccion-titulo">
+            <h3>Secci&oacute;n II</h3>
+            <h1>Herramientas del <span class="highlight">Banco Central</span></h1>
+            <p class="subtitle">&iquest;C&oacute;mo se implementa la pol&iacute;tica monetaria en la pr&aacute;ctica?</p>
+        </div>
+
+        <!-- ===== SLIDE 8: ¿QUÉ ES UN BANCO CENTRAL? ===== -->
+        <div class="slide bg-blanco">
+            <h2>&iquest;Qu&eacute; es un <span class="highlight">Banco Central</span>?</h2>
+            <p>Es la instituci&oacute;n responsable de la <strong>pol&iacute;tica monetaria</strong> de un pa&iacute;s. No es un banco com&uacute;n: no busca ganancias, sino estabilidad.</p>
+
+            <div class="three-cols">
+                <div class="concepto-box">
+                    <h4>Emisor monopolista</h4>
+                    <p>Tiene el <strong>monopolio legal</strong> de la emisi&oacute;n de billetes y monedas. Controla la base monetaria (M0).</p>
+                </div>
+                <div class="concepto-box">
+                    <h4>Banco de bancos</h4>
+                    <p>Es el <strong>prestamista de &uacute;ltima instancia</strong>. Los bancos comerciales mantienen cuentas en el BC y recurren a &eacute;l en situaciones de iliquidez.</p>
+                </div>
+                <div class="concepto-box">
+                    <h4>Regulador financiero</h4>
+                    <p>Supervisa el sistema bancario, fija <strong>encajes</strong>, regula el cr&eacute;dito y busca prevenir crisis sist&eacute;micas.</p>
+                </div>
+            </div>
+
+            <blockquote style="margin-top: 25px;">
+                &laquo;El arte de la banca central consiste en saber cu&aacute;ndo actuar y cu&aacute;ndo esperar. Y sobre todo, en lograr que los mercados crean que har&aacute;s lo que dijiste.&raquo;
+                <cite>&mdash; Adaptaci&oacute;n de Paul Volcker</cite>
+            </blockquote>
+
+            <p class="nota-academica">Referencia: Samuelson &amp; Nordhaus, Cap. 26. Bernanke &amp; Frank, Cap. 24. La independencia del BC es un debate central en dise&ntilde;o institucional.</p>
+        </div>
+
+        <!-- ===== SLIDE 9: OPERACIONES DE MERCADO ABIERTO ===== -->
+        <div class="slide bg-respaldo">
+            <h2><span class="highlight">Operaciones de mercado abierto</span>: la herramienta principal</h2>
+            <p>El Banco Central compra y vende <strong>t&iacute;tulos p&uacute;blicos</strong> en el mercado secundario para expandir o contraer la cantidad de dinero en circulaci&oacute;n.</p>
+
+            <div class="two-cols" style="margin-top: 20px;">
+                <div class="solucion-box">
+                    <h4 style="margin-bottom: 10px;">Pol&iacute;tica expansiva &rarr; BC <strong>compra</strong> bonos</h4>
+                    <p style="font-size: 1.15rem;">El BC inyecta pesos en el sistema &rarr; sube la base monetaria &rarr; baja la tasa de inter&eacute;s &rarr; se estimula el cr&eacute;dito y la actividad econ&oacute;mica.</p>
+                </div>
+                <div class="problema-box">
+                    <h4 style="margin-bottom: 10px;">Pol&iacute;tica contractiva &rarr; BC <strong>vende</strong> bonos</h4>
+                    <p style="font-size: 1.15rem;">El BC retira pesos del sistema &rarr; baja la base monetaria &rarr; sube la tasa de inter&eacute;s &rarr; se encarece el cr&eacute;dito y se enfr&iacute;a la demanda.</p>
+                </div>
+            </div>
+
+            <div class="flow-diagram" style="margin-top: 25px;">
+                <div class="flow-box"><strong>BC compra<br>bonos</strong></div>
+                <div class="flow-arrow">&rarr;</div>
+                <div class="flow-box"><strong>Inyecta<br>liquidez</strong></div>
+                <div class="flow-arrow">&rarr;</div>
+                <div class="flow-box"><strong>Baja tasa<br>de inter&eacute;s</strong></div>
+                <div class="flow-arrow">&rarr;</div>
+                <div class="flow-box"><strong>Sube cr&eacute;dito<br>e inversi&oacute;n</strong></div>
+                <div class="flow-arrow">&rarr;</div>
+                <div class="flow-box"><strong>Crece el<br>PBI</strong></div>
+            </div>
+
+            <p class="nota-academica">Referencia: Samuelson &amp; Nordhaus, Cap. 26. Bernanke &amp; Frank, Cap. 25. Las OMA son el instrumento preferido desde que la Fed las adopt&oacute; en los a&ntilde;os 1920.</p>
+        </div>
+
+        <!-- ===== SLIDE 10: ENCAJES Y CORREDOR DE TASAS ===== -->
+        <div class="slide bg-verde">
+            <h2>Encajes y <span style="color: var(--azul-respaldo);">corredor de tasas</span></h2>
+            <p>Adem&aacute;s de las OMA, el BC dispone de otros instrumentos convencionales para regular la liquidez:</p>
+
+            <div class="two-cols" style="margin-top: 20px;">
+                <div class="concepto-box">
+                    <h4 style="color: var(--azul-respaldo);">Encaje legal (reservas obligatorias)</h4>
+                    <p>Porcentaje de dep&oacute;sitos que los bancos <strong>no pueden prestar</strong>. Subir el encaje reduce el multiplicador bancario y contrae la oferta de cr&eacute;dito. Es un instrumento potente pero poco flexible &mdash;se usa con poca frecuencia.</p>
+                </div>
+                <div class="concepto-box">
+                    <h4 style="color: var(--azul-respaldo);">Corredor de tasas de inter&eacute;s</h4>
+                    <p>El BC fija una <strong>tasa piso</strong> (remuneraci&oacute;n de dep&oacute;sitos de bancos en el BC) y una <strong>tasa techo</strong> (pr&eacute;stamos de &uacute;ltima instancia). La tasa interbancaria fluctua dentro del corredor, guiada por la <strong>tasa de pol&iacute;tica monetaria</strong> (TPM).</p>
+                </div>
+            </div>
+
+            <div class="formula" style="background: rgba(255,255,255,0.2); margin-top: 25px;">
+                Tasa piso (dep&oacute;sitos BC) &le; <strong>Tasa interbancaria</strong> &le; Tasa techo (ventanilla BC)
+            </div>
+
+            <p class="nota-academica" style="border-top-color: rgba(255,255,255,0.25);">Referencia: Samuelson &amp; Nordhaus, Cap. 26. Bernanke &amp; Frank, Cap. 25. El corredor de tasas es el mecanismo operativo est&aacute;ndar de bancos centrales modernos (Fed, BCE, BCRA).</p>
+        </div>
+
+        <!-- ===== SLIDE 11: HERRAMIENTAS NO CONVENCIONALES ===== -->
+        <div class="slide bg-blanco">
+            <h2>Herramientas <span class="highlight">no convencionales</span>: cuando la tasa llega a cero</h2>
+            <p>Cuando la tasa de inter&eacute;s nominal alcanza el <strong>l&iacute;mite inferior cero</strong> (<em>zero lower bound</em>), las herramientas tradicionales se agotan. Los bancos centrales recurren entonces a instrumentos extraordinarios:</p>
+
+            <div class="three-cols">
+                <div class="concepto-box">
+                    <h4>Quantitative Easing (QE)</h4>
+                    <p>Compra masiva de activos (bonos soberanos, hipotecarios, corporativos) para <strong>inyectar liquidez</strong> directamente y comprimir las tasas de largo plazo. La Fed compr&oacute; US$ 4.5 billones entre 2008 y 2014.</p>
+                </div>
+                <div class="concepto-box">
+                    <h4>Forward Guidance</h4>
+                    <p>Comunicaci&oacute;n expl&iacute;cita sobre la <strong>trayectoria futura</strong> de la tasa de pol&iacute;tica. &laquo;Mantendremos las tasas bajas hasta que el desempleo baje de X%&raquo;. Busca anclar expectativas.</p>
+                </div>
+                <div class="concepto-box">
+                    <h4>Tasas negativas</h4>
+                    <p>El BCE y el Banco de Jap&oacute;n aplicaron tasas negativas sobre dep&oacute;sitos bancarios: <strong>cobrar</strong> a los bancos por mantener reservas para forzarlos a prestar.</p>
+                </div>
+            </div>
+
+            <div class="cita-paper" style="margin-top: 20px;">
+                <div class="titulo">&laquo;The Federal Reserve&rsquo;s Balance Sheet as a Financial-Stability Tool&raquo;</div>
+                <div class="autores">Bernanke, B. (2012) &mdash; Discurso en la Fed de Kansas City</div>
+                <div class="contenido">
+                    &laquo;Las pol&iacute;ticas no convencionales no reemplazan las herramientas est&aacute;ndar; las complementan cuando la tasa de pol&iacute;tica est&aacute; en su l&iacute;mite inferior.&raquo;
+                </div>
+            </div>
+
+            <p class="nota-academica">Referencia: Bernanke &amp; Frank, Cap. 25. Samuelson &amp; Nordhaus (ediciones recientes). Estos instrumentos se masificaron post&ndash;2008.</p>
+        </div>
+
+        <!-- ===== SLIDE 12: MECANISMO DE TRANSMISIÓN ===== -->
+        <div class="slide bg-respaldo">
+            <h2>El <span class="highlight">mecanismo de transmisi&oacute;n</span> monetaria</h2>
+            <p>&iquest;C&oacute;mo llega una decisi&oacute;n del BC a la econom&iacute;a real? A trav&eacute;s de una cadena de efectos que operan en <strong>m&uacute;ltiples canales</strong>:</p>
+
+            <div class="flow-diagram">
+                <div class="flow-box"><strong>BC modifica<br>tasa de pol&iacute;tica</strong></div>
+                <div class="flow-arrow">&rarr;</div>
+                <div class="flow-box"><strong>Tasas de mercado<br>se ajustan</strong></div>
+                <div class="flow-arrow">&rarr;</div>
+                <div class="flow-box"><strong>Cr&eacute;dito, tipo de<br>cambio, activos</strong></div>
+                <div class="flow-arrow">&rarr;</div>
+                <div class="flow-box"><strong>Consumo e<br>inversi&oacute;n</strong></div>
+                <div class="flow-arrow">&rarr;</div>
+                <div class="flow-box"><strong>PBI e<br>inflaci&oacute;n</strong></div>
+            </div>
+
+            <div class="three-cols" style="margin-top: 15px;">
+                <div class="concepto-box">
+                    <h4>Canal del cr&eacute;dito</h4>
+                    <p>Menores tasas &rarr; m&aacute;s pr&eacute;stamos bancarios &rarr; m&aacute;s inversi&oacute;n y consumo. Efecto amplificado por el <strong>acelerador financiero</strong> (Bernanke, Gertler &amp; Gilchrist, 1999).</p>
+                </div>
+                <div class="concepto-box">
+                    <h4>Canal del tipo de cambio</h4>
+                    <p>Menores tasas &rarr; capitales emigran buscando mayor rendimiento &rarr; se deprecia la moneda &rarr; mejoran exportaciones netas. Relevante en <strong>econom&iacute;as abiertas</strong>.</p>
+                </div>
+                <div class="concepto-box">
+                    <h4>Canal de expectativas</h4>
+                    <p>Si los agentes <strong>creen</strong> que la inflaci&oacute;n futura ser&aacute; baja, ajustan salarios y precios en consecuencia. Es el canal m&aacute;s poderoso &mdash;y el m&aacute;s dif&iacute;cil de gestionar.</p>
+                </div>
+            </div>
+
+            <p class="nota-academica">Referencia: Samuelson &amp; Nordhaus, Cap. 26&ndash;27. Bernanke &amp; Frank, Cap. 25. Mishkin, F. (1995). &laquo;Symposium on the Monetary Transmission Mechanism&raquo;, <em>Journal of Economic Perspectives</em>.</p>
+        </div>
+
+        <!-- ===== SLIDE 13: SECCIÓN TÍTULO — EL DOBLE MANDATO ===== -->
+        <div class="slide bg-verde seccion-titulo">
+            <h3 style="color: var(--azul-respaldo);">Secci&oacute;n III</h3>
+            <h1>El doble <span style="color: var(--azul-respaldo);">mandato</span></h1>
+            <p class="subtitle">&iquest;Estabilidad de precios o pleno empleo? El dilema permanente de la pol&iacute;tica monetaria</p>
+        </div>
+
+        <!-- ===== SLIDE 14: EL DILEMA ===== -->
+        <div class="slide bg-blanco">
+            <h2>El dilema central: <span class="highlight">inflaci&oacute;n vs. empleo</span></h2>
+            <p>La mayor&iacute;a de los bancos centrales enfrenta un <strong>trade-off</strong> fundamental: pol&iacute;ticas expansivas reducen el desempleo pero pueden generar inflaci&oacute;n; pol&iacute;ticas contractivas controlan precios pero enfrr&iacute;an la econom&iacute;a.</p>
+
+            <div class="versus">
+                <div class="concepto-box">
+                    <h4>Objetivo 1: Estabilidad de precios</h4>
+                    <p>Mantener la inflaci&oacute;n baja y predecible. La mayor&iacute;a de los BC apunta a un rango de <strong>2&ndash;3% anual</strong>. Una inflaci&oacute;n controlada preserva el poder de compra y facilita la planificaci&oacute;n econ&oacute;mica.</p>
+                </div>
+                <div class="versus-center">vs.</div>
+                <div class="concepto-box">
+                    <h4>Objetivo 2: Pleno empleo</h4>
+                    <p>Que la econom&iacute;a opere cerca de su <strong>producto potencial</strong>, minimizando el desempleo involuntario. Implica pol&iacute;ticas acomodaticias cuando la brecha del producto es negativa.</p>
+                </div>
+            </div>
+
+            <blockquote>
+                &laquo;Un banco central no puede resolver todos los problemas de una econom&iacute;a. Pero s&iacute; puede evitar crear nuevos.&raquo;
+                <cite>&mdash; Adaptaci&oacute;n de William McChesney Martin, presidente de la Fed (1951&ndash;1970)</cite>
+            </blockquote>
+
+            <p class="nota-academica">Referencia: Samuelson &amp; Nordhaus, Cap. 27. Bernanke &amp; Frank, Cap. 25. La Reserva Federal de EE.UU. tiene un mandato dual expl&iacute;cito desde la Humphrey&ndash;Hawkins Act de 1978.</p>
+        </div>
+
+        <!-- ===== SLIDE 15: ESCUELAS DE PENSAMIENTO ===== -->
+        <div class="slide bg-respaldo">
+            <h2>&iquest;Qu&eacute; priorizan las distintas <span class="highlight">escuelas</span>?</h2>
+            <p>El peso relativo de cada objetivo var&iacute;a seg&uacute;n la tradici&oacute;n te&oacute;rica:</p>
+
+            <div class="two-cols" style="margin-top: 20px;">
+                <div>
+                    <div class="concepto-box" style="margin-bottom: 25px;">
+                        <h4>Keynesianos</h4>
+                        <p>Priorizan el <strong>pleno empleo</strong>. La inflaci&oacute;n moderada es tolerable si reduce el desempleo. El BC debe ser activo en la estabilizaci&oacute;n del ciclo. &laquo;En el largo plazo estamos todos muertos.&raquo;</p>
+                    </div>
+                    <div class="concepto-box">
+                        <h4>Nuevos keynesianos</h4>
+                        <p>Incorporan <strong>expectativas racionales</strong> y rigideces de precios. Aceptan la importancia de la credibilidad antiinflacionaria, pero defienden un rol activo del BC. Usan reglas tipo <strong>Taylor</strong> (1993).</p>
+                    </div>
+                </div>
+                <div>
+                    <div class="concepto-box" style="margin-bottom: 25px;">
+                        <h4>Monetaristas</h4>
+                        <p>Priorizan la <strong>estabilidad de precios</strong>. Friedman propuso una regla fija de crecimiento monetario (k% rule). Desconf&iacute;an de la discreci&oacute;n del BC: los rezagos hacen que la pol&iacute;tica activa sea desestabilizadora.</p>
+                    </div>
+                    <div class="concepto-box">
+                        <h4>Nuevos cl&aacute;sicos</h4>
+                        <p>Robert Lucas (1972) argument&oacute; que solo las sorpresas monetarias tienen efectos reales. Si los agentes anticipan la expansi&oacute;n, ajustan precios y la pol&iacute;tica es <strong>neutral</strong>. Fundamento de las <em>inflation targets</em>.</p>
+                    </div>
+                </div>
+            </div>
+
+            <p class="nota-academica">Referencia: Samuelson &amp; Nordhaus, Cap. 27&ndash;28. Bernanke &amp; Frank, Cap. 25. Taylor, J. (1993). &laquo;Discretion versus Policy Rules in Practice&raquo;, <em>Carnegie-Rochester Series</em>.</p>
+        </div>
+
+        <!-- ===== SLIDE 16: CURVA DE PHILLIPS ===== -->
+        <div class="slide bg-blanco">
+            <h2>La <span class="highlight">curva de Phillips</span>: el trade-off emp&iacute;rico</h2>
+
+            <div class="two-cols">
+                <div>
+                    <div class="cita-paper">
+                        <div class="titulo">&laquo;The Relation between Unemployment and the Rate of Change of Money Wage Rates in the United Kingdom&raquo;</div>
+                        <div class="autores">A.W. Phillips (1958) &mdash; <em>Economica</em></div>
+                        <div class="contenido">
+                            Phillips document&oacute; una relaci&oacute;n inversa estable entre desempleo e inflaci&oacute;n salarial en el Reino Unido (1861&ndash;1957). Samuelson y Solow (1960) la adaptaron como men&uacute; de pol&iacute;tica.
+                        </div>
+                    </div>
+
+                    <p style="margin-top: 20px;">Pero Friedman (1968) y Phelps (1967) advirtieron: el trade-off es solo de <strong>corto plazo</strong>. En el largo plazo, las expectativas se ajustan y la curva se vuelve <strong>vertical</strong> en la tasa natural de desempleo.</p>
+
+                    <div class="formula">
+                        &pi; = &pi;<sup>e</sup> &ndash; &beta;(u &ndash; u<sup>n</sup>) + &epsilon;
+                    </div>
+                    <p style="font-size: 1.1rem; text-align: center;"><em>&pi; = inflaci&oacute;n, &pi;<sup>e</sup> = inflaci&oacute;n esperada, u = desempleo, u<sup>n</sup> = tasa natural</em></p>
+                </div>
+                <div>
+                    <svg viewBox="0 0 400 340" style="width: 100%; max-width: 400px; margin: 0 auto; display: block;">
+                        <!-- Ejes -->
+                        <line x1="60" y1="20" x2="60" y2="290" stroke="#021751" stroke-width="2"/>
+                        <line x1="60" y1="290" x2="380" y2="290" stroke="#021751" stroke-width="2"/>
+                        <!-- Labels -->
+                        <text x="20" y="160" fill="#021751" font-size="13" font-family="Albert Sans" transform="rotate(-90,20,160)">Inflaci&oacute;n (&pi;)</text>
+                        <text x="220" y="320" fill="#021751" font-size="13" font-family="Albert Sans" text-anchor="middle">Desempleo (u)</text>
+                        <!-- Curva de Phillips corto plazo -->
+                        <path d="M 90,60 Q 180,120 340,250" fill="none" stroke="#1036E2" stroke-width="3"/>
+                        <text x="330" y="270" fill="#1036E2" font-size="12" font-weight="600" font-family="Albert Sans">CP</text>
+                        <!-- Curva de Phillips largo plazo (vertical) -->
+                        <line x1="220" y1="40" x2="220" y2="280" stroke="#DC2626" stroke-width="3" stroke-dasharray="8,5"/>
+                        <text x="230" y="45" fill="#DC2626" font-size="12" font-weight="600" font-family="Albert Sans">LP (u&#x207F;)</text>
+                        <!-- Punto A -->
+                        <circle cx="150" cy="100" r="6" fill="#00C600"/>
+                        <text x="130" y="92" fill="#00C600" font-size="12" font-weight="600" font-family="Albert Sans">A</text>
+                        <!-- Punto B -->
+                        <circle cx="280" cy="210" r="6" fill="#00C600"/>
+                        <text x="288" y="205" fill="#00C600" font-size="12" font-weight="600" font-family="Albert Sans">B</text>
+                    </svg>
+                    <p style="font-size: 1rem; text-align: center; margin-top: 10px;"><strong>A</strong>: baja desempleo, alta inflaci&oacute;n<br><strong>B</strong>: alto desempleo, baja inflaci&oacute;n<br><span style="color: var(--rojo-alerta);">LP</span>: largo plazo, vertical en u<sup>n</sup></p>
+                </div>
+            </div>
+
+            <p class="nota-academica">Referencia: Samuelson &amp; Nordhaus, Cap. 28. Bernanke &amp; Frank, Cap. 25. Friedman, M. (1968). &laquo;The Role of Monetary Policy&raquo;, <em>American Economic Review</em>.</p>
+        </div>
+
+        <!-- ===== SLIDE 17: DISEÑOS INSTITUCIONALES ===== -->
+        <div class="slide bg-impulso">
+            <h2>Dise&ntilde;os institucionales: <span class="highlight">&iquest;c&oacute;mo se resuelve el dilema?</span></h2>
+            <p>La forma en que cada pa&iacute;s organiza su banco central refleja cu&aacute;nto peso le da a cada objetivo:</p>
+
+            <div class="three-cols" style="margin-top: 20px;">
+                <div class="concepto-box">
+                    <h4>Mandato dual (Fed &mdash; EE.UU.)</h4>
+                    <p>Estabilidad de precios <strong>y</strong> m&aacute;ximo empleo expl&iacute;citamente. El presidente de la Fed debe equilibrar ambos objetivos en cada decisi&oacute;n. Meta de inflaci&oacute;n: 2%.</p>
+                </div>
+                <div class="concepto-box">
+                    <h4>Mandato &uacute;nico (BCE &mdash; Eurozona)</h4>
+                    <p>Prioridad expl&iacute;cita: <strong>estabilidad de precios</strong>. Solo subsidiariamente apoya el crecimiento y el empleo. Herencia de la tradici&oacute;n monetarista del Bundesbank alem&aacute;n.</p>
+                </div>
+                <div class="concepto-box">
+                    <h4>Inflation Targeting (BCRA, BCCh, etc.)</h4>
+                    <p>Meta num&eacute;rica de inflaci&oacute;n expl&iacute;cita (ej: 2&ndash;4%), con <strong>flexibilidad</strong> para considerar actividad econ&oacute;mica. Transparencia y comunicaci&oacute;n como pilares.</p>
+                </div>
+            </div>
+
+            <div class="cita-paper" style="margin-top: 20px;">
+                <div class="titulo">&laquo;Rules Rather than Discretion: The Inconsistency of Optimal Plans&raquo;</div>
+                <div class="autores">Kydland, F. &amp; Prescott, E. (1977) &mdash; <em>Journal of Political Economy</em></div>
+                <div class="contenido">
+                    Demostraron que la pol&iacute;tica discrecional genera un <strong>sesgo inflacionario</strong>: los gobiernos tienen incentivos a &laquo;sorprender&raquo; con expansi&oacute;n. La soluci&oacute;n: reglas y compromiso cre&iacute;ble. Nobel de Econom&iacute;a 2004.
+                </div>
+            </div>
+
+            <p class="nota-academica">Referencia: Samuelson &amp; Nordhaus, Cap. 27. Bernanke &amp; Frank, Cap. 25. El inflation targeting fue adoptado por Nueva Zelanda en 1990 y se expandi&oacute; globalmente.</p>
+        </div>
+
+        <!-- ===== SLIDE 18: SECCIÓN TÍTULO — EMISIÓN E INFLACIÓN ===== -->
+        <div class="slide bg-respaldo seccion-titulo">
+            <h3>Secci&oacute;n IV</h3>
+            <h1>Emisi&oacute;n e <span class="highlight">inflaci&oacute;n</span></h1>
+            <p class="subtitle">&iquest;Imprimir dinero siempre genera inflaci&oacute;n? La teor&iacute;a, la evidencia y las sorpresas</p>
+        </div>
+
+        <!-- ===== SLIDE 19: TEORÍA CUANTITATIVA — MV=PY ===== -->
+        <div class="slide bg-blanco">
+            <h2>La teor&iacute;a cuantitativa: <span class="highlight">MV = PY</span></h2>
+            <p>La identidad m&aacute;s antigua y debatida de la macroeconom&iacute;a. Formulada originalmente por Irving Fisher (1911) y reformulada por la Escuela de Cambridge:</p>
+
+            <div class="formula formula-grande">
+                M &times; V = P &times; Y
+            </div>
+
+            <div class="stats-grid stats-grid-4" style="margin-top: 15px;">
+                <div class="stat-box">
+                    <div class="stat-numero">M</div>
+                    <div class="stat-label">Oferta monetaria<br><small>(cantidad de dinero)</small></div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-numero">V</div>
+                    <div class="stat-label">Velocidad de circulaci&oacute;n<br><small>(veces que rota el dinero)</small></div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-numero">P</div>
+                    <div class="stat-label">Nivel de precios<br><small>(inflaci&oacute;n)</small></div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-numero">Y</div>
+                    <div class="stat-label">Producto real<br><small>(PBI real)</small></div>
+                </div>
+            </div>
+
+            <p style="margin-top: 20px; text-align: center;">Como <strong>identidad contable</strong>, siempre se cumple. El debate es sobre los <strong>supuestos causales</strong>: &iquest;V es estable? &iquest;Y est&aacute; en pleno empleo? &iquest;M causa P o P causa M?</p>
+
+            <p class="nota-academica">Referencia: Samuelson &amp; Nordhaus, Cap. 26. Bernanke &amp; Frank, Cap. 24. Fisher, I. (1911). <em>The Purchasing Power of Money</em>.</p>
+        </div>
+
+        <!-- ===== SLIDE 20: VISIÓN MONETARISTA ===== -->
+        <div class="slide bg-respaldo">
+            <h2>La visi&oacute;n <span class="highlight">monetarista</span>: &laquo;la inflaci&oacute;n es siempre un fen&oacute;meno monetario&raquo;</h2>
+
+            <blockquote>
+                &laquo;La inflaci&oacute;n es siempre y en todas partes un fen&oacute;meno monetario, en el sentido de que es y solo puede ser producida por un aumento m&aacute;s r&aacute;pido de la cantidad de dinero que del producto.&raquo;
+                <cite>&mdash; Milton Friedman, &laquo;The Counter-Revolution in Monetary Theory&raquo; (1970)</cite>
+            </blockquote>
+
+            <p style="margin-top: 20px;">El argumento monetarista descansa en tres supuestos:</p>
+
+            <div class="three-cols">
+                <div class="concepto-box">
+                    <h4>V es estable</h4>
+                    <p>La velocidad de circulaci&oacute;n cambia lentamente y de manera predecible. No absorbe los cambios en M.</p>
+                </div>
+                <div class="concepto-box">
+                    <h4>Y tiende al potencial</h4>
+                    <p>En el largo plazo, el producto est&aacute; determinado por factores reales (tecnolog&iacute;a, trabajo, capital). El dinero es <strong>neutral</strong>.</p>
+                </div>
+                <div class="concepto-box">
+                    <h4>M &rarr; P (causalidad)</h4>
+                    <p>Si V es estable e Y est&aacute; dado, todo aumento de M se traduce <strong>proporcionalmente</strong> en P. M&aacute;s dinero = m&aacute;s inflaci&oacute;n.</p>
+                </div>
+            </div>
+
+            <div class="formula" style="margin-top: 20px;">
+                Si &Delta;V &asymp; 0 e Y = Y* &rArr; &Delta;M &approx; &Delta;P &rarr; <strong>m&aacute;s emisi&oacute;n = m&aacute;s inflaci&oacute;n</strong>
+            </div>
+
+            <p class="nota-academica">Referencia: Samuelson &amp; Nordhaus, Cap. 28. Bernanke &amp; Frank, Cap. 25. Friedman, M. &amp; Schwartz, A. (1963). <em>A Monetary History of the United States</em>. Princeton University Press.</p>
+        </div>
+
+        <!-- ===== SLIDE 21: McCANDLESS & WEBER (1995) — EVIDENCIA EMPÍRICA ===== -->
+        <div class="slide bg-impulso">
+            <h2>La evidencia emp&iacute;rica: <span class="highlight">McCandless &amp; Weber (1995)</span></h2>
+
+            <div class="cita-paper">
+                <div class="titulo">&laquo;Some Monetary Facts&raquo;</div>
+                <div class="autores">McCandless, G.T. &amp; Weber, W.E. (1995) &mdash; <em>Federal Reserve Bank of Minneapolis Quarterly Review</em></div>
+                <div class="contenido">
+                    Analizaron datos de <strong>110 pa&iacute;ses durante 30 a&ntilde;os</strong> (1960&ndash;1990). Encontraron una correlaci&oacute;n casi perfecta entre la tasa de crecimiento de la oferta monetaria y la tasa de inflaci&oacute;n en el largo plazo. La correlaci&oacute;n fue de <strong>0.95</strong>.
+                </div>
+            </div>
+
+            <div class="two-cols" style="margin-top: 20px;">
+                <div>
+                    <h3 style="font-size: 1.4rem;">Hallazgos clave</h3>
+                    <ul>
+                        <li>Correlaci&oacute;n <strong>M2 &ndash; inflaci&oacute;n</strong>: 0.95 (110 pa&iacute;ses)</li>
+                        <li>Relaci&oacute;n <strong>casi proporcional</strong>: 10% m&aacute;s de dinero &asymp; 10% m&aacute;s de inflaci&oacute;n</li>
+                        <li><strong>No hallaron correlaci&oacute;n</strong> significativa entre crecimiento monetario y crecimiento del PBI real</li>
+                        <li>La relaci&oacute;n se sostiene en <strong>todas las subregiones</strong> y per&iacute;odos analizados</li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 style="font-size: 1.4rem;">Implicancias</h3>
+                    <div class="solucion-box">
+                        <p style="font-size: 1.15rem;"><strong>A favor del monetarismo:</strong> en el largo plazo, el dinero es neutral &mdash;afecta precios pero no producto real. La evidencia de 30 a&ntilde;os y 110 pa&iacute;ses es contundente.</p>
+                    </div>
+                    <div class="problema-box">
+                        <p style="font-size: 1.15rem;"><strong>Limitaci&oacute;n:</strong> la correlaci&oacute;n es de largo plazo. En el corto plazo, la relaci&oacute;n dinero&ndash;inflaci&oacute;n es mucho m&aacute;s ruidosa y depende de expectativas, capacidad ociosa y otros factores.</p>
+                    </div>
+                </div>
+            </div>
+
+            <p class="nota-academica">Referencia: Samuelson &amp; Nordhaus, Cap. 28. Bernanke &amp; Frank, Cap. 25. Este paper es uno de los m&aacute;s citados en la literatura sobre dinero e inflaci&oacute;n.</p>
+        </div>
+
+        <!-- ===== SLIDE 22: POST-2008 — LA INFLACIÓN QUE NO LLEGÓ ===== -->
+        <div class="slide bg-verde">
+            <h2>Post&ndash;2008: la inflaci&oacute;n <span style="color: var(--azul-respaldo);">que no lleg&oacute;</span></h2>
+            <p>Si m&aacute;s dinero = m&aacute;s inflaci&oacute;n, &iquest;qu&eacute; pas&oacute; despu&eacute;s de 2008? Los principales bancos centrales multiplicaron la base monetaria y la inflaci&oacute;n permaneci&oacute; <strong>por debajo de la meta</strong> durante una d&eacute;cada.</p>
+
+            <div class="stats-grid">
+                <div class="stat-box">
+                    <div class="stat-numero" style="color: var(--azul-respaldo);">x5</div>
+                    <div class="stat-label">Expansi&oacute;n de la base monetaria de la Fed (2008&ndash;2014)</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-numero" style="color: var(--azul-respaldo);">1.5%</div>
+                    <div class="stat-label">Inflaci&oacute;n promedio en EE.UU. (2009&ndash;2019) &mdash; debajo de la meta del 2%</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-numero" style="color: var(--azul-respaldo);">0.3%</div>
+                    <div class="stat-label">Inflaci&oacute;n promedio en Jap&oacute;n (2010&ndash;2019) pese a QE masivo</div>
+                </div>
+            </div>
+
+            <div class="two-cols" style="margin-top: 20px;">
+                <div class="concepto-box">
+                    <h4 style="color: var(--azul-respaldo);">&iquest;Qu&eacute; fall&oacute; en la predicci&oacute;n monetarista?</h4>
+                    <p>La <strong>velocidad de circulaci&oacute;n</strong> (V) colaps&oacute;. Los bancos acumularon reservas excedentes en vez de prestar. El dinero creado por el BC qued&oacute; &laquo;atrapado&raquo; en el sistema financiero y nunca lleg&oacute; a la econom&iacute;a real.</p>
+                </div>
+                <div class="concepto-box">
+                    <h4 style="color: var(--azul-respaldo);">Trampa de liquidez 2.0</h4>
+                    <p>Con tasas en cero y expectativas deprimidas, la pol&iacute;tica monetaria pierde tracci&oacute;n. Es la versi&oacute;n moderna de la <strong>trampa de liquidez</strong> keynesiana: el dinero extra se atesora, no se gasta.</p>
+                </div>
+            </div>
+
+            <p class="nota-academica" style="border-top-color: rgba(255,255,255,0.25);">Referencia: Samuelson &amp; Nordhaus (ediciones recientes). Bernanke &amp; Frank, Cap. 25. Krugman, P. (1998). &laquo;It&rsquo;s Baaack: Japan&rsquo;s Slump and the Return of the Liquidity Trap&raquo;, <em>Brookings Papers on Economic Activity</em>.</p>
+        </div>
+
+        <!-- ===== SLIDE 23: SÍNTESIS ===== -->
+        <div class="slide bg-blanco">
+            <h2>S&iacute;ntesis: <span class="highlight">&iquest;emisi&oacute;n causa inflaci&oacute;n?</span></h2>
+            <p>La respuesta honesta es: <strong>depende del contexto</strong>. La evidencia sugiere una relaci&oacute;n que var&iacute;a seg&uacute;n el horizonte temporal y las condiciones econ&oacute;micas:</p>
+
+            <div class="three-cols" style="margin-top: 15px;">
+                <div class="concepto-box">
+                    <h4>Largo plazo</h4>
+                    <p>La relaci&oacute;n dinero&ndash;inflaci&oacute;n es <strong>robusta</strong>. Pa&iacute;ses que emiten sistem&aacute;ticamente por encima de su crecimiento real terminan con alta inflaci&oacute;n. McCandless &amp; Weber lo confirman con 110 pa&iacute;ses.</p>
+                </div>
+                <div class="concepto-box">
+                    <h4>Corto plazo</h4>
+                    <p>La relaci&oacute;n es <strong>contingente</strong>. Depende de la brecha del producto, las expectativas, la velocidad de circulaci&oacute;n y la credibilidad del BC. La misma expansi&oacute;n puede generar inflaci&oacute;n o no.</p>
+                </div>
+                <div class="concepto-box">
+                    <h4>Clave: las expectativas</h4>
+                    <p>Si los agentes <strong>creen</strong> que la emisi&oacute;n generar&aacute; inflaci&oacute;n, ajustan precios preventivamente y la profec&iacute;a se autocumple. La credibilidad del BC es el activo m&aacute;s valioso.</p>
+                </div>
+            </div>
+
+            <div class="flow-diagram" style="margin-top: 20px;">
+                <div class="flow-box" style="background: rgba(220,38,38,0.1); border: 2px solid var(--rojo-alerta);"><strong>Emisi&oacute;n sin respaldo<br>productivo</strong></div>
+                <div class="flow-arrow" style="color: var(--azul-impulso);">&rarr;</div>
+                <div class="flow-box"><strong>&iquest;Hay capacidad<br>ociosa?</strong></div>
+                <div class="flow-arrow" style="color: var(--azul-impulso);">&rarr;</div>
+                <div class="flow-box"><strong>&iquest;Expectativas<br>ancladas?</strong></div>
+                <div class="flow-arrow" style="color: var(--azul-impulso);">&rarr;</div>
+                <div class="flow-box" style="background: rgba(0,198,0,0.1); border: 2px solid var(--verde-activo);"><strong>Resultado depende<br>del contexto</strong></div>
+            </div>
+
+            <blockquote style="margin-top: 15px;">
+                &laquo;La inflaci&oacute;n es siempre un fen&oacute;meno monetario... <em>en el largo plazo</em>. En el corto plazo, es un fen&oacute;meno de expectativas, instituciones y credibilidad.&raquo;
+                <cite>&mdash; S&iacute;ntesis contempor&aacute;nea</cite>
+            </blockquote>
+
+            <p class="nota-academica">Referencia: Samuelson &amp; Nordhaus, Cap. 26&ndash;28. Bernanke &amp; Frank, Cap. 24&ndash;25. Blanchard, O. (2021). &laquo;In Defense of Concerns over the $1.9 Trillion Relief Plan&raquo;, Peterson Institute.</p>
+        </div>
+        <!-- ============================================================ -->
+        <!-- SECCI&Oacute;N 5: COORDINACI&Oacute;N FISCAL-MONETARIA (24-27) -->
+        <!-- ============================================================ -->
+
+        <!-- SLIDE 24: SECCI&Oacute;N T&Iacute;TULO -->
+        <div class="slide bg-impulso seccion-titulo">
+                <h3>Secci&oacute;n 5</h3>
+                <h1>Coordinaci&oacute;n fiscal y monetaria</h1>
+                <p class="subtitle">&iquest;Puede el banco central controlar la inflaci&oacute;n si el fisco no coopera?</p>
+        </div>
+
+        <!-- SLIDE 25: SARGENT & WALLACE 1981 RECAP -->
+        <div class="slide bg-blanco">
+                <h2>Sargent &amp; Wallace (1981): la aritm&eacute;tica desagradable</h2>
+                <p>El resultado central: una pol&iacute;tica monetaria &laquo;dura&raquo; combinada con d&eacute;ficits fiscales persistentes no reduce la inflaci&oacute;n &mdash; la <strong class="highlight-red">pospone y la amplifica</strong>.</p>
+                <div class="flow-diagram">
+                        <div class="flow-box">D&eacute;ficit fiscal<br>persistente</div>
+                        <div class="flow-arrow">&rarr;</div>
+                        <div class="flow-box">BC restringe<br>emisi&oacute;n hoy</div>
+                        <div class="flow-arrow">&rarr;</div>
+                        <div class="flow-box">Deuda p&uacute;blica<br>crece</div>
+                        <div class="flow-arrow">&rarr;</div>
+                        <div class="flow-box">Intereses se<br>acumulan</div>
+                        <div class="flow-arrow">&rarr;</div>
+                        <div class="flow-box" style="background: rgba(220,38,38,0.15); border: 2px solid var(--rojo-alerta);">Monetizaci&oacute;n<br>forzada ma&ntilde;ana</div>
+                </div>
+                <div class="problema-box">
+                        <p style="margin: 0;"><strong>Paradoja:</strong> restringir la base monetaria hoy, sin ajuste fiscal, genera <em>m&aacute;s</em> inflaci&oacute;n en el futuro. La &laquo;dureza&raquo; monetaria se vuelve inflacionaria.</p>
+                </div>
+                <p class="nota-academica">Sargent, T. &amp; Wallace, N. (1981). &laquo;Some Unpleasant Monetarist Arithmetic&raquo;. Federal Reserve Bank of Minneapolis Quarterly Review, 5(3), 1&ndash;17.</p>
+        </div>
+
+        <!-- SLIDE 26: DOMINANCIA FISCAL vs MONETARIA -->
+        <div class="slide bg-respaldo">
+                <h2>Dominancia fiscal vs. dominancia monetaria</h2>
+                <p>Dos reg&iacute;menes posibles seg&uacute;n qui&eacute;n &laquo;mueve primero&raquo;:</p>
+                <div class="two-cols">
+                        <div>
+                                <div class="concepto-box" style="border: 3px solid var(--verde-activo);">
+                                        <h4>Dominancia monetaria</h4>
+                                        <p style="text-align: left;">El BC fija la pol&iacute;tica monetaria de forma independiente.</p>
+                                        <p style="text-align: left;">El Tesoro <strong>ajusta</strong> su gasto a la restricci&oacute;n.</p>
+                                        <p style="text-align: left;">Inflaci&oacute;n determinada por el BC.</p>
+                                </div>
+                                <div class="solucion-box" style="margin-top: 15px;">
+                                        <p style="margin: 0;"><strong>Resultado:</strong> inflaci&oacute;n baja y estable</p>
+                                </div>
+                        </div>
+                        <div>
+                                <div class="concepto-box" style="border: 3px solid var(--rojo-alerta);">
+                                        <h4 style="color: var(--rojo-alerta);">Dominancia fiscal</h4>
+                                        <p style="text-align: left;">El Tesoro fija d&eacute;ficits sin restricci&oacute;n.</p>
+                                        <p style="text-align: left;">El BC <strong>se subordina</strong> y financia al fisco.</p>
+                                        <p style="text-align: left;">Inflaci&oacute;n determinada por el d&eacute;ficit.</p>
+                                </div>
+                                <div class="problema-box" style="margin-top: 15px;">
+                                        <p style="margin: 0;"><strong>Resultado:</strong> inflaci&oacute;n alta e inestable</p>
+                                </div>
+                        </div>
+                </div>
+                <p style="text-align: center; margin-top: 30px; font-size: 1.3rem;"><strong class="highlight">La independencia del BC es condici&oacute;n necesaria, pero no suficiente.</strong></p>
+        </div>
+
+        <!-- SLIDE 27: INDEPENDENCIA DEL BC -->
+        <div class="slide bg-blanco">
+                <h2>Independencia del banco central</h2>
+                <p>La evidencia emp&iacute;rica muestra una correlaci&oacute;n robusta entre independencia del BC e inflaci&oacute;n baja:</p>
+                <div class="two-cols">
+                        <div>
+                                <h3 style="font-size: 1.4rem;">Evidencia emp&iacute;rica</h3>
+                                <ul>
+                                        <li><strong>Alesina &amp; Summers (1993):</strong> pa&iacute;ses con BC m&aacute;s independientes tienen inflaci&oacute;n promedio significativamente menor</li>
+                                        <li><strong>Cukierman, Webb &amp; Neyapti (1992):</strong> construyeron &iacute;ndices de independencia legal y de rotaci&oacute;n de gobernadores</li>
+                                        <li>En Am&eacute;rica Latina, la rotaci&oacute;n frecuente de presidentes del BC se asocia con inflaci&oacute;n m&aacute;s alta</li>
+                                </ul>
+                        </div>
+                        <div>
+                                <h3 style="font-size: 1.4rem;">Dise&ntilde;o institucional</h3>
+                                <ul>
+                                        <li><strong>Mandato claro:</strong> estabilidad de precios como objetivo principal</li>
+                                        <li><strong>Autonom&iacute;a operativa:</strong> fijaci&oacute;n de tasas sin intervenci&oacute;n pol&iacute;tica</li>
+                                        <li><strong>Prohibici&oacute;n de financiamiento:</strong> no prestar al Tesoro directamente</li>
+                                        <li><strong>Mandatos largos y escalonados:</strong> aislar de ciclos electorales</li>
+                                </ul>
+                        </div>
+                </div>
+                <p class="nota-academica">Sin embargo, la independencia de <em>jure</em> no siempre coincide con la de <em>facto</em>. V&eacute;ase Cukierman, A. (1992). <em>Central Bank Strategy, Credibility, and Independence</em>. MIT Press.</p>
+        </div>
+
+        <!-- ============================================================ -->
+        <!-- SECCI&Oacute;N 6: EXPECTATIVAS Y CREDIBILIDAD (28-36) -->
+        <!-- ============================================================ -->
+
+        <!-- SLIDE 28: SECCI&Oacute;N T&Iacute;TULO -->
+        <div class="slide bg-verde seccion-titulo">
+                <h3 style="color: var(--blanco);">Secci&oacute;n 6</h3>
+                <h1>Expectativas y credibilidad</h1>
+                <p class="subtitle">El arma m&aacute;s poderosa de un banco central es lo que la gente <span style="color: var(--azul-respaldo); font-weight: 700;">cree</span> que va a hacer</p>
+        </div>
+
+        <!-- SLIDE 29: POR QU&Eacute; IMPORTAN LAS EXPECTATIVAS -->
+        <div class="slide bg-blanco">
+                <h2>&iquest;Por qu&eacute; importan las expectativas?</h2>
+                <p>Las expectativas de inflaci&oacute;n tienen un componente <strong class="highlight">auto-cumplido</strong>: si los agentes esperan inflaci&oacute;n alta, ajustan precios y salarios al alza, <em>generando</em> esa inflaci&oacute;n.</p>
+                <div class="flow-diagram">
+                        <div class="flow-box">Agentes esperan<br>inflaci&oacute;n alta</div>
+                        <div class="flow-arrow">&rarr;</div>
+                        <div class="flow-box">Suben precios<br>y salarios</div>
+                        <div class="flow-arrow">&rarr;</div>
+                        <div class="flow-box">Inflaci&oacute;n<br>efectiva sube</div>
+                        <div class="flow-arrow">&rarr;</div>
+                        <div class="flow-box">Expectativas<br>se confirman</div>
+                </div>
+                <div class="two-cols" style="margin-top: 20px;">
+                        <div class="solucion-box">
+                                <p style="margin: 0;"><strong>Expectativas ancladas:</strong> si el BC tiene credibilidad, las expectativas se anclan en la meta. Los shocks transitorios no se trasladan a precios.</p>
+                        </div>
+                        <div class="problema-box">
+                                <p style="margin: 0;"><strong>Expectativas desancladas:</strong> sin credibilidad, cualquier perturbaci&oacute;n detona una espiral. El BC pierde el control del proceso inflacionario.</p>
+                        </div>
+                </div>
+                <p class="nota-academica">La formaci&oacute;n de expectativas fue formalizada por Muth (1961) y Lucas (1972). La Curva de Phillips con expectativas racionales elimina el trade-off de largo plazo.</p>
+        </div>
+
+        <!-- SLIDE 30: KYDLAND & PRESCOTT 1977 -->
+        <div class="slide bg-respaldo">
+                <h2>Kydland &amp; Prescott (1977): inconsistencia temporal</h2>
+                <div class="cita-paper">
+                        <div class="titulo">&laquo;Rules Rather than Discretion: The Inconsistency of Optimal Plans&raquo;</div>
+                        <div class="autores">Finn Kydland &amp; Edward Prescott &mdash; Journal of Political Economy, 85(3), 473&ndash;491</div>
+                        <div class="contenido">
+                                &laquo;Incluso con las mejores intenciones, un banco central que opera con discrecionalidad tiene incentivos a desviarse de su plan &oacute;ptimo una vez que los agentes han fijado sus expectativas.&raquo;
+                        </div>
+                </div>
+                <p style="margin-top: 25px;">El problema: el <strong class="highlight">plan &oacute;ptimo ex ante</strong> deja de ser &oacute;ptimo <strong class="highlight">ex post</strong>.</p>
+                <div class="flow-diagram">
+                        <div class="flow-box">BC anuncia<br>inflaci&oacute;n baja</div>
+                        <div class="flow-arrow">&rarr;</div>
+                        <div class="flow-box">Agentes fijan<br>expectativas bajas</div>
+                        <div class="flow-arrow">&rarr;</div>
+                        <div class="flow-box">BC tiene incentivo<br>a &laquo;sorprender&raquo;</div>
+                        <div class="flow-arrow">&rarr;</div>
+                        <div class="flow-box" style="border: 2px solid var(--rojo-alerta);">Agentes anticipan<br>la trampa</div>
+                </div>
+                <p style="margin-top: 20px; text-align: center; opacity: 0.8;">Premio Nobel de Econom&iacute;a 2004</p>
+        </div>
+
+        <!-- SLIDE 31: SESGO INFLACIONARIO -->
+        <div class="slide bg-blanco">
+                <h2>El sesgo inflacionario</h2>
+                <p>Si el BC tiene discrecionalidad y busca un nivel de empleo superior al natural, el <strong class="highlight">equilibrio de Nash</strong> arroja una inflaci&oacute;n de equilibrio superior a la &oacute;ptima:</p>
+                <div class="formula formula-grande">
+                        &pi;<sub>eq</sub> &gt; &pi;<sub>opt</sub>
+                </div>
+                <p style="text-align: center; font-size: 1.3rem;">La inflaci&oacute;n de equilibrio es mayor que la inflaci&oacute;n &oacute;ptima, <strong class="highlight-red">sin ning&uacute;n beneficio en empleo</strong>.</p>
+                <div class="two-cols" style="margin-top: 25px;">
+                        <div class="concepto-box">
+                                <h4>&iquest;Por qu&eacute;?</h4>
+                                <p>El BC quiere &laquo;sorprender&raquo; con inflaci&oacute;n para reducir el desempleo. Pero los agentes racionales lo anticipan y ajustan sus expectativas al alza.</p>
+                        </div>
+                        <div class="concepto-box">
+                                <h4>Resultado</h4>
+                                <p>Inflaci&oacute;n m&aacute;s alta que la deseada, sin ganancia alguna en producto ni empleo. Lo peor de ambos mundos.</p>
+                        </div>
+                </div>
+                <p class="nota-academica">Formalmente: &pi;<sub>eq</sub> = (a/b) &middot; (y* &minus; y<sub>n</sub>), donde <em>a</em> es el peso del empleo en la funci&oacute;n objetivo y <em>b</em> es el costo de la inflaci&oacute;n.</p>
+        </div>
+
+        <!-- SLIDE 32: BARRO & GORDON 1983 -->
+        <div class="slide bg-impulso">
+                <h2>Barro &amp; Gordon (1983): reputaci&oacute;n como disciplina</h2>
+                <div class="cita-paper" style="border-left-color: var(--blanco);">
+                        <div class="titulo">&laquo;Rules, Discretion and Reputation in a Model of Monetary Policy&raquo;</div>
+                        <div class="autores">Robert Barro &amp; David Gordon &mdash; Journal of Monetary Economics, 12(1), 101&ndash;121</div>
+                        <div class="contenido">
+                                &laquo;En un juego repetido, la reputaci&oacute;n del banco central puede funcionar como un mecanismo disciplinador: el costo de perder credibilidad supera la ganancia de una sorpresa inflacionaria.&raquo;
+                        </div>
+                </div>
+                <div class="two-cols" style="margin-top: 25px;">
+                        <div class="concepto-box">
+                                <h4 style="color: var(--blanco);">BC &laquo;Halc&oacute;n&raquo; (Hawk)</h4>
+                                <p>Prioriza estabilidad de precios. Tolera costos de corto plazo. Construye reputaci&oacute;n. Ancla expectativas.</p>
+                        </div>
+                        <div class="concepto-box">
+                                <h4 style="color: var(--blanco);">BC &laquo;Paloma&raquo; (Dove)</h4>
+                                <p>Prioriza empleo de corto plazo. Cede ante presiones pol&iacute;ticas. Pierde credibilidad. Genera sesgo inflacionario.</p>
+                        </div>
+                </div>
+                <p style="text-align: center; margin-top: 25px; font-size: 1.3rem;">
+                        <strong>Insight:</strong> en un juego de una sola vez, la tentaci&oacute;n gana. En un juego <em>repetido</em>, la reputaci&oacute;n disciplina.
+                </p>
+        </div>
+
+        <!-- SLIDE 33: SOLUCIONES INSTITUCIONALES -->
+        <div class="slide bg-blanco">
+                <h2>Soluciones institucionales al sesgo inflacionario</h2>
+                <p>&iquest;C&oacute;mo resolver la inconsistencia temporal? Cuatro caminos complementarios:</p>
+                <div class="stats-grid stats-grid-4" style="margin-top: 20px;">
+                        <div class="concepto-box">
+                                <h4>Reglas</h4>
+                                <p>Compromisos formales que limitan la discrecionalidad (ej: regla de Taylor, metas de agregados).</p>
+                        </div>
+                        <div class="concepto-box">
+                                <h4>Independencia</h4>
+                                <p>Aislar al BC de presiones pol&iacute;ticas. Mandatos largos, prohibici&oacute;n de financiamiento al Tesoro.</p>
+                        </div>
+                        <div class="concepto-box">
+                                <h4>Inflation Targeting</h4>
+                                <p>Meta expl&iacute;cita de inflaci&oacute;n + transparencia + rendici&oacute;n de cuentas. Adoptado por ~40 pa&iacute;ses.</p>
+                        </div>
+                        <div class="concepto-box">
+                                <h4>Banquero conservador</h4>
+                                <p>Rogoff (1985): nombrar un presidente del BC con mayor aversi&oacute;n a la inflaci&oacute;n que la sociedad promedio.</p>
+                        </div>
+                </div>
+                <p class="nota-academica">Rogoff, K. (1985). &laquo;The Optimal Degree of Commitment to an Intermediate Monetary Target&raquo;. <em>Quarterly Journal of Economics</em>, 100(4), 1169&ndash;1189. V&eacute;ase tambi&eacute;n Walsh, C. (1995) sobre contratos &oacute;ptimos para banqueros centrales.</p>
+        </div>
+
+        <!-- SLIDE 34: FORWARD GUIDANCE -->
+        <div class="slide bg-respaldo">
+                <h2>Forward guidance: gestionar expectativas con comunicaci&oacute;n</h2>
+                <p>La pol&iacute;tica monetaria moderna opera tanto por <strong class="highlight">acci&oacute;n</strong> como por <strong class="highlight">comunicaci&oacute;n</strong>. El <em>forward guidance</em> es la pr&aacute;ctica de anunciar expl&iacute;citamente la trayectoria futura de tasas.</p>
+                <div class="two-cols" style="margin-top: 20px;">
+                        <div>
+                                <h3 style="font-size: 1.4rem; color: var(--verde-activo);">Tipos de forward guidance</h3>
+                                <ul>
+                                        <li><strong>Calendario:</strong> &laquo;Mantendremos la tasa en cero al menos hasta 2024&raquo;</li>
+                                        <li><strong>Condicional:</strong> &laquo;No subiremos la tasa hasta que el desempleo baje del 6.5%&raquo; (Fed, 2012)</li>
+                                        <li><strong>Cualitativo:</strong> &laquo;La pol&iacute;tica seguir&aacute; siendo acomodaticia por un per&iacute;odo considerable&raquo;</li>
+                                </ul>
+                        </div>
+                        <div>
+                                <h3 style="font-size: 1.4rem; color: var(--verde-activo);">&iquest;Por qu&eacute; funciona?</h3>
+                                <ul>
+                                        <li>Las tasas de largo plazo dependen de las expectativas de tasas cortas futuras</li>
+                                        <li>Si el BC ancla esas expectativas, mueve toda la curva de rendimientos</li>
+                                        <li>Reduce incertidumbre para empresas y hogares</li>
+                                        <li>Complementa la tasa de pol&iacute;tica cuando llega al <em>zero lower bound</em></li>
+                                </ul>
+                        </div>
+                </div>
+                <p style="text-align: center; margin-top: 25px;"><strong class="highlight">Las palabras del banquero central son tan poderosas como sus acciones.</strong></p>
+        </div>
+
+        <!-- SLIDE 35: AN&Eacute;CDOTAS FAMOSAS -->
+        <div class="slide bg-verde">
+                <h2 style="color: var(--blanco);">Tres momentos que definieron la credibilidad monetaria</h2>
+                <div class="three-cols" style="margin-top: 20px;">
+                        <div class="concepto-box">
+                                <h4 style="color: var(--azul-respaldo);">Volcker Shock (1979)</h4>
+                                <p>Paul Volcker subi&oacute; la tasa de la Fed al <strong style="color: var(--azul-respaldo);">20%</strong>. Provoc&oacute; una recesi&oacute;n brutal, pero mat&oacute; la inflaci&oacute;n de dos d&iacute;gitos en EE.UU. Demostr&oacute; que la credibilidad se construye con dolor.</p>
+                        </div>
+                        <div class="concepto-box">
+                                <h4 style="color: var(--azul-respaldo);">&laquo;Whatever it takes&raquo; (2012)</h4>
+                                <p>Mario Draghi, presidente del BCE, pronunci&oacute; <strong style="color: var(--azul-respaldo);">3 palabras</strong> que salvaron al euro. No necesit&oacute; actuar de inmediato: la credibilidad de la promesa fue suficiente para frenar la crisis de deuda soberana.</p>
+                        </div>
+                        <div class="concepto-box">
+                                <h4 style="color: var(--azul-respaldo);">La ponchera (McChesney Martin)</h4>
+                                <p>William McChesney Martin, presidente de la Fed (1951&ndash;1970): <em style="color: var(--azul-respaldo);">&laquo;El trabajo de la Fed es retirar la ponchera justo cuando la fiesta se pone buena.&raquo;</em> La disciplina impopular es el precio de la estabilidad.</p>
+                        </div>
+                </div>
+                <p style="text-align: center; margin-top: 25px; font-size: 1.3rem;"><strong style="color: var(--azul-respaldo);">La credibilidad se construye en a&ntilde;os y se pierde en un d&iacute;a.</strong></p>
+        </div>
+
+        <!-- SLIDE 36: REGLA DE TAYLOR -->
+        <div class="slide bg-blanco">
+                <h2>La Regla de Taylor (1993)</h2>
+                <p>John Taylor propuso una regla simple para guiar la pol&iacute;tica de tasas de inter&eacute;s:</p>
+                <div class="formula formula-grande">
+                        i = r* + &pi; + 0.5(&pi; &minus; &pi;*) + 0.5(y &minus; y*)
+                </div>
+                <div class="two-cols" style="margin-top: 20px;">
+                        <div>
+                                <ul>
+                                        <li><strong class="highlight">i</strong> = tasa de inter&eacute;s nominal que fija el BC</li>
+                                        <li><strong class="highlight">r*</strong> = tasa real de equilibrio (~2%)</li>
+                                        <li><strong class="highlight">&pi;</strong> = inflaci&oacute;n observada</li>
+                                </ul>
+                        </div>
+                        <div>
+                                <ul>
+                                        <li><strong class="highlight">&pi;*</strong> = meta de inflaci&oacute;n</li>
+                                        <li><strong class="highlight">y &minus; y*</strong> = brecha del producto (output gap)</li>
+                                        <li><strong class="highlight">0.5</strong> = ponderaciones de reacci&oacute;n</li>
+                                </ul>
+                        </div>
+                </div>
+                <div class="cita-paper" style="margin-top: 20px;">
+                        <div class="titulo">&laquo;Discretion versus Policy Rules in Practice&raquo;</div>
+                        <div class="autores">John B. Taylor &mdash; Carnegie-Rochester Conference Series on Public Policy, 39, 195&ndash;214 (1993)</div>
+                        <div class="contenido">
+                                &laquo;Una regla simple de pol&iacute;tica monetaria que responde a la inflaci&oacute;n y a la brecha del producto puede aproximar bien las decisiones &oacute;ptimas de tasas de inter&eacute;s.&raquo;
+                        </div>
+                </div>
+        </div>
+
+        <!-- ============================================================ -->
+        <!-- SECCI&Oacute;N 7: TEOR&Iacute;A MARADONIANA (37-38) -->
+        <!-- ============================================================ -->
+
+        <!-- SLIDE 37: MERVYN KING 2005 -->
+        <div class="slide bg-respaldo">
+                <h2>La Teor&iacute;a Maradoniana de las tasas de inter&eacute;s</h2>
+                <p>En la <strong class="highlight">Mais Lecture</strong> de 2005, el gobernador del Bank of England, <strong class="highlight">Mervyn King</strong>, us&oacute; una analog&iacute;a futbol&iacute;stica para explicar c&oacute;mo funciona la pol&iacute;tica monetaria moderna.</p>
+                <div class="cita-paper" style="border-left-color: var(--verde-activo);">
+                        <div class="titulo">Mais Lecture 2005 &mdash; &laquo;Monetary Policy: Practice Ahead of Theory&raquo;</div>
+                        <div class="autores">Mervyn King, Gobernador del Bank of England &mdash; Cass Business School, 17 de mayo de 2005</div>
+                        <div class="contenido">
+                                &laquo;Maradona corri&oacute; 60 metros en l&iacute;nea pr&aacute;cticamente recta contra Inglaterra en el Mundial de 1986. &iquest;C&oacute;mo lo logr&oacute;? Porque los defensores esperaban que cambiara de direcci&oacute;n. La expectativa de que girar&iacute;a fue suficiente para que corrieran en otra direcci&oacute;n.&raquo;
+                        </div>
+                </div>
+                <blockquote style="border-left-color: var(--verde-activo); margin-top: 25px;">
+                        &laquo;La pol&iacute;tica monetaria funciona de la misma manera. Lo que importa no es lo que el banco central <em>hace</em>, sino lo que el mercado <em>espera</em> que haga.&raquo;
+                        <cite>&mdash; Mervyn King, 2005</cite>
+                </blockquote>
+        </div>
+
+        <!-- SLIDE 38: LA ANALOG&Iacute;A APLICADA -->
+        <div class="slide bg-blanco">
+                <h2>La analog&iacute;a aplicada: mover la econom&iacute;a sin moverse</h2>
+                <p>As&iacute; como Maradona corri&oacute; en l&iacute;nea recta porque los defensores <em>anticipaban</em> que girar&iacute;a, un banco central cre&iacute;ble puede mover la econom&iacute;a <strong class="highlight">a trav&eacute;s de las expectativas</strong>, sin necesidad de cambiar la tasa.</p>
+                <div class="flow-diagram">
+                        <div class="flow-box">BC tiene<br>credibilidad</div>
+                        <div class="flow-arrow">&rarr;</div>
+                        <div class="flow-box">Mercados anticipan<br>su reacci&oacute;n</div>
+                        <div class="flow-arrow">&rarr;</div>
+                        <div class="flow-box">Precios y tasas<br>se ajustan solos</div>
+                        <div class="flow-arrow">&rarr;</div>
+                        <div class="flow-box">BC no necesita<br>actuar</div>
+                </div>
+                <div class="two-cols" style="margin-top: 20px;">
+                        <div class="concepto-box">
+                                <h4>Ejemplo: Draghi 2012</h4>
+                                <p>El BCE no compr&oacute; un solo bono cuando Draghi dijo &laquo;whatever it takes&raquo;. Los spreads de deuda soberana cayeron <strong>solo con el anuncio</strong>. La credibilidad hizo el trabajo.</p>
+                        </div>
+                        <div class="concepto-box">
+                                <h4>Forward guidance</h4>
+                                <p>Cuando la Fed anuncia que mantendr&aacute; tasas bajas, las tasas largas bajan <em>inmediatamente</em>. El anuncio <strong>es</strong> la pol&iacute;tica. Las palabras mueven mercados.</p>
+                        </div>
+                </div>
+                <p style="text-align: center; margin-top: 25px; font-size: 1.3rem;"><strong class="highlight">La pol&iacute;tica monetaria &oacute;ptima es aquella en la que el BC casi no necesita actuar.</strong></p>
+        </div>
+        <!-- ============================================================ -->
+        <!-- SLIDE 39: SECCI&Oacute;N T&Iacute;TULO &mdash; ARGENTINA -->
+        <!-- ============================================================ -->
+        <div class="slide bg-respaldo seccion-titulo">
+                <h3>Parte 2 &mdash; Aplicaci&oacute;n</h3>
+                <h1>Historia reciente de la<br>pol&iacute;tica monetaria <span class="highlight">argentina</span></h1>
+                <p class="subtitle">Aplicando los conceptos a nuestra realidad</p>
+                <p style="margin-top: 40px; opacity: 0.5; font-size: 1.1rem;">5 monedas en 50 a&ntilde;os &mdash; un laboratorio de pol&iacute;tica monetaria</p>
+        </div>
+
+        <!-- ============================================================ -->
+        <!-- SLIDE 40: OVERVIEW &mdash; TIMELINE DE MONEDAS -->
+        <!-- ============================================================ -->
+        <div class="slide bg-blanco">
+                <h2>50 a&ntilde;os, 5 monedas, infinitas lecciones</h2>
+                <p>Argentina cambi&oacute; de moneda m&aacute;s veces que cualquier pa&iacute;s occidental en el mismo per&iacute;odo.</p>
+
+                <div class="timeline" style="margin-top: 20px;">
+                        <div class="timeline-item">
+                                <span class="timeline-year">1970</span>
+                                <div><strong>Peso Ley 18.188</strong> &mdash; Reemplaz&oacute; al peso moneda nacional (1 PL = 100 $m/n). Inflaci&oacute;n cr&oacute;nica de tres d&iacute;gitos.</div>
+                        </div>
+                        <div class="timeline-item">
+                                <span class="timeline-year">1983</span>
+                                <div><strong>Peso Argentino</strong> &mdash; 1 $a = 10.000 PL. Hiperinflaci&oacute;n en camino.</div>
+                        </div>
+                        <div class="timeline-item">
+                                <span class="timeline-year">1985</span>
+                                <div><strong>Austral</strong> &mdash; Plan Austral: 1 ₳ = 1.000 $a. Estabilidad breve, luego hiperinflaci&oacute;n.</div>
+                        </div>
+                        <div class="timeline-item">
+                                <span class="timeline-year">1992</span>
+                                <div><strong>Peso Convertible</strong> &mdash; 1 $ = 10.000 ₳ = 1 USD. D&eacute;cada de estabilidad, colapso en 2001.</div>
+                        </div>
+                        <div class="timeline-item">
+                                <span class="timeline-year">2002+</span>
+                                <div><strong>Peso (post-convertibilidad)</strong> &mdash; Flotaci&oacute;n. De $1 = 1 USD a $1.200+ = 1 USD en 2024.</div>
+                        </div>
+                </div>
+
+                <div class="stats-grid" style="grid-template-columns: repeat(3, 1fr); margin-top: 15px;">
+                        <div class="stat-box">
+                                <div class="stat-numero rojo" style="font-size: 3rem;">13 ceros</div>
+                                <div class="stat-label">eliminados entre<br>1970 y 1992</div>
+                        </div>
+                        <div class="stat-box">
+                                <div class="stat-numero rojo" style="font-size: 3rem;">2 hiper</div>
+                                <div class="stat-label">inflaciones<br>(1989 y 1990)</div>
+                        </div>
+                        <div class="stat-box">
+                                <div class="stat-numero" style="font-size: 3rem;">0 a&ntilde;os</div>
+                                <div class="stat-label">de inflaci&oacute;n &lt;10%<br>sostenida post-2007</div>
+                        </div>
+                </div>
+        </div>
+
+        <!-- ============================================================ -->
+        <!-- SLIDE 41: PRE-CONVERTIBILIDAD -->
+        <!-- ============================================================ -->
+        <div class="slide bg-impulso">
+                <span class="era-badge crisis">CRISIS</span>
+                <h2>Pre-convertibilidad: la subordinaci&oacute;n del BCRA</h2>
+                <p>El Banco Central funcionaba como <strong>caja del Tesoro</strong>. La dominancia fiscal era total.</p>
+
+                <div class="two-cols" style="margin-top: 15px;">
+                        <div>
+                                <ul>
+                                        <li><strong>BCRA sin autonom&iacute;a:</strong> financiaba autom&aacute;ticamente el d&eacute;ficit fiscal v&iacute;a Adelantos Transitorios</li>
+                                        <li><strong>Plan Austral (1985):</strong> intento de estabilizaci&oacute;n heterodoxo &mdash; congelamiento + nueva moneda</li>
+                                        <li><strong>Fracaso:</strong> sin ajuste fiscal estructural, la inflaci&oacute;n volvi&oacute; con fuerza</li>
+                                        <li><strong>Espiral final:</strong> p&eacute;rdida total de confianza en el austral, corrida cambiaria</li>
+                                </ul>
+                        </div>
+                        <div>
+                                <div class="stat-box" style="background: rgba(255,255,255,0.08); border-radius: 12px; padding: 20px;">
+                                        <div class="stat-numero rojo" style="font-size: 4rem;">3.079%</div>
+                                        <div class="stat-label">Inflaci&oacute;n 1989</div>
+                                </div>
+                                <div class="stat-box" style="background: rgba(255,255,255,0.08); border-radius: 12px; padding: 20px; margin-top: 15px;">
+                                        <div class="stat-numero rojo" style="font-size: 4rem;">2.314%</div>
+                                        <div class="stat-label">Inflaci&oacute;n 1990</div>
+                                </div>
+                        </div>
+                </div>
+
+                <p class="nota-academica" style="border-top-color: rgba(255,255,255,0.2);">Sargent &amp; Wallace (1981): caso puro de dominancia fiscal &rarr; monetizaci&oacute;n inevitable. Cagan (1956): expectativas de inflaci&oacute;n autoconfirmadas.</p>
+        </div>
+
+        <!-- ============================================================ -->
+        <!-- SLIDE 42: CONVERTIBILIDAD 1991-2001 -->
+        <!-- ============================================================ -->
+        <div class="slide bg-blanco">
+                <span class="era-badge estabilidad">ESTABILIDAD FORZADA</span>
+                <h2>Convertibilidad (1991&ndash;2001): el ancla extrema</h2>
+
+                <div class="formula" style="margin-top: 15px;">
+                        1 Peso = 1 D&oacute;lar &nbsp;&nbsp;(por Ley 23.928)
+                </div>
+
+                <div class="two-cols" style="margin-top: 15px;">
+                        <div class="solucion-box">
+                                <h4 style="color: var(--verde-activo); margin-bottom: 8px;">Lo que logr&oacute;</h4>
+                                <ul style="margin: 0;">
+                                        <li style="font-size: 1.15rem;">Inflaci&oacute;n: de <strong>1.344%</strong> (1990) a <strong>4%</strong> (1994)</li>
+                                        <li style="font-size: 1.15rem;">Remonetizaci&oacute;n de la econom&iacute;a</li>
+                                        <li style="font-size: 1.15rem;">Horizonte de planificaci&oacute;n largo</li>
+                                </ul>
+                        </div>
+                        <div class="problema-box">
+                                <h4 style="color: var(--rojo-alerta); margin-bottom: 8px;">Lo que sacrific&oacute;</h4>
+                                <ul style="margin: 0;">
+                                        <li style="font-size: 1.15rem;">Pol&iacute;tica monetaria como herramienta</li>
+                                        <li style="font-size: 1.15rem;">Prestamista de &uacute;ltima instancia</li>
+                                        <li style="font-size: 1.15rem;">Capacidad de ajuste ante shocks externos</li>
+                                </ul>
+                        </div>
+                </div>
+
+                <div class="flow-diagram" style="margin-top: 20px;">
+                        <div class="flow-box">D&eacute;ficit sin emisi&oacute;n</div>
+                        <div class="flow-arrow">&rarr;</div>
+                        <div class="flow-box">Deuda externa creciente</div>
+                        <div class="flow-arrow">&rarr;</div>
+                        <div class="flow-box">Crisis Tequila + Rusia + Brasil</div>
+                        <div class="flow-arrow">&rarr;</div>
+                        <div class="flow-box" style="border: 2px solid var(--rojo-alerta);">Colapso 2001</div>
+                </div>
+
+                <p class="nota-academica">La convertibilidad elimin&oacute; la dominancia fiscal v&iacute;a emisi&oacute;n, pero no elimin&oacute; el d&eacute;ficit: solo cambi&oacute; su financiamiento de pesos a d&oacute;lares.</p>
+        </div>
+
+        <!-- ============================================================ -->
+        <!-- SLIDE 43: POST-CRISIS 2002-2006 -->
+        <!-- ============================================================ -->
+        <div class="slide bg-respaldo">
+                <span class="era-badge transicion">TRANSICI&Oacute;N</span>
+                <h2>Post-crisis (2002&ndash;2006): la calma despu&eacute;s de la tormenta</h2>
+                <p>Tras el colapso, Argentina adopt&oacute; un r&eacute;gimen monetario radicalmente distinto.</p>
+
+                <div class="three-cols" style="margin-top: 20px;">
+                        <div class="concepto-box">
+                                <h4>Tipo de cambio flotante</h4>
+                                <p>Devaluaci&oacute;n de $1 a $3 por d&oacute;lar. El BCRA recuper&oacute; herramientas de pol&iacute;tica monetaria.</p>
+                        </div>
+                        <div class="concepto-box">
+                                <h4>Acumulaci&oacute;n de reservas</h4>
+                                <p>Tipo de cambio competitivo + super&aacute;vit gemelo (fiscal y externo) permitieron reconstruir reservas.</p>
+                        </div>
+                        <div class="concepto-box">
+                                <h4>Pol&iacute;tica monetaria pasiva</h4>
+                                <p>Crecimiento monetario subordinado al ingreso de d&oacute;lares. Sin metas expl&iacute;citas de inflaci&oacute;n.</p>
+                        </div>
+                </div>
+
+                <div class="stats-grid" style="margin-top: 25px;">
+                        <div class="stat-box">
+                                <div class="stat-numero" style="font-size: 3.5rem;">3,5%</div>
+                                <div class="stat-label">super&aacute;vit fiscal<br>promedio (% PBI)</div>
+                        </div>
+                        <div class="stat-box">
+                                <div class="stat-numero" style="font-size: 3.5rem;">8,5%</div>
+                                <div class="stat-label">crecimiento PBI<br>promedio anual</div>
+                        </div>
+                        <div class="stat-box">
+                                <div class="stat-numero" style="font-size: 3.5rem;">10-12%</div>
+                                <div class="stat-label">inflaci&oacute;n anual<br>(contenida, sin metas)</div>
+                        </div>
+                </div>
+
+                <p class="nota-academica" style="border-top-color: rgba(255,255,255,0.2);">Paradoja: sin esquema monetario formal, la inflaci&oacute;n se mantuvo moderada gracias al super&aacute;vit fiscal &mdash; confirmando a Sargent &amp; Wallace.</p>
+        </div>
+
+        <!-- ============================================================ -->
+        <!-- SLIDE 44: 2007-2015 DOMINANCIA FISCAL -->
+        <!-- ============================================================ -->
+        <div class="slide bg-verde">
+                <span class="era-badge" style="background: var(--azul-respaldo); color: white;">DOMINANCIA FISCAL</span>
+                <h2 style="color: var(--azul-respaldo);">2007&ndash;2015: el retorno de la subordinaci&oacute;n monetaria</h2>
+
+                <div class="two-cols" style="margin-top: 15px;">
+                        <div>
+                                <ul>
+                                        <li><strong>Reforma Carta Org&aacute;nica BCRA (2012):</strong> ampli&oacute; l&iacute;mites de Adelantos Transitorios y utilidades giradas al Tesoro</li>
+                                        <li><strong>Intervenci&oacute;n INDEC (2007):</strong> manipulaci&oacute;n de estad&iacute;sticas de inflaci&oacute;n &rarr; destrucci&oacute;n de credibilidad</li>
+                                        <li><strong>Cepo cambiario (2011):</strong> restricci&oacute;n total a la compra de d&oacute;lares</li>
+                                        <li><strong>Emisi&oacute;n monetaria:</strong> financiamiento del d&eacute;ficit fiscal creciente</li>
+                                </ul>
+                        </div>
+                        <div>
+                                <div class="concepto-box" style="background: rgba(2,23,81,0.12);">
+                                        <h4 style="color: var(--azul-respaldo);">Dominancia fiscal plena</h4>
+                                        <p>El BCRA perdi&oacute; de facto su independencia. Las transferencias al Tesoro pasaron de 0,5% a 4% del PBI entre 2007 y 2015.</p>
+                                </div>
+                                <div class="concepto-box" style="background: rgba(2,23,81,0.12); margin-top: 15px;">
+                                        <h4 style="color: var(--azul-respaldo);">Inflaci&oacute;n reprimida</h4>
+                                        <p>Inflaci&oacute;n oficial: 10%. Inflaci&oacute;n real (estimaciones privadas): <strong style="color: var(--azul-respaldo);">25-40%</strong> anual.</p>
+                                </div>
+                        </div>
+                </div>
+
+                <div class="flow-diagram" style="margin-top: 15px;">
+                        <div class="flow-box" style="background: rgba(2,23,81,0.12);">D&eacute;ficit fiscal</div>
+                        <div class="flow-arrow" style="color: var(--azul-respaldo);">&rarr;</div>
+                        <div class="flow-box" style="background: rgba(2,23,81,0.12);">Emisi&oacute;n BCRA</div>
+                        <div class="flow-arrow" style="color: var(--azul-respaldo);">&rarr;</div>
+                        <div class="flow-box" style="background: rgba(2,23,81,0.12);">Inflaci&oacute;n</div>
+                        <div class="flow-arrow" style="color: var(--azul-respaldo);">&rarr;</div>
+                        <div class="flow-box" style="background: rgba(2,23,81,0.12);">Cepo + controles</div>
+                        <div class="flow-arrow" style="color: var(--azul-respaldo);">&rarr;</div>
+                        <div class="flow-box" style="background: rgba(2,23,81,0.12);">Brecha cambiaria</div>
+                </div>
+
+                <p class="nota-academica" style="border-top-color: rgba(2,23,81,0.2); color: var(--azul-respaldo);">Caso cl&aacute;sico de Sargent &amp; Wallace: el fisco mueve primero, el BCRA acomoda. La independencia formal es irrelevante sin independencia real.</p>
+        </div>
+
+        <!-- ============================================================ -->
+        <!-- SLIDE 45: 2016-2018 INFLATION TARGETING -->
+        <!-- ============================================================ -->
+        <div class="slide bg-blanco">
+                <span class="era-badge reforma">REFORMA</span>
+                <h2>2016&ndash;2018: el intento de <em>inflation targeting</em></h2>
+                <p>Federico Sturzenegger al frente del BCRA intent&oacute; un r&eacute;gimen de metas de inflaci&oacute;n.</p>
+
+                <div class="two-cols" style="margin-top: 15px;">
+                        <div>
+                                <div class="concepto-box">
+                                        <h4>El dise&ntilde;o</h4>
+                                        <p style="font-size: 1.05rem;">Meta de inflaci&oacute;n descendente: 25% &rarr; 17% &rarr; 12%. Tasa de inter&eacute;s como instrumento principal. Lebac como herramienta de esterilizaci&oacute;n.</p>
+                                </div>
+                        </div>
+                        <div>
+                                <div class="concepto-box">
+                                        <h4>El problema</h4>
+                                        <p style="font-size: 1.05rem;"><strong>Gradualismo fiscal:</strong> el d&eacute;ficit primario segu&iacute;a en 4% del PBI. La pol&iacute;tica monetaria intentaba compensar lo que el fisco no resolv&iacute;a.</p>
+                                </div>
+                        </div>
+                </div>
+
+                <div class="problema-box" style="margin-top: 20px;">
+                        <p style="margin: 0;"><strong>Resultado:</strong> Inflaci&oacute;n real siempre por encima de las metas &rarr; metas relajadas en enero 2018 &rarr; <strong class="highlight-red">p&eacute;rdida total de credibilidad</strong>.</p>
+                </div>
+
+                <div class="solucion-box" style="margin-top: 10px;">
+                        <p style="margin: 0;"><strong>Kydland &amp; Prescott (1977) confirmados:</strong> sin compromiso cre&iacute;ble (reglas vs. discrecionalidad), el p&uacute;blico anticipa el incumplimiento. Las metas no anclaron expectativas porque nadie cre&iacute;a en ellas.</p>
+                </div>
+
+                <p class="nota-academica">Stock de Lebac alcanz&oacute; el 12% del PBI en 2018 &mdash; una bomba monetaria que eventualmente estall&oacute;.</p>
+        </div>
+
+        <!-- ============================================================ -->
+        <!-- SLIDE 46: 2018-2019 CRISIS -->
+        <!-- ============================================================ -->
+        <div class="slide bg-respaldo">
+                <span class="era-badge crisis">CRISIS</span>
+                <h2>2018&ndash;2019: la corrida y el FMI</h2>
+                <p>El experimento de <em>inflation targeting</em> termin&oacute; en una crisis cambiaria violenta.</p>
+
+                <div class="flow-diagram" style="margin-top: 15px;">
+                        <div class="flow-box">Suba de tasas<br>en EE.UU.</div>
+                        <div class="flow-arrow">&rarr;</div>
+                        <div class="flow-box">Salida de capitales<br><em>carry trade</em></div>
+                        <div class="flow-arrow">&rarr;</div>
+                        <div class="flow-box">Corrida contra<br>el peso</div>
+                        <div class="flow-arrow">&rarr;</div>
+                        <div class="flow-box">Programa FMI<br>(USD 57.000 M)</div>
+                        <div class="flow-arrow">&rarr;</div>
+                        <div class="flow-box" style="border: 2px solid var(--rojo-alerta);">Recesi&oacute;n +<br>inflaci&oacute;n</div>
+                </div>
+
+                <div class="two-cols" style="margin-top: 20px;">
+                        <div>
+                                <div class="stats-grid" style="grid-template-columns: 1fr 1fr; gap: 15px; margin-top: 0;">
+                                        <div class="stat-box" style="background: rgba(255,255,255,0.05); border-radius: 10px;">
+                                                <div class="stat-numero rojo" style="font-size: 3.2rem;">47%</div>
+                                                <div class="stat-label">Inflaci&oacute;n 2018</div>
+                                        </div>
+                                        <div class="stat-box" style="background: rgba(255,255,255,0.05); border-radius: 10px;">
+                                                <div class="stat-numero rojo" style="font-size: 3.2rem;">54%</div>
+                                                <div class="stat-label">Inflaci&oacute;n 2019</div>
+                                        </div>
+                                </div>
+                        </div>
+                        <div>
+                                <ul>
+                                        <li><strong>Lebac &rarr; Leliq:</strong> se desarmaron las Lebac y se crearon Leliq, concentrando el riesgo en bancos</li>
+                                        <li><strong>Bandas cambiarias:</strong> el FMI impuso zonas de no intervenci&oacute;n</li>
+                                        <li><strong>Tasa de inter&eacute;s:</strong> Leliq lleg&oacute; al 73% anual</li>
+                                </ul>
+                        </div>
+                </div>
+
+                <p class="nota-academica" style="border-top-color: rgba(255,255,255,0.2);">Obstfeld (1996) y su modelo de crisis de segunda generaci&oacute;n: las expectativas de devaluaci&oacute;n pueden ser autoconfirmadas cuando los fundamentos son d&eacute;biles.</p>
+        </div>
+
+        <!-- ============================================================ -->
+        <!-- SLIDE 47: 2020-2023 PANDEMIA Y EMISI&Oacute;N -->
+        <!-- ============================================================ -->
+        <div class="slide bg-impulso">
+                <span class="era-badge crisis">EMERGENCIA</span>
+                <h2>2020&ndash;2023: pandemia, emisi&oacute;n y represi&oacute;n financiera</h2>
+                <p>La pandemia intensific&oacute; la monetizaci&oacute;n del d&eacute;ficit a niveles hist&oacute;ricos.</p>
+
+                <div class="two-cols" style="margin-top: 15px;">
+                        <div>
+                                <ul>
+                                        <li><strong>Emisi&oacute;n masiva (2020):</strong> transferencias BCRA &rarr; Tesoro equivalentes al <strong>5% del PBI</strong></li>
+                                        <li><strong>Cepo endurecido:</strong> l&iacute;mite de USD 200/mes, brecha cambiaria superior al 100%</li>
+                                        <li><strong>Represi&oacute;n financiera:</strong> tasas reales negativas, regulaciones de encajes, controles de precios</li>
+                                        <li><strong>Base monetaria:</strong> creci&oacute; 80% en 2020, muy por encima de la demanda de dinero</li>
+                                </ul>
+                        </div>
+                        <div>
+                                <div class="inflation-meter">
+                                        <div class="meter-row">
+                                                <span class="meter-label">2020</span>
+                                                <div class="meter-bar-container">
+                                                        <div class="meter-bar high" style="width: 17%;">36%</div>
+                                                </div>
+                                        </div>
+                                        <div class="meter-row">
+                                                <span class="meter-label">2021</span>
+                                                <div class="meter-bar-container">
+                                                        <div class="meter-bar high" style="width: 24%;">51%</div>
+                                                </div>
+                                        </div>
+                                        <div class="meter-row">
+                                                <span class="meter-label">2022</span>
+                                                <div class="meter-bar-container">
+                                                        <div class="meter-bar extreme" style="width: 45%;">95%</div>
+                                                </div>
+                                        </div>
+                                        <div class="meter-row">
+                                                <span class="meter-label">2023</span>
+                                                <div class="meter-bar-container">
+                                                        <div class="meter-bar extreme" style="width: 100%;">211%</div>
+                                                </div>
+                                        </div>
+                                </div>
+                                <p style="text-align: center; font-size: 1rem; opacity: 0.8; margin-top: 5px;">Inflaci&oacute;n interanual (IPC dic-dic)</p>
+                        </div>
+                </div>
+
+                <p class="nota-academica" style="border-top-color: rgba(255,255,255,0.2);">Friedman: &ldquo;La inflaci&oacute;n es siempre y en todas partes un fen&oacute;meno monetario&rdquo;. Sargent &amp; Wallace: &ldquo;...pero causado por la pol&iacute;tica fiscal.&rdquo;</p>
+        </div>
+
+        <!-- ============================================================ -->
+        <!-- SLIDE 48: 2024-PRESENTE &mdash; DESINFLACI&Oacute;N -->
+        <!-- ============================================================ -->
+        <div class="slide bg-blanco">
+                <span class="era-badge estabilidad">ESTABILIZACI&Oacute;N</span>
+                <h2>2024&ndash;presente: el ancla fiscal y la desinflaci&oacute;n</h2>
+                <p>Un programa de estabilizaci&oacute;n basado en <strong class="highlight">equilibrio fiscal como precondici&oacute;n monetaria</strong>.</p>
+
+                <div class="three-cols" style="margin-top: 15px;">
+                        <div class="concepto-box">
+                                <h4>Fin del financiamiento monetario</h4>
+                                <p>Cero transferencias del BCRA al Tesoro. El d&eacute;ficit se cerr&oacute; desde el primer mes.</p>
+                        </div>
+                        <div class="concepto-box">
+                                <h4>Super&aacute;vit fiscal</h4>
+                                <p>Super&aacute;vit financiero (no solo primario) por primera vez en m&aacute;s de una d&eacute;cada.</p>
+                        </div>
+                        <div class="concepto-box">
+                                <h4>Crawling peg</h4>
+                                <p>Deslizamiento cambiario pautado (inicialmente 2% mensual) como ancla nominal complementaria.</p>
+                        </div>
+                </div>
+
+                <div class="stats-grid" style="margin-top: 20px;">
+                        <div class="stat-box">
+                                <div class="stat-numero rojo" style="font-size: 3.5rem;">25,5%</div>
+                                <div class="stat-label">Inflaci&oacute;n mensual<br>diciembre 2023</div>
+                        </div>
+                        <div class="stat-box">
+                                <div class="stat-numero" style="font-size: 3.5rem;">2-3%</div>
+                                <div class="stat-label">Inflaci&oacute;n mensual<br>segundo semestre 2024</div>
+                        </div>
+                        <div class="stat-box">
+                                <div class="stat-numero" style="font-size: 3.5rem;">0%</div>
+                                <div class="stat-label">Financiamiento<br>monetario del d&eacute;ficit</div>
+                        </div>
+                </div>
+
+                <p class="nota-academica">Confirma Sargent (1982), <em>&ldquo;The Ends of Four Big Inflations&rdquo;</em>: las desinflaciones exitosas requieren un cambio cre&iacute;ble de r&eacute;gimen fiscal, no solo monetario.</p>
+        </div>
+
+        <!-- ============================================================ -->
+        <!-- SLIDE 49: MAPEO PAPERS &harr; EPISODIOS ARGENTINOS -->
+        <!-- ============================================================ -->
+        <div class="slide bg-respaldo">
+                <h2>Los papers <span class="highlight">explican</span> a Argentina</h2>
+                <p>Cada episodio de nuestra historia monetaria tiene un marco te&oacute;rico que lo anticip&oacute; o lo explic&oacute;.</p>
+
+                <div class="two-cols" style="margin-top: 15px; gap: 30px;">
+                        <div>
+                                <div class="concepto-box" style="margin-bottom: 15px; text-align: left;">
+                                        <h4>Sargent &amp; Wallace (1981)</h4>
+                                        <p>&rarr; 1983-1989 (hiper), 2007-2015 (emisi&oacute;n), 2020-2023 (pandemia): dominancia fiscal inevitable sin ajuste.</p>
+                                </div>
+                                <div class="concepto-box" style="margin-bottom: 15px; text-align: left;">
+                                        <h4>Kydland &amp; Prescott (1977)</h4>
+                                        <p>&rarr; 2016-2018 (inflation targeting fallido): sin reglas cre&iacute;bles, las metas no anclan expectativas.</p>
+                                </div>
+                                <div class="concepto-box" style="margin-bottom: 15px; text-align: left;">
+                                        <h4>Barro &amp; Gordon (1983)</h4>
+                                        <p>&rarr; Cada plan de estabilizaci&oacute;n abandonado: el sesgo inflacionario por incentivos pol&iacute;ticos a corto plazo.</p>
+                                </div>
+                                <div class="concepto-box" style="text-align: left;">
+                                        <h4>Friedman (1968)</h4>
+                                        <p>&rarr; Curva de Phillips vertical: las pol&iacute;ticas expansivas no generan empleo permanente, solo inflaci&oacute;n.</p>
+                                </div>
+                        </div>
+                        <div>
+                                <div class="concepto-box" style="margin-bottom: 15px; text-align: left;">
+                                        <h4>Mundell-Fleming (1963)</h4>
+                                        <p>&rarr; Convertibilidad: tipo de cambio fijo + libre movilidad de capitales = cero pol&iacute;tica monetaria.</p>
+                                </div>
+                                <div class="concepto-box" style="margin-bottom: 15px; text-align: left;">
+                                        <h4>Taylor (1993)</h4>
+                                        <p>&rarr; 2016-2018: intento de regla de tasa de inter&eacute;s en un contexto donde los supuestos no se cumpl&iacute;an.</p>
+                                </div>
+                                <div class="concepto-box" style="margin-bottom: 15px; text-align: left;">
+                                        <h4>Cagan (1956)</h4>
+                                        <p>&rarr; 1989-1990: din&aacute;mica hiperinflacionaria donde las expectativas se autoconfirman y la demanda de dinero colapsa.</p>
+                                </div>
+                                <div class="concepto-box" style="text-align: left;">
+                                        <h4>Sargent (1982)</h4>
+                                        <p>&rarr; 2024: desinflaci&oacute;n r&aacute;pida v&iacute;a cambio cre&iacute;ble de r&eacute;gimen fiscal, como en las 4 hiperinflaciones europeas.</p>
+                                </div>
+                        </div>
+                </div>
+        </div>
+
+        <!-- ============================================================ -->
+        <!-- SLIDE 50: KEY MESSAGES -->
+        <!-- ============================================================ -->
+        <div class="slide bg-impulso">
+                <h2>Cinco lecciones de la pol&iacute;tica monetaria argentina</h2>
+
+                <div style="margin-top: 20px;">
+                        <div class="concepto-box" style="text-align: left; margin-bottom: 18px; display: flex; gap: 20px; align-items: flex-start;">
+                                <span style="font-size: 2.5rem; font-weight: 800; opacity: 0.4; min-width: 50px;">01</span>
+                                <div>
+                                        <h4 style="color: white; font-size: 1.2rem;">No hay pol&iacute;tica monetaria sin equilibrio fiscal</h4>
+                                        <p style="font-size: 1.1rem;">Sargent &amp; Wallace lo demostraron en 1981. Argentina lo confirm&oacute; docenas de veces.</p>
+                                </div>
+                        </div>
+                        <div class="concepto-box" style="text-align: left; margin-bottom: 18px; display: flex; gap: 20px; align-items: flex-start;">
+                                <span style="font-size: 2.5rem; font-weight: 800; opacity: 0.4; min-width: 50px;">02</span>
+                                <div>
+                                        <h4 style="color: white; font-size: 1.2rem;">La credibilidad no se decreta, se construye</h4>
+                                        <p style="font-size: 1.1rem;">Kydland &amp; Prescott: las reglas importan m&aacute;s que las promesas. La inconsistencia temporal destruye reputaci&oacute;n.</p>
+                                </div>
+                        </div>
+                        <div class="concepto-box" style="text-align: left; margin-bottom: 18px; display: flex; gap: 20px; align-items: flex-start;">
+                                <span style="font-size: 2.5rem; font-weight: 800; opacity: 0.4; min-width: 50px;">03</span>
+                                <div>
+                                        <h4 style="color: white; font-size: 1.2rem;">Los atajos monetarios siempre se pagan</h4>
+                                        <p style="font-size: 1.1rem;">Emisi&oacute;n, controles de precios, cepo: son parches que posponen el ajuste y lo encarecen.</p>
+                                </div>
+                        </div>
+                        <div class="concepto-box" style="text-align: left; margin-bottom: 18px; display: flex; gap: 20px; align-items: flex-start;">
+                                <span style="font-size: 2.5rem; font-weight: 800; opacity: 0.4; min-width: 50px;">04</span>
+                                <div>
+                                        <h4 style="color: white; font-size: 1.2rem;">Las instituciones importan tanto como las pol&iacute;ticas</h4>
+                                        <p style="font-size: 1.1rem;">La independencia del banco central es necesaria pero insuficiente si el marco institucional no la protege.</p>
+                                </div>
+                        </div>
+                        <div class="concepto-box" style="text-align: left; display: flex; gap: 20px; align-items: flex-start;">
+                                <span style="font-size: 2.5rem; font-weight: 800; opacity: 0.4; min-width: 50px;">05</span>
+                                <div>
+                                        <h4 style="color: white; font-size: 1.2rem;">La desinflaci&oacute;n es posible &mdash; pero requiere voluntad pol&iacute;tica</h4>
+                                        <p style="font-size: 1.1rem;">Las 4 hiperinflaciones de Sargent y la experiencia 2024 muestran que el cambio de r&eacute;gimen puede ser r&aacute;pido si es cre&iacute;ble.</p>
+                                </div>
+                        </div>
+                </div>
+        </div>
+
+        <!-- ============================================================ -->
+        <!-- SLIDE 51: CLOSING QUOTE -->
+        <!-- ============================================================ -->
+        <div class="slide bg-respaldo" style="text-align: center;">
+                <blockquote style="border-left: none; text-align: center; font-size: 2.2rem; padding: 0; max-width: 900px; margin: 0 auto;">
+                        &ldquo;Las ideas de los economistas y los fil&oacute;sofos pol&iacute;ticos, tanto cuando tienen raz&oacute;n como cuando est&aacute;n equivocadas, son m&aacute;s poderosas de lo que com&uacute;nmente se entiende. De hecho, el mundo est&aacute; gobernado por poco m&aacute;s. Los hombres pr&aacute;cticos, que se creen libres de toda influencia intelectual, son generalmente esclavos de alg&uacute;n economista difunto.&rdquo;
+                        <cite style="font-size: 1.3rem; margin-top: 30px; opacity: 0.8;">&mdash; John Maynard Keynes, <em>Teor&iacute;a General del Empleo, el Inter&eacute;s y el Dinero</em> (1936)</cite>
+                </blockquote>
+                <p style="margin-top: 50px; opacity: 0.5; font-size: 1.1rem;">Las ideas que discutimos en esta clase &mdash;de Friedman, Sargent, Kydland, Taylor&mdash;<br>han moldeado las pol&iacute;ticas que determinaron la vida de millones de argentinos.</p>
+        </div>
+
+        <!-- ============================================================ -->
+        <!-- SLIDE 52: BIBLIOGRAF&Iacute;A -->
+        <!-- ============================================================ -->
+        <div class="slide bg-blanco" style="justify-content: flex-start; padding-top: 50px;">
+                <h2>Bibliograf&iacute;a</h2>
+
+                <div class="two-cols" style="margin-top: 15px; gap: 40px;">
+                        <div>
+                                <div class="biblio-section">
+                                        <h4>Manuales de referencia</h4>
+                                        <p class="biblio-item">Samuelson, P. A. &amp; Nordhaus, W. D. (2010). <em>Econom&iacute;a con Aplicaciones a Latinoam&eacute;rica</em>, 19&ordf; ed. McGraw-Hill.</p>
+                                        <p class="biblio-item">Bernanke, B. S. &amp; Frank, R. H. (2007). <em>Principios de Econom&iacute;a</em>, 3&ordf; ed. McGraw-Hill.</p>
+                                </div>
+
+                                <div class="biblio-section">
+                                        <h4>Papers fundamentales</h4>
+                                        <p class="biblio-item">Friedman, M. (1968). &ldquo;The Role of Monetary Policy&rdquo;. <em>American Economic Review</em>, 58(1), 1-17.</p>
+                                        <p class="biblio-item">Sargent, T. J. &amp; Wallace, N. (1981). &ldquo;Some Unpleasant Monetarist Arithmetic&rdquo;. <em>Federal Reserve Bank of Minneapolis Quarterly Review</em>, 5(3), 1-17.</p>
+                                        <p class="biblio-item">Sargent, T. J. (1982). &ldquo;The Ends of Four Big Inflations&rdquo;. En R. E. Hall (ed.), <em>Inflation: Causes and Effects</em>. University of Chicago Press.</p>
+                                        <p class="biblio-item">Kydland, F. E. &amp; Prescott, E. C. (1977). &ldquo;Rules Rather than Discretion: The Inconsistency of Optimal Plans&rdquo;. <em>Journal of Political Economy</em>, 85(3), 473-492.</p>
+                                </div>
+                        </div>
+                        <div>
+                                <div class="biblio-section">
+                                        <h4>Papers fundamentales (cont.)</h4>
+                                        <p class="biblio-item">Barro, R. J. &amp; Gordon, D. B. (1983). &ldquo;Rules, Discretion and Reputation in a Model of Monetary Policy&rdquo;. <em>Journal of Monetary Economics</em>, 12(1), 101-121.</p>
+                                        <p class="biblio-item">Taylor, J. B. (1993). &ldquo;Discretion versus Policy Rules in Practice&rdquo;. <em>Carnegie-Rochester Conference Series on Public Policy</em>, 39, 195-214.</p>
+                                        <p class="biblio-item">Cagan, P. (1956). &ldquo;The Monetary Dynamics of Hyperinflation&rdquo;. En M. Friedman (ed.), <em>Studies in the Quantity Theory of Money</em>. University of Chicago Press.</p>
+                                </div>
+
+                                <div class="biblio-section">
+                                        <h4>Premios Nobel citados</h4>
+                                        <p class="biblio-item">Milton Friedman &mdash; Nobel 1976: &ldquo;por sus logros en an&aacute;lisis del consumo, historia y teor&iacute;a monetaria&rdquo;.</p>
+                                        <p class="biblio-item">Finn Kydland &amp; Edward Prescott &mdash; Nobel 2004: &ldquo;por sus contribuciones a la macroeconom&iacute;a din&aacute;mica: consistencia temporal de la pol&iacute;tica econ&oacute;mica y las fuerzas detr&aacute;s de los ciclos econ&oacute;micos&rdquo;.</p>
+                                        <p class="biblio-item">Thomas Sargent &mdash; Nobel 2011: &ldquo;por su investigaci&oacute;n emp&iacute;rica sobre causa y efecto en macroeconom&iacute;a&rdquo;.</p>
+                                        <p class="biblio-item">Robert Mundell &mdash; Nobel 1999: &ldquo;por su an&aacute;lisis de la pol&iacute;tica monetaria y fiscal bajo diferentes reg&iacute;menes cambiarios&rdquo;.</p>
+                                </div>
+                        </div>
+                </div>
+        </div>
+        <!-- ========== SLIDE 1: HEADER ANEXO ========== -->
+
+        <div class="slide bg-respaldo seccion-titulo">
+                <h3>Anexo</h3>
+                <h1>Papers en <span class="highlight">profundidad</span></h1>
+                <p class="subtitle">Desarrollo de los textos acad&eacute;micos citados en la presentaci&oacute;n</p>
+        </div>
+
+        <!-- ========================================================== -->
+        <!-- ===== PAPER 1: FRIEDMAN (1968) ===== -->
+        <!-- ========================================================== -->
+
+        <!-- PAPER 1 - Slide 1: Presentaci&oacute;n del paper -->
+        <div class="slide bg-blanco">
+                <span class="anexo-badge">ANEXO &mdash; PAPERS</span>
+                <h2>La tasa natural y la <span class="highlight">neutralidad del dinero</span></h2>
+
+                <div class="cita-paper">
+                        <strong>Friedman, M. (1968).</strong> &laquo;The Role of Monetary Policy&raquo;, <em>American Economic Review</em>, 58(1), pp. 1&ndash;17.
+                </div>
+
+                <div class="concepto-box">
+                        <h4>Tesis central</h4>
+                        <p>Friedman argument&oacute; que la pol&iacute;tica monetaria <strong>no puede</strong> reducir permanentemente el desempleo por debajo de su <strong>tasa natural</strong>. En el largo plazo, el dinero es <strong>neutral</strong>: solo afecta precios, no variables reales. La curva de Phillips, que sugiere un trade-off permanente entre inflaci&oacute;n y desempleo, es <strong>vertical</strong> en el largo plazo.</p>
+                </div>
+
+                <div class="stats-grid">
+                        <div class="stat-box">
+                                <span class="stat-numero">1968</span>
+                                <span class="stat-label">Discurso presidencial AEA</span>
+                        </div>
+                        <div class="stat-box">
+                                <span class="stat-numero">0</span>
+                                <span class="stat-label">Efecto real de largo plazo de la emisi&oacute;n</span>
+                        </div>
+                        <div class="stat-box">
+                                <span class="stat-numero">90&deg;</span>
+                                <span class="stat-label">Phillips vertical en el largo plazo</span>
+                        </div>
+                </div>
+
+                <p class="nota-academica">Discurso presidencial ante la American Economic Association, diciembre de 1967, publicado en AER 1968.</p>
+        </div>
+
+        <!-- PAPER 1 - Slide 2: Modelo y mecanismo -->
+        <div class="slide bg-respaldo">
+                <span class="anexo-badge">ANEXO &mdash; PAPERS</span>
+                <h2>El mecanismo: <span class="highlight">expectativas adaptativas</span> y tasa natural</h2>
+
+                <div class="two-cols">
+                        <div class="concepto-box">
+                                <h4>Curva de Phillips de corto plazo</h4>
+                                <p>Una expansi&oacute;n monetaria <strong>sorpresiva</strong> puede reducir temporalmente el desempleo porque los trabajadores confunden el aumento nominal de salarios con un aumento real. Pero a medida que ajustan sus expectativas, el efecto se desvanece.</p>
+                        </div>
+                        <div class="concepto-box">
+                                <h4>Curva de Phillips de largo plazo</h4>
+                                <p>Cuando las expectativas se ajustan completamente, la econom&iacute;a vuelve a la tasa natural de desempleo, pero con <strong>inflaci&oacute;n m&aacute;s alta</strong>. El trade-off desaparece: solo queda el costo inflacionario.</p>
+                        </div>
+                </div>
+
+                <div class="flow-diagram">
+                        <div class="flow-box">Expansi&oacute;n monetaria</div>
+                        <div class="flow-arrow">&rarr;</div>
+                        <div class="flow-box">Sorpresa inflacionaria</div>
+                        <div class="flow-arrow">&rarr;</div>
+                        <div class="flow-box">Ca&iacute;da temporal del desempleo</div>
+                        <div class="flow-arrow">&rarr;</div>
+                        <div class="flow-box">Ajuste de expectativas</div>
+                        <div class="flow-arrow">&rarr;</div>
+                        <div class="flow-box">Desempleo vuelve a tasa natural + inflaci&oacute;n permanente</div>
+                </div>
+
+                <p class="nota-academica">Phelps (1967) lleg&oacute; independientemente a la misma conclusi&oacute;n. Ambos recibieron reconocimiento por la &laquo;hip&oacute;tesis aceleracionista&raquo;.</p>
+        </div>
+
+        <!-- PAPER 1 - Slide 3: Aplicaci&oacute;n a Argentina -->
+        <div class="slide bg-impulso">
+                <span class="anexo-badge">ANEXO &mdash; PAPERS</span>
+                <h2>Friedman aplicado a <span class="highlight">Argentina</span>: emitir no crea empleo</h2>
+
+                <div class="two-cols">
+                        <div>
+                                <div class="problema-box">
+                                        <h4 style="margin-bottom: 8px; font-size: 1.2rem;">D&eacute;cada de 1980</h4>
+                                        <p style="font-size: 1.15rem; margin: 0;">Argentina expandi&oacute; la base monetaria para financiar el d&eacute;ficit fiscal, esperando reactivar el empleo. Resultado: inflaci&oacute;n de <strong>3.079%</strong> en 1989 y desempleo que no baj&oacute; &mdash; exactamente lo que Friedman predijo.</p>
+                                </div>
+                                <div class="problema-box">
+                                        <h4 style="margin-bottom: 8px; font-size: 1.2rem;">Per&iacute;odo 2020&ndash;2023</h4>
+                                        <p style="font-size: 1.15rem; margin: 0;">Masiva emisi&oacute;n monetaria durante y despu&eacute;s de la pandemia. La base monetaria creci&oacute; &gt;70% anual. La inflaci&oacute;n pas&oacute; del 36% al 211%. El desempleo baj&oacute; transitoriamente pero el empleo de calidad <strong>no mejor&oacute;</strong>.</p>
+                                </div>
+                        </div>
+                        <div>
+                                <div class="concepto-box">
+                                        <h4>La lecci&oacute;n friedmaniana</h4>
+                                        <p>Argentina es el laboratorio emp&iacute;rico de la tesis de Friedman: <strong>d&eacute;cadas de emisi&oacute;n monetaria no generaron crecimiento sostenido ni empleo permanente</strong>. Solo generaron inflaci&oacute;n creciente y destrucci&oacute;n del poder adquisitivo de los salarios.</p>
+                                </div>
+                                <div class="solucion-box">
+                                        <h4 style="margin-bottom: 8px; font-size: 1.2rem;">Prescripci&oacute;n de Friedman</h4>
+                                        <p style="font-size: 1.15rem; margin: 0;">&laquo;La pol&iacute;tica monetaria debe proveer un marco monetario <strong>estable</strong>. No puede hacer m&aacute;s. No deber&iacute;a intentar hacer m&aacute;s.&raquo;</p>
+                                </div>
+                        </div>
+                </div>
+
+                <p class="nota-academica">Datos INDEC e INDEC-provincias. Inflaci&oacute;n 1989: Ferreres (2005). Per&iacute;odo 2020&ndash;23: BCRA, Informe Monetario.</p>
+        </div>
+
+        <!-- ========================================================== -->
+        <!-- ===== PAPER 2: KYDLAND & PRESCOTT (1977) ===== -->
+        <!-- ========================================================== -->
+
+        <!-- PAPER 2 - Slide 1: Presentaci&oacute;n del paper -->
+        <div class="slide bg-verde">
+                <span class="anexo-badge">ANEXO &mdash; PAPERS</span>
+                <h2>Reglas vs. Discreci&oacute;n: el problema de la <span style="color: var(--azul-respaldo);">inconsistencia temporal</span></h2>
+
+                <div class="cita-paper">
+                        <strong>Kydland, F. &amp; Prescott, E. (1977).</strong> &laquo;Rules Rather than Discretion: The Inconsistency of Optimal Plans&raquo;, <em>Journal of Political Economy</em>, 85(3), pp. 473&ndash;491.
+                </div>
+
+                <div class="concepto-box">
+                        <h4 style="color: var(--azul-respaldo);">Hallazgo central</h4>
+                        <p>Los gobiernos que pueden reoptimizar su pol&iacute;tica en cada per&iacute;odo caen en una <strong>trampa</strong>: anuncian pol&iacute;ticas &oacute;ptimas pero luego tienen incentivos para desviarse. El resultado es un <strong>sesgo inflacionario</strong> sist&eacute;mico, an&aacute;logo al dilema del prisionero. La soluci&oacute;n: <strong>reglas vinculantes</strong> que impidan la discreci&oacute;n.</p>
+                </div>
+
+                <div class="stats-grid">
+                        <div class="stat-box">
+                                <span class="stat-numero" style="color: var(--azul-respaldo);">1977</span>
+                                <span class="stat-label">Journal of Political Economy</span>
+                        </div>
+                        <div class="stat-box">
+                                <span class="stat-numero" style="color: var(--azul-respaldo);">2004</span>
+                                <span class="stat-label">Premio Nobel de Econom&iacute;a</span>
+                        </div>
+                        <div class="stat-box">
+                                <span class="stat-numero" style="color: var(--azul-respaldo);">&infin;</span>
+                                <span class="stat-label">Sesgo inflacionario bajo discreci&oacute;n</span>
+                        </div>
+                </div>
+
+                <p class="nota-academica">Kydland y Prescott recibieron el Nobel en 2004 &laquo;por sus contribuciones a la macroeconom&iacute;a din&aacute;mica: la consistencia temporal de la pol&iacute;tica econ&oacute;mica y las fuerzas motrices del ciclo econ&oacute;mico&raquo;.</p>
+        </div>
+
+        <!-- PAPER 2 - Slide 2: Modelo y mecanismo -->
+        <div class="slide bg-blanco">
+                <span class="anexo-badge">ANEXO &mdash; PAPERS</span>
+                <h2>La <span class="highlight">inconsistencia temporal</span> como dilema del prisionero</h2>
+
+                <div class="two-cols">
+                        <div class="concepto-box">
+                                <h4>El juego secuencial</h4>
+                                <p><strong>Per&iacute;odo 1:</strong> El banco central anuncia inflaci&oacute;n baja.<br>
+                                <strong>Per&iacute;odo 2:</strong> El p&uacute;blico fija salarios y contratos bas&aacute;ndose en el anuncio.<br>
+                                <strong>Per&iacute;odo 3:</strong> El BC tiene incentivo a generar una <strong>sorpresa inflacionaria</strong> para reducir desempleo temporalmente.<br>
+                                <strong>Resultado:</strong> El p&uacute;blico anticipa la traici&oacute;n &rarr; expectativas altas &rarr; inflaci&oacute;n alta <strong>sin</strong> ganancia de empleo.</p>
+                        </div>
+                        <div class="concepto-box">
+                                <h4>Dilema del prisionero monetario</h4>
+                                <table>
+                                        <tr>
+                                                <th></th>
+                                                <th>P&uacute;blico cree</th>
+                                                <th>P&uacute;blico no cree</th>
+                                        </tr>
+                                        <tr>
+                                                <td><strong>BC cumple</strong></td>
+                                                <td style="color: var(--azul-impulso);"><strong>&Oacute;ptimo</strong></td>
+                                                <td>Recesi&oacute;n</td>
+                                        </tr>
+                                        <tr>
+                                                <td><strong>BC traiciona</strong></td>
+                                                <td>Ganancia temporal</td>
+                                                <td style="color: var(--rojo-alerta);"><strong>Equilibrio Nash</strong></td>
+                                        </tr>
+                                </table>
+                                <p style="font-size: 1rem; margin-top: 10px;">El equilibrio de Nash es inflaci&oacute;n alta y desempleo en tasa natural &mdash; el peor escenario estable.</p>
+                        </div>
+                </div>
+
+                <div class="solucion-box">
+                        <p style="font-size: 1.3rem; margin: 0;"><strong>Soluci&oacute;n de Kydland-Prescott:</strong> Reglas fijas y predecibles (metas de inflaci&oacute;n, tipo de cambio fijo, regla de crecimiento monetario) que <strong>impidan la tentaci&oacute;n de desviarse</strong>.</p>
+                </div>
+
+                <p class="nota-academica">El equilibrio de Nash con inflaci&oacute;n alta replica la l&oacute;gica del dilema del prisionero: ambos jugadores estar&iacute;an mejor cooperando, pero la estructura de incentivos lo impide.</p>
+        </div>
+
+        <!-- PAPER 2 - Slide 3: Aplicaci&oacute;n a Argentina -->
+        <div class="slide bg-respaldo">
+                <span class="anexo-badge">ANEXO &mdash; PAPERS</span>
+                <h2>Kydland-Prescott aplicado a <span class="highlight">Argentina</span>: cada plan fallido = inconsistencia temporal</h2>
+
+                <div class="three-cols">
+                        <div class="concepto-box">
+                                <h4>Plan Austral (1985)</h4>
+                                <p>Congel&oacute; precios y salarios. El gobierno prometi&oacute; disciplina fiscal. No cumpli&oacute;. Los agentes aprendieron a <strong>desconfiar</strong>. Inflaci&oacute;n volvi&oacute; con fuerza en 1987.</p>
+                        </div>
+                        <div class="concepto-box">
+                                <h4>Convertibilidad (1991)</h4>
+                                <p>Regla dura: 1 peso = 1 d&oacute;lar por ley. Funcion&oacute; mientras fue cre&iacute;ble, pero la <strong>indisciplina fiscal</strong> provincial y nacional la min&oacute; hasta el colapso de 2001.</p>
+                        </div>
+                        <div class="concepto-box">
+                                <h4>Metas de Inflaci&oacute;n (2016)</h4>
+                                <p>BCRA adopt&oacute; inflation targeting. Pero el gobierno no acompa&ntilde;&oacute; con ajuste fiscal. El mercado no crey&oacute;. La tasa real fue negativa. Fracas&oacute; en 18 meses.</p>
+                        </div>
+                </div>
+
+                <div class="problema-box">
+                        <h4 style="margin-bottom: 8px; font-size: 1.2rem;">El patr&oacute;n argentino</h4>
+                        <p style="font-size: 1.15rem; margin: 0;">Cada plan de estabilizaci&oacute;n sigui&oacute; el mismo gui&oacute;n: <strong>anuncio ambicioso &rarr; credibilidad inicial &rarr; desv&iacute;o fiscal &rarr; p&eacute;rdida de confianza &rarr; colapso</strong>. Es la inconsistencia temporal de Kydland-Prescott repetida c&iacute;clicamente durante 40 a&ntilde;os.</p>
+                </div>
+
+                <p class="nota-academica">V&eacute;ase tambi&eacute;n: Calvo (1978), &laquo;On the Time Consistency of Optimal Policy in a Monetary Economy&raquo;, Econometrica.</p>
+        </div>
+
+        <!-- ========================================================== -->
+        <!-- ===== PAPER 3: BARRO & GORDON (1983) ===== -->
+        <!-- ========================================================== -->
+
+        <!-- PAPER 3 - Slide 1: Presentaci&oacute;n del paper -->
+        <div class="slide bg-blanco">
+                <span class="anexo-badge">ANEXO &mdash; PAPERS</span>
+                <h2>Reputaci&oacute;n como <span class="highlight">disciplina monetaria</span></h2>
+
+                <div class="cita-paper">
+                        <strong>Barro, R. &amp; Gordon, D. (1983).</strong> &laquo;Rules, Discretion and Reputation in a Model of Monetary Policy&raquo;, <em>Journal of Monetary Economics</em>, 12(1), pp. 101&ndash;121.
+                </div>
+
+                <div class="concepto-box">
+                        <h4>Contribuci&oacute;n clave</h4>
+                        <p>Extendieron el modelo de Kydland-Prescott a un <strong>juego repetido</strong>. En un mundo sin reglas formales, la <strong>reputaci&oacute;n</strong> del banco central puede funcionar como sustituto: si el BC sabe que ser&aacute; &laquo;castigado&raquo; por el mercado cuando traiciona, puede auto-disciplinarse. El modelo distingue entre banqueros centrales <strong>halcones</strong> (priorizan inflaci&oacute;n baja) y <strong>palomas</strong> (priorizan empleo).</p>
+                </div>
+
+                <div class="versus">
+                        <div class="concepto-box">
+                                <h4>Halc&oacute;n (Hawk)</h4>
+                                <p>Prioriza estabilidad de precios. Tolera desempleo transitorio. Construye reputaci&oacute;n. <strong>Equilibrio de baja inflaci&oacute;n.</strong></p>
+                        </div>
+                        <div class="versus-center">VS</div>
+                        <div class="concepto-box">
+                                <h4>Paloma (Dove)</h4>
+                                <p>Prioriza empleo a corto plazo. Cede a presiones pol&iacute;ticas. Destruye reputaci&oacute;n. <strong>Equilibrio de alta inflaci&oacute;n.</strong></p>
+                        </div>
+                </div>
+
+                <p class="nota-academica">Fuente: Barro &amp; Gordon (1983), Journal of Monetary Economics, Elsevier.</p>
+        </div>
+
+        <!-- PAPER 3 - Slide 2: Modelo y mecanismo -->
+        <div class="slide bg-respaldo">
+                <span class="anexo-badge">ANEXO &mdash; PAPERS</span>
+                <h2>El juego de la <span class="highlight">reputaci&oacute;n</span>: teor&iacute;a de juegos aplicada</h2>
+
+                <div class="concepto-box">
+                        <h4>La funci&oacute;n de p&eacute;rdida del banco central</h4>
+                        <div class="formula">
+                                L = (&pi; &minus; &pi;*)<sup>2</sup> + &lambda;(u &minus; u*)<sup>2</sup>
+                        </div>
+                        <p>Donde <strong>&pi;</strong> es inflaci&oacute;n efectiva, <strong>&pi;*</strong> es la meta, <strong>u</strong> es desempleo, <strong>u*</strong> es la meta, y <strong>&lambda;</strong> refleja cu&aacute;nto le &laquo;importa&raquo; el empleo al BC. Un halc&oacute;n tiene <strong>&lambda; bajo</strong>; una paloma tiene <strong>&lambda; alto</strong>.</p>
+                </div>
+
+                <div class="flow-diagram">
+                        <div class="flow-box">BC anuncia &pi; baja</div>
+                        <div class="flow-arrow">&rarr;</div>
+                        <div class="flow-box">P&uacute;blico observa historial</div>
+                        <div class="flow-arrow">&rarr;</div>
+                        <div class="flow-box">&iquest;Crey&oacute;? Fija expectativas</div>
+                        <div class="flow-arrow">&rarr;</div>
+                        <div class="flow-box">BC decide: &iquest;cumplir o traicionar?</div>
+                </div>
+
+                <div class="two-cols">
+                        <div class="solucion-box">
+                                <h4 style="margin-bottom: 8px; font-size: 1.2rem;">Si cumple (Halc&oacute;n)</h4>
+                                <p style="font-size: 1.15rem; margin: 0;">Construye capital reputacional. En el futuro, el p&uacute;blico creer&aacute; m&aacute;s. Las expectativas bajan. <strong>C&iacute;rculo virtuoso.</strong></p>
+                        </div>
+                        <div class="problema-box">
+                                <h4 style="margin-bottom: 8px; font-size: 1.2rem;">Si traiciona (Paloma)</h4>
+                                <p style="font-size: 1.15rem; margin: 0;">Gana un per&iacute;odo de menor desempleo. Pero el p&uacute;blico ajusta expectativas al alza. Pierde reputaci&oacute;n. <strong>C&iacute;rculo vicioso.</strong></p>
+                        </div>
+                </div>
+
+                <p class="nota-academica">El modelo demuestra que la reputaci&oacute;n tiene valor econ&oacute;mico cuantificable: el costo de reconstruirla supera ampliamente el beneficio de la &laquo;sorpresa&raquo; inflacionaria.</p>
+        </div>
+
+        <!-- PAPER 3 - Slide 3: Aplicaci&oacute;n a Argentina -->
+        <div class="slide bg-verde">
+                <span class="anexo-badge">ANEXO &mdash; PAPERS</span>
+                <h2>Barro-Gordon aplicado a <span style="color: var(--azul-respaldo);">Argentina</span>: el BCRA como paloma hist&oacute;rica</h2>
+
+                <div class="two-cols">
+                        <div class="concepto-box">
+                                <h4 style="color: var(--azul-respaldo);">El BCRA: 80 a&ntilde;os de &laquo;paloma&raquo;</h4>
+                                <p>Desde su creaci&oacute;n en 1935, el BCRA ha sido mayormente un instrumento del Tesoro Nacional. Hist&oacute;ricamente financi&oacute; d&eacute;ficits, resign&oacute; metas de inflaci&oacute;n ante presiones pol&iacute;ticas y cedi&oacute; independencia operativa. El resultado: <strong>d&eacute;ficit de reputaci&oacute;n cr&oacute;nico</strong>.</p>
+                                <ul>
+                                        <li>Adelantos transitorios como financiamiento permanente</li>
+                                        <li>Metas de inflaci&oacute;n cambiadas sobre la marcha</li>
+                                        <li>Presidentes del BCRA removidos por no alinearse</li>
+                                </ul>
+                        </div>
+                        <div>
+                                <div class="problema-box">
+                                        <h4 style="margin-bottom: 8px; font-size: 1.2rem;">El costo del d&eacute;ficit reputacional</h4>
+                                        <p style="font-size: 1.15rem; margin: 0;">Sin reputaci&oacute;n, cada anuncio del BCRA se descuenta: las tasas de inter&eacute;s deben ser <strong>mucho m&aacute;s altas</strong> para compensar la desconfianza. El costo de estabilizar se multiplica.</p>
+                                </div>
+                                <div class="solucion-box">
+                                        <h4 style="margin-bottom: 8px; font-size: 1.2rem;">La reconstrucci&oacute;n necesaria</h4>
+                                        <p style="font-size: 1.15rem; margin: 0;">Seg&uacute;n Barro-Gordon, la &uacute;nica salida es un per&iacute;odo prolongado de <strong>comportamiento consistente</strong> &mdash; cumplir lo que se anuncia, sin excepciones, hasta que la reputaci&oacute;n se restablezca.</p>
+                                </div>
+                        </div>
+                </div>
+
+                <p class="nota-academica">V&eacute;ase: Cukierman, Webb &amp; Neyapti (1992), &laquo;Measuring the Independence of Central Banks&raquo;, World Bank Economic Review.</p>
+        </div>
+
+        <!-- ========================================================== -->
+        <!-- ===== PAPER 4: TAYLOR (1993) ===== -->
+        <!-- ========================================================== -->
+
+        <!-- PAPER 4 - Slide 1: Presentaci&oacute;n del paper -->
+        <div class="slide bg-respaldo">
+                <span class="anexo-badge">ANEXO &mdash; PAPERS</span>
+                <h2>La <span class="highlight">Regla de Taylor</span>: pol&iacute;tica monetaria como f&oacute;rmula</h2>
+
+                <div class="cita-paper">
+                        <strong>Taylor, J. (1993).</strong> &laquo;Discretion versus Policy Rules in Practice&raquo;, <em>Carnegie-Rochester Conference Series on Public Policy</em>, 39, pp. 195&ndash;214.
+                </div>
+
+                <div class="concepto-box">
+                        <h4>Contribuci&oacute;n clave</h4>
+                        <p>Taylor propuso una <strong>regla simple</strong> para fijar la tasa de inter&eacute;s del banco central, basada en solo dos variables: la <strong>desviaci&oacute;n de la inflaci&oacute;n</strong> respecto a su meta y la <strong>brecha del producto</strong>. La regla demostr&oacute; describir sorprendentemente bien la conducta de la Fed bajo Volcker y Greenspan.</p>
+                </div>
+
+                <div class="formula formula-grande">
+                        i = r* + &pi; + 0,5(&pi; &minus; &pi;*) + 0,5(y &minus; y*)
+                </div>
+
+                <div class="three-cols">
+                        <div class="concepto-box">
+                                <h4>i</h4>
+                                <p>Tasa de inter&eacute;s nominal del BC</p>
+                        </div>
+                        <div class="concepto-box">
+                                <h4>r*</h4>
+                                <p>Tasa de inter&eacute;s real de equilibrio (~2%)</p>
+                        </div>
+                        <div class="concepto-box">
+                                <h4>&pi;, &pi;*</h4>
+                                <p>Inflaci&oacute;n observada y meta de inflaci&oacute;n</p>
+                        </div>
+                </div>
+
+                <p class="nota-academica">La regla original usaba ponderaciones de 0,5 para ambas brechas, calibradas con datos de EE.UU. 1987&ndash;1992.</p>
+        </div>
+
+        <!-- PAPER 4 - Slide 2: Ejemplo de c&aacute;lculo -->
+        <div class="slide bg-blanco">
+                <span class="anexo-badge">ANEXO &mdash; PAPERS</span>
+                <h2>La Regla de Taylor: <span class="highlight">ejemplo num&eacute;rico</span></h2>
+
+                <div class="concepto-box">
+                        <h4>Caso base: econom&iacute;a estable (EE.UU. t&iacute;pico)</h4>
+                        <div class="formula">
+                                i = 2% + 2% + 0,5(2% &minus; 2%) + 0,5(0%) = <strong>4%</strong>
+                        </div>
+                        <p>Con inflaci&oacute;n en meta (2%), producto en potencial (brecha = 0) y tasa real de equilibrio de 2%, la tasa nominal debe ser 4%.</p>
+                </div>
+
+                <div class="two-cols" style="margin-top: 20px;">
+                        <div class="concepto-box">
+                                <h4>Caso: inflaci&oacute;n alta (&pi; = 5%)</h4>
+                                <div class="formula" style="font-size: 1.5rem;">
+                                        i = 2% + 5% + 0,5(5% &minus; 2%) + 0,5(0%) = <strong>8,5%</strong>
+                                </div>
+                                <p>La regla dice: subir agresivamente la tasa para contener la inflaci&oacute;n. <strong>Reacci&oacute;n m&aacute;s que proporcional</strong> (principio de Taylor).</p>
+                        </div>
+                        <div class="concepto-box">
+                                <h4>Caso: recesi&oacute;n (y &minus; y* = &minus;3%)</h4>
+                                <div class="formula" style="font-size: 1.5rem;">
+                                        i = 2% + 2% + 0,5(0%) + 0,5(&minus;3%) = <strong>2,5%</strong>
+                                </div>
+                                <p>En recesi&oacute;n con inflaci&oacute;n controlada, la regla indica bajar la tasa para estimular. <strong>Reacci&oacute;n sim&eacute;trica.</strong></p>
+                        </div>
+                </div>
+
+                <div class="solucion-box">
+                        <p style="font-size: 1.2rem; margin: 0;"><strong>Principio de Taylor:</strong> la tasa real debe subir cuando la inflaci&oacute;n sube. Es decir, la tasa nominal debe moverse <strong>m&aacute;s que uno a uno</strong> con la inflaci&oacute;n. Si no se cumple, la pol&iacute;tica es acomodaticia.</p>
+                </div>
+
+                <p class="nota-academica">El &laquo;principio de Taylor&raquo; (coeficiente &gt;1 ante inflaci&oacute;n) es condici&oacute;n necesaria para la estabilidad macroecon&oacute;mica en modelos neo-keynesianos.</p>
+        </div>
+
+        <!-- PAPER 4 - Slide 3: Aplicaci&oacute;n a Argentina -->
+        <div class="slide bg-impulso">
+                <span class="anexo-badge">ANEXO &mdash; PAPERS</span>
+                <h2>Taylor aplicado a <span class="highlight">Argentina</span>: el desaf&iacute;o de aplicar reglas en alta inflaci&oacute;n</h2>
+
+                <div class="two-cols">
+                        <div>
+                                <div class="concepto-box">
+                                        <h4>El intento 2016&ndash;2018</h4>
+                                        <p>El BCRA de Sturzenegger adopt&oacute; un r&eacute;gimen de metas de inflaci&oacute;n inspirado en la l&oacute;gica Taylor. Se fij&oacute; una meta del 12&ndash;17% para 2017 y se us&oacute; la tasa de LEBACs como instrumento principal.</p>
+                                        <ul>
+                                                <li>Meta original: 12&ndash;17% anual</li>
+                                                <li>Inflaci&oacute;n efectiva 2017: 24,8%</li>
+                                                <li>Meta revisada en enero 2018: 15%</li>
+                                                <li>Crisis cambiaria: abril 2018</li>
+                                        </ul>
+                                </div>
+                        </div>
+                        <div>
+                                <div class="problema-box">
+                                        <h4 style="margin-bottom: 8px; font-size: 1.2rem;">&iquest;Por qu&eacute; fall&oacute;?</h4>
+                                        <p style="font-size: 1.15rem; margin: 0;">La regla de Taylor asume un <strong>entorno de baja inflaci&oacute;n</strong> y credibilidad razonable. En Argentina, con inflaci&oacute;n inercial, inercia salarial, tarifas atrasadas y falta de respaldo fiscal, la tasa necesaria seg&uacute;n Taylor ser&iacute;a <strong>astron&oacute;mica</strong>.</p>
+                                </div>
+                                <div class="concepto-box">
+                                        <h4>&iquest;Qu&eacute; dir&iacute;a Taylor?</h4>
+                                        <div class="formula" style="font-size: 1.3rem;">
+                                                i = 2% + 25% + 0,5(25% &minus; 15%) + 0,5(0%) = <strong>32%</strong>
+                                        </div>
+                                        <p>Con inflaci&oacute;n del 25% y meta del 15%, la regla ped&iacute;a tasas del 32%. El BCRA fij&oacute; 28%. <strong>No cumpli&oacute; el principio de Taylor.</strong></p>
+                                </div>
+                        </div>
+                </div>
+
+                <p class="nota-academica">Datos: BCRA, Informe de Pol&iacute;tica Monetaria (2016&ndash;2018). Meta revisada: comunicado BCRA 28/12/2017.</p>
+        </div>
+
+        <!-- ========================================================== -->
+        <!-- ===== PAPER 5: SARGENT & WALLACE (1981) ===== -->
+        <!-- ========================================================== -->
+
+        <!-- PAPER 5 - Slide 1: Presentaci&oacute;n del paper -->
+        <div class="slide bg-blanco">
+                <span class="anexo-badge">ANEXO &mdash; PAPERS</span>
+                <h2>La <span class="highlight">aritm&eacute;tica monetarista desagradable</span></h2>
+
+                <div class="cita-paper">
+                        <strong>Sargent, T. &amp; Wallace, N. (1981).</strong> &laquo;Some Unpleasant Monetarist Arithmetic&raquo;, <em>Federal Reserve Bank of Minneapolis Quarterly Review</em>, 5(3), pp. 1&ndash;17.
+                </div>
+
+                <div class="concepto-box">
+                        <h4>Tesis central</h4>
+                        <p>Si el gobierno mantiene d&eacute;ficits fiscales persistentes y la autoridad monetaria es <strong>subordinada</strong> a la fiscal, entonces una pol&iacute;tica monetaria restrictiva hoy puede generar <strong>m&aacute;s inflaci&oacute;n ma&ntilde;ana</strong>. La raz&oacute;n: restringir la emisi&oacute;n hoy obliga a financiar el d&eacute;ficit con deuda, que eventualmente deber&aacute; monetizarse con una emisi&oacute;n a&uacute;n mayor.</p>
+                </div>
+
+                <div class="flow-diagram">
+                        <div class="flow-box">D&eacute;ficit fiscal persistente</div>
+                        <div class="flow-arrow">&rarr;</div>
+                        <div class="flow-box">BC restringe emisi&oacute;n</div>
+                        <div class="flow-arrow">&rarr;</div>
+                        <div class="flow-box">Gobierno se endeuda</div>
+                        <div class="flow-arrow">&rarr;</div>
+                        <div class="flow-box">Deuda crece con intereses</div>
+                        <div class="flow-arrow">&rarr;</div>
+                        <div class="flow-box">Monetizaci&oacute;n futura a&uacute;n mayor</div>
+                </div>
+
+                <p class="nota-academica">Fuente: Federal Reserve Bank of Minneapolis, Quarterly Review, oto&ntilde;o 1981.</p>
+        </div>
+
+        <!-- PAPER 5 - Slide 2: Dominancia fiscal -->
+        <div class="slide bg-respaldo">
+                <span class="anexo-badge">ANEXO &mdash; PAPERS</span>
+                <h2><span class="highlight">Dominancia fiscal</span>: cuando el fisco manda</h2>
+
+                <div class="two-cols">
+                        <div class="concepto-box">
+                                <h4>Dominancia monetaria</h4>
+                                <p>El banco central fija la pol&iacute;tica monetaria y el fisco <strong>se ajusta</strong>. El BC puede controlar la inflaci&oacute;n porque el gobierno genera super&aacute;vits o reduce gasto para honrar su deuda. <strong>La inflaci&oacute;n es un fen&oacute;meno monetario controlable.</strong></p>
+                        </div>
+                        <div class="concepto-box">
+                                <h4>Dominancia fiscal</h4>
+                                <p>El fisco fija su d&eacute;ficit y el banco central <strong>se subordina</strong>. No importa cu&aacute;n duro sea el BC hoy: si el d&eacute;ficit persiste, la deuda acumulada deber&aacute; monetizarse tarde o temprano. <strong>La inflaci&oacute;n es un fen&oacute;meno fiscal inevitable.</strong></p>
+                        </div>
+                </div>
+
+                <div class="concepto-box" style="margin-top: 25px;">
+                        <h4>La restricci&oacute;n presupuestaria intertemporal del gobierno</h4>
+                        <div class="formula">
+                                Deuda<sub>hoy</sub> = &Sigma; (Super&aacute;vits futuros descontados) + &Sigma; (Se&ntilde;oreaje futuro descontado)
+                        </div>
+                        <p>Si los super&aacute;vits futuros <strong>no alcanzan</strong>, el se&ntilde;oreaje (emisi&oacute;n) debe cubrir la diferencia. <strong>Toda deuda no pagada con impuestos se paga con inflaci&oacute;n.</strong></p>
+                </div>
+
+                <p class="nota-academica">V&eacute;ase tambi&eacute;n: Woodford (1995), &laquo;Price-Level Determinacy Without Control of a Monetary Aggregate&raquo;, Carnegie-Rochester Series.</p>
+        </div>
+
+        <!-- PAPER 5 - Slide 3: Aplicaci&oacute;n a Argentina -->
+        <div class="slide bg-verde">
+                <span class="anexo-badge">ANEXO &mdash; PAPERS</span>
+                <h2>Sargent-Wallace aplicado a <span style="color: var(--azul-respaldo);">Argentina</span>: dominancia fiscal cr&oacute;nica</h2>
+
+                <div class="two-cols">
+                        <div>
+                                <div class="concepto-box">
+                                        <h4 style="color: var(--azul-respaldo);">1960&ndash;2001: 40 a&ntilde;os de d&eacute;ficits</h4>
+                                        <p>Argentina tuvo d&eacute;ficit fiscal en <strong>48 de los 60 a&ntilde;os</strong> entre 1960 y 2020. La aritm&eacute;tica desagradable se cumpli&oacute; puntualmente: cada vez que se intent&oacute; pol&iacute;tica monetaria dura sin ajuste fiscal, termin&oacute; en crisis.</p>
+                                        <ul>
+                                                <li><strong>1975&ndash;1989:</strong> D&eacute;ficits &rarr; emisi&oacute;n &rarr; hiperinflaci&oacute;n</li>
+                                                <li><strong>1991&ndash;2001:</strong> Convertibilidad sin ajuste fiscal &rarr; deuda &rarr; default</li>
+                                                <li><strong>2003&ndash;2015:</strong> Super&aacute;vit inicial, luego d&eacute;ficit &rarr; emisi&oacute;n encubierta</li>
+                                        </ul>
+                                </div>
+                        </div>
+                        <div>
+                                <div class="problema-box">
+                                        <h4 style="margin-bottom: 8px; font-size: 1.2rem;">2018: caso de libro</h4>
+                                        <p style="font-size: 1.15rem; margin: 0;">El BCRA subi&oacute; la tasa al 60% para frenar la inflaci&oacute;n, pero el d&eacute;ficit fiscal segu&iacute;a siendo del 5% del PBI. Resultado: deuda en LEBACs creci&oacute; exponencialmente, el tipo de cambio colaps&oacute;, la inflaci&oacute;n subi&oacute; al 48%. <strong>Sargent-Wallace en tiempo real.</strong></p>
+                                </div>
+                                <div class="solucion-box">
+                                        <h4 style="margin-bottom: 8px; font-size: 1.2rem;">2024: el ancla fiscal</h4>
+                                        <p style="font-size: 1.15rem; margin: 0;">Por primera vez en d&eacute;cadas, Argentina busca <strong>super&aacute;vit fiscal primario</strong> como ancla principal. La lecci&oacute;n Sargent-Wallace finalmente internalizada: sin equilibrio fiscal, no hay estabilizaci&oacute;n monetaria posible.</p>
+                                </div>
+                        </div>
+                </div>
+
+                <p class="nota-academica">D&eacute;ficits hist&oacute;ricos: Secretar&iacute;a de Hacienda, series hist&oacute;ricas. Crisis 2018: BCRA, Informe Monetario Mensual.</p>
+        </div>
+
+        <!-- ========================================================== -->
+        <!-- ===== PAPER 6: KING (2005) ===== -->
+        <!-- ========================================================== -->
+
+        <!-- PAPER 6 - Slide 1: Presentaci&oacute;n del paper -->
+        <div class="slide bg-respaldo">
+                <span class="anexo-badge">ANEXO &mdash; PAPERS</span>
+                <h2>La <span class="highlight">Teor&iacute;a Maradona</span> de la pol&iacute;tica monetaria</h2>
+
+                <div class="cita-paper">
+                        <strong>King, M. (2005).</strong> &laquo;Monetary Policy: Practice Ahead of Theory&raquo;, Mais Lecture, Cass Business School, Bank of England, 17 de mayo de 2005.
+                </div>
+
+                <div class="concepto-box">
+                        <h4>La analog&iacute;a de Maradona</h4>
+                        <p>Mervyn King, Gobernador del Banco de Inglaterra, utiliz&oacute; los dos goles de Maradona contra Inglaterra en M&eacute;xico 1986 para explicar c&oacute;mo funciona la pol&iacute;tica monetaria moderna. El <strong>segundo gol</strong> &mdash; donde Maradona corri&oacute; en l&iacute;nea recta y los defensores se fueron solos &mdash; ilustra c&oacute;mo las <strong>expectativas hacen el trabajo</strong> del banco central.</p>
+                </div>
+
+                <div class="two-cols">
+                        <div class="concepto-box">
+                                <h4>Gol 1: La mano de Dios</h4>
+                                <p>Pol&iacute;tica monetaria discrecional, impredecible, &laquo;trampa&raquo;. Los mercados no saben qu&eacute; esperar. <strong>Funciona una vez, nunca m&aacute;s.</strong></p>
+                        </div>
+                        <div class="concepto-box">
+                                <h4>Gol 2: El gol del siglo</h4>
+                                <p>Maradona fue en l&iacute;nea recta. Los defensores se movieron solos anticip&aacute;ndolo. <strong>Las expectativas hicieron el trabajo.</strong> As&iacute; debe funcionar un BC cre&iacute;ble.</p>
+                        </div>
+                </div>
+
+                <p class="nota-academica">Fuente: Mais Lecture, Cass Business School, Londres, 17/05/2005. Disponible en bankofengland.co.uk.</p>
+        </div>
+
+        <!-- PAPER 6 - Slide 2: Expectativas como mecanismo -->
+        <div class="slide bg-blanco">
+                <span class="anexo-badge">ANEXO &mdash; PAPERS</span>
+                <h2>El canal de <span class="highlight">expectativas</span>: cuando el mercado hace el trabajo</h2>
+
+                <div class="concepto-box">
+                        <h4>El mecanismo Maradona en pol&iacute;tica monetaria</h4>
+                        <p>Si un banco central es <strong>cre&iacute;ble</strong>, no necesita mover la tasa de inter&eacute;s tanto. Los mercados anticipan sus reacciones futuras y ajustan precios, tipos de cambio y decisiones de inversi&oacute;n <strong>antes</strong> de que el BC act&uacute;e. Las expectativas hacen el &laquo;trabajo pesado&raquo;.</p>
+                </div>
+
+                <div class="flow-diagram">
+                        <div class="flow-box">BC cre&iacute;ble con regla clara</div>
+                        <div class="flow-arrow">&rarr;</div>
+                        <div class="flow-box">Mercado anticipa reacciones futuras</div>
+                        <div class="flow-arrow">&rarr;</div>
+                        <div class="flow-box">Tasas largas, tipo de cambio y precios se ajustan solos</div>
+                        <div class="flow-arrow">&rarr;</div>
+                        <div class="flow-box">BC apenas mueve la tasa</div>
+                </div>
+
+                <div class="versus">
+                        <div class="concepto-box">
+                                <h4>BC cre&iacute;ble (Maradona Gol 2)</h4>
+                                <p>Basta con <strong>se&ntilde;alizar</strong>. Los mercados se mueven solos. Volatilidad baja. La curva de rendimientos refleja expectativas ancladas. <strong>M&iacute;nimo esfuerzo, m&aacute;ximo resultado.</strong></p>
+                        </div>
+                        <div class="versus-center">VS</div>
+                        <div class="concepto-box">
+                                <h4>BC sin credibilidad</h4>
+                                <p>Debe <strong>actuar agresivamente</strong> para lograr poco. Las tasas deben ser extremadamente altas. Volatilidad alta. La pol&iacute;tica monetaria es costosa e ineficiente. <strong>M&aacute;ximo esfuerzo, m&iacute;nimo resultado.</strong></p>
+                        </div>
+                </div>
+
+                <p class="nota-academica">King cit&oacute; la paradoja de que los mejores bancos centrales son los que <strong>menos necesitan actuar</strong>, porque sus expectativas ya est&aacute;n ancladas.</p>
+        </div>
+
+        <!-- PAPER 6 - Slide 3: Aplicaci&oacute;n a Argentina -->
+        <div class="slide bg-impulso">
+                <span class="anexo-badge">ANEXO &mdash; PAPERS</span>
+                <h2>King aplicado a <span class="highlight">Argentina</span>: el canal Maradona a&uacute;n no funciona</h2>
+
+                <div class="two-cols">
+                        <div>
+                                <div class="problema-box">
+                                        <h4 style="margin-bottom: 8px; font-size: 1.2rem;">Baja credibilidad = canal roto</h4>
+                                        <p style="font-size: 1.15rem; margin: 0;">En Argentina, el BCRA carece de la credibilidad necesaria para que las expectativas hagan el trabajo. Los anuncios del banco central no anclan expectativas &mdash; los agentes miran <strong>el d&oacute;lar paralelo</strong>, no la tasa de pol&iacute;tica monetaria.</p>
+                                </div>
+                                <div class="concepto-box">
+                                        <h4>S&iacute;ntomas del canal roto</h4>
+                                        <ul>
+                                                <li>Expectativas de inflaci&oacute;n desancladas cr&oacute;nicamente</li>
+                                                <li>Curva de rendimientos invertida o inexistente</li>
+                                                <li>El tipo de cambio paralelo como &laquo;verdadero indicador&raquo;</li>
+                                                <li>Necesidad de tasas reales extremas para contener precios</li>
+                                        </ul>
+                                </div>
+                        </div>
+                        <div>
+                                <div class="concepto-box">
+                                        <h4>&iquest;Cu&aacute;ndo funcionar&aacute; el canal Maradona?</h4>
+                                        <p>King dir&iacute;a que el canal de expectativas solo se activa tras un <strong>per&iacute;odo prolongado de consistencia</strong>:</p>
+                                        <ul>
+                                                <li>Equilibrio fiscal sostenido (no transitorio)</li>
+                                                <li>BCRA con independencia real y demostrada</li>
+                                                <li>Historial de cumplimiento de metas</li>
+                                                <li>Marco institucional que sobreviva cambios de gobierno</li>
+                                        </ul>
+                                </div>
+                                <div class="solucion-box">
+                                        <h4 style="margin-bottom: 8px; font-size: 1.2rem;">La meta a largo plazo</h4>
+                                        <p style="font-size: 1.15rem; margin: 0;">Pasar de &laquo;Mano de Dios&raquo; (intervenciones impredecibles, controles de cambio, cepos) a &laquo;Gol del Siglo&raquo; (pol&iacute;tica transparente donde las expectativas se alinean solas).</p>
+                                </div>
+                        </div>
+                </div>
+
+                <p class="nota-academica">Sobre expectativas desancladas en Argentina: Catao &amp; Terrones (2005), &laquo;Fiscal Deficits and Inflation&raquo;, Journal of Monetary Economics.</p>
+        </div>
+
+        <!-- ========================================================== -->
+        <!-- ===== PAPER 7: McCANDLESS & WEBER (1995) ===== -->
+        <!-- ========================================================== -->
+
+        <!-- PAPER 7 - Slide 1: Presentaci&oacute;n del paper -->
+        <div class="slide bg-verde">
+                <span class="anexo-badge">ANEXO &mdash; PAPERS</span>
+                <h2>La correlaci&oacute;n <span style="color: var(--azul-respaldo);">dinero&ndash;inflaci&oacute;n</span> en 110 pa&iacute;ses</h2>
+
+                <div class="cita-paper">
+                        <strong>McCandless, G. &amp; Weber, W. (1995).</strong> &laquo;Some Monetary Facts&raquo;, <em>Federal Reserve Bank of Minneapolis Quarterly Review</em>, 19(3), pp. 2&ndash;11.
+                </div>
+
+                <div class="concepto-box">
+                        <h4 style="color: var(--azul-respaldo);">Hallazgo central</h4>
+                        <p>Usando datos de <strong>110 pa&iacute;ses</strong> durante 30 a&ntilde;os (1960&ndash;1990), McCandless y Weber documentaron tres &laquo;hechos monetarios&raquo; emp&iacute;ricos fundamentales. El m&aacute;s contundente: la correlaci&oacute;n entre crecimiento de <strong>M2</strong> e <strong>inflaci&oacute;n</strong> es pr&aacute;cticamente perfecta en el largo plazo.</p>
+                </div>
+
+                <div class="stats-grid">
+                        <div class="stat-box">
+                                <span class="stat-numero" style="color: var(--azul-respaldo);">110</span>
+                                <span class="stat-label">Pa&iacute;ses en la muestra</span>
+                        </div>
+                        <div class="stat-box">
+                                <span class="stat-numero" style="color: var(--azul-respaldo);">~0,95</span>
+                                <span class="stat-label">Correlaci&oacute;n M2&ndash;inflaci&oacute;n (largo plazo)</span>
+                        </div>
+                        <div class="stat-box">
+                                <span class="stat-numero" style="color: var(--azul-respaldo);">30</span>
+                                <span class="stat-label">A&ntilde;os de datos (1960&ndash;1990)</span>
+                        </div>
+                </div>
+
+                <p class="nota-academica">Fuente: Federal Reserve Bank of Minneapolis, Quarterly Review, verano 1995.</p>
+        </div>
+
+        <!-- PAPER 7 - Slide 2: Los tres hechos monetarios -->
+        <div class="slide bg-respaldo">
+                <span class="anexo-badge">ANEXO &mdash; PAPERS</span>
+                <h2>Los tres <span class="highlight">hechos monetarios</span> de McCandless-Weber</h2>
+
+                <div class="three-cols">
+                        <div class="concepto-box">
+                                <h4>Hecho 1</h4>
+                                <p>Existe una correlaci&oacute;n <strong>casi perfecta</strong> (~0,95) entre la tasa de crecimiento de la oferta monetaria (M2) y la tasa de inflaci&oacute;n en el largo plazo, independientemente del pa&iacute;s o la definici&oacute;n de dinero utilizada.</p>
+                        </div>
+                        <div class="concepto-box">
+                                <h4>Hecho 2</h4>
+                                <p><strong>No existe correlaci&oacute;n</strong> entre el crecimiento monetario y el crecimiento del producto real en el largo plazo. M&aacute;s dinero no genera m&aacute;s crecimiento &mdash; confirma la <strong>neutralidad del dinero</strong> de Friedman.</p>
+                        </div>
+                        <div class="concepto-box">
+                                <h4>Hecho 3</h4>
+                                <p><strong>No existe correlaci&oacute;n</strong> entre inflaci&oacute;n y crecimiento del producto real en el largo plazo. La inflaci&oacute;n no &laquo;lubrica&raquo; la econom&iacute;a &mdash; destruye. El trade-off Phillips <strong>no existe</strong> a largo plazo.</p>
+                        </div>
+                </div>
+
+                <div class="formula formula-grande">
+                        &Delta;M &asymp; &Delta;P &ensp;(largo plazo) &ensp;&ensp;|&ensp;&ensp; Corr(&Delta;M, &Delta;Y) &asymp; 0
+                </div>
+
+                <div class="solucion-box">
+                        <p style="font-size: 1.3rem; margin: 0;"><strong>Implicancia de pol&iacute;tica:</strong> En el largo plazo, la &uacute;nica variable que el banco central controla con la emisi&oacute;n es el <strong>nivel de precios</strong>. La producci&oacute;n y el empleo dependen de factores reales (tecnolog&iacute;a, instituciones, capital humano).</p>
+                </div>
+
+                <p class="nota-academica">Los resultados son robustos a distintas definiciones de dinero (M0, M1, M2) y a la exclusi&oacute;n de outliers.</p>
+        </div>
+
+        <!-- PAPER 7 - Slide 3: Aplicaci&oacute;n a Argentina -->
+        <div class="slide bg-blanco">
+                <span class="anexo-badge">ANEXO &mdash; PAPERS</span>
+                <h2>McCandless-Weber aplicado a <span class="highlight">Argentina</span>: el poster child de la correlaci&oacute;n</h2>
+
+                <div class="concepto-box">
+                        <h4>Argentina: extremo derecho del gr&aacute;fico</h4>
+                        <p>En los scatter plots de McCandless-Weber, Argentina aparece sistem&aacute;ticamente en el <strong>extremo superior derecho</strong>: m&aacute;ximo crecimiento monetario, m&aacute;xima inflaci&oacute;n. Es el pa&iacute;s que m&aacute;s claramente confirma la relaci&oacute;n entre dinero y precios.</p>
+                </div>
+
+                <div class="stats-grid">
+                        <div class="stat-box">
+                                <span class="stat-numero">72%</span>
+                                <span class="stat-label">Crecimiento M2 anual promedio (2020&ndash;23)</span>
+                        </div>
+                        <div class="stat-box">
+                                <span class="stat-numero rojo">211%</span>
+                                <span class="stat-label">Inflaci&oacute;n anual diciembre 2023</span>
+                        </div>
+                        <div class="stat-box">
+                                <span class="stat-numero">~0,97</span>
+                                <span class="stat-label">Correlaci&oacute;n M2-IPC Argentina (1960&ndash;2023)</span>
+                        </div>
+                </div>
+
+                <div class="two-cols" style="margin-top: 20px;">
+                        <div class="problema-box">
+                                <h4 style="margin-bottom: 8px; font-size: 1.2rem;">2020&ndash;2023: la prueba emp&iacute;rica</h4>
+                                <p style="font-size: 1.15rem; margin: 0;">La masiva emisi&oacute;n monetaria para financiar el d&eacute;ficit pandemico y post-pand&eacute;mico se traslad&oacute; uno a uno a inflaci&oacute;n, exactamente como McCandless-Weber predijeron. El rezago fue de <strong>6 a 12 meses</strong>, consistente con la literatura.</p>
+                        </div>
+                        <div class="solucion-box">
+                                <h4 style="margin-bottom: 8px; font-size: 1.2rem;">La contraprueba: 2024</h4>
+                                <p style="font-size: 1.15rem; margin: 0;">Al cortar dr&aacute;sticamente la emisi&oacute;n monetaria (d&eacute;ficit cero + no financiamiento del BCRA al Tesoro), la inflaci&oacute;n cay&oacute; del 25% mensual al 2,7% en menos de un a&ntilde;o. <strong>McCandless-Weber funciona en ambas direcciones.</strong></p>
+                        </div>
+                </div>
+
+                <p class="nota-academica">Datos de emisi&oacute;n: BCRA, base monetaria y agregados. Inflaci&oacute;n: INDEC, IPC Nacional.</p>
+        </div>
+        <div class="slide bg-respaldo portada">
+                <h1>Gracias</h1>
+                <p class="subtitle" style="margin-top: 20px; font-size: 2rem;">&iquest;Preguntas?</p>
+                <p style="margin-top: 50px; opacity: 0.5; font-size: 1.1rem;">Pol&iacute;tica Monetaria &mdash; De la teor&iacute;a a la pr&aacute;ctica argentina</p>
+        </div>
+
+    </div>
+
+    <div class="slide-counter">
+        <span id="current">1</span> / <span id="total">0</span>
+    </div>
+
+    <div class="nav-hint">
+        &larr; &rarr; para navegar | F para pantalla completa
+    </div>
+
+    <script>
+        const slides = document.querySelectorAll('.slide');
+        let currentSlide = 0;
+        const total = slides.length;
+
+        document.getElementById('total').textContent = total;
+
+        function showSlide(n) {
+            slides[currentSlide].classList.remove('active');
+            currentSlide = (n + total) % total;
+            slides[currentSlide].classList.add('active');
+            document.getElementById('current').textContent = currentSlide + 1;
+        }
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowRight' || e.key === ' ' || e.key === 'Enter') {
+                showSlide(currentSlide + 1);
+            } else if (e.key === 'ArrowLeft') {
+                showSlide(currentSlide - 1);
+            } else if (e.key === 'Home') {
+                showSlide(0);
+            } else if (e.key === 'End') {
+                showSlide(total - 1);
+            } else if (e.key === 'f' || e.key === 'F') {
+                if (document.fullscreenElement) {
+                    document.exitFullscreen();
+                } else {
+                    document.documentElement.requestFullscreen();
+                }
+            }
+        });
+
+        // Touch support
+        let touchStartX = 0;
+        document.addEventListener('touchstart', (e) => {
+            touchStartX = e.touches[0].clientX;
+        });
+
+        document.addEventListener('touchend', (e) => {
+            const touchEndX = e.changedTouches[0].clientX;
+            const diff = touchStartX - touchEndX;
+            if (Math.abs(diff) > 50) {
+                if (diff > 0) {
+                    showSlide(currentSlide + 1);
+                } else {
+                    showSlide(currentSlide - 1);
+                }
+            }
+        });
+
+        // Click to advance
+        document.querySelector('.slide-container').addEventListener('click', (e) => {
+            if (e.clientX > window.innerWidth / 2) {
+                showSlide(currentSlide + 1);
+            } else {
+                showSlide(currentSlide - 1);
+            }
+        });
+    </script>
+</body>
+</html>

@@ -183,6 +183,7 @@ Antes de construir el HTML, SIEMPRE presentar a Felipe:
 | `presentacion_coordinacion_fiscal_monetaria.html` | 51 | Académica | Felipe | Coordinación fiscal y monetaria (con anexo de 6 papers) |
 | `presentacion_comercio_exterior.html` | 82 | Académica | Felipe | Comercio internacional (con anexo de 8 papers) |
 | `presentacion_mercado_cambios.html` | 74 | Académica | Felipe | Mercado de cambios (con anexo de 7 papers) |
+| `presentacion_politica_monetaria.html` | 75 | Académica | Felipe | Política monetaria (con anexo de 7 papers) |
 
 ## Imágenes locales en el repo
 - `good_bad_ugly_poster.jpg` — El Bueno, el Malo y el Feo
