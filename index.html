@@ -156,6 +156,74 @@
             text-decoration: none;
         }
 
+        /* Password overlay */
+        .auth-overlay {
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: linear-gradient(135deg, var(--azul-respaldo) 0%, #0a1628 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+        }
+        .auth-overlay.hidden { display: none; }
+        .auth-box {
+            text-align: center;
+            max-width: 400px;
+            padding: 40px;
+        }
+        .auth-box h2 {
+            font-size: 1.8rem;
+            margin-bottom: 8px;
+            color: white;
+        }
+        .auth-box p {
+            color: rgba(255,255,255,0.6);
+            font-size: 0.95rem;
+            margin-bottom: 30px;
+        }
+        .auth-input {
+            width: 100%;
+            padding: 14px 20px;
+            font-size: 1.1rem;
+            border: 2px solid rgba(255,255,255,0.2);
+            border-radius: 10px;
+            background: rgba(255,255,255,0.08);
+            color: white;
+            font-family: inherit;
+            outline: none;
+            transition: border-color 0.3s;
+        }
+        .auth-input::placeholder { color: rgba(255,255,255,0.35); }
+        .auth-input:focus { border-color: var(--verde-activo); }
+        .auth-input.error { border-color: #DC2626; animation: shake 0.4s ease; }
+        .auth-btn {
+            width: 100%;
+            padding: 14px;
+            margin-top: 15px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            border: none;
+            border-radius: 10px;
+            background: var(--azul-impulso);
+            color: white;
+            cursor: pointer;
+            font-family: inherit;
+            transition: background 0.3s;
+        }
+        .auth-btn:hover { background: #0d2bc0; }
+        .auth-error-msg {
+            color: #DC2626;
+            font-size: 0.9rem;
+            margin-top: 12px;
+            min-height: 1.2em;
+        }
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-8px); }
+            75% { transform: translateX(8px); }
+        }
+
         @media (max-width: 600px) {
             .logo-text {
                 font-size: 2rem;
@@ -173,6 +241,17 @@
     </style>
 </head>
 <body>
+    <!-- Password gate -->
+    <div class="auth-overlay" id="authOverlay">
+        <div class="auth-box">
+            <h2>Material Educativo</h2>
+            <p>Ingres&aacute; la contrase&ntilde;a para acceder</p>
+            <input type="password" class="auth-input" id="authInput" placeholder="Contrase&ntilde;a" autocomplete="off">
+            <button class="auth-btn" id="authBtn">Ingresar</button>
+            <div class="auth-error-msg" id="authError"></div>
+        </div>
+    </div>
+
     <div class="container">
         <header>
             <div class="logo">
@@ -256,5 +335,34 @@
             <p style="margin-top: 8px;"><a href="https://github.com/felipevenancio93" target="_blank">github.com/felipevenancio93</a></p>
         </footer>
     </div>
+    <script>
+        (function() {
+            var overlay = document.getElementById('authOverlay');
+            var input = document.getElementById('authInput');
+            var btn = document.getElementById('authBtn');
+            var errorMsg = document.getElementById('authError');
+            var PASS = 'Estratosfera';
+
+            if (sessionStorage.getItem('clases_auth') === 'true') {
+                overlay.classList.add('hidden');
+            }
+
+            function tryAuth() {
+                if (input.value === PASS) {
+                    sessionStorage.setItem('clases_auth', 'true');
+                    overlay.classList.add('hidden');
+                } else {
+                    input.classList.add('error');
+                    errorMsg.textContent = 'Contrase\u00f1a incorrecta';
+                    setTimeout(function() { input.classList.remove('error'); }, 400);
+                }
+            }
+
+            btn.addEventListener('click', tryAuth);
+            input.addEventListener('keydown', function(e) {
+                if (e.key === 'Enter') tryAuth();
+            });
+        })();
+    </script>
 </body>
 </html>
