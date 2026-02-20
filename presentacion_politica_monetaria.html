@@ -706,45 +706,9 @@
             <p class="nota-academica">Referencia: Samuelson, P. &amp; Nordhaus, W. <em>Econom&iacute;a</em>, Cap. 25: &laquo;El dinero es la grasa que lubrica el intercambio&raquo;. Bernanke, B. &amp; Frank, R. <em>Principios de Econom&iacute;a</em>, Cap. 23.</p>
         </div>
 
-        <!-- ===== SLIDE A: DOBLE COINCIDENCIA DE DESEOS (ANIMADO) ===== -->
+        <!-- ===== SLIDE A: DOBLE COINCIDENCIA DE DESEOS ===== -->
         <div class="slide bg-impulso">
             <style>
-                /* Animaciones para diagrama de doble coincidencia */
-                @keyframes fadeInArrow1 { from { opacity: 0; } to { opacity: 1; } }
-                @keyframes fadeInArrow2 { from { opacity: 0; } to { opacity: 1; } }
-                @keyframes fadeInArrow3 { from { opacity: 0; } to { opacity: 1; } }
-                @keyframes fadeInArrow4 { from { opacity: 0; } to { opacity: 1; } }
-                @keyframes pulseRed { 0%, 100% { opacity: 0.9; } 50% { opacity: 0.4; } }
-                @keyframes drawLine {
-                    from { stroke-dashoffset: 200; }
-                    to { stroke-dashoffset: 0; }
-                }
-                @keyframes fadeInSolution {
-                    from { opacity: 0; transform: translateY(15px); }
-                    to { opacity: 1; transform: translateY(0); }
-                }
-
-                .barter-svg .arrow-group-1 { opacity: 0; animation: fadeInArrow1 0.6s ease forwards; animation-delay: 0.5s; }
-                .barter-svg .arrow-group-2 { opacity: 0; animation: fadeInArrow2 0.6s ease forwards; animation-delay: 1.2s; }
-                .barter-svg .arrow-group-3 { opacity: 0; animation: fadeInArrow3 0.6s ease forwards; animation-delay: 1.9s; }
-                .barter-svg .arrow-group-4 { opacity: 0; animation: fadeInArrow4 0.6s ease forwards; animation-delay: 2.6s; }
-                .barter-svg .fail-x { opacity: 0; animation: fadeInArrow1 0.4s ease forwards; animation-delay: 3.3s; }
-                .barter-svg .fail-x-2 { opacity: 0; animation: fadeInArrow1 0.4s ease forwards; animation-delay: 3.6s; }
-                .barter-svg .fail-label { opacity: 0; animation: fadeInArrow1 0.5s ease forwards; animation-delay: 3.9s; }
-                .barter-svg .pulse-fail { animation: pulseRed 1.5s ease infinite; animation-delay: 4s; }
-
-                .slide-a-solution {
-                    opacity: 0;
-                    animation: fadeInSolution 0.8s ease forwards;
-                    animation-delay: 4.5s;
-                }
-
-                .slide-a-nota {
-                    opacity: 0;
-                    animation: fadeInSolution 0.6s ease forwards;
-                    animation-delay: 5.2s;
-                }
-
                 @media (max-width: 768px) {
                     .barter-diagram-container { flex-direction: column !important; }
                     .barter-diagram-container > div { width: 100% !important; }
@@ -838,7 +802,7 @@
                 </div>
 
                 <!-- Soluci&oacute;n con dinero -->
-                <div class="slide-a-solution" style="flex: 0.8;">
+                <div style="flex: 0.8;">
                     <div class="solucion-box" style="border-left-color: rgba(255,255,255,0.6);">
                         <h4 style="margin-bottom: 10px; color: white;">&iquest;C&oacute;mo resuelve el dinero?</h4>
                         <div style="font-size: 1.1rem;">
@@ -851,7 +815,7 @@
                 </div>
             </div>
 
-            <p class="nota-academica slide-a-nota" style="border-top-color: rgba(255,255,255,0.2);">Referencia: Samuelson, P. &amp; Nordhaus, W. <em>Econom&iacute;a</em>, Cap. 25: &laquo;El dinero como medio de cambio&raquo;. Adam Smith (1776), <em>La riqueza de las naciones</em>, Libro I, Cap. IV: el origen del dinero como respuesta a la ineficiencia del trueque.</p>
+            <p class="nota-academica" style="border-top-color: rgba(255,255,255,0.2);">Referencia: Samuelson, P. &amp; Nordhaus, W. <em>Econom&iacute;a</em>, Cap. 25: &laquo;El dinero como medio de cambio&raquo;. Adam Smith (1776), <em>La riqueza de las naciones</em>, Libro I, Cap. IV: el origen del dinero como respuesta a la ineficiencia del trueque.</p>
         </div>
 
         <!-- ===== SLIDE B: OFERTA DE DINERO ===== -->
@@ -1667,89 +1631,6 @@
             <p class="nota-academica">Referencia: Samuelson &amp; Nordhaus, Cap. 27. Bernanke &amp; Frank, Cap. 25. El inflation targeting fue adoptado por Nueva Zelanda en 1990 y se expandi&oacute; globalmente.</p>
         </div>
 
-        <!-- ===== SLIDE G: REGLA VS. DISCRECIONALIDAD — TEORÍA DE JUEGOS ===== -->
-        <div class="slide bg-blanco">
-            <h2>Regla vs. discrecionalidad: <span class="highlight">el juego del banco central</span></h2>
-            <p>El problema de la pol&iacute;tica monetaria puede plantearse como un <strong>juego estrat&eacute;gico</strong> entre dos actores:</p>
-
-            <div class="two-cols" style="margin-top: 15px; margin-bottom: 15px;">
-                <div>
-                    <ul>
-                        <li><strong>Jugador 1: Banco Central</strong> &mdash; anuncia &laquo;voy a mantener la inflaci&oacute;n baja&raquo; (compromiso)</li>
-                        <li><strong>Jugador 2: Sector Privado</strong> (trabajadores, empresas) &mdash; forma expectativas en base a ese anuncio</li>
-                    </ul>
-                </div>
-                <div>
-                    <div class="problema-box">
-                        <p style="margin-bottom: 0;"><strong>La tentaci&oacute;n:</strong> una vez que las expectativas est&aacute;n ancladas en inflaci&oacute;n baja, el BC podr&iacute;a &laquo;sorprender&raquo; con un poco m&aacute;s de dinero para impulsar el empleo. Pero el sector privado <strong>conoce</strong> esta tentaci&oacute;n...</p>
-                    </div>
-                </div>
-            </div>
-
-            <h3 style="font-size: 1.4rem; margin-bottom: 12px;">Matriz de pagos</h3>
-            <table style="font-size: 1.15rem; max-width: 850px;">
-                <thead>
-                    <tr>
-                        <th style="width: 200px;"></th>
-                        <th style="text-align: center;">BC <span style="color: var(--azul-impulso); font-weight: 700; text-transform: none; letter-spacing: 0;">Cumple</span></th>
-                        <th style="text-align: center;">BC <span style="color: var(--rojo-alerta); font-weight: 700; text-transform: none; letter-spacing: 0;">Enga&ntilde;a</span></th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td><strong>Privado Cree</strong></td>
-                        <td style="text-align: center; background: rgba(0, 198, 0, 0.1); border: 2px solid var(--verde-activo); border-radius: 6px;"><strong style="color: var(--verde-activo);">&iexcl;Mejor resultado!</strong><br>Baja inflaci&oacute;n, empleo en tasa natural. Cooperaci&oacute;n.</td>
-                        <td style="text-align: center;">BC gana empleo temporalmente, pero <strong>destruye credibilidad</strong>.</td>
-                    </tr>
-                    <tr>
-                        <td><strong>Privado No Cree</strong></td>
-                        <td style="text-align: center;">BC cumple pero nadie le cree &rarr; ajustes salariales excesivos.</td>
-                        <td style="text-align: center; background: rgba(220, 38, 38, 0.12); border: 2px solid var(--rojo-alerta); border-radius: 6px;"><strong style="color: var(--rojo-alerta);">Equilibrio de Nash</strong><br>Alta inflaci&oacute;n, <strong>SIN</strong> ganancia de empleo. Ambos pierden.</td>
-                    </tr>
-                </tbody>
-            </table>
-
-            <blockquote style="margin-top: 15px; border-left-color: var(--azul-impulso);">
-                El resultado racional del juego es el <strong>peor para la sociedad</strong>: alta inflaci&oacute;n sin beneficio de empleo. La inconsistencia temporal genera un <em>sesgo inflacionario</em>.
-                <cite>&mdash; Kydland &amp; Prescott (1977), Barro &amp; Gordon (1983)</cite>
-            </blockquote>
-
-            <p class="nota-academica">Referencia: Kydland, F. &amp; Prescott, E. (1977). &laquo;Rules Rather than Discretion: The Inconsistency of Optimal Plans&raquo;, <em>Journal of Political Economy</em>, 85(3). Barro, R. &amp; Gordon, D. (1983). &laquo;A Positive Theory of Monetary Policy in a Natural Rate Model&raquo;, <em>Journal of Monetary Economics</em>, 12(1).</p>
-        </div>
-
-        <!-- ===== SLIDE H: SOLUCIONES AL PROBLEMA DE INCONSISTENCIA TEMPORAL ===== -->
-        <div class="slide bg-impulso">
-            <h2>Soluciones: c&oacute;mo <span style="color: var(--blanco); border-bottom: 3px solid var(--verde-activo);">atar las manos</span> del banco central</h2>
-            <p>&iquest;C&oacute;mo resolver la inconsistencia temporal? Cuatro caminos institucionales complementarios:</p>
-
-            <div class="two-cols" style="margin-top: 15px; gap: 25px;">
-                <div class="concepto-box">
-                    <h4 style="color: var(--blanco);">1. Reglas monetarias</h4>
-                    <p>Eliminar la discrecionalidad con reglas formales. La <strong>k% rule</strong> de Friedman (crecimiento monetario fijo) o la <strong>Regla de Taylor</strong> (tasa de inter&eacute;s que responde a inflaci&oacute;n y brecha del producto). Si el BC sigue una f&oacute;rmula, no hay espacio para la tentaci&oacute;n.</p>
-                </div>
-                <div class="concepto-box">
-                    <h4 style="color: var(--blanco);">2. Independencia del BC</h4>
-                    <p>Aislar al banco central de <strong>presiones pol&iacute;ticas</strong>. Un gobierno que necesita ganar elecciones tiene incentivos a pedir expansi&oacute;n monetaria. Un BC independiente puede resistir esa presi&oacute;n y priorizar la estabilidad de precios.</p>
-                </div>
-            </div>
-            <div class="two-cols" style="margin-top: 15px; gap: 25px;">
-                <div class="concepto-box">
-                    <h4 style="color: var(--blanco);">3. Metas de inflaci&oacute;n con rendici&oacute;n de cuentas</h4>
-                    <p>Un <strong>compromiso p&uacute;blico verificable</strong>: el BC anuncia una meta num&eacute;rica de inflaci&oacute;n y debe explicar si no la cumple. La transparencia reemplaza a la discrecionalidad. Adoptado desde Nueva Zelanda (1990) en adelante.</p>
-                </div>
-                <div class="concepto-box">
-                    <h4 style="color: var(--blanco);">4. El &laquo;banquero central conservador&raquo;</h4>
-                    <p>Rogoff (1985): nombrar a alguien <strong>m&aacute;s hawkish</strong> que la sociedad promedio &mdash;alguien que le d&eacute; m&aacute;s peso a la inflaci&oacute;n que al empleo. As&iacute;, el sesgo inflacionario se reduce porque quien decide tiene preferencias m&aacute;s estrictas.</p>
-                </div>
-            </div>
-
-            <blockquote style="margin-top: 20px; border-left-color: var(--blanco);">
-                La credibilidad no se declara, se construye. Y es m&aacute;s f&aacute;cil destruirla que construirla.
-            </blockquote>
-
-            <p class="nota-academica" style="border-top-color: rgba(255,255,255,0.25);">Referencia: Rogoff, K. (1985). &laquo;The Optimal Degree of Commitment to an Intermediate Monetary Target&raquo;, <em>Quarterly Journal of Economics</em>. Walsh, C. (1995). &laquo;Optimal Contracts for Central Bankers&raquo;, <em>American Economic Review</em>. Bernanke, B. &amp; Frank, R. <em>Principios de Econom&iacute;a</em>, Cap. 25.</p>
-        </div>
-
         <!-- ===== SLIDE 18: SECCIÓN TÍTULO — EMISIÓN E INFLACIÓN ===== -->
         <div class="slide bg-respaldo seccion-titulo">
             <h3>Secci&oacute;n IV</h3>
@@ -2233,6 +2114,89 @@
                 </div>
                 <p style="text-align: center; margin-top: 25px; font-size: 1.3rem;"><strong class="highlight">La pol&iacute;tica monetaria &oacute;ptima es aquella en la que el BC casi no necesita actuar.</strong></p>
         </div>
+        <!-- ===== SLIDE G: REGLA VS. DISCRECIONALIDAD — TEORÍA DE JUEGOS ===== -->
+        <div class="slide bg-blanco">
+            <h2>Regla vs. discrecionalidad: <span class="highlight">el juego del banco central</span></h2>
+            <p>El problema de la pol&iacute;tica monetaria puede plantearse como un <strong>juego estrat&eacute;gico</strong> entre dos actores:</p>
+
+            <div class="two-cols" style="margin-top: 15px; margin-bottom: 15px;">
+                <div>
+                    <ul>
+                        <li><strong>Jugador 1: Banco Central</strong> &mdash; anuncia &laquo;voy a mantener la inflaci&oacute;n baja&raquo; (compromiso)</li>
+                        <li><strong>Jugador 2: Sector Privado</strong> (trabajadores, empresas) &mdash; forma expectativas en base a ese anuncio</li>
+                    </ul>
+                </div>
+                <div>
+                    <div class="problema-box">
+                        <p style="margin-bottom: 0;"><strong>La tentaci&oacute;n:</strong> una vez que las expectativas est&aacute;n ancladas en inflaci&oacute;n baja, el BC podr&iacute;a &laquo;sorprender&raquo; con un poco m&aacute;s de dinero para impulsar el empleo. Pero el sector privado <strong>conoce</strong> esta tentaci&oacute;n...</p>
+                    </div>
+                </div>
+            </div>
+
+            <h3 style="font-size: 1.4rem; margin-bottom: 12px;">Matriz de pagos</h3>
+            <table style="font-size: 1.15rem; max-width: 850px;">
+                <thead>
+                    <tr>
+                        <th style="width: 200px;"></th>
+                        <th style="text-align: center;">BC <span style="color: var(--azul-impulso); font-weight: 700; text-transform: none; letter-spacing: 0;">Cumple</span></th>
+                        <th style="text-align: center;">BC <span style="color: var(--rojo-alerta); font-weight: 700; text-transform: none; letter-spacing: 0;">Enga&ntilde;a</span></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Privado Cree</strong></td>
+                        <td style="text-align: center; background: rgba(0, 198, 0, 0.1); border: 2px solid var(--verde-activo); border-radius: 6px;"><strong style="color: var(--verde-activo);">&iexcl;Mejor resultado!</strong><br>Baja inflaci&oacute;n, empleo en tasa natural. Cooperaci&oacute;n.</td>
+                        <td style="text-align: center;">BC gana empleo temporalmente, pero <strong>destruye credibilidad</strong>.</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Privado No Cree</strong></td>
+                        <td style="text-align: center;">BC cumple pero nadie le cree &rarr; ajustes salariales excesivos.</td>
+                        <td style="text-align: center; background: rgba(220, 38, 38, 0.12); border: 2px solid var(--rojo-alerta); border-radius: 6px;"><strong style="color: var(--rojo-alerta);">Equilibrio de Nash</strong><br>Alta inflaci&oacute;n, <strong>SIN</strong> ganancia de empleo. Ambos pierden.</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <blockquote style="margin-top: 15px; border-left-color: var(--azul-impulso);">
+                El resultado racional del juego es el <strong>peor para la sociedad</strong>: alta inflaci&oacute;n sin beneficio de empleo. La inconsistencia temporal genera un <em>sesgo inflacionario</em>.
+                <cite>&mdash; Kydland &amp; Prescott (1977), Barro &amp; Gordon (1983)</cite>
+            </blockquote>
+
+            <p class="nota-academica">Referencia: Kydland, F. &amp; Prescott, E. (1977). &laquo;Rules Rather than Discretion: The Inconsistency of Optimal Plans&raquo;, <em>Journal of Political Economy</em>, 85(3). Barro, R. &amp; Gordon, D. (1983). &laquo;A Positive Theory of Monetary Policy in a Natural Rate Model&raquo;, <em>Journal of Monetary Economics</em>, 12(1).</p>
+        </div>
+
+        <!-- ===== SLIDE H: SOLUCIONES AL PROBLEMA DE INCONSISTENCIA TEMPORAL ===== -->
+        <div class="slide bg-impulso">
+            <h2>Soluciones: c&oacute;mo <span style="color: var(--blanco); border-bottom: 3px solid var(--verde-activo);">atar las manos</span> del banco central</h2>
+            <p>&iquest;C&oacute;mo resolver la inconsistencia temporal? Cuatro caminos institucionales complementarios:</p>
+
+            <div class="two-cols" style="margin-top: 15px; gap: 25px;">
+                <div class="concepto-box">
+                    <h4 style="color: var(--blanco);">1. Reglas monetarias</h4>
+                    <p>Eliminar la discrecionalidad con reglas formales. La <strong>k% rule</strong> de Friedman (crecimiento monetario fijo) o la <strong>Regla de Taylor</strong> (tasa de inter&eacute;s que responde a inflaci&oacute;n y brecha del producto). Si el BC sigue una f&oacute;rmula, no hay espacio para la tentaci&oacute;n.</p>
+                </div>
+                <div class="concepto-box">
+                    <h4 style="color: var(--blanco);">2. Independencia del BC</h4>
+                    <p>Aislar al banco central de <strong>presiones pol&iacute;ticas</strong>. Un gobierno que necesita ganar elecciones tiene incentivos a pedir expansi&oacute;n monetaria. Un BC independiente puede resistir esa presi&oacute;n y priorizar la estabilidad de precios.</p>
+                </div>
+            </div>
+            <div class="two-cols" style="margin-top: 15px; gap: 25px;">
+                <div class="concepto-box">
+                    <h4 style="color: var(--blanco);">3. Metas de inflaci&oacute;n con rendici&oacute;n de cuentas</h4>
+                    <p>Un <strong>compromiso p&uacute;blico verificable</strong>: el BC anuncia una meta num&eacute;rica de inflaci&oacute;n y debe explicar si no la cumple. La transparencia reemplaza a la discrecionalidad. Adoptado desde Nueva Zelanda (1990) en adelante.</p>
+                </div>
+                <div class="concepto-box">
+                    <h4 style="color: var(--blanco);">4. El &laquo;banquero central conservador&raquo;</h4>
+                    <p>Rogoff (1985): nombrar a alguien <strong>m&aacute;s hawkish</strong> que la sociedad promedio &mdash;alguien que le d&eacute; m&aacute;s peso a la inflaci&oacute;n que al empleo. As&iacute;, el sesgo inflacionario se reduce porque quien decide tiene preferencias m&aacute;s estrictas.</p>
+                </div>
+            </div>
+
+            <blockquote style="margin-top: 20px; border-left-color: var(--blanco);">
+                La credibilidad no se declara, se construye. Y es m&aacute;s f&aacute;cil destruirla que construirla.
+            </blockquote>
+
+            <p class="nota-academica" style="border-top-color: rgba(255,255,255,0.25);">Referencia: Rogoff, K. (1985). &laquo;The Optimal Degree of Commitment to an Intermediate Monetary Target&raquo;, <em>Quarterly Journal of Economics</em>. Walsh, C. (1995). &laquo;Optimal Contracts for Central Bankers&raquo;, <em>American Economic Review</em>. Bernanke, B. &amp; Frank, R. <em>Principios de Econom&iacute;a</em>, Cap. 25.</p>
+        </div>
+
         <!-- ============================================================ -->
         <!-- SLIDE 39: SECCI&Oacute;N T&Iacute;TULO &mdash; ARGENTINA -->
         <!-- ============================================================ -->
@@ -2715,9 +2679,9 @@
         <!-- SLIDE 51: CLOSING QUOTE -->
         <!-- ============================================================ -->
         <div class="slide bg-respaldo" style="text-align: center;">
-                <blockquote style="border-left: none; text-align: center; font-size: 2.2rem; padding: 0; max-width: 900px; margin: 0 auto;">
-                        &ldquo;Las ideas de los economistas y los fil&oacute;sofos pol&iacute;ticos, tanto cuando tienen raz&oacute;n como cuando est&aacute;n equivocadas, son m&aacute;s poderosas de lo que com&uacute;nmente se entiende. De hecho, el mundo est&aacute; gobernado por poco m&aacute;s. Los hombres pr&aacute;cticos, que se creen libres de toda influencia intelectual, son generalmente esclavos de alg&uacute;n economista difunto.&rdquo;
-                        <cite style="font-size: 1.3rem; margin-top: 30px; opacity: 0.8;">&mdash; John Maynard Keynes, <em>Teor&iacute;a General del Empleo, el Inter&eacute;s y el Dinero</em> (1936)</cite>
+                <blockquote style="border-left: none; text-align: center; font-size: 2.4rem; padding: 0; max-width: 900px; margin: 0 auto;">
+                        &ldquo;La inflaci&oacute;n es tan violenta como un asaltante, tan aterradora como un ladr&oacute;n armado y tan letal como un sicario.&rdquo;
+                        <cite style="font-size: 1.3rem; margin-top: 30px; opacity: 0.8;">&mdash; Ronald Reagan, 1978</cite>
                 </blockquote>
                 <p style="margin-top: 50px; opacity: 0.5; font-size: 1.1rem;">Las ideas que discutimos en esta clase &mdash;de Friedman, Sargent, Kydland, Taylor&mdash;<br>han moldeado las pol&iacute;ticas que determinaron la vida de millones de argentinos.</p>
         </div>
