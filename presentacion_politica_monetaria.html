@@ -611,9 +611,64 @@
                 margin-bottom: 20px;
         }
 
+        /* Era badges (Argentina section) */
+        .era-badge {
+                display: inline-block;
+                padding: 4px 14px;
+                border-radius: 20px;
+                font-size: 0.85rem;
+                font-weight: 600;
+                margin-bottom: 15px;
+                letter-spacing: 1px;
+        }
+        .era-badge.crisis { background: var(--rojo-alerta); color: white; }
+        .era-badge.estabilidad { background: var(--verde-activo); color: white; }
+        .era-badge.transicion { background: var(--amarillo); color: #000; }
+        .era-badge.reforma { background: var(--azul-impulso); color: white; }
+
+        /* Inflation meter (bar chart) */
+        .inflation-meter { width: 100%; }
+        .meter-row {
+                display: flex;
+                align-items: center;
+                margin-bottom: 10px;
+        }
+        .meter-label {
+                width: 50px;
+                font-weight: 600;
+                font-size: 0.95rem;
+                flex-shrink: 0;
+        }
+        .meter-bar-container {
+                flex: 1;
+                background: rgba(255,255,255,0.15);
+                border-radius: 6px;
+                height: 32px;
+                margin-left: 10px;
+                overflow: hidden;
+        }
+        .meter-bar {
+                height: 100%;
+                border-radius: 6px;
+                display: flex;
+                align-items: center;
+                justify-content: flex-end;
+                padding-right: 10px;
+                font-weight: 700;
+                font-size: 0.9rem;
+                color: white;
+                min-width: 50px;
+                transition: width 0.6s ease;
+        }
+        .meter-bar.high { background: var(--amarillo); color: #000; }
+        .meter-bar.extreme { background: var(--rojo-alerta); }
+
         @media (max-width: 768px) {
             .biblio-item { font-size: 0.8rem; }
             .anexo-badge { font-size: 0.75rem; padding: 4px 12px; }
+            .era-badge { font-size: 0.75rem; padding: 3px 10px; }
+            .meter-bar-container { height: 26px; }
+            .meter-bar { font-size: 0.8rem; }
         }
     </style>
 </head>
@@ -631,24 +686,464 @@
         <!-- ===== SLIDE 2: ¿QUÉ ES EL DINERO? — Funciones ===== -->
         <div class="slide bg-blanco">
             <h2>&iquest;Qu&eacute; es el <span class="highlight">dinero</span>?</h2>
-            <p>El dinero no es riqueza en s&iacute; mismo. Es una <strong>tecnolog&iacute;a social</strong> que resuelve el problema de la doble coincidencia de deseos del trueque. Cumple tres funciones esenciales:</p>
+            <p>Samuelson define al dinero como <strong>&laquo;cualquier cosa que sirva como medio de cambio com&uacute;nmente aceptado&raquo;</strong>. No tiene valor intr&iacute;nseco &mdash;un billete de $10.000 es solo un papel&mdash; pero cumple su funci&oacute;n porque <em>todos lo aceptan</em>. Cumple tres funciones b&aacute;sicas:</p>
 
             <div class="three-cols">
                 <div class="concepto-box">
                     <h4>Medio de cambio</h4>
-                    <p>Facilita las transacciones eliminando la necesidad de que ambas partes deseen exactamente lo que la otra ofrece. Reduce los <strong>costos de transacci&oacute;n</strong> dr&aacute;sticamente.</p>
+                    <p>Seg&uacute;n Samuelson: el dinero se utiliza &laquo;al comprar y vender bienes, trabajo y capital&raquo;. Al ser universalmente aceptado, <strong>elimina la necesidad del trueque</strong> y la problem&aacute;tica doble coincidencia de deseos.</p>
                 </div>
                 <div class="concepto-box">
                     <h4>Unidad de cuenta</h4>
-                    <p>Permite expresar todos los precios en una misma medida. Sin esta funci&oacute;n, con <em>n</em> bienes necesitar&iacute;amos n(n&ndash;1)/2 precios relativos en vez de <em>n</em> precios.</p>
+                    <p>El dinero es &laquo;la vara para medir el valor econ&oacute;mico de las cosas&raquo;. Permite expresar todos los precios en un <strong>denominador com&uacute;n</strong>. Con <em>n</em> bienes, solo necesitamos <em>n</em> precios en vez de n(n&ndash;1)/2 precios relativos.</p>
                 </div>
                 <div class="concepto-box">
-                    <h4>Reserva de valor</h4>
-                    <p>Permite <strong>trasladar poder de compra</strong> en el tiempo. Esta funci&oacute;n se deteriora con la inflaci&oacute;n: a mayor inflaci&oacute;n, peor reserva de valor.</p>
+                    <h4>Dep&oacute;sito de valor</h4>
+                    <p>Samuelson: el dinero &laquo;permite transportar valor a lo largo del tiempo&raquo;. Se puede recibir dinero hoy y <strong>gastarlo ma&ntilde;ana</strong>. Pero esta funci&oacute;n se deteriora con la inflaci&oacute;n, que erosiona el poder adquisitivo.</p>
                 </div>
             </div>
 
-            <p class="nota-academica">Referencia: Samuelson, P. &amp; Nordhaus, W. <em>Econom&iacute;a</em>, Cap. 25. Bernanke, B. &amp; Frank, R. <em>Principios de Econom&iacute;a</em>, Cap. 23.</p>
+            <p class="nota-academica">Referencia: Samuelson, P. &amp; Nordhaus, W. <em>Econom&iacute;a</em>, Cap. 25: &laquo;El dinero es la grasa que lubrica el intercambio&raquo;. Bernanke, B. &amp; Frank, R. <em>Principios de Econom&iacute;a</em>, Cap. 23.</p>
+        </div>
+
+        <!-- ===== SLIDE A: DOBLE COINCIDENCIA DE DESEOS (ANIMADO) ===== -->
+        <div class="slide bg-impulso">
+            <style>
+                /* Animaciones para diagrama de doble coincidencia */
+                @keyframes fadeInArrow1 { from { opacity: 0; } to { opacity: 1; } }
+                @keyframes fadeInArrow2 { from { opacity: 0; } to { opacity: 1; } }
+                @keyframes fadeInArrow3 { from { opacity: 0; } to { opacity: 1; } }
+                @keyframes fadeInArrow4 { from { opacity: 0; } to { opacity: 1; } }
+                @keyframes pulseRed { 0%, 100% { opacity: 0.9; } 50% { opacity: 0.4; } }
+                @keyframes drawLine {
+                    from { stroke-dashoffset: 200; }
+                    to { stroke-dashoffset: 0; }
+                }
+                @keyframes fadeInSolution {
+                    from { opacity: 0; transform: translateY(15px); }
+                    to { opacity: 1; transform: translateY(0); }
+                }
+
+                .barter-svg .arrow-group-1 { opacity: 0; animation: fadeInArrow1 0.6s ease forwards; animation-delay: 0.5s; }
+                .barter-svg .arrow-group-2 { opacity: 0; animation: fadeInArrow2 0.6s ease forwards; animation-delay: 1.2s; }
+                .barter-svg .arrow-group-3 { opacity: 0; animation: fadeInArrow3 0.6s ease forwards; animation-delay: 1.9s; }
+                .barter-svg .arrow-group-4 { opacity: 0; animation: fadeInArrow4 0.6s ease forwards; animation-delay: 2.6s; }
+                .barter-svg .fail-x { opacity: 0; animation: fadeInArrow1 0.4s ease forwards; animation-delay: 3.3s; }
+                .barter-svg .fail-x-2 { opacity: 0; animation: fadeInArrow1 0.4s ease forwards; animation-delay: 3.6s; }
+                .barter-svg .fail-label { opacity: 0; animation: fadeInArrow1 0.5s ease forwards; animation-delay: 3.9s; }
+                .barter-svg .pulse-fail { animation: pulseRed 1.5s ease infinite; animation-delay: 4s; }
+
+                .slide-a-solution {
+                    opacity: 0;
+                    animation: fadeInSolution 0.8s ease forwards;
+                    animation-delay: 4.5s;
+                }
+
+                .slide-a-nota {
+                    opacity: 0;
+                    animation: fadeInSolution 0.6s ease forwards;
+                    animation-delay: 5.2s;
+                }
+
+                @media (max-width: 768px) {
+                    .barter-diagram-container { flex-direction: column !important; }
+                    .barter-diagram-container > div { width: 100% !important; }
+                    .barter-svg { max-height: 250px !important; }
+                }
+            </style>
+
+            <h2>El problema de la <span class="highlight">doble coincidencia</span> de deseos</h2>
+
+            <blockquote style="border-left-color: rgba(255,255,255,0.5); margin-bottom: 20px;">
+                &laquo;Yo doy clases de econom&iacute;a y quiero un asado. Tengo que encontrar un carnicero que quiera una clase de econom&iacute;a.&raquo;
+                <cite>&mdash; Felipe Venancio, en clase</cite>
+            </blockquote>
+
+            <div class="barter-diagram-container" style="display: flex; gap: 30px; align-items: center;">
+                <!-- Diagrama SVG del trueque -->
+                <div style="flex: 1.2;">
+                    <svg class="barter-svg" viewBox="0 0 520 380" style="width: 100%; max-height: 340px;">
+                        <!-- Personas en tri&aacute;ngulo -->
+                        <!-- Felipe (arriba) -->
+                        <circle cx="260" cy="65" r="40" fill="rgba(255,255,255,0.15)" stroke="white" stroke-width="2"/>
+                        <text x="260" y="58" text-anchor="middle" fill="white" font-size="11" font-weight="700" font-family="Albert Sans">Felipe</text>
+                        <text x="260" y="74" text-anchor="middle" fill="rgba(255,255,255,0.7)" font-size="9" font-family="Albert Sans">(Profesor)</text>
+                        <text x="260" y="120" text-anchor="middle" fill="rgba(255,255,255,0.6)" font-size="10" font-family="Albert Sans" font-style="italic">Ofrece: clases</text>
+                        <text x="260" y="134" text-anchor="middle" fill="#F59E0B" font-size="10" font-family="Albert Sans" font-weight="600">Quiere: carne</text>
+
+                        <!-- Carnicero (abajo izquierda) -->
+                        <circle cx="100" cy="290" r="40" fill="rgba(255,255,255,0.15)" stroke="white" stroke-width="2"/>
+                        <text x="100" y="283" text-anchor="middle" fill="white" font-size="11" font-weight="700" font-family="Albert Sans">Carnicero</text>
+                        <text x="100" y="299" text-anchor="middle" fill="rgba(255,255,255,0.7)" font-size="9" font-family="Albert Sans">(Juan)</text>
+                        <text x="100" y="345" text-anchor="middle" fill="rgba(255,255,255,0.6)" font-size="10" font-family="Albert Sans" font-style="italic">Ofrece: carne</text>
+                        <text x="100" y="359" text-anchor="middle" fill="#F59E0B" font-size="10" font-family="Albert Sans" font-weight="600">Quiere: pan</text>
+
+                        <!-- Panadero (abajo derecha) -->
+                        <circle cx="420" cy="290" r="40" fill="rgba(255,255,255,0.15)" stroke="white" stroke-width="2"/>
+                        <text x="420" y="283" text-anchor="middle" fill="white" font-size="11" font-weight="700" font-family="Albert Sans">Panadero</text>
+                        <text x="420" y="299" text-anchor="middle" fill="rgba(255,255,255,0.7)" font-size="9" font-family="Albert Sans">(Mar&iacute;a)</text>
+                        <text x="420" y="345" text-anchor="middle" fill="rgba(255,255,255,0.6)" font-size="10" font-family="Albert Sans" font-style="italic">Ofrece: pan</text>
+                        <text x="420" y="359" text-anchor="middle" fill="#F59E0B" font-size="10" font-family="Albert Sans" font-weight="600">Quiere: clases</text>
+
+                        <!-- Flecha 1: Felipe ofrece clases al Carnicero -->
+                        <g class="arrow-group-1">
+                            <line x1="225" y1="95" x2="135" y2="255" stroke="white" stroke-width="2" stroke-dasharray="6,4"/>
+                            <polygon points="135,255 143,243 129,245" fill="white"/>
+                            <rect x="130" y="155" width="80" height="22" rx="4" fill="rgba(220,38,38,0.8)"/>
+                            <text x="170" y="170" text-anchor="middle" fill="white" font-size="9" font-family="Albert Sans" font-weight="600">Clases?</text>
+                        </g>
+
+                        <!-- Flecha 2: Carnicero rechaza (quiere pan) -->
+                        <g class="arrow-group-2">
+                            <rect x="38" y="225" width="55" height="22" rx="4" fill="rgba(220,38,38,0.9)"/>
+                            <text x="65" y="240" text-anchor="middle" fill="white" font-size="9" font-family="Albert Sans" font-weight="700">&iexcl;NO!</text>
+                            <text x="65" y="216" text-anchor="middle" fill="rgba(255,255,255,0.6)" font-size="8" font-family="Albert Sans">Quiere pan,</text>
+                            <text x="65" y="206" text-anchor="middle" fill="rgba(255,255,255,0.6)" font-size="8" font-family="Albert Sans">no clases</text>
+                        </g>
+
+                        <!-- Flecha 3: Carnicero ofrece carne al Panadero -->
+                        <g class="arrow-group-3">
+                            <line x1="145" y1="290" x2="375" y2="290" stroke="white" stroke-width="2" stroke-dasharray="6,4"/>
+                            <polygon points="375,290 365,284 365,296" fill="white"/>
+                            <rect x="225" y="270" width="65" height="22" rx="4" fill="rgba(255,255,255,0.2)"/>
+                            <text x="258" y="285" text-anchor="middle" fill="white" font-size="9" font-family="Albert Sans">Carne</text>
+                        </g>
+
+                        <!-- Flecha 4: Panadero quiere clases, no carne -->
+                        <g class="arrow-group-4">
+                            <line x1="440" y1="255" x2="295" y2="95" stroke="rgba(255,255,255,0.4)" stroke-width="2" stroke-dasharray="6,4"/>
+                            <polygon points="295,95 303,107 289,105" fill="rgba(255,255,255,0.4)"/>
+                            <rect x="345" y="165" width="80" height="22" rx="4" fill="rgba(255,255,255,0.15)"/>
+                            <text x="385" y="180" text-anchor="middle" fill="rgba(255,255,255,0.7)" font-size="9" font-family="Albert Sans">Quiere clases</text>
+                        </g>
+
+                        <!-- X roja sobre el intercambio fallido Felipe-Carnicero -->
+                        <g class="fail-x">
+                            <line x1="158" y1="165" x2="182" y2="185" stroke="#DC2626" stroke-width="4" stroke-linecap="round"/>
+                            <line x1="182" y1="165" x2="158" y2="185" stroke="#DC2626" stroke-width="4" stroke-linecap="round"/>
+                        </g>
+
+                        <!-- X roja central -->
+                        <g class="fail-x-2">
+                            <line x1="248" y1="195" x2="272" y2="220" stroke="#DC2626" stroke-width="4" stroke-linecap="round"/>
+                            <line x1="272" y1="195" x2="248" y2="220" stroke="#DC2626" stroke-width="4" stroke-linecap="round"/>
+                        </g>
+
+                        <!-- Label: Sin coincidencia -->
+                        <g class="fail-label">
+                            <rect x="185" y="225" width="150" height="26" rx="6" fill="rgba(220,38,38,0.85)"/>
+                            <text x="260" y="243" text-anchor="middle" fill="white" font-size="11" font-family="Albert Sans" font-weight="700" class="pulse-fail">&iexcl;No hay coincidencia!</text>
+                        </g>
+                    </svg>
+                </div>
+
+                <!-- Soluci&oacute;n con dinero -->
+                <div class="slide-a-solution" style="flex: 0.8;">
+                    <div class="solucion-box" style="border-left-color: rgba(255,255,255,0.6);">
+                        <h4 style="margin-bottom: 10px; color: white;">&iquest;C&oacute;mo resuelve el dinero?</h4>
+                        <div style="font-size: 1.1rem;">
+                            <p style="margin-bottom: 8px;"><strong>1.</strong> Felipe vende clases a Mar&iacute;a (que s&iacute; las quiere) &rarr; recibe <strong>$</strong></p>
+                            <p style="margin-bottom: 8px;"><strong>2.</strong> Felipe usa el dinero para comprarle carne a Juan &rarr; paga <strong>$</strong></p>
+                            <p style="margin-bottom: 8px;"><strong>3.</strong> Juan usa ese dinero para comprarle pan a Mar&iacute;a &rarr; paga <strong>$</strong></p>
+                            <p style="margin-bottom: 0; opacity: 0.85; font-style: italic;">&iexcl;Todos consiguen lo que quieren sin necesitar una coincidencia directa!</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <p class="nota-academica slide-a-nota" style="border-top-color: rgba(255,255,255,0.2);">Referencia: Samuelson, P. &amp; Nordhaus, W. <em>Econom&iacute;a</em>, Cap. 25: &laquo;El dinero como medio de cambio&raquo;. Adam Smith (1776), <em>La riqueza de las naciones</em>, Libro I, Cap. IV: el origen del dinero como respuesta a la ineficiencia del trueque.</p>
+        </div>
+
+        <!-- ===== SLIDE B: OFERTA DE DINERO ===== -->
+        <div class="slide bg-respaldo">
+            <h2>La <span class="highlight">oferta de dinero</span>: creaci&oacute;n primaria y secundaria</h2>
+
+            <div class="two-cols">
+                <div>
+                    <div class="concepto-box">
+                        <h4>Creaci&oacute;n primaria (Banco Central)</h4>
+                        <p>El BC tiene el <strong>monopolio legal</strong> de emitir base monetaria. La base monetaria (B) est&aacute; compuesta por billetes y monedas en circulaci&oacute;n m&aacute;s las reservas bancarias (dep&oacute;sitos de los bancos en el BC).</p>
+                    </div>
+                    <div class="formula" style="margin-top: 15px;">
+                        B = Billetes en circulaci&oacute;n + Reservas bancarias
+                    </div>
+                </div>
+                <div>
+                    <div class="concepto-box">
+                        <h4>Creaci&oacute;n secundaria (Bancos comerciales)</h4>
+                        <p>Pero hay <strong>m&aacute;s dinero</strong> en la econom&iacute;a que la base monetaria. Los bancos comerciales crean dinero cada vez que otorgan un pr&eacute;stamo: el dinero prestado se deposita, se presta de nuevo, y as&iacute; se <strong>multiplica</strong>.</p>
+                    </div>
+                </div>
+            </div>
+
+            <p style="margin-top: 20px; opacity: 0.9;">El proceso de creaci&oacute;n secundaria funciona as&iacute;:</p>
+
+            <div class="flow-diagram">
+                <div class="flow-box"><strong>BC emite<br>base monetaria</strong></div>
+                <div class="flow-arrow">&rarr;</div>
+                <div class="flow-box"><strong>Bancos reciben<br>dep&oacute;sitos</strong></div>
+                <div class="flow-arrow">&rarr;</div>
+                <div class="flow-box"><strong>Guardan encaje,<br>prestan el resto</strong></div>
+                <div class="flow-arrow">&rarr;</div>
+                <div class="flow-box"><strong>Pr&eacute;stamo vuelve<br>como dep&oacute;sito</strong></div>
+                <div class="flow-arrow">&rarr;</div>
+                <div class="flow-box"><strong>Se presta<br>de nuevo</strong></div>
+                <div class="flow-arrow">&rarr;</div>
+                <div class="flow-box" style="background: rgba(0,198,0,0.25); border: 2px solid var(--verde-activo);"><strong>El dinero se<br>MULTIPLICA</strong></div>
+            </div>
+
+            <div class="formula-grande" style="margin-top: 15px;">
+                m = 1 / r &nbsp;&nbsp;&nbsp; &rArr; &nbsp;&nbsp;&nbsp; M = B &times; m
+            </div>
+            <p style="text-align: center; font-size: 1.15rem; opacity: 0.75;">Donde <em>m</em> = multiplicador monetario, <em>r</em> = tasa de encaje (reservas obligatorias), <em>B</em> = base monetaria, <em>M</em> = oferta monetaria</p>
+
+            <p class="nota-academica">Referencia: Samuelson, P. &amp; Nordhaus, W. <em>Econom&iacute;a</em>, Cap. 25&ndash;26. Bernanke, B. &amp; Frank, R. <em>Principios de Econom&iacute;a</em>, Cap. 23&ndash;24. El multiplicador simple (1/r) es un modelo te&oacute;rico; en la pr&aacute;ctica, el multiplicador efectivo es menor porque el p&uacute;blico retiene efectivo y los bancos mantienen reservas excedentes.</p>
+        </div>
+
+        <!-- ===== SLIDE C: MULTIPLICADOR DE DINERO INTERACTIVO ===== -->
+        <div class="slide bg-blanco">
+            <h2>El <span class="highlight">multiplicador del dinero</span> en acci&oacute;n</h2>
+
+            <div class="formula-grande" style="margin-top: 5px; margin-bottom: 10px;">
+                m = 1 / r &nbsp;&nbsp;&nbsp;&nbsp; Oferta monetaria = Base monetaria &times; multiplicador
+            </div>
+
+            <!-- Botones de selecci&oacute;n de encaje -->
+            <div id="encaje-tabs" style="display: flex; gap: 12px; justify-content: center; margin: 15px 0;">
+                <button onclick="mostrarEncaje(10)" id="btn-10" style="padding: 10px 24px; border: 2px solid #1036E2; background: #1036E2; color: white; border-radius: 8px; font-size: 1.05rem; font-weight: 600; cursor: pointer; font-family: 'Albert Sans', sans-serif;">Encaje 10%</button>
+                <button onclick="mostrarEncaje(20)" id="btn-20" style="padding: 10px 24px; border: 2px solid #1036E2; background: transparent; color: #1036E2; border-radius: 8px; font-size: 1.05rem; font-weight: 600; cursor: pointer; font-family: 'Albert Sans', sans-serif;">Encaje 20%</button>
+                <button onclick="mostrarEncaje(30)" id="btn-30" style="padding: 10px 24px; border: 2px solid #1036E2; background: transparent; color: #1036E2; border-radius: 8px; font-size: 1.05rem; font-weight: 600; cursor: pointer; font-family: 'Albert Sans', sans-serif;">Encaje 30%</button>
+                <button onclick="mostrarEncaje(50)" id="btn-50" style="padding: 10px 24px; border: 2px solid #1036E2; background: transparent; color: #1036E2; border-radius: 8px; font-size: 1.05rem; font-weight: 600; cursor: pointer; font-family: 'Albert Sans', sans-serif;">Encaje 50%</button>
+            </div>
+
+            <!-- Tabla para encaje 10% -->
+            <div id="tabla-10" style="display: block;">
+                <table style="color: #021751;">
+                    <thead>
+                        <tr>
+                            <th>Ronda</th>
+                            <th>Dep&oacute;sito recibido</th>
+                            <th>Encaje (10%)</th>
+                            <th>Pr&eacute;stamo otorgado</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr><td><strong>1</strong></td><td>$1.000,00</td><td style="color: #DC2626;">$100,00</td><td style="color: #1036E2; font-weight: 600;">$900,00</td></tr>
+                        <tr><td><strong>2</strong></td><td>$900,00</td><td style="color: #DC2626;">$90,00</td><td style="color: #1036E2; font-weight: 600;">$810,00</td></tr>
+                        <tr><td><strong>3</strong></td><td>$810,00</td><td style="color: #DC2626;">$81,00</td><td style="color: #1036E2; font-weight: 600;">$729,00</td></tr>
+                        <tr><td><strong>4</strong></td><td>$729,00</td><td style="color: #DC2626;">$72,90</td><td style="color: #1036E2; font-weight: 600;">$656,10</td></tr>
+                        <tr><td><strong>5</strong></td><td>$656,10</td><td style="color: #DC2626;">$65,61</td><td style="color: #1036E2; font-weight: 600;">$590,49</td></tr>
+                        <tr style="background: rgba(16,54,226,0.08); font-weight: 700;"><td>...</td><td colspan="3" style="text-align: center;">El proceso contin&uacute;a hasta agotarse</td></tr>
+                    </tbody>
+                </table>
+                <div style="display: flex; justify-content: space-around; margin-top: 12px;">
+                    <div class="stat-box">
+                        <div class="stat-numero" style="font-size: 3rem;">10x</div>
+                        <div class="stat-label">Multiplicador (1/0,10)</div>
+                    </div>
+                    <div class="stat-box">
+                        <div class="stat-numero" style="font-size: 3rem;">$10.000</div>
+                        <div class="stat-label">Dinero total creado</div>
+                    </div>
+                    <div class="stat-box">
+                        <div class="stat-numero" style="font-size: 3rem;">$9.000</div>
+                        <div class="stat-label">Dinero nuevo (creaci&oacute;n secundaria)</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tabla para encaje 20% -->
+            <div id="tabla-20" style="display: none;">
+                <table style="color: #021751;">
+                    <thead>
+                        <tr>
+                            <th>Ronda</th>
+                            <th>Dep&oacute;sito recibido</th>
+                            <th>Encaje (20%)</th>
+                            <th>Pr&eacute;stamo otorgado</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr><td><strong>1</strong></td><td>$1.000,00</td><td style="color: #DC2626;">$200,00</td><td style="color: #1036E2; font-weight: 600;">$800,00</td></tr>
+                        <tr><td><strong>2</strong></td><td>$800,00</td><td style="color: #DC2626;">$160,00</td><td style="color: #1036E2; font-weight: 600;">$640,00</td></tr>
+                        <tr><td><strong>3</strong></td><td>$640,00</td><td style="color: #DC2626;">$128,00</td><td style="color: #1036E2; font-weight: 600;">$512,00</td></tr>
+                        <tr><td><strong>4</strong></td><td>$512,00</td><td style="color: #DC2626;">$102,40</td><td style="color: #1036E2; font-weight: 600;">$409,60</td></tr>
+                        <tr><td><strong>5</strong></td><td>$409,60</td><td style="color: #DC2626;">$81,92</td><td style="color: #1036E2; font-weight: 600;">$327,68</td></tr>
+                        <tr style="background: rgba(16,54,226,0.08); font-weight: 700;"><td>...</td><td colspan="3" style="text-align: center;">El proceso contin&uacute;a hasta agotarse</td></tr>
+                    </tbody>
+                </table>
+                <div style="display: flex; justify-content: space-around; margin-top: 12px;">
+                    <div class="stat-box">
+                        <div class="stat-numero" style="font-size: 3rem;">5x</div>
+                        <div class="stat-label">Multiplicador (1/0,20)</div>
+                    </div>
+                    <div class="stat-box">
+                        <div class="stat-numero" style="font-size: 3rem;">$5.000</div>
+                        <div class="stat-label">Dinero total creado</div>
+                    </div>
+                    <div class="stat-box">
+                        <div class="stat-numero" style="font-size: 3rem;">$4.000</div>
+                        <div class="stat-label">Dinero nuevo (creaci&oacute;n secundaria)</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tabla para encaje 30% -->
+            <div id="tabla-30" style="display: none;">
+                <table style="color: #021751;">
+                    <thead>
+                        <tr>
+                            <th>Ronda</th>
+                            <th>Dep&oacute;sito recibido</th>
+                            <th>Encaje (30%)</th>
+                            <th>Pr&eacute;stamo otorgado</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr><td><strong>1</strong></td><td>$1.000,00</td><td style="color: #DC2626;">$300,00</td><td style="color: #1036E2; font-weight: 600;">$700,00</td></tr>
+                        <tr><td><strong>2</strong></td><td>$700,00</td><td style="color: #DC2626;">$210,00</td><td style="color: #1036E2; font-weight: 600;">$490,00</td></tr>
+                        <tr><td><strong>3</strong></td><td>$490,00</td><td style="color: #DC2626;">$147,00</td><td style="color: #1036E2; font-weight: 600;">$343,00</td></tr>
+                        <tr><td><strong>4</strong></td><td>$343,00</td><td style="color: #DC2626;">$102,90</td><td style="color: #1036E2; font-weight: 600;">$240,10</td></tr>
+                        <tr><td><strong>5</strong></td><td>$240,10</td><td style="color: #DC2626;">$72,03</td><td style="color: #1036E2; font-weight: 600;">$168,07</td></tr>
+                        <tr style="background: rgba(16,54,226,0.08); font-weight: 700;"><td>...</td><td colspan="3" style="text-align: center;">El proceso contin&uacute;a hasta agotarse</td></tr>
+                    </tbody>
+                </table>
+                <div style="display: flex; justify-content: space-around; margin-top: 12px;">
+                    <div class="stat-box">
+                        <div class="stat-numero" style="font-size: 3rem;">3,33x</div>
+                        <div class="stat-label">Multiplicador (1/0,30)</div>
+                    </div>
+                    <div class="stat-box">
+                        <div class="stat-numero" style="font-size: 3rem;">$3.333</div>
+                        <div class="stat-label">Dinero total creado</div>
+                    </div>
+                    <div class="stat-box">
+                        <div class="stat-numero" style="font-size: 3rem;">$2.333</div>
+                        <div class="stat-label">Dinero nuevo (creaci&oacute;n secundaria)</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tabla para encaje 50% -->
+            <div id="tabla-50" style="display: none;">
+                <table style="color: #021751;">
+                    <thead>
+                        <tr>
+                            <th>Ronda</th>
+                            <th>Dep&oacute;sito recibido</th>
+                            <th>Encaje (50%)</th>
+                            <th>Pr&eacute;stamo otorgado</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr><td><strong>1</strong></td><td>$1.000,00</td><td style="color: #DC2626;">$500,00</td><td style="color: #1036E2; font-weight: 600;">$500,00</td></tr>
+                        <tr><td><strong>2</strong></td><td>$500,00</td><td style="color: #DC2626;">$250,00</td><td style="color: #1036E2; font-weight: 600;">$250,00</td></tr>
+                        <tr><td><strong>3</strong></td><td>$250,00</td><td style="color: #DC2626;">$125,00</td><td style="color: #1036E2; font-weight: 600;">$125,00</td></tr>
+                        <tr><td><strong>4</strong></td><td>$125,00</td><td style="color: #DC2626;">$62,50</td><td style="color: #1036E2; font-weight: 600;">$62,50</td></tr>
+                        <tr><td><strong>5</strong></td><td>$62,50</td><td style="color: #DC2626;">$31,25</td><td style="color: #1036E2; font-weight: 600;">$31,25</td></tr>
+                        <tr style="background: rgba(16,54,226,0.08); font-weight: 700;"><td>...</td><td colspan="3" style="text-align: center;">El proceso contin&uacute;a hasta agotarse</td></tr>
+                    </tbody>
+                </table>
+                <div style="display: flex; justify-content: space-around; margin-top: 12px;">
+                    <div class="stat-box">
+                        <div class="stat-numero" style="font-size: 3rem;">2x</div>
+                        <div class="stat-label">Multiplicador (1/0,50)</div>
+                    </div>
+                    <div class="stat-box">
+                        <div class="stat-numero" style="font-size: 3rem;">$2.000</div>
+                        <div class="stat-label">Dinero total creado</div>
+                    </div>
+                    <div class="stat-box">
+                        <div class="stat-numero" style="font-size: 3rem;">$1.000</div>
+                        <div class="stat-label">Dinero nuevo (creaci&oacute;n secundaria)</div>
+                    </div>
+                </div>
+            </div>
+
+            <script>
+                function mostrarEncaje(rate) {
+                    var rates = [10, 20, 30, 50];
+                    for (var i = 0; i < rates.length; i++) {
+                        var r = rates[i];
+                        document.getElementById('tabla-' + r).style.display = (r === rate) ? 'block' : 'none';
+                        var btn = document.getElementById('btn-' + r);
+                        if (r === rate) {
+                            btn.style.background = '#1036E2';
+                            btn.style.color = 'white';
+                        } else {
+                            btn.style.background = 'transparent';
+                            btn.style.color = '#1036E2';
+                        }
+                    }
+                }
+            </script>
+
+            <p class="nota-academica">Referencia: Samuelson, P. &amp; Nordhaus, W. <em>Econom&iacute;a</em>, Cap. 25. El multiplicador simple (1/r) asume que todo pr&eacute;stamo se redeposita y que no hay filtraciones de efectivo. En la realidad, el multiplicador efectivo es menor.</p>
+        </div>
+
+        <!-- ===== SLIDE D: LIQUIDEZ EN ACTIVOS FINANCIEROS ===== -->
+        <div class="slide bg-verde">
+            <h2>El concepto de <span style="color: var(--azul-respaldo);">liquidez</span></h2>
+
+            <p style="font-size: 1.4rem; margin-bottom: 10px;">La <strong style="color: var(--azul-respaldo);">liquidez</strong> es la facilidad y velocidad con la que un activo puede convertirse en efectivo <strong>sin p&eacute;rdida significativa de valor</strong>.</p>
+
+            <p style="font-size: 1.15rem; opacity: 0.9; margin-bottom: 20px;">No todos los activos son igualmente l&iacute;quidos. Hay un <strong>espectro</strong>: desde el efectivo (liquidez perfecta) hasta los inmuebles (pueden tardar meses en venderse).</p>
+
+            <!-- Espectro de liquidez -->
+            <div style="background: rgba(2,23,81,0.12); border-radius: 16px; padding: 25px 30px; margin-bottom: 20px;">
+                <div style="display: flex; justify-content: space-between; margin-bottom: 12px;">
+                    <span style="font-size: 0.95rem; font-weight: 700; color: var(--azul-respaldo);">M&Aacute;S L&Iacute;QUIDO</span>
+                    <span style="font-size: 0.95rem; font-weight: 700; color: var(--azul-respaldo);">MENOS L&Iacute;QUIDO</span>
+                </div>
+                <!-- Barra gradiente -->
+                <div style="height: 12px; border-radius: 6px; background: linear-gradient(to right, #021751, #1036E2, #4a6cf7, #93a8f9, #c4d0fc, #e8ecfe); margin-bottom: 18px;"></div>
+                <!-- Activos en el espectro -->
+                <div style="display: grid; grid-template-columns: repeat(6, 1fr); gap: 10px; text-align: center;">
+                    <div style="background: rgba(2,23,81,0.18); border-radius: 10px; padding: 14px 8px;">
+                        <div style="font-size: 1.8rem; margin-bottom: 6px;">&#x1F4B5;</div>
+                        <div style="font-size: 0.95rem; font-weight: 700; color: var(--azul-respaldo);">Efectivo</div>
+                        <div style="font-size: 0.8rem; opacity: 0.7;">(billetes)</div>
+                        <div style="font-size: 0.75rem; margin-top: 4px; font-weight: 600; color: var(--azul-respaldo);">M0</div>
+                    </div>
+                    <div style="background: rgba(2,23,81,0.14); border-radius: 10px; padding: 14px 8px;">
+                        <div style="font-size: 1.8rem; margin-bottom: 6px;">&#x1F3E6;</div>
+                        <div style="font-size: 0.95rem; font-weight: 700; color: var(--azul-respaldo);">Dep&oacute;sitos a la vista</div>
+                        <div style="font-size: 0.8rem; opacity: 0.7;">(cta. corriente)</div>
+                        <div style="font-size: 0.75rem; margin-top: 4px; font-weight: 600; color: var(--azul-respaldo);">M1</div>
+                    </div>
+                    <div style="background: rgba(2,23,81,0.10); border-radius: 10px; padding: 14px 8px;">
+                        <div style="font-size: 1.8rem; margin-bottom: 6px;">&#x23F3;</div>
+                        <div style="font-size: 0.95rem; font-weight: 700; color: var(--azul-respaldo);">Dep&oacute;sitos a plazo</div>
+                        <div style="font-size: 0.8rem; opacity: 0.7;">(plazo fijo)</div>
+                        <div style="font-size: 0.75rem; margin-top: 4px; font-weight: 600; color: var(--azul-respaldo);">M2</div>
+                    </div>
+                    <div style="background: rgba(2,23,81,0.07); border-radius: 10px; padding: 14px 8px;">
+                        <div style="font-size: 1.8rem; margin-bottom: 6px;">&#x1F4DC;</div>
+                        <div style="font-size: 0.95rem; font-weight: 700; color: var(--azul-respaldo);">Bonos</div>
+                        <div style="font-size: 0.8rem; opacity: 0.7;">(deuda p&uacute;blica)</div>
+                        <div style="font-size: 0.75rem; margin-top: 4px; font-weight: 600; color: var(--azul-respaldo);">M3+</div>
+                    </div>
+                    <div style="background: rgba(2,23,81,0.04); border-radius: 10px; padding: 14px 8px;">
+                        <div style="font-size: 1.8rem; margin-bottom: 6px;">&#x1F4C8;</div>
+                        <div style="font-size: 0.95rem; font-weight: 700; color: var(--azul-respaldo);">Acciones</div>
+                        <div style="font-size: 0.8rem; opacity: 0.7;">(renta variable)</div>
+                        <div style="font-size: 0.75rem; margin-top: 4px; opacity: 0.6;">&mdash;</div>
+                    </div>
+                    <div style="background: rgba(2,23,81,0.02); border-radius: 10px; padding: 14px 8px;">
+                        <div style="font-size: 1.8rem; margin-bottom: 6px;">&#x1F3E0;</div>
+                        <div style="font-size: 0.95rem; font-weight: 700; color: var(--azul-respaldo);">Inmuebles</div>
+                        <div style="font-size: 0.8rem; opacity: 0.7;">(propiedades)</div>
+                        <div style="font-size: 0.75rem; margin-top: 4px; opacity: 0.6;">&mdash;</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="concepto-box" style="background: rgba(2,23,81,0.1); text-align: left;">
+                <h4 style="color: var(--azul-respaldo);">&iquest;Por qu&eacute; importa la liquidez?</h4>
+                <p>Es la base para entender los <strong>agregados monetarios</strong> (M0, M1, M2, M3). Cada agregado a&ntilde;ade activos <em>menos l&iacute;quidos</em>: M0 es solo efectivo; M1 suma dep&oacute;sitos a la vista; M2 agrega plazos fijos; M3 incluye fondos institucionales. El Banco Central debe decidir <strong>qu&eacute; &laquo;M&raquo; controlar</strong> &mdash;y esa elecci&oacute;n define su estrategia monetaria.</p>
+            </div>
+
+            <p class="nota-academica" style="border-top-color: rgba(2,23,81,0.2);">Referencia: Samuelson, P. &amp; Nordhaus, W. <em>Econom&iacute;a</em>, Cap. 25: &laquo;Los componentes de la oferta monetaria&raquo;. La clasificaci&oacute;n exacta de agregados var&iacute;a entre pa&iacute;ses: el BCRA usa M0, M1, M2, M3; la Fed usa M1 y M2 (discontinu&oacute; M3 en 2006).</p>
         </div>
 
         <!-- ===== SLIDE 3: AGREGADOS MONETARIOS ===== -->
@@ -710,6 +1205,45 @@
             </div>
 
             <p class="nota-academica">Referencia: Samuelson &amp; Nordhaus, Cap. 26. Bernanke &amp; Frank, Cap. 24. Keynes, J.M. (1936). <em>The General Theory</em>, Cap. 13&ndash;15.</p>
+        </div>
+
+        <!-- ===== SLIDE E: LA TASA DE INTERÉS COMO COSTO DE OPORTUNIDAD ===== -->
+        <div class="slide bg-blanco">
+            <h2>La tasa de inter&eacute;s: el <span class="highlight">precio de la liquidez</span></h2>
+
+            <p style="font-size: 1.35rem;">La tasa de inter&eacute;s es el <strong>costo de oportunidad</strong> de mantener dinero l&iacute;quido. Es lo que sacrific&aacute;s por tener tu riqueza en efectivo en vez de invertirla.</p>
+
+            <div class="versus" style="margin-top: 25px;">
+                <div class="concepto-box">
+                    <h4>Mantener dinero l&iacute;quido</h4>
+                    <ul>
+                        <li><strong>Seguridad:</strong> dispon&eacute;s de tu dinero al instante</li>
+                        <li><strong>Flexibilidad:</strong> pod&eacute;s aprovechar oportunidades</li>
+                        <li style="color: var(--rojo-alerta);"><strong>Costo:</strong> NO gan&aacute;s intereses. Tu dinero pierde valor real con la inflaci&oacute;n.</li>
+                    </ul>
+                </div>
+                <div class="versus-center">vs</div>
+                <div class="concepto-box">
+                    <h4>Invertir en bonos / dep&oacute;sitos</h4>
+                    <ul>
+                        <li><strong>Rendimiento:</strong> gan&aacute;s una tasa de inter&eacute;s</li>
+                        <li><strong>Protecci&oacute;n:</strong> preserv&aacute;s (o aument&aacute;s) el valor real</li>
+                        <li style="color: var(--rojo-alerta);"><strong>Costo:</strong> PERD&Eacute;S liquidez. No pod&eacute;s usar ese dinero hasta el vencimiento.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <blockquote style="border-left-color: var(--azul-impulso); margin-top: 20px;">
+                &laquo;La tasa de inter&eacute;s es lo que el mercado te paga por renunciar a la liquidez.&raquo;
+                <cite>&mdash; John Maynard Keynes, <em>Teor&iacute;a General</em> (1936)</cite>
+            </blockquote>
+
+            <div class="solucion-box" style="margin-top: 15px;">
+                <h4 style="margin-bottom: 8px; color: #021751;">Conexi&oacute;n con la demanda de dinero</h4>
+                <p style="font-size: 1.15rem;">Por eso la curva de demanda de dinero tiene <strong>pendiente negativa</strong>: cuando la tasa de inter&eacute;s sube, el costo de oportunidad de tener efectivo aumenta &rarr; la gente prefiere invertir &rarr; <strong>demanda menos dinero l&iacute;quido</strong>. Cuando la tasa baja, mantener efectivo &laquo;sale barato&raquo; &rarr; se demanda m&aacute;s dinero.</p>
+            </div>
+
+            <p class="nota-academica">Referencia: Samuelson, P. &amp; Nordhaus, W. <em>Econom&iacute;a</em>, Cap. 25&ndash;26. Keynes, J.M. (1936). <em>The General Theory of Employment, Interest and Money</em>, Cap. 13&ndash;15: la preferencia por la liquidez como determinante de la tasa de inter&eacute;s.</p>
         </div>
 
         <!-- ===== SLIDE 5: FRIEDMAN Y TOBIN — DEMANDA DE DINERO COMO PORTAFOLIO ===== -->
@@ -784,6 +1318,43 @@
             <p class="nota-academica">Referencia: Samuelson &amp; Nordhaus, Cap. 26. Bernanke &amp; Frank, Cap. 24. Este gr&aacute;fico es el punto de partida del modelo IS&ndash;LM de Hicks (1937).</p>
         </div>
 
+        <!-- ===== SLIDE F: POLÍTICA MONETARIA Y ACTIVIDAD EN EL CORTO PLAZO ===== -->
+        <div class="slide bg-respaldo">
+            <h2>Pol&iacute;tica monetaria y <span class="highlight">actividad econ&oacute;mica</span> en el corto plazo</h2>
+            <p>&iquest;C&oacute;mo una decisi&oacute;n del banco central sobre la tasa de inter&eacute;s termina afectando el <strong>nivel de actividad</strong>? A trav&eacute;s de dos canales principales:</p>
+
+            <div class="flow-diagram">
+                <div class="flow-box" style="background: rgba(0,198,0,0.2); border: 2px solid var(--verde-activo);"><strong>BC baja la<br>tasa de inter&eacute;s</strong></div>
+                <div class="flow-arrow">&rarr;</div>
+                <div style="display: flex; flex-direction: column; gap: 15px; flex: 1; max-width: 600px;">
+                    <div class="concepto-box" style="text-align: left;">
+                        <h4>Canal del consumo</h4>
+                        <p>Menor tasa &rarr; el ahorro se vuelve <strong>menos atractivo</strong> &rarr; los hogares prefieren <strong>consumir hoy</strong> en lugar de ahorrar &rarr; sube el consumo presente (C)</p>
+                    </div>
+                    <div class="concepto-box" style="text-align: left;">
+                        <h4>Canal de la inversi&oacute;n</h4>
+                        <p>Menor tasa &rarr; baja el <strong>costo de financiar proyectos</strong> &rarr; m&aacute;s proyectos se vuelven rentables &rarr; sube la inversi&oacute;n (I)</p>
+                    </div>
+                </div>
+                <div class="flow-arrow">&rarr;</div>
+                <div style="display: flex; flex-direction: column; gap: 10px;">
+                    <div class="flow-box"><strong>Aumento de la<br>demanda agregada</strong></div>
+                    <div class="flow-arrow" style="text-align: center;">&darr;</div>
+                    <div class="flow-box" style="background: rgba(0,198,0,0.2); border: 2px solid var(--verde-activo);"><strong>Mayor nivel de<br>actividad (PBI)</strong></div>
+                </div>
+            </div>
+
+            <div class="problema-box" style="margin-top: 15px;">
+                <p style="margin-bottom: 0;"><strong>&iquest;Y si el BC quiere enfriar la econom&iacute;a?</strong> El mecanismo inverso: BC <strong>sube</strong> la tasa &rarr; ahorro m&aacute;s atractivo + inversi&oacute;n m&aacute;s cara &rarr; <strong>cae la demanda agregada</strong> &rarr; menor nivel de actividad. Pol&iacute;tica monetaria <em>contractiva</em>.</p>
+            </div>
+
+            <div class="solucion-box" style="margin-top: 10px;">
+                <p style="margin-bottom: 0;"><strong>Atenci&oacute;n:</strong> Este mecanismo funciona en el <strong>CORTO PLAZO</strong>. En el largo plazo, como vimos, el dinero es neutral &mdash;solo afecta precios, no cantidades reales.</p>
+            </div>
+
+            <p class="nota-academica">Referencia: Samuelson, P. &amp; Nordhaus, W. <em>Econom&iacute;a</em>, Cap. 26&ndash;27. Bernanke, B. &amp; Frank, R. <em>Principios de Econom&iacute;a</em>, Cap. 25.</p>
+        </div>
+
         <!-- ===== SLIDE 7: SECCIÓN TÍTULO — HERRAMIENTAS DEL BC ===== -->
         <div class="slide bg-impulso seccion-titulo">
             <h3>Secci&oacute;n II</h3>
@@ -850,27 +1421,41 @@
             <p class="nota-academica">Referencia: Samuelson &amp; Nordhaus, Cap. 26. Bernanke &amp; Frank, Cap. 25. Las OMA son el instrumento preferido desde que la Fed las adopt&oacute; en los a&ntilde;os 1920.</p>
         </div>
 
-        <!-- ===== SLIDE 10: ENCAJES Y CORREDOR DE TASAS ===== -->
+        <!-- ===== SLIDE 10: ENCAJES Y SU EFECTO EN EL MULTIPLICADOR ===== -->
         <div class="slide bg-verde">
-            <h2>Encajes y <span style="color: var(--azul-respaldo);">corredor de tasas</span></h2>
-            <p>Adem&aacute;s de las OMA, el BC dispone de otros instrumentos convencionales para regular la liquidez:</p>
+            <h2>Encajes: el BC controla el <span style="color: var(--azul-respaldo);">multiplicador</span></h2>
+            <p>El encaje legal es el porcentaje de dep&oacute;sitos que los bancos <strong>deben mantener como reserva</strong> y no pueden prestar. Al modificarlo, el BC altera directamente el multiplicador monetario.</p>
 
             <div class="two-cols" style="margin-top: 20px;">
                 <div class="concepto-box">
-                    <h4 style="color: var(--azul-respaldo);">Encaje legal (reservas obligatorias)</h4>
-                    <p>Porcentaje de dep&oacute;sitos que los bancos <strong>no pueden prestar</strong>. Subir el encaje reduce el multiplicador bancario y contrae la oferta de cr&eacute;dito. Es un instrumento potente pero poco flexible &mdash;se usa con poca frecuencia.</p>
+                    <h4 style="color: var(--azul-respaldo);">BC sube el encaje &rarr; pol&iacute;tica contractiva</h4>
+                    <p>Los bancos deben retener m&aacute;s reservas &rarr; prestan menos &rarr; el multiplicador <strong>baja</strong> &rarr; la oferta monetaria se contrae aunque la base monetaria no cambie.</p>
+                    <div class="formula" style="background: rgba(255,255,255,0.2); margin-top: 10px;">
+                        Encaje 10% &rarr; m = 10 &nbsp;&nbsp;|&nbsp;&nbsp; Encaje 20% &rarr; m = 5
+                    </div>
+                    <p style="margin-top: 8px;">Duplicar el encaje <strong>reduce a la mitad</strong> la capacidad de creaci&oacute;n de dinero del sistema bancario.</p>
                 </div>
                 <div class="concepto-box">
-                    <h4 style="color: var(--azul-respaldo);">Corredor de tasas de inter&eacute;s</h4>
-                    <p>El BC fija una <strong>tasa piso</strong> (remuneraci&oacute;n de dep&oacute;sitos de bancos en el BC) y una <strong>tasa techo</strong> (pr&eacute;stamos de &uacute;ltima instancia). La tasa interbancaria fluctua dentro del corredor, guiada por la <strong>tasa de pol&iacute;tica monetaria</strong> (TPM).</p>
+                    <h4 style="color: var(--azul-respaldo);">BC baja el encaje &rarr; pol&iacute;tica expansiva</h4>
+                    <p>Los bancos pueden prestar m&aacute;s de cada dep&oacute;sito &rarr; el multiplicador <strong>sube</strong> &rarr; la oferta monetaria se expande.</p>
+                    <div class="formula" style="background: rgba(255,255,255,0.2); margin-top: 10px;">
+                        Encaje 20% &rarr; m = 5 &nbsp;&nbsp;|&nbsp;&nbsp; Encaje 10% &rarr; m = 10
+                    </div>
+                    <p style="margin-top: 8px;">Reducir el encaje a la mitad <strong>duplica</strong> la capacidad de creaci&oacute;n de dinero.</p>
                 </div>
             </div>
 
-            <div class="formula" style="background: rgba(255,255,255,0.2); margin-top: 25px;">
-                Tasa piso (dep&oacute;sitos BC) &le; <strong>Tasa interbancaria</strong> &le; Tasa techo (ventanilla BC)
+            <div class="flow-diagram" style="margin-top: 20px;">
+                <div class="flow-box" style="border-color: rgba(255,255,255,0.4);"><strong>BC modifica<br>encaje</strong></div>
+                <div class="flow-arrow" style="color: white;">&rarr;</div>
+                <div class="flow-box" style="border-color: rgba(255,255,255,0.4);"><strong>Cambia el<br>multiplicador</strong></div>
+                <div class="flow-arrow" style="color: white;">&rarr;</div>
+                <div class="flow-box" style="border-color: rgba(255,255,255,0.4);"><strong>Var&iacute;a la<br>oferta monetaria</strong></div>
+                <div class="flow-arrow" style="color: white;">&rarr;</div>
+                <div class="flow-box" style="border-color: rgba(255,255,255,0.4);"><strong>Afecta tasa<br>de inter&eacute;s</strong></div>
             </div>
 
-            <p class="nota-academica" style="border-top-color: rgba(255,255,255,0.25);">Referencia: Samuelson &amp; Nordhaus, Cap. 26. Bernanke &amp; Frank, Cap. 25. El corredor de tasas es el mecanismo operativo est&aacute;ndar de bancos centrales modernos (Fed, BCE, BCRA).</p>
+            <p class="nota-academica" style="border-top-color: rgba(255,255,255,0.25);">Referencia: Samuelson &amp; Nordhaus, Cap. 25&ndash;26. Bernanke &amp; Frank, Cap. 24. Es un instrumento potente pero poco flexible; la mayor&iacute;a de los BC prefiere las OMA para ajustes cotidianos.</p>
         </div>
 
         <!-- ===== SLIDE 11: HERRAMIENTAS NO CONVENCIONALES ===== -->
@@ -928,7 +1513,7 @@
                 </div>
                 <div class="concepto-box">
                     <h4>Canal del tipo de cambio</h4>
-                    <p>Menores tasas &rarr; capitales emigran buscando mayor rendimiento &rarr; se deprecia la moneda &rarr; mejoran exportaciones netas. Relevante en <strong>econom&iacute;as abiertas</strong>.</p>
+                    <p>Menores tasas &rarr; capitales emigran buscando mejor rendimiento &rarr; <strong>presi&oacute;n sobre el tipo de cambio</strong> (depreciaci&oacute;n). Esto puede generar <span class="highlight-red">inestabilidad cambiaria</span>, encarecimiento de importaciones y pass-through a precios internos. En econom&iacute;as abiertas y bimonetarias como Argentina, este canal es <strong>particularmente riesgoso</strong>.</p>
                 </div>
                 <div class="concepto-box">
                     <h4>Canal de expectativas</h4>
@@ -1082,6 +1667,89 @@
             <p class="nota-academica">Referencia: Samuelson &amp; Nordhaus, Cap. 27. Bernanke &amp; Frank, Cap. 25. El inflation targeting fue adoptado por Nueva Zelanda en 1990 y se expandi&oacute; globalmente.</p>
         </div>
 
+        <!-- ===== SLIDE G: REGLA VS. DISCRECIONALIDAD — TEORÍA DE JUEGOS ===== -->
+        <div class="slide bg-blanco">
+            <h2>Regla vs. discrecionalidad: <span class="highlight">el juego del banco central</span></h2>
+            <p>El problema de la pol&iacute;tica monetaria puede plantearse como un <strong>juego estrat&eacute;gico</strong> entre dos actores:</p>
+
+            <div class="two-cols" style="margin-top: 15px; margin-bottom: 15px;">
+                <div>
+                    <ul>
+                        <li><strong>Jugador 1: Banco Central</strong> &mdash; anuncia &laquo;voy a mantener la inflaci&oacute;n baja&raquo; (compromiso)</li>
+                        <li><strong>Jugador 2: Sector Privado</strong> (trabajadores, empresas) &mdash; forma expectativas en base a ese anuncio</li>
+                    </ul>
+                </div>
+                <div>
+                    <div class="problema-box">
+                        <p style="margin-bottom: 0;"><strong>La tentaci&oacute;n:</strong> una vez que las expectativas est&aacute;n ancladas en inflaci&oacute;n baja, el BC podr&iacute;a &laquo;sorprender&raquo; con un poco m&aacute;s de dinero para impulsar el empleo. Pero el sector privado <strong>conoce</strong> esta tentaci&oacute;n...</p>
+                    </div>
+                </div>
+            </div>
+
+            <h3 style="font-size: 1.4rem; margin-bottom: 12px;">Matriz de pagos</h3>
+            <table style="font-size: 1.15rem; max-width: 850px;">
+                <thead>
+                    <tr>
+                        <th style="width: 200px;"></th>
+                        <th style="text-align: center;">BC <span style="color: var(--azul-impulso); font-weight: 700; text-transform: none; letter-spacing: 0;">Cumple</span></th>
+                        <th style="text-align: center;">BC <span style="color: var(--rojo-alerta); font-weight: 700; text-transform: none; letter-spacing: 0;">Enga&ntilde;a</span></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Privado Cree</strong></td>
+                        <td style="text-align: center; background: rgba(0, 198, 0, 0.1); border: 2px solid var(--verde-activo); border-radius: 6px;"><strong style="color: var(--verde-activo);">&iexcl;Mejor resultado!</strong><br>Baja inflaci&oacute;n, empleo en tasa natural. Cooperaci&oacute;n.</td>
+                        <td style="text-align: center;">BC gana empleo temporalmente, pero <strong>destruye credibilidad</strong>.</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Privado No Cree</strong></td>
+                        <td style="text-align: center;">BC cumple pero nadie le cree &rarr; ajustes salariales excesivos.</td>
+                        <td style="text-align: center; background: rgba(220, 38, 38, 0.12); border: 2px solid var(--rojo-alerta); border-radius: 6px;"><strong style="color: var(--rojo-alerta);">Equilibrio de Nash</strong><br>Alta inflaci&oacute;n, <strong>SIN</strong> ganancia de empleo. Ambos pierden.</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <blockquote style="margin-top: 15px; border-left-color: var(--azul-impulso);">
+                El resultado racional del juego es el <strong>peor para la sociedad</strong>: alta inflaci&oacute;n sin beneficio de empleo. La inconsistencia temporal genera un <em>sesgo inflacionario</em>.
+                <cite>&mdash; Kydland &amp; Prescott (1977), Barro &amp; Gordon (1983)</cite>
+            </blockquote>
+
+            <p class="nota-academica">Referencia: Kydland, F. &amp; Prescott, E. (1977). &laquo;Rules Rather than Discretion: The Inconsistency of Optimal Plans&raquo;, <em>Journal of Political Economy</em>, 85(3). Barro, R. &amp; Gordon, D. (1983). &laquo;A Positive Theory of Monetary Policy in a Natural Rate Model&raquo;, <em>Journal of Monetary Economics</em>, 12(1).</p>
+        </div>
+
+        <!-- ===== SLIDE H: SOLUCIONES AL PROBLEMA DE INCONSISTENCIA TEMPORAL ===== -->
+        <div class="slide bg-impulso">
+            <h2>Soluciones: c&oacute;mo <span style="color: var(--blanco); border-bottom: 3px solid var(--verde-activo);">atar las manos</span> del banco central</h2>
+            <p>&iquest;C&oacute;mo resolver la inconsistencia temporal? Cuatro caminos institucionales complementarios:</p>
+
+            <div class="two-cols" style="margin-top: 15px; gap: 25px;">
+                <div class="concepto-box">
+                    <h4 style="color: var(--blanco);">1. Reglas monetarias</h4>
+                    <p>Eliminar la discrecionalidad con reglas formales. La <strong>k% rule</strong> de Friedman (crecimiento monetario fijo) o la <strong>Regla de Taylor</strong> (tasa de inter&eacute;s que responde a inflaci&oacute;n y brecha del producto). Si el BC sigue una f&oacute;rmula, no hay espacio para la tentaci&oacute;n.</p>
+                </div>
+                <div class="concepto-box">
+                    <h4 style="color: var(--blanco);">2. Independencia del BC</h4>
+                    <p>Aislar al banco central de <strong>presiones pol&iacute;ticas</strong>. Un gobierno que necesita ganar elecciones tiene incentivos a pedir expansi&oacute;n monetaria. Un BC independiente puede resistir esa presi&oacute;n y priorizar la estabilidad de precios.</p>
+                </div>
+            </div>
+            <div class="two-cols" style="margin-top: 15px; gap: 25px;">
+                <div class="concepto-box">
+                    <h4 style="color: var(--blanco);">3. Metas de inflaci&oacute;n con rendici&oacute;n de cuentas</h4>
+                    <p>Un <strong>compromiso p&uacute;blico verificable</strong>: el BC anuncia una meta num&eacute;rica de inflaci&oacute;n y debe explicar si no la cumple. La transparencia reemplaza a la discrecionalidad. Adoptado desde Nueva Zelanda (1990) en adelante.</p>
+                </div>
+                <div class="concepto-box">
+                    <h4 style="color: var(--blanco);">4. El &laquo;banquero central conservador&raquo;</h4>
+                    <p>Rogoff (1985): nombrar a alguien <strong>m&aacute;s hawkish</strong> que la sociedad promedio &mdash;alguien que le d&eacute; m&aacute;s peso a la inflaci&oacute;n que al empleo. As&iacute;, el sesgo inflacionario se reduce porque quien decide tiene preferencias m&aacute;s estrictas.</p>
+                </div>
+            </div>
+
+            <blockquote style="margin-top: 20px; border-left-color: var(--blanco);">
+                La credibilidad no se declara, se construye. Y es m&aacute;s f&aacute;cil destruirla que construirla.
+            </blockquote>
+
+            <p class="nota-academica" style="border-top-color: rgba(255,255,255,0.25);">Referencia: Rogoff, K. (1985). &laquo;The Optimal Degree of Commitment to an Intermediate Monetary Target&raquo;, <em>Quarterly Journal of Economics</em>. Walsh, C. (1995). &laquo;Optimal Contracts for Central Bankers&raquo;, <em>American Economic Review</em>. Bernanke, B. &amp; Frank, R. <em>Principios de Econom&iacute;a</em>, Cap. 25.</p>
+        </div>
+
         <!-- ===== SLIDE 18: SECCIÓN TÍTULO — EMISIÓN E INFLACIÓN ===== -->
         <div class="slide bg-respaldo seccion-titulo">
             <h3>Secci&oacute;n IV</h3>
@@ -1191,76 +1859,37 @@
             <p class="nota-academica">Referencia: Samuelson &amp; Nordhaus, Cap. 28. Bernanke &amp; Frank, Cap. 25. Este paper es uno de los m&aacute;s citados en la literatura sobre dinero e inflaci&oacute;n.</p>
         </div>
 
-        <!-- ===== SLIDE 22: POST-2008 — LA INFLACIÓN QUE NO LLEGÓ ===== -->
-        <div class="slide bg-verde">
-            <h2>Post&ndash;2008: la inflaci&oacute;n <span style="color: var(--azul-respaldo);">que no lleg&oacute;</span></h2>
-            <p>Si m&aacute;s dinero = m&aacute;s inflaci&oacute;n, &iquest;qu&eacute; pas&oacute; despu&eacute;s de 2008? Los principales bancos centrales multiplicaron la base monetaria y la inflaci&oacute;n permaneci&oacute; <strong>por debajo de la meta</strong> durante una d&eacute;cada.</p>
-
-            <div class="stats-grid">
-                <div class="stat-box">
-                    <div class="stat-numero" style="color: var(--azul-respaldo);">x5</div>
-                    <div class="stat-label">Expansi&oacute;n de la base monetaria de la Fed (2008&ndash;2014)</div>
-                </div>
-                <div class="stat-box">
-                    <div class="stat-numero" style="color: var(--azul-respaldo);">1.5%</div>
-                    <div class="stat-label">Inflaci&oacute;n promedio en EE.UU. (2009&ndash;2019) &mdash; debajo de la meta del 2%</div>
-                </div>
-                <div class="stat-box">
-                    <div class="stat-numero" style="color: var(--azul-respaldo);">0.3%</div>
-                    <div class="stat-label">Inflaci&oacute;n promedio en Jap&oacute;n (2010&ndash;2019) pese a QE masivo</div>
-                </div>
-            </div>
-
-            <div class="two-cols" style="margin-top: 20px;">
-                <div class="concepto-box">
-                    <h4 style="color: var(--azul-respaldo);">&iquest;Qu&eacute; fall&oacute; en la predicci&oacute;n monetarista?</h4>
-                    <p>La <strong>velocidad de circulaci&oacute;n</strong> (V) colaps&oacute;. Los bancos acumularon reservas excedentes en vez de prestar. El dinero creado por el BC qued&oacute; &laquo;atrapado&raquo; en el sistema financiero y nunca lleg&oacute; a la econom&iacute;a real.</p>
-                </div>
-                <div class="concepto-box">
-                    <h4 style="color: var(--azul-respaldo);">Trampa de liquidez 2.0</h4>
-                    <p>Con tasas en cero y expectativas deprimidas, la pol&iacute;tica monetaria pierde tracci&oacute;n. Es la versi&oacute;n moderna de la <strong>trampa de liquidez</strong> keynesiana: el dinero extra se atesora, no se gasta.</p>
-                </div>
-            </div>
-
-            <p class="nota-academica" style="border-top-color: rgba(255,255,255,0.25);">Referencia: Samuelson &amp; Nordhaus (ediciones recientes). Bernanke &amp; Frank, Cap. 25. Krugman, P. (1998). &laquo;It&rsquo;s Baaack: Japan&rsquo;s Slump and the Return of the Liquidity Trap&raquo;, <em>Brookings Papers on Economic Activity</em>.</p>
-        </div>
-
-        <!-- ===== SLIDE 23: SÍNTESIS ===== -->
+        <!-- ===== SLIDE: SÍNTESIS ===== -->
         <div class="slide bg-blanco">
-            <h2>S&iacute;ntesis: <span class="highlight">&iquest;emisi&oacute;n causa inflaci&oacute;n?</span></h2>
-            <p>La respuesta honesta es: <strong>depende del contexto</strong>. La evidencia sugiere una relaci&oacute;n que var&iacute;a seg&uacute;n el horizonte temporal y las condiciones econ&oacute;micas:</p>
+            <h2>S&iacute;ntesis: emisi&oacute;n <span class="highlight">sostenida</span> y sin respaldo s&iacute; genera inflaci&oacute;n</h2>
+            <p>La evidencia emp&iacute;rica (McCandless &amp; Weber, 110 pa&iacute;ses, 30 a&ntilde;os) es contundente: <strong>sostener elevados niveles de emisi&oacute;n monetaria lleva a inflaci&oacute;n</strong>. La clave est&aacute; en la ecuaci&oacute;n cuantitativa:</p>
+
+            <div class="formula formula-grande" style="margin: 15px 0;">
+                &Delta;M + &Delta;V = &Delta;P + &Delta;Y
+            </div>
+
+            <p style="text-align: center;">Si la emisi&oacute;n (&Delta;M) supera <strong>sostenidamente</strong> al crecimiento real (&Delta;Y), y la velocidad (V) no cae proporcionalmente, el excedente se traduce en <strong>mayor nivel de precios</strong> (&Delta;P).</p>
 
             <div class="three-cols" style="margin-top: 15px;">
                 <div class="concepto-box">
-                    <h4>Largo plazo</h4>
-                    <p>La relaci&oacute;n dinero&ndash;inflaci&oacute;n es <strong>robusta</strong>. Pa&iacute;ses que emiten sistem&aacute;ticamente por encima de su crecimiento real terminan con alta inflaci&oacute;n. McCandless &amp; Weber lo confirman con 110 pa&iacute;ses.</p>
+                    <h4>Capacidad ociosa</h4>
+                    <p>Si la econom&iacute;a tiene recursos sin usar, una expansi&oacute;n monetaria puede estimular el producto real (Y sube) antes de generar inflaci&oacute;n. Pero si la econom&iacute;a opera cerca de su potencial, el efecto va <strong>directo a precios</strong>.</p>
                 </div>
                 <div class="concepto-box">
-                    <h4>Corto plazo</h4>
-                    <p>La relaci&oacute;n es <strong>contingente</strong>. Depende de la brecha del producto, las expectativas, la velocidad de circulaci&oacute;n y la credibilidad del BC. La misma expansi&oacute;n puede generar inflaci&oacute;n o no.</p>
+                    <h4>Demanda de dinero</h4>
+                    <p>Si la emisi&oacute;n responde a un <strong>aumento genuino de la demanda de dinero</strong> (porque la econom&iacute;a crece, se monetiza, hay m&aacute;s transacciones), no es inflacionaria. El problema es emitir <strong>por encima</strong> de lo que la econom&iacute;a demanda.</p>
                 </div>
                 <div class="concepto-box">
-                    <h4>Clave: las expectativas</h4>
-                    <p>Si los agentes <strong>creen</strong> que la emisi&oacute;n generar&aacute; inflaci&oacute;n, ajustan precios preventivamente y la profec&iacute;a se autocumple. La credibilidad del BC es el activo m&aacute;s valioso.</p>
+                    <h4>Expectativas</h4>
+                    <p>Si los agentes <strong>perciben</strong> que la emisi&oacute;n es transitoria y el BC es cre&iacute;ble, V puede absorber el exceso. Si perciben que es permanente, ajustan precios <strong>anticipadamente</strong> y la inflaci&oacute;n se materializa m&aacute;s r&aacute;pido.</p>
                 </div>
             </div>
 
-            <div class="flow-diagram" style="margin-top: 20px;">
-                <div class="flow-box" style="background: rgba(220,38,38,0.1); border: 2px solid var(--rojo-alerta);"><strong>Emisi&oacute;n sin respaldo<br>productivo</strong></div>
-                <div class="flow-arrow" style="color: var(--azul-impulso);">&rarr;</div>
-                <div class="flow-box"><strong>&iquest;Hay capacidad<br>ociosa?</strong></div>
-                <div class="flow-arrow" style="color: var(--azul-impulso);">&rarr;</div>
-                <div class="flow-box"><strong>&iquest;Expectativas<br>ancladas?</strong></div>
-                <div class="flow-arrow" style="color: var(--azul-impulso);">&rarr;</div>
-                <div class="flow-box" style="background: rgba(0,198,0,0.1); border: 2px solid var(--verde-activo);"><strong>Resultado depende<br>del contexto</strong></div>
+            <div class="problema-box" style="margin-top: 15px;">
+                <p style="margin: 0;"><strong>Conclusi&oacute;n:</strong> la emisi&oacute;n monetaria sostenida y sin respaldo en demanda real de dinero <strong>s&iacute; genera inflaci&oacute;n</strong>. Las variables que determinan la velocidad y magnitud del efecto son: la capacidad ociosa (&Delta;Y potencial), las expectativas de inflaci&oacute;n, la credibilidad del BC y la din&aacute;mica de la demanda de dinero (V).</p>
             </div>
 
-            <blockquote style="margin-top: 15px;">
-                &laquo;La inflaci&oacute;n es siempre un fen&oacute;meno monetario... <em>en el largo plazo</em>. En el corto plazo, es un fen&oacute;meno de expectativas, instituciones y credibilidad.&raquo;
-                <cite>&mdash; S&iacute;ntesis contempor&aacute;nea</cite>
-            </blockquote>
-
-            <p class="nota-academica">Referencia: Samuelson &amp; Nordhaus, Cap. 26&ndash;28. Bernanke &amp; Frank, Cap. 24&ndash;25. Blanchard, O. (2021). &laquo;In Defense of Concerns over the $1.9 Trillion Relief Plan&raquo;, Peterson Institute.</p>
+            <p class="nota-academica">Referencia: Samuelson &amp; Nordhaus, Cap. 26&ndash;28. Bernanke &amp; Frank, Cap. 24&ndash;25. McCandless &amp; Weber (1995): correlaci&oacute;n 0.95 entre &Delta;M y &Delta;P en el largo plazo.</p>
         </div>
         <!-- ============================================================ -->
         <!-- SECCI&Oacute;N 5: COORDINACI&Oacute;N FISCAL-MONETARIA (24-27) -->
