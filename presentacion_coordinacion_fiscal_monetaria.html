@@ -267,6 +267,9 @@
             color: var(--azul-impulso);
         }
 
+        .bg-verde .concepto-box h4 { color: var(--azul-respaldo); }
+        .bg-verde .highlight { color: var(--azul-respaldo); }
+
         .concepto-box p {
             font-size: 1.15rem;
             margin-bottom: 0;
@@ -460,6 +463,18 @@
             border-top-color: rgba(0,0,0,0.1);
         }
 
+        /* Anexo badge */
+        .anexo-badge {
+            background: var(--amarillo);
+            color: #000;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            display: inline-block;
+            margin-bottom: 20px;
+        }
+
         /* Era badge */
         .era-badge {
             padding: 8px 20px;
@@ -558,6 +573,7 @@
             .cita-paper .autores { font-size: 0.8rem; }
             .cita-paper .contenido { font-size: 1rem; }
             .nota-academica { font-size: 0.8rem; margin-top: 15px; padding-top: 10px; }
+            .anexo-badge { font-size: 0.75rem; padding: 4px 12px; }
             .formula { font-size: 1.3rem; padding: 18px; margin: 15px 0; }
             .flow-diagram { gap: 8px; margin: 20px 0; }
             .flow-box { padding: 12px 16px; font-size: 0.95rem; }
@@ -1162,7 +1178,729 @@
             </div>
         </div>
 
-        <!-- SLIDE 32: CIERRE -->
+        <!-- ========== SECCIÓN ANEXO: PAPERS EN PROFUNDIDAD ========== -->
+
+        <div class="slide bg-respaldo seccion-titulo">
+            <h3>Anexo</h3>
+            <h1>Papers en <span class="highlight">profundidad</span></h1>
+            <p class="subtitle">Desarrollo de los textos acad&eacute;micos citados en la presentaci&oacute;n</p>
+        </div>
+
+        <!-- ===== PAPER 1: CAGAN (1956) ===== -->
+
+        <div class="slide bg-blanco">
+            <span class="anexo-badge">ANEXO &mdash; PAPERS</span>
+            <h2>La din&aacute;mica monetaria de la <span class="highlight">hiperinflaci&oacute;n</span></h2>
+
+            <div class="cita-paper">
+                <strong>Cagan, P. (1956).</strong> &laquo;The Monetary Dynamics of Hyperinflation&raquo;, en <em>Studies in the Quantity Theory of Money</em>, ed. Milton Friedman. University of Chicago Press, pp. 25&ndash;117.
+            </div>
+
+            <div class="concepto-box">
+                <h4>Hallazgo central</h4>
+                <p>Primer estudio emp&iacute;rico riguroso de siete episodios de hiperinflaci&oacute;n (Alemania, Hungr&iacute;a, Austria, Polonia, Grecia, Rusia y China). Cagan demostr&oacute; que la <strong>demanda de dinero</strong> depende fundamentalmente de la <strong>inflaci&oacute;n esperada</strong>: cuando las expectativas se vuelven adaptativas y explosivas, el sistema monetario colapsa.</p>
+            </div>
+
+            <div class="stats-grid">
+                <div class="stat-box">
+                    <span class="stat-numero">7</span>
+                    <span class="stat-label">Episodios estudiados</span>
+                </div>
+                <div class="stat-box">
+                    <span class="stat-numero">10<sup>25</sup></span>
+                    <span class="stat-label">Nivel de precios en Hungr&iacute;a (1946)</span>
+                </div>
+                <div class="stat-box">
+                    <span class="stat-numero">50%</span>
+                    <span class="stat-label">Umbral mensual de hiperinflaci&oacute;n</span>
+                </div>
+            </div>
+
+            <div class="concepto-box">
+                <h4>Tesis fundamental</h4>
+                <p>La hiperinflaci&oacute;n es un <strong>fen&oacute;meno esencialmente fiscal</strong>: los gobiernos recurren a la emisi&oacute;n monetaria porque han perdido la capacidad de recaudar impuestos por v&iacute;as convencionales. El se&ntilde;oreaje se convierte en la &uacute;ltima fuente de financiamiento.</p>
+            </div>
+
+            <p class="nota-academica">Fuente: Cagan (1956), cap&iacute;tulo en <em>Studies in the Quantity Theory of Money</em>, NBER/U. of Chicago.</p>
+        </div>
+
+        <div class="slide bg-respaldo">
+            <span class="anexo-badge">ANEXO &mdash; PAPERS</span>
+            <h2>El modelo de <span class="highlight">Cagan</span>: expectativas adaptativas y din&aacute;mica explosiva</h2>
+
+            <div class="concepto-box">
+                <h4>Demanda de dinero de Cagan</h4>
+                <div class="formula">
+                    ln(M/P) = &alpha; &minus; &beta;&pi;<sup>e</sup>
+                </div>
+                <p>Donde <strong>M/P</strong> son saldos reales, <strong>&pi;<sup>e</sup></strong> es la inflaci&oacute;n esperada y <strong>&beta;</strong> es la semi-elasticidad de la demanda de dinero respecto a la inflaci&oacute;n esperada.</p>
+            </div>
+
+            <div class="concepto-box">
+                <h4>Expectativas adaptativas</h4>
+                <div class="formula">
+                    d&pi;<sup>e</sup>/dt = &gamma;(&pi; &minus; &pi;<sup>e</sup>), &ensp; &gamma; &gt; 0
+                </div>
+                <p>Los agentes corrigen sus expectativas proporcionalmente al error pasado. Si <strong>&beta;&gamma; &gt; 1</strong>, el sistema se vuelve <strong>inestable</strong>: la inflaci&oacute;n observada supera las expectativas, que se revisan al alza, generando a&uacute;n m&aacute;s inflaci&oacute;n.</p>
+            </div>
+
+            <div class="flow-diagram">
+                <div class="flow-box">D&eacute;ficit fiscal insostenible</div>
+                <div class="flow-arrow">&rarr;</div>
+                <div class="flow-box">Emisi&oacute;n monetaria para financiarlo</div>
+                <div class="flow-arrow">&rarr;</div>
+                <div class="flow-box">Inflaci&oacute;n sube</div>
+                <div class="flow-arrow">&rarr;</div>
+                <div class="flow-box">Expectativas se revisan al alza</div>
+                <div class="flow-arrow">&rarr;</div>
+                <div class="flow-box">Ca&iacute;da de demanda de dinero</div>
+                <div class="flow-arrow">&rarr;</div>
+                <div class="flow-box">Hiperinflaci&oacute;n explosiva</div>
+            </div>
+
+            <p class="nota-academica">El par&aacute;metro cr&iacute;tico &beta;&gamma; determina la estabilidad: por debajo de 1, el sistema converge; por encima, explota.</p>
+        </div>
+
+        <div class="slide bg-impulso">
+            <span class="anexo-badge">ANEXO &mdash; PAPERS</span>
+            <h2>Cagan aplicado a <span class="highlight">Argentina</span>: la hiperinflaci&oacute;n de 1989&ndash;1990</h2>
+
+            <div class="two-cols">
+                <div class="concepto-box">
+                    <h4>El episodio argentino</h4>
+                    <p>Entre mayo y julio de 1989, la inflaci&oacute;n mensual super&oacute; el <strong>100%</strong>, alcanzando un pico de <strong>196% en julio de 1989</strong>. El Plan Austral (1985) y el Plan Primavera (1988) hab&iacute;an fracasado, erosionando toda credibilidad.</p>
+                    <ul>
+                        <li>D&eacute;ficit fiscal financiado con emisi&oacute;n del BCRA</li>
+                        <li>Fracaso sucesivo de planes de estabilizaci&oacute;n</li>
+                        <li>Ca&iacute;da de la demanda de dinero &mdash; &laquo;huida del peso&raquo;</li>
+                        <li>Dolarizaci&oacute;n de facto de la econom&iacute;a</li>
+                    </ul>
+                </div>
+                <div class="concepto-box">
+                    <h4>Comparaci&oacute;n con los casos de Cagan</h4>
+                    <p>La din&aacute;mica argentina replica exactamente el modelo:</p>
+                    <ul>
+                        <li><strong>Alemania 1923:</strong> d&eacute;ficit post-b&eacute;lico &rarr; emisi&oacute;n &rarr; hiperinflaci&oacute;n</li>
+                        <li><strong>Hungr&iacute;a 1946:</strong> destrucci&oacute;n institucional &rarr; colapso fiscal</li>
+                        <li><strong>Argentina 1989:</strong> dominancia fiscal + p&eacute;rdida de credibilidad &rarr; expectativas explosivas</li>
+                    </ul>
+                    <p>En todos los casos, la <strong>condici&oacute;n &beta;&gamma; &gt; 1</strong> se satisface: las expectativas inflacionarias superan la capacidad del sistema de auto-corregirse.</p>
+                </div>
+            </div>
+
+            <div class="problema-box">
+                <h4>&iquest;Por qu&eacute; fall&oacute; el Plan Austral?</h4>
+                <p>Congel&oacute; precios y salarios sin resolver el d&eacute;ficit fiscal subyacente. Cagan predice este resultado: sin correcci&oacute;n fiscal, ning&uacute;n ancla nominal sobrevive. La inflaci&oacute;n reprimida eventualmente explota con mayor virulencia.</p>
+            </div>
+
+            <p class="nota-academica">Datos de inflaci&oacute;n: INDEC. Comparaciones con Cagan (1956), Tabla 1.</p>
+        </div>
+
+        <!-- ===== PAPER 2: BARRO (1974) ===== -->
+
+        <div class="slide bg-verde">
+            <span class="anexo-badge">ANEXO &mdash; PAPERS</span>
+            <h2>Equivalencia <span style="color: var(--azul-respaldo);">Ricardiana</span></h2>
+
+            <div class="cita-paper">
+                <strong>Barro, R. (1974).</strong> &laquo;Are Government Bonds Net Wealth?&raquo;, <em>Journal of Political Economy</em>, 82(6), pp. 1095&ndash;1117.
+            </div>
+
+            <div class="concepto-box">
+                <h4 style="color: var(--azul-respaldo);">Proposici&oacute;n central</h4>
+                <p>Los consumidores racionales tratan la <strong>deuda p&uacute;blica</strong> como <strong>impuestos futuros descontados</strong>. Por lo tanto, un aumento del gasto p&uacute;blico financiado con deuda no incrementa la riqueza neta percibida: los agentes aumentan su ahorro para pagar los impuestos futuros que la deuda implica.</p>
+            </div>
+
+            <div class="stats-grid">
+                <div class="stat-box">
+                    <span class="stat-numero">=0</span>
+                    <span class="stat-label">Efecto neto del est&iacute;mulo fiscal v&iacute;a deuda</span>
+                </div>
+                <div class="stat-box">
+                    <span class="stat-numero">1:1</span>
+                    <span class="stat-label">Compensaci&oacute;n ahorro privado / d&eacute;ficit</span>
+                </div>
+                <div class="stat-box">
+                    <span class="stat-numero">&infin;</span>
+                    <span class="stat-label">Horizonte de planificaci&oacute;n (altruismo intergeneracional)</span>
+                </div>
+            </div>
+
+            <div class="concepto-box">
+                <h4 style="color: var(--azul-respaldo);">Desaf&iacute;o al multiplicador keynesiano</h4>
+                <p>Si la equivalencia ricardiana se cumple, el <strong>multiplicador fiscal es cero</strong>: el gasto p&uacute;blico financiado con deuda no estimula la demanda agregada porque el sector privado ahorra exactamente lo que el gobierno gasta de m&aacute;s.</p>
+            </div>
+
+            <p class="nota-academica">Fuente: Barro (1974), Journal of Political Economy, University of Chicago Press.</p>
+        </div>
+
+        <div class="slide bg-blanco">
+            <span class="anexo-badge">ANEXO &mdash; PAPERS</span>
+            <h2>El mecanismo de la <span class="highlight">equivalencia ricardiana</span></h2>
+
+            <div class="flow-diagram">
+                <div class="flow-box">Gobierno aumenta gasto financiado con deuda</div>
+                <div class="flow-arrow">&rarr;</div>
+                <div class="flow-box">Hogares anticipan impuestos futuros m&aacute;s altos</div>
+                <div class="flow-arrow">&rarr;</div>
+                <div class="flow-box">Ahorro privado aumenta en igual magnitud</div>
+                <div class="flow-arrow">&rarr;</div>
+                <div class="flow-box">Demanda agregada no cambia</div>
+                <div class="flow-arrow">&rarr;</div>
+                <div class="flow-box">Multiplicador fiscal = 0</div>
+            </div>
+
+            <div class="two-cols">
+                <div class="concepto-box">
+                    <h4>Supuestos necesarios</h4>
+                    <ul>
+                        <li><strong>Agentes racionales</strong> con horizonte infinito (o altruismo intergeneracional)</li>
+                        <li><strong>Mercados de cr&eacute;dito perfectos:</strong> hogares pueden prestar y endeudarse libremente</li>
+                        <li><strong>Impuestos no distorsivos</strong> (lump-sum)</li>
+                        <li><strong>Certidumbre</strong> sobre la pol&iacute;tica fiscal futura</li>
+                    </ul>
+                </div>
+                <div class="concepto-box">
+                    <h4>Implicaciones para la pol&iacute;tica econ&oacute;mica</h4>
+                    <ul>
+                        <li>La forma de financiamiento del gasto (deuda vs. impuestos) es <strong>irrelevante</strong></li>
+                        <li>Solo el <strong>nivel de gasto</strong> p&uacute;blico importa, no su financiamiento</li>
+                        <li>Los bonos del gobierno <strong>no son riqueza neta</strong> para el sector privado</li>
+                        <li>La tasa de inter&eacute;s no se ve afectada por d&eacute;ficits fiscales</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="formula">
+                &Delta;B = &Delta;S<sub>privado</sub> &rArr; &Delta;Demanda Agregada = 0
+            </div>
+
+            <p class="nota-academica">Barro formaliz&oacute; una idea originalmente propuesta por David Ricardo en 1820, de ah&iacute; el nombre &laquo;equivalencia ricardiana&raquo;.</p>
+        </div>
+
+        <div class="slide bg-respaldo">
+            <span class="anexo-badge">ANEXO &mdash; PAPERS</span>
+            <h2>&iquest;Por qu&eacute; la equivalencia ricardiana <span class="highlight">no aplica</span> en Argentina?</h2>
+
+            <div class="two-cols">
+                <div class="concepto-box">
+                    <h4>Restricciones crediticias</h4>
+                    <p>El supuesto de mercados de cr&eacute;dito perfectos <strong>no se cumple</strong> en Argentina. Gran parte de la poblaci&oacute;n est&aacute; excluida del sistema financiero formal:</p>
+                    <ul>
+                        <li>Baja bancarizaci&oacute;n (~50% de adultos)</li>
+                        <li>Cr&eacute;dito hipotecario pr&aacute;cticamente inexistente</li>
+                        <li>Tasas de inter&eacute;s reales prohibitivas</li>
+                        <li>Los hogares restringidos gastan todo ingreso adicional</li>
+                    </ul>
+                </div>
+                <div class="concepto-box">
+                    <h4>Econom&iacute;a informal y credibilidad</h4>
+                    <p>Otros supuestos que fallan sistem&aacute;ticamente:</p>
+                    <ul>
+                        <li><strong>Econom&iacute;a informal (~40% del PIB):</strong> millones de agentes fuera del sistema tributario no internalizan impuestos futuros</li>
+                        <li><strong>Falta de credibilidad:</strong> cambios de r&eacute;gimen frecuentes hacen imposible formar expectativas racionales sobre impuestos futuros</li>
+                        <li><strong>Horizonte corto:</strong> la inestabilidad reduce el horizonte de planificaci&oacute;n a meses, no generaciones</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="problema-box">
+                <h4>Consecuencia para Argentina</h4>
+                <p>En una econom&iacute;a con restricciones crediticias severas, alta informalidad y baja credibilidad institucional, el <strong>multiplicador fiscal es significativamente mayor que cero</strong>. Esto explica por qu&eacute; la expansi&oacute;n fiscal s&iacute; genera booms de consumo en el corto plazo &mdash;pero tambi&eacute;n por qu&eacute; la contracci&oacute;n fiscal genera recesiones m&aacute;s profundas que lo que predice el modelo ricardiano.</p>
+            </div>
+
+            <p class="nota-academica">V&eacute;ase tambi&eacute;n: Elmendorf &amp; Mankiw (1999), &laquo;Government Debt&raquo;, Handbook of Macroeconomics.</p>
+        </div>
+
+        <!-- ===== PAPER 3: SARGENT & WALLACE (1981) ===== -->
+
+        <div class="slide bg-impulso">
+            <span class="anexo-badge">ANEXO &mdash; PAPERS</span>
+            <h2>La aritm&eacute;tica <span class="highlight">desagradable</span> del monetarismo</h2>
+
+            <div class="cita-paper">
+                <strong>Sargent, T. &amp; Wallace, N. (1981).</strong> &laquo;Some Unpleasant Monetarist Arithmetic&raquo;, <em>Federal Reserve Bank of Minneapolis Quarterly Review</em>, 5(3), pp. 1&ndash;17.
+            </div>
+
+            <div class="concepto-box">
+                <h4>La aritm&eacute;tica desagradable</h4>
+                <p>Si la <strong>autoridad fiscal domina</strong> y mantiene d&eacute;ficits persistentes, el banco central <strong>eventualmente deber&aacute; monetizar la deuda</strong>, sin importar cu&aacute;n restrictiva sea su pol&iacute;tica monetaria en el corto plazo. La pol&iacute;tica monetaria contractiva <em>hoy</em> puede significar <strong>m&aacute;s inflaci&oacute;n ma&ntilde;ana</strong>.</p>
+            </div>
+
+            <div class="stats-grid">
+                <div class="stat-box">
+                    <span class="stat-numero">r &gt; g</span>
+                    <span class="stat-label">Condici&oacute;n: tasa real &gt; crecimiento</span>
+                </div>
+                <div class="stat-box">
+                    <span class="stat-numero">&infin;</span>
+                    <span class="stat-label">Deuda no puede crecer para siempre</span>
+                </div>
+                <div class="stat-box">
+                    <span class="stat-numero">t+n</span>
+                    <span class="stat-label">Monetizaci&oacute;n inevitable en el futuro</span>
+                </div>
+            </div>
+
+            <div class="concepto-box">
+                <h4>La paradoja</h4>
+                <p>&laquo;Dinero apretado ahora&raquo; con d&eacute;ficits fiscales sin resolver produce <strong>menor se&ntilde;oreaje hoy</strong> pero acumula <strong>deuda que requerir&aacute; mayor se&ntilde;oreaje ma&ntilde;ana</strong>. La pol&iacute;tica monetaria sola no puede controlar la inflaci&oacute;n si la pol&iacute;tica fiscal no coopera.</p>
+            </div>
+
+            <p class="nota-academica">Fuente: Sargent &amp; Wallace (1981), Federal Reserve Bank of Minneapolis.</p>
+        </div>
+
+        <div class="slide bg-verde">
+            <span class="anexo-badge">ANEXO &mdash; PAPERS</span>
+            <h2>Dominancia <span style="color: var(--azul-respaldo);">fiscal</span> vs. dominancia <span style="color: var(--azul-respaldo);">monetaria</span></h2>
+
+            <div class="two-cols">
+                <div class="concepto-box">
+                    <h4 style="color: var(--azul-respaldo);">R&eacute;gimen de dominancia monetaria</h4>
+                    <ul>
+                        <li>El banco central fija la pol&iacute;tica monetaria <strong>de forma independiente</strong></li>
+                        <li>La autoridad fiscal <strong>ajusta</strong> sus d&eacute;ficits a lo que el mercado est&aacute; dispuesto a financiar</li>
+                        <li>El presupuesto p&uacute;blico se subordina al objetivo de inflaci&oacute;n</li>
+                        <li>Resultado: <strong>inflaci&oacute;n baja y estable</strong></li>
+                    </ul>
+                </div>
+                <div class="concepto-box">
+                    <h4 style="color: var(--azul-respaldo);">R&eacute;gimen de dominancia fiscal</h4>
+                    <ul>
+                        <li>La autoridad fiscal fija el d&eacute;ficit <strong>sin considerar</strong> la restricci&oacute;n monetaria</li>
+                        <li>El banco central <strong>debe acomodar</strong> monetizando la deuda o vi&eacute;ndola crecer hasta ser insostenible</li>
+                        <li>La pol&iacute;tica monetaria pierde autonom&iacute;a</li>
+                        <li>Resultado: <strong>inflaci&oacute;n alta o hiperinflaci&oacute;n</strong></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="flow-diagram">
+                <div class="flow-box">D&eacute;ficit fiscal persistente</div>
+                <div class="flow-arrow">&rarr;</div>
+                <div class="flow-box">Deuda crece a tasa r</div>
+                <div class="flow-arrow">&rarr;</div>
+                <div class="flow-box">Mercado deja de financiar</div>
+                <div class="flow-arrow">&rarr;</div>
+                <div class="flow-box">Banco central monetiza</div>
+                <div class="flow-arrow">&rarr;</div>
+                <div class="flow-box">Inflaci&oacute;n futura mayor</div>
+            </div>
+
+            <div class="formula">
+                B(t)/P(t) &le; &Sigma; [s<sub>t+i</sub>/(1+r)<sup>i</sup>] + &Sigma; [&Delta;M<sub>t+i</sub>/P<sub>t+i</sub>(1+r)<sup>i</sup>]
+            </div>
+
+            <p class="nota-academica">La restricci&oacute;n presupuestaria intertemporal del gobierno: la deuda real debe igualar el valor presente de super&aacute;vits futuros m&aacute;s se&ntilde;oreaje futuro.</p>
+        </div>
+
+        <div class="slide bg-blanco">
+            <span class="anexo-badge">ANEXO &mdash; PAPERS</span>
+            <h2>Sargent &amp; Wallace aplicado a <span class="highlight">Argentina</span></h2>
+
+            <div class="two-cols">
+                <div class="concepto-box">
+                    <h4>Subordinaci&oacute;n hist&oacute;rica del BCRA</h4>
+                    <p>Argentina fue un caso paradigm&aacute;tico de <strong>dominancia fiscal</strong> durante d&eacute;cadas:</p>
+                    <ul>
+                        <li><strong>1970s&ndash;1980s:</strong> el BCRA financi&oacute; d&eacute;ficits fiscales cr&oacute;nicos v&iacute;a emisi&oacute;n &rarr; hiperinflaci&oacute;n</li>
+                        <li><strong>Convertibilidad (1991):</strong> intento extremo de dominancia monetaria &mdash; se elimin&oacute; la capacidad de emisi&oacute;n</li>
+                        <li><strong>2003&ndash;2015:</strong> retorno gradual a la dominancia fiscal con uso de reservas y adelantos transitorios</li>
+                    </ul>
+                </div>
+                <div class="concepto-box">
+                    <h4>Crisis 2018&ndash;2019: la aritm&eacute;tica en acci&oacute;n</h4>
+                    <p>El programa de <strong>metas de inflaci&oacute;n</strong> (2016&ndash;2018) fracas&oacute; exactamente como predice el modelo:</p>
+                    <ul>
+                        <li>Pol&iacute;tica monetaria contractiva (Lebac) sin ajuste fiscal suficiente</li>
+                        <li>Deuda en d&oacute;lares creci&oacute; aceleradamente</li>
+                        <li>Cuando los mercados dejaron de financiar, el ajuste fue abrupto</li>
+                        <li>La inflaci&oacute;n subi&oacute; del 25% al 54% anual</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="solucion-box">
+                <h4>Lecci&oacute;n para la estabilizaci&oacute;n actual</h4>
+                <p>El modelo de Sargent &amp; Wallace demuestra que <strong>ning&uacute;n programa monetario puede tener &eacute;xito sin coordinaci&oacute;n fiscal</strong>. La actual estrategia de super&aacute;vit fiscal primario busca resolver la &laquo;aritm&eacute;tica desagradable&raquo; desde su ra&iacute;z: eliminando la necesidad de monetizaci&oacute;n futura.</p>
+            </div>
+
+            <p class="nota-academica">V&eacute;ase: Uribe (2024), &laquo;Fiscal Dominance in Argentina&raquo;; Cachanosky &amp; Ravier (2023).</p>
+        </div>
+
+        <!-- ===== PAPER 4: SARGENT (1982) ===== -->
+
+        <div class="slide bg-respaldo">
+            <span class="anexo-badge">ANEXO &mdash; PAPERS</span>
+            <h2>El fin de cuatro grandes <span class="highlight">inflaciones</span></h2>
+
+            <div class="cita-paper">
+                <strong>Sargent, T. (1982).</strong> &laquo;The Ends of Four Big Inflations&raquo;, en <em>Inflation: Causes and Effects</em>, ed. Robert Hall. NBER / University of Chicago Press, pp. 41&ndash;98.
+            </div>
+
+            <div class="concepto-box">
+                <h4>Hallazgo central</h4>
+                <p>Las hiperinflaciones de Austria, Hungr&iacute;a, Polonia y Alemania en la d&eacute;cada de 1920 terminaron de forma <strong>abrupta y casi inmediata</strong>, no gradual. El ingrediente esencial no fue solo la restricci&oacute;n monetaria, sino una <strong>reforma fiscal cre&iacute;ble</strong> que convenciera al p&uacute;blico de que la monetizaci&oacute;n del d&eacute;ficit hab&iacute;a terminado definitivamente.</p>
+            </div>
+
+            <div class="stats-grid">
+                <div class="stat-box">
+                    <span class="stat-numero">4</span>
+                    <span class="stat-label">Pa&iacute;ses estudiados</span>
+                </div>
+                <div class="stat-box">
+                    <span class="stat-numero">Abrupto</span>
+                    <span class="stat-label">Tipo de fin de hiperinflaci&oacute;n</span>
+                </div>
+                <div class="stat-box">
+                    <span class="stat-numero">Fiscal</span>
+                    <span class="stat-label">Origen de la credibilidad</span>
+                </div>
+            </div>
+
+            <div class="concepto-box">
+                <h4>Contra la visi&oacute;n gradualista</h4>
+                <p>Sargent refut&oacute; la idea de que la desinflaci&oacute;n requiere una recesi&oacute;n prolongada. Si el cambio de r&eacute;gimen es <strong>cre&iacute;ble</strong>, las expectativas se ajustan r&aacute;pidamente y la inflaci&oacute;n cae sin el costo convencional previsto por la curva de Phillips.</p>
+            </div>
+
+            <p class="nota-academica">Fuente: Sargent (1982), NBER Conference Volume.</p>
+        </div>
+
+        <div class="slide bg-impulso">
+            <span class="anexo-badge">ANEXO &mdash; PAPERS</span>
+            <h2>Los cuatro casos: &iquest;qu&eacute; <span class="highlight">funcion&oacute;</span>?</h2>
+
+            <div class="three-cols">
+                <div class="concepto-box">
+                    <h4>Compromiso fiscal</h4>
+                    <p>En los cuatro casos, el gobierno realiz&oacute; un <strong>ajuste fiscal dram&aacute;tico y visible</strong>:</p>
+                    <ul>
+                        <li>Eliminaci&oacute;n de subsidios</li>
+                        <li>Reforma tributaria integral</li>
+                        <li>Equilibrio presupuestario exigido por ley</li>
+                    </ul>
+                </div>
+                <div class="concepto-box">
+                    <h4>Reforma institucional</h4>
+                    <p>Se crearon <strong>nuevas instituciones</strong> que romp&iacute;an con el r&eacute;gimen anterior:</p>
+                    <ul>
+                        <li>Nuevas monedas (Rentenmark, peng&ouml;)</li>
+                        <li>Prohibici&oacute;n legal de financiar al Tesoro</li>
+                        <li>Supervisi&oacute;n internacional (Liga de Naciones)</li>
+                    </ul>
+                </div>
+                <div class="concepto-box">
+                    <h4>Banco central independiente</h4>
+                    <p>Se estableci&oacute; la <strong>independencia del banco central</strong> como se&ntilde;al cre&iacute;ble:</p>
+                    <ul>
+                        <li>Estatutos que proh&iacute;ben pr&eacute;stamos al gobierno</li>
+                        <li>Directorio independiente del poder pol&iacute;tico</li>
+                        <li>Respaldo en oro o divisas</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="flow-diagram">
+                <div class="flow-box">Crisis hiperinflacionaria</div>
+                <div class="flow-arrow">&rarr;</div>
+                <div class="flow-box">Reforma fiscal cre&iacute;ble</div>
+                <div class="flow-arrow">&rarr;</div>
+                <div class="flow-box">Nueva moneda + BC independiente</div>
+                <div class="flow-arrow">&rarr;</div>
+                <div class="flow-box">Cambio de expectativas</div>
+                <div class="flow-arrow">&rarr;</div>
+                <div class="flow-box">Inflaci&oacute;n cae abruptamente</div>
+            </div>
+
+            <p class="nota-academica">En Alemania, la inflaci&oacute;n pas&oacute; de billones por ciento anual a pr&aacute;cticamente cero en semanas tras la introducci&oacute;n del Rentenmark (noviembre 1923).</p>
+        </div>
+
+        <div class="slide bg-verde">
+            <span class="anexo-badge">ANEXO &mdash; PAPERS</span>
+            <h2>Sargent (1982) aplicado a <span style="color: var(--azul-respaldo);">Argentina</span></h2>
+
+            <div class="two-cols">
+                <div class="concepto-box">
+                    <h4 style="color: var(--azul-respaldo);">Convertibilidad 1991: &eacute;xito inicial, fracaso final</h4>
+                    <p>La Convertibilidad sigui&oacute; el &laquo;modelo Sargent&raquo; en su dise&ntilde;o:</p>
+                    <ul>
+                        <li>Nueva moneda (peso convertible 1:1 con d&oacute;lar)</li>
+                        <li>Prohibici&oacute;n de emisi&oacute;n sin respaldo</li>
+                        <li>Reforma fiscal parcial y privatizaciones</li>
+                    </ul>
+                    <p><strong>Resultado:</strong> inflaci&oacute;n cay&oacute; del 1.344% (1990) al 4% (1994). Pero la disciplina fiscal no se sostuvo &rarr; crisis de 2001.</p>
+                </div>
+                <div class="concepto-box">
+                    <h4 style="color: var(--azul-respaldo);">Estabilizaci&oacute;n 2024&ndash;2025: &iquest;esta vez es diferente?</h4>
+                    <p>El programa actual tambi&eacute;n busca replicar las lecciones de Sargent:</p>
+                    <ul>
+                        <li><strong>Ajuste fiscal agresivo:</strong> super&aacute;vit primario como ancla principal</li>
+                        <li><strong>Fin del financiamiento monetario:</strong> eliminaci&oacute;n de adelantos transitorios al Tesoro</li>
+                        <li><strong>Se&ntilde;ales institucionales:</strong> compromiso legislativo con el equilibrio fiscal</li>
+                    </ul>
+                    <p><strong>Pregunta abierta:</strong> &iquest;es la reforma lo suficientemente cre&iacute;ble e irreversible?</p>
+                </div>
+            </div>
+
+            <div class="solucion-box">
+                <h4>La lecci&oacute;n de Sargent para Argentina</h4>
+                <p>La inflaci&oacute;n no se reduce gradualmente &laquo;de a poco&raquo;: se termina con un <strong>cambio de r&eacute;gimen cre&iacute;ble</strong>. La clave no es solo lo que el gobierno hace hoy, sino lo que el p&uacute;blico <em>cree que har&aacute; ma&ntilde;ana</em>. Sin instituciones que aten las manos del fisco a futuro, la desinflaci&oacute;n ser&aacute; fr&aacute;gil.</p>
+            </div>
+
+            <p class="nota-academica">Fuente: Sargent (1982); datos argentinos de INDEC y BCRA.</p>
+        </div>
+
+        <!-- ===== PAPER 5: KIGUEL & LIVIATAN (1992) ===== -->
+
+        <div class="slide bg-blanco">
+            <span class="anexo-badge">ANEXO &mdash; PAPERS</span>
+            <h2>El ciclo de las estabilizaciones basadas en el <span class="highlight">tipo de cambio</span></h2>
+
+            <div class="cita-paper">
+                <strong>Kiguel, M. &amp; Liviatan, N. (1992).</strong> &laquo;The Business Cycle Associated with Exchange Rate-Based Stabilizations&raquo;, <em>World Bank Economic Review</em>, 6(2), pp. 279&ndash;305.
+            </div>
+
+            <div class="concepto-box">
+                <h4>Patr&oacute;n caracter&iacute;stico</h4>
+                <p>Las estabilizaciones que usan el <strong>tipo de cambio como ancla nominal</strong> producen un ciclo predecible: un <strong>boom inicial</strong> de consumo e inversi&oacute;n, seguido de <strong>apreciaci&oacute;n real</strong>, deterioro de la cuenta corriente y, frecuentemente, una <strong>crisis cambiaria</strong>.</p>
+            </div>
+
+            <div class="stats-grid">
+                <div class="stat-box">
+                    <span class="stat-numero">Boom</span>
+                    <span class="stat-label">Fase 1: expansi&oacute;n de consumo</span>
+                </div>
+                <div class="stat-box">
+                    <span class="stat-numero">Apreciaci&oacute;n</span>
+                    <span class="stat-label">Fase 2: p&eacute;rdida de competitividad</span>
+                </div>
+                <div class="stat-box">
+                    <span class="stat-numero">Crisis</span>
+                    <span class="stat-label">Fase 3: ajuste abrupto</span>
+                </div>
+            </div>
+
+            <div class="concepto-box">
+                <h4>La &laquo;trampa de la estabilizaci&oacute;n&raquo;</h4>
+                <p>La inflaci&oacute;n baja r&aacute;pidamente en bienes transables (anclados al tipo de cambio), pero la inflaci&oacute;n en <strong>no transables persiste</strong> (salarios, servicios, alquileres). Esta inercia genera una <strong>apreciaci&oacute;n real</strong> progresiva que socava la sostenibilidad del programa.</p>
+            </div>
+
+            <p class="nota-academica">Fuente: Kiguel &amp; Liviatan (1992), World Bank Economic Review.</p>
+        </div>
+
+        <div class="slide bg-respaldo">
+            <span class="anexo-badge">ANEXO &mdash; PAPERS</span>
+            <h2>El ciclo completo: del <span class="highlight">ancla</span> a la <span class="highlight">crisis</span></h2>
+
+            <div class="flow-diagram">
+                <div class="flow-box">Ancla cambiaria fijada</div>
+                <div class="flow-arrow">&rarr;</div>
+                <div class="flow-box">Inflaci&oacute;n en transables cae r&aacute;pido</div>
+                <div class="flow-arrow">&rarr;</div>
+                <div class="flow-box">Inflaci&oacute;n en no transables persiste</div>
+                <div class="flow-arrow">&rarr;</div>
+                <div class="flow-box">Tipo de cambio real se aprecia</div>
+                <div class="flow-arrow">&rarr;</div>
+                <div class="flow-box">Boom de consumo e importaciones</div>
+                <div class="flow-arrow">&rarr;</div>
+                <div class="flow-box">D&eacute;ficit de cuenta corriente</div>
+                <div class="flow-arrow">&rarr;</div>
+                <div class="flow-box">P&eacute;rdida de reservas</div>
+                <div class="flow-arrow">&rarr;</div>
+                <div class="flow-box">Crisis cambiaria o abandono del ancla</div>
+            </div>
+
+            <div class="two-cols">
+                <div class="concepto-box">
+                    <h4>Ancla cambiaria</h4>
+                    <ul>
+                        <li>Desinflaci&oacute;n r&aacute;pida pero con <strong>inercia inflacionaria</strong></li>
+                        <li>Boom de consumo por efecto riqueza</li>
+                        <li>Apreciaci&oacute;n real progresiva</li>
+                        <li><strong>Riesgo:</strong> crisis de balanza de pagos</li>
+                        <li>Ejemplos: Tablita (Arg), Convertibilidad (Arg), Plan Real (Bra)</li>
+                    </ul>
+                </div>
+                <div class="concepto-box">
+                    <h4>Ancla monetaria</h4>
+                    <ul>
+                        <li>Desinflaci&oacute;n <strong>m&aacute;s lenta</strong> pero sin apreciaci&oacute;n forzada</li>
+                        <li>Recesi&oacute;n inicial m&aacute;s pronunciada</li>
+                        <li>Tipo de cambio flexible absorbe shocks</li>
+                        <li><strong>Ventaja:</strong> evita acumulaci&oacute;n de desequilibrios externos</li>
+                        <li>Ejemplos: Chile (1975), Israel (parcialmente, 1985)</li>
+                    </ul>
+                </div>
+            </div>
+
+            <p class="nota-academica">Kiguel &amp; Liviatan documentaron este patr&oacute;n en m&aacute;s de 10 episodios de estabilizaci&oacute;n en Am&eacute;rica Latina e Israel.</p>
+        </div>
+
+        <div class="slide bg-impulso">
+            <span class="anexo-badge">ANEXO &mdash; PAPERS</span>
+            <h2>Kiguel &amp; Liviatan aplicado a <span class="highlight">Argentina</span>: tres episodios</h2>
+
+            <div class="three-cols">
+                <div class="concepto-box">
+                    <h4>Tablita 1979&ndash;1981</h4>
+                    <ul>
+                        <li>Tipo de cambio preanunciado (tablita de Mart&iacute;nez de Hoz)</li>
+                        <li>Boom de consumo financiado con deuda externa</li>
+                        <li>Apreciaci&oacute;n real masiva</li>
+                        <li>Colapso en 1981 con maxidevaluaci&oacute;n</li>
+                        <li><strong>Patr&oacute;n K&amp;L perfecto</strong></li>
+                    </ul>
+                </div>
+                <div class="concepto-box">
+                    <h4>Convertibilidad 1991&ndash;2001</h4>
+                    <ul>
+                        <li>Ancla extrema: currency board 1:1</li>
+                        <li>Boom 1991&ndash;1998: PIB creci&oacute; 50%</li>
+                        <li>Apreciaci&oacute;n real gradual</li>
+                        <li>D&eacute;ficit de cuenta corriente cr&oacute;nico</li>
+                        <li><strong>Colapso 2001:</strong> crisis de deuda + default + devaluaci&oacute;n</li>
+                    </ul>
+                </div>
+                <div class="concepto-box">
+                    <h4>Crawling peg 2024&ndash;2025</h4>
+                    <ul>
+                        <li>Crawling peg al 2% mensual inicial</li>
+                        <li>Inflaci&oacute;n baja pero a&uacute;n por encima del crawl</li>
+                        <li>&iquest;Se repite la apreciaci&oacute;n real?</li>
+                        <li>Debate sobre flexibilizaci&oacute;n cambiaria</li>
+                        <li><strong>&iquest;Diferencia clave?</strong> Super&aacute;vit fiscal</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="problema-box">
+                <h4>El dilema recurrente argentino</h4>
+                <p>Argentina ha ca&iacute;do en la &laquo;trampa de Kiguel &amp; Liviatan&raquo; repetidamente. El ancla cambiaria compra desinflaci&oacute;n r&aacute;pida y popularidad pol&iacute;tica, pero genera desequilibrios acumulativos que terminan en crisis. La pregunta central para 2025 es: <strong>&iquest;puede el super&aacute;vit fiscal romper el patr&oacute;n hist&oacute;rico, o la apreciaci&oacute;n real forzar&aacute; un ajuste cambiario?</strong></p>
+            </div>
+
+            <p class="nota-academica">Fuente: Kiguel &amp; Liviatan (1992); datos hist&oacute;ricos de BCRA e INDEC.</p>
+        </div>
+
+        <!-- ===== PAPER 6: WOODFORD (1995) ===== -->
+
+        <div class="slide bg-verde">
+            <span class="anexo-badge">ANEXO &mdash; PAPERS</span>
+            <h2>Teor&iacute;a fiscal del <span style="color: var(--azul-respaldo);">nivel de precios</span></h2>
+
+            <div class="cita-paper">
+                <strong>Woodford, M. (1995).</strong> &laquo;Price Level Determinacy Without Control of a Monetary Aggregate&raquo;, <em>Carnegie-Rochester Conference Series on Public Policy</em>, 43, pp. 1&ndash;46.
+            </div>
+
+            <div class="concepto-box">
+                <h4 style="color: var(--azul-respaldo);">La Teor&iacute;a Fiscal del Nivel de Precios (FTPL)</h4>
+                <p>El <strong>nivel de precios</strong> puede estar determinado por la <strong>pol&iacute;tica fiscal</strong>, no solo por la pol&iacute;tica monetaria. Si el gobierno no ajusta sus super&aacute;vits para garantizar la solvencia (pol&iacute;tica fiscal &laquo;no ricardiana&raquo;), entonces es el <strong>nivel de precios el que debe ajustarse</strong> para satisfacer la restricci&oacute;n presupuestaria intertemporal.</p>
+            </div>
+
+            <div class="stats-grid">
+                <div class="stat-box">
+                    <span class="stat-numero">P</span>
+                    <span class="stat-label">Variable de ajuste: el nivel de precios</span>
+                </div>
+                <div class="stat-box">
+                    <span class="stat-numero">B/P</span>
+                    <span class="stat-label">Deuda real como determinante</span>
+                </div>
+                <div class="stat-box">
+                    <span class="stat-numero">VP(s)</span>
+                    <span class="stat-label">Valor presente de super&aacute;vits fiscales</span>
+                </div>
+            </div>
+
+            <div class="concepto-box">
+                <h4 style="color: var(--azul-respaldo);">Innovaci&oacute;n te&oacute;rica</h4>
+                <p>Woodford demostr&oacute; que un banco central que no controla ning&uacute;n agregado monetario (como en los sistemas modernos de tasas de inter&eacute;s) a&uacute;n puede tener un nivel de precios determinado &mdash;pero solo si la <strong>pol&iacute;tica fiscal es ricardiana</strong>. Si no lo es, la pol&iacute;tica fiscal determina los precios.</p>
+            </div>
+
+            <p class="nota-academica">Fuente: Woodford (1995), Carnegie-Rochester Conference Series on Public Policy.</p>
+        </div>
+
+        <div class="slide bg-blanco">
+            <span class="anexo-badge">ANEXO &mdash; PAPERS</span>
+            <h2>La restricci&oacute;n presupuestaria <span class="highlight">intertemporal</span> del gobierno</h2>
+
+            <div class="concepto-box">
+                <h4>La ecuaci&oacute;n fundamental de la FTPL</h4>
+                <div class="formula">
+                    B<sub>t</sub> / P<sub>t</sub> = &Sigma;<sub>i=0</sub><sup>&infin;</sup> &beta;<sup>i</sup> E<sub>t</sub>[s<sub>t+i</sub>]
+                </div>
+                <p>Donde <strong>B<sub>t</sub></strong> es la deuda nominal, <strong>P<sub>t</sub></strong> es el nivel de precios, <strong>&beta;</strong> es el factor de descuento, y <strong>s<sub>t+i</sub></strong> son los super&aacute;vits primarios reales futuros. El <strong>valor real de la deuda</strong> debe igualar el <strong>valor presente de los super&aacute;vits fiscales futuros</strong>.</p>
+            </div>
+
+            <div class="two-cols">
+                <div class="concepto-box">
+                    <h4>Pol&iacute;tica fiscal ricardiana</h4>
+                    <p>El gobierno <strong>ajusta super&aacute;vits</strong> para satisfacer la restricci&oacute;n a cualquier nivel de precios.</p>
+                    <ul>
+                        <li>Si la deuda sube &rarr; el gobierno sube impuestos o baja gasto</li>
+                        <li>La ecuaci&oacute;n se cumple por ajuste fiscal</li>
+                        <li>El nivel de precios lo determina la <strong>pol&iacute;tica monetaria</strong></li>
+                    </ul>
+                </div>
+                <div class="concepto-box">
+                    <h4>Pol&iacute;tica fiscal no ricardiana</h4>
+                    <p>El gobierno <strong>no ajusta</strong> sus super&aacute;vits; fija su trayectoria fiscal de forma ex&oacute;gena.</p>
+                    <ul>
+                        <li>Si la deuda sube &rarr; el gobierno no reacciona</li>
+                        <li>La ecuaci&oacute;n se cumple por ajuste del <strong>nivel de precios P</strong></li>
+                        <li>El nivel de precios lo determina la <strong>pol&iacute;tica fiscal</strong></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="flow-diagram">
+                <div class="flow-box">Super&aacute;vits esperados caen</div>
+                <div class="flow-arrow">&rarr;</div>
+                <div class="flow-box">VP(s) disminuye</div>
+                <div class="flow-arrow">&rarr;</div>
+                <div class="flow-box">B/P debe caer para reequilibrar</div>
+                <div class="flow-arrow">&rarr;</div>
+                <div class="flow-box">P sube (inflaci&oacute;n / devaluaci&oacute;n)</div>
+            </div>
+
+            <p class="nota-academica">La FTPL extiende la l&oacute;gica de Sargent &amp; Wallace (1981) a un marco de equilibrio general completo.</p>
+        </div>
+
+        <div class="slide bg-respaldo">
+            <span class="anexo-badge">ANEXO &mdash; PAPERS</span>
+            <h2>Woodford aplicado a <span class="highlight">Argentina</span>: precios como v&aacute;lvula fiscal</h2>
+
+            <div class="two-cols">
+                <div class="concepto-box">
+                    <h4>El nivel de precios como variable de ajuste</h4>
+                    <p>La historia argentina es un caso de estudio natural de la FTPL:</p>
+                    <ul>
+                        <li><strong>Inflaci&oacute;n cr&oacute;nica (1945&ndash;1991):</strong> pol&iacute;tica fiscal no ricardiana &rarr; el nivel de precios absorbi&oacute; los d&eacute;ficits persistentes</li>
+                        <li><strong>Devaluaciones discretas:</strong> cuando la inflaci&oacute;n no bastaba, saltos cambiarios reajustaban B/P</li>
+                        <li><strong>2001&ndash;2002:</strong> default + devaluaci&oacute;n del 200% = ajuste masivo de P para re-equilibrar la ecuaci&oacute;n</li>
+                        <li><strong>2018&ndash;2023:</strong> d&eacute;ficits cr&oacute;nicos &rarr; inflaci&oacute;n acumulada superior al 10.000%</li>
+                    </ul>
+                </div>
+                <div class="concepto-box">
+                    <h4>Debate actual: dolarizaci&oacute;n y credibilidad fiscal</h4>
+                    <p>La FTPL ilumina el debate argentino contempor&aacute;neo:</p>
+                    <ul>
+                        <li><strong>Dolarizaci&oacute;n:</strong> eliminar&iacute;a P como variable de ajuste, forzando ajuste fiscal o default</li>
+                        <li><strong>Competencia de monedas:</strong> reduce la capacidad de ajustar v&iacute;a inflaci&oacute;n</li>
+                        <li><strong>Super&aacute;vit fiscal:</strong> si VP(s) sube cre&iacute;blemente &rarr; P puede estabilizarse o caer</li>
+                        <li><strong>Riesgo:</strong> si la consolidaci&oacute;n fiscal no es permanente, la ecuaci&oacute;n predice retorno inflacionario</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="solucion-box">
+                <h4>La lecci&oacute;n de Woodford para Argentina</h4>
+                <p>El nivel de precios no es solo un fen&oacute;meno monetario: es el <strong>reflejo del valor presente de la solvencia fiscal</strong>. Para estabilizar permanentemente los precios en Argentina, se necesita que los agentes crean en una trayectoria de <strong>super&aacute;vits primarios sostenidos en el tiempo</strong>. Cada se&ntilde;al de debilidad fiscal &mdash;un a&ntilde;o electoral expansivo, una ley de gasto sin financiamiento, una transferencia al BCRA&mdash; reduce VP(s) y presiona al alza el nivel de precios.</p>
+            </div>
+
+            <p class="nota-academica">V&eacute;ase tambi&eacute;n: Cochrane (2023), <em>The Fiscal Theory of the Price Level</em>, Princeton University Press.</p>
+        </div>
+
+        <!-- SLIDE: CIERRE -->
         <div class="slide bg-respaldo portada">
             <h1>Gracias</h1>
             <p class="subtitle" style="margin-top: 20px;">¿Preguntas?</p>
@@ -1171,7 +1909,7 @@
     </div>
 
     <div class="slide-counter">
-        <span id="current">1</span> / <span id="total">32</span>
+        <span id="current">1</span> / <span id="total">51</span>
     </div>
 
     <div class="nav-hint">

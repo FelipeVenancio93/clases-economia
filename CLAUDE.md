@@ -179,8 +179,8 @@ Antes de construir el HTML, SIEMPRE presentar a Felipe:
 | `presentacion_credito_v2.html` | 31 | Divulgación | VetaCap | El crédito como motor productivo |
 | `presentacion_credito_academica.html` | 31 | Académica | VetaCap | El crédito (versión con papers) |
 | `presentacion_sgr_deuda_pyme.html` | 27 | Divulgación | VetaCap | SGR y financiamiento PyME |
-| `presentacion_politica_fiscal.html` | 61 | Académica | Felipe | Política fiscal argentina |
-| `presentacion_coordinacion_fiscal_monetaria.html` | 34 | Académica | Felipe | Coordinación fiscal y monetaria |
+| `presentacion_politica_fiscal.html` | 75 | Académica | Felipe | Política fiscal argentina (con anexo de 4 papers) |
+| `presentacion_coordinacion_fiscal_monetaria.html` | 51 | Académica | Felipe | Coordinación fiscal y monetaria (con anexo de 6 papers) |
 | `presentacion_comercio_exterior.html` | 82 | Académica | Felipe | Comercio internacional (con anexo de 8 papers) |
 | `presentacion_mercado_cambios.html` | 74 | Académica | Felipe | Mercado de cambios (con anexo de 7 papers) |
 
