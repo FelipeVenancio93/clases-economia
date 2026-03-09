@@ -131,6 +131,64 @@
             text-transform: uppercase;
         }
 
+        .card-badge.wip {
+            background: #F59E0B;
+            color: #000;
+        }
+
+        .presentation-card.wip {
+            opacity: 0.75;
+        }
+        .presentation-card.wip:hover {
+            border-color: #F59E0B;
+        }
+
+        /* Modal contraseña por clase */
+        .class-auth-overlay {
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(2, 23, 81, 0.92);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 10000;
+        }
+        .class-auth-overlay.hidden { display: none; }
+        .class-auth-box {
+            text-align: center;
+            max-width: 400px;
+            padding: 40px;
+            background: rgba(255,255,255,0.06);
+            border: 1px solid rgba(255,255,255,0.15);
+            border-radius: 16px;
+        }
+        .class-auth-box h3 {
+            font-size: 1.4rem;
+            margin-bottom: 8px;
+            color: white;
+        }
+        .class-auth-box p {
+            color: rgba(255,255,255,0.6);
+            font-size: 0.95rem;
+            margin-bottom: 20px;
+        }
+        .class-auth-box .auth-input {
+            margin-bottom: 0;
+        }
+        .class-auth-box .auth-btn {
+            margin-top: 12px;
+        }
+        .class-auth-close {
+            margin-top: 15px;
+            background: none;
+            border: none;
+            color: rgba(255,255,255,0.4);
+            cursor: pointer;
+            font-size: 0.9rem;
+            font-family: inherit;
+        }
+        .class-auth-close:hover { color: rgba(255,255,255,0.7); }
+
         .section-title {
             font-size: 1rem;
             color: rgba(255,255,255,0.5);
@@ -368,11 +426,11 @@
                 <p class="card-description">Ventajas comparativas, proteccionismo vs. librecambio, cadenas globales de valor, la guerra comercial de Trump y radiografía del comercio exterior argentino.</p>
             </a>
 
-            <a href="presentacion_crecimiento_desarrollo.html" class="presentation-card">
+            <a href="#" class="presentation-card wip" id="crecimientoCard" onclick="event.preventDefault(); document.getElementById('classAuthOverlay').classList.remove('hidden'); document.getElementById('classAuthInput').focus();">
                 <div class="card-header">
                     <div class="card-icon">🌍</div>
                     <span class="card-title">Crecimiento y Desarrollo Económico</span>
-                    <span class="card-badge">Nuevo</span>
+                    <span class="card-badge wip">En proceso</span>
                 </div>
                 <p class="card-description">¿Por qué algunos países son ricos y otros pobres? Solow, Lucas, Romer, Acemoglu. Trampas de pobreza, enfermedad holandesa, desigualdad y el gran misterio argentino. Anexo con 8 papers.</p>
             </a>
@@ -392,6 +450,18 @@
             <p style="margin-top: 8px;"><a href="https://github.com/felipevenancio93" target="_blank">github.com/felipevenancio93</a></p>
         </footer>
     </div>
+    <!-- Modal contraseña para clase en proceso -->
+    <div class="class-auth-overlay hidden" id="classAuthOverlay">
+        <div class="class-auth-box">
+            <h3>🌍 Crecimiento y Desarrollo</h3>
+            <p>Esta clase est&aacute; en proceso. Ingres&aacute; la contrase&ntilde;a para acceder.</p>
+            <input type="password" class="auth-input" id="classAuthInput" placeholder="Contrase&ntilde;a" autocomplete="off">
+            <button class="auth-btn" id="classAuthBtn">Ingresar</button>
+            <div class="auth-error-msg" id="classAuthError"></div>
+            <button class="class-auth-close" id="classAuthClose">Cancelar</button>
+        </div>
+    </div>
+
     <script>
         (function() {
             var overlay = document.getElementById('authOverlay');
@@ -418,6 +488,44 @@
             btn.addEventListener('click', tryAuth);
             input.addEventListener('keydown', function(e) {
                 if (e.key === 'Enter') tryAuth();
+            });
+
+            // Clase en proceso: Crecimiento y Desarrollo
+            var cOverlay = document.getElementById('classAuthOverlay');
+            var cInput = document.getElementById('classAuthInput');
+            var cBtn = document.getElementById('classAuthBtn');
+            var cError = document.getElementById('classAuthError');
+            var cClose = document.getElementById('classAuthClose');
+            var CLASS_PASS = 'MenemLoHizo';
+
+            function tryClassAuth() {
+                if (cInput.value === CLASS_PASS) {
+                    cOverlay.classList.add('hidden');
+                    cInput.value = '';
+                    cError.textContent = '';
+                    window.location.href = 'presentacion_crecimiento_desarrollo.html';
+                } else {
+                    cInput.classList.add('error');
+                    cError.textContent = 'Contrase\u00f1a incorrecta';
+                    setTimeout(function() { cInput.classList.remove('error'); }, 400);
+                }
+            }
+
+            cBtn.addEventListener('click', tryClassAuth);
+            cInput.addEventListener('keydown', function(e) {
+                if (e.key === 'Enter') tryClassAuth();
+            });
+            cClose.addEventListener('click', function() {
+                cOverlay.classList.add('hidden');
+                cInput.value = '';
+                cError.textContent = '';
+            });
+            cOverlay.addEventListener('click', function(e) {
+                if (e.target === cOverlay) {
+                    cOverlay.classList.add('hidden');
+                    cInput.value = '';
+                    cError.textContent = '';
+                }
             });
         })();
     </script>
