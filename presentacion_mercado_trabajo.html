@@ -1,0 +1,1767 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mercado de Trabajo — Oferta, Demanda y Equilibrio</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Albert+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --azul-impulso: #1036E2;
+            --verde-activo: #00C600;
+            --azul-respaldo: #021751;
+            --blanco: #FFFFFF;
+            --negro: #000000;
+            --rojo-alerta: #DC2626;
+            --amarillo: #F59E0B;
+            --naranja: #F59E0B;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Albert Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--azul-respaldo);
+            color: var(--blanco);
+            overflow: hidden;
+        }
+        .slide-container { width: 100vw; height: 100vh; display: flex; align-items: center; justify-content: center; }
+        .slide { display: none; width: 100%; height: 100%; padding: 60px 80px; flex-direction: column; justify-content: center; }
+        .slide.active { display: flex; }
+        .bg-respaldo { background: var(--azul-respaldo); color: var(--blanco); }
+        .bg-impulso { background: var(--azul-impulso); color: var(--blanco); }
+        .bg-verde { background: var(--verde-activo); color: var(--blanco); }
+        .bg-blanco { background: var(--blanco); color: var(--azul-respaldo); }
+        h1 { font-size: 3.8rem; font-weight: 700; line-height: 1.1; margin-bottom: 30px; }
+        h2 { font-size: 2.6rem; font-weight: 600; margin-bottom: 25px; }
+        h3 { font-size: 1.8rem; font-weight: 500; margin-bottom: 20px; opacity: 0.9; }
+        p, li { font-size: 1.5rem; line-height: 1.6; margin-bottom: 15px; }
+        .subtitle { font-size: 1.6rem; opacity: 0.8; font-weight: 400; }
+        .highlight { color: var(--verde-activo); }
+        .bg-blanco .highlight { color: var(--azul-impulso); }
+        .bg-verde .highlight { color: var(--azul-respaldo); }
+        .highlight-red { color: var(--rojo-alerta); }
+        .highlight-yellow { color: var(--amarillo); }
+        blockquote { font-size: 1.7rem; font-style: italic; border-left: 4px solid var(--verde-activo); padding-left: 30px; margin: 25px 0; opacity: 0.95; }
+        blockquote cite { display: block; font-size: 1.1rem; margin-top: 12px; font-style: normal; opacity: 0.7; }
+        ul { list-style: none; padding-left: 0; }
+        ul li { padding-left: 35px; position: relative; margin-bottom: 18px; }
+        ul li::before { content: "\25B8"; position: absolute; left: 0; color: var(--verde-activo); font-size: 1.4rem; }
+        .bg-verde ul li::before, .bg-impulso ul li::before { color: var(--blanco); }
+        table { width: 100%; border-collapse: collapse; margin: 25px 0; font-size: 1.3rem; }
+        th, td { padding: 18px 22px; text-align: left; border-bottom: 1px solid rgba(255,255,255,0.2); }
+        .bg-blanco th, .bg-blanco td { border-bottom: 1px solid rgba(0,0,0,0.1); }
+        th { font-weight: 600; opacity: 0.7; font-size: 1rem; text-transform: uppercase; letter-spacing: 1px; }
+        .formula { font-size: 2rem; text-align: center; padding: 30px; background: rgba(255,255,255,0.08); border-radius: 12px; margin: 25px 0; font-weight: 500; letter-spacing: 2px; }
+        .bg-blanco .formula { background: rgba(16, 54, 226, 0.06); }
+        .formula-grande { font-size: 2.5rem; padding: 40px; }
+        .flow-diagram { display: flex; align-items: center; justify-content: center; gap: 15px; margin: 35px 0; flex-wrap: wrap; }
+        .flow-box { background: rgba(255,255,255,0.1); padding: 20px 28px; border-radius: 10px; font-size: 1.2rem; font-weight: 500; text-align: center; }
+        .bg-blanco .flow-box { background: rgba(16, 54, 226, 0.1); }
+        .flow-arrow { font-size: 1.8rem; color: var(--verde-activo); }
+        .two-cols { display: grid; grid-template-columns: 1fr 1fr; gap: 50px; margin-top: 25px; }
+        .three-cols { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 30px; margin-top: 25px; }
+        .concepto-box { background: rgba(255,255,255,0.08); padding: 25px; border-radius: 12px; text-align: center; }
+        .bg-blanco .concepto-box { background: rgba(16, 54, 226, 0.06); }
+        .concepto-box h4 { font-size: 1.3rem; font-weight: 600; margin-bottom: 12px; color: var(--verde-activo); }
+        .bg-blanco .concepto-box h4 { color: var(--azul-impulso); }
+        .bg-verde .concepto-box h4 { color: var(--azul-respaldo); }
+        .concepto-box p { font-size: 1.15rem; margin-bottom: 0; }
+        .cita-paper { background: rgba(255,255,255,0.06); padding: 25px 30px; border-radius: 10px; margin: 20px 0; border-left: 4px solid var(--verde-activo); }
+        .bg-blanco .cita-paper { background: rgba(16, 54, 226, 0.04); border-left-color: var(--azul-impulso); }
+        .cita-paper .titulo { font-weight: 600; font-size: 1.15rem; margin-bottom: 8px; }
+        .cita-paper .autores { font-size: 0.95rem; opacity: 0.7; margin-bottom: 12px; }
+        .cita-paper .contenido { font-size: 1.2rem; line-height: 1.5; font-style: italic; }
+        .bar-chart { margin: 30px 0; }
+        .bar-row { display: flex; align-items: center; margin-bottom: 15px; }
+        .bar-label { width: 140px; font-size: 1.1rem; font-weight: 500; }
+        .bar-container { flex: 1; height: 35px; background: rgba(255,255,255,0.1); border-radius: 5px; overflow: hidden; margin: 0 15px; }
+        .bg-blanco .bar-container { background: rgba(0,0,0,0.05); }
+        .bar { height: 100%; background: var(--verde-activo); border-radius: 5px; display: flex; align-items: center; justify-content: flex-end; padding-right: 12px; font-weight: 600; font-size: 0.95rem; color: white; }
+        .bar.rojo { background: var(--rojo-alerta); }
+        .bar.azul { background: var(--azul-impulso); }
+        .bar.amarillo { background: var(--amarillo); color: #000; }
+        .stat-box { text-align: center; padding: 25px; }
+        .stat-numero { font-size: 4.5rem; font-weight: 800; color: var(--verde-activo); line-height: 1; }
+        .bg-blanco .stat-numero { color: var(--azul-impulso); }
+        .stat-numero.rojo { color: var(--rojo-alerta); }
+        .stat-label { font-size: 1.2rem; opacity: 0.8; margin-top: 10px; }
+        .stats-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 35px; margin-top: 35px; }
+        .stats-grid-4 { grid-template-columns: repeat(4, 1fr); }
+        .stats-grid-2 { grid-template-columns: repeat(2, 1fr); }
+        .portada { text-align: center; }
+        .portada h1 { font-size: 4.2rem; margin-bottom: 20px; }
+        .seccion-titulo { text-align: center; }
+        .seccion-titulo h3 { text-transform: uppercase; letter-spacing: 3px; font-size: 1.2rem; opacity: 0.7; margin-bottom: 15px; }
+        .versus { display: grid; grid-template-columns: 1fr auto 1fr; gap: 25px; align-items: center; margin: 25px 0; }
+        .versus-center { font-size: 2.5rem; font-weight: 800; opacity: 0.3; }
+        .problema-box { background: rgba(220, 38, 38, 0.15); border-left: 4px solid var(--rojo-alerta); padding: 20px 25px; border-radius: 0 10px 10px 0; margin: 12px 0; }
+        .solucion-box { background: rgba(0, 198, 0, 0.15); border-left: 4px solid var(--verde-activo); padding: 20px 25px; border-radius: 0 10px 10px 0; margin: 12px 0; }
+        .bg-blanco .problema-box { background: rgba(220, 38, 38, 0.08); }
+        .bg-blanco .solucion-box { background: rgba(0, 198, 0, 0.08); }
+        .pregunta-grande { font-size: 3.2rem; font-weight: 700; text-align: center; line-height: 1.3; }
+        .respuesta-reveal { font-size: 2.2rem; font-weight: 600; text-align: center; color: var(--verde-activo); margin-top: 30px; }
+        .nav-hint { position: fixed; bottom: 30px; right: 40px; font-size: 0.9rem; opacity: 0.5; }
+        .slide-counter { position: fixed; bottom: 30px; left: 40px; font-size: 0.9rem; opacity: 0.5; }
+        ol { padding-left: 0; counter-reset: step-counter; list-style: none; }
+        ol li { padding-left: 45px; position: relative; margin-bottom: 18px; font-size: 1.5rem; line-height: 1.6; }
+        ol li::before { counter-increment: step-counter; content: counter(step-counter); position: absolute; left: 0; top: 2px; width: 32px; height: 32px; background: var(--verde-activo); color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 1rem; }
+        .bg-blanco ol li::before { background: var(--azul-impulso); }
+        @media (max-width: 1200px) {
+            h1 { font-size: 2.8rem; } h2 { font-size: 2rem; } p, li { font-size: 1.2rem; }
+            .slide { padding: 40px 50px; } .two-cols, .three-cols { grid-template-columns: 1fr; gap: 25px; }
+            .stats-grid { grid-template-columns: repeat(2, 1fr); }
+        }
+        @media (max-width: 768px) {
+            .slide { padding: 25px 20px; }
+            h1 { font-size: 2rem; } h2 { font-size: 1.5rem; } h3 { font-size: 1.2rem; }
+            p, li { font-size: 0.95rem; line-height: 1.5; margin-bottom: 10px; }
+            ol li { font-size: 0.95rem; line-height: 1.5; padding-left: 38px; }
+            ol li::before { width: 26px; height: 26px; font-size: 0.85rem; }
+            .subtitle { font-size: 1rem; }
+            blockquote { font-size: 1.15rem; padding-left: 18px; margin: 15px 0; }
+            blockquote cite { font-size: 0.85rem; }
+            .portada h1 { font-size: 2.2rem; }
+            .pregunta-grande { font-size: 2rem; }
+            .respuesta-reveal { font-size: 1.5rem; }
+            .two-cols, .three-cols { grid-template-columns: 1fr; gap: 15px; }
+            .stats-grid { grid-template-columns: repeat(2, 1fr); gap: 15px; margin-top: 20px; }
+            .stats-grid-4 { grid-template-columns: repeat(2, 1fr); }
+            .stat-numero { font-size: 2.8rem; }
+            .stat-label { font-size: 0.95rem; }
+            .stat-box { padding: 15px; }
+            .concepto-box { padding: 15px; }
+            .concepto-box h4 { font-size: 1.05rem; }
+            .concepto-box p { font-size: 0.95rem; }
+            .problema-box, .solucion-box { padding: 12px 15px; margin: 8px 0; }
+            .cita-paper { padding: 15px 18px; margin: 12px 0; }
+            .cita-paper .titulo { font-size: 1rem; }
+            .cita-paper .autores { font-size: 0.8rem; }
+            .cita-paper .contenido { font-size: 1rem; }
+            .formula { font-size: 1.3rem; padding: 18px; margin: 15px 0; }
+            .flow-diagram { gap: 8px; margin: 20px 0; }
+            .flow-box { padding: 12px 16px; font-size: 0.95rem; }
+            .flow-arrow { font-size: 1.3rem; }
+            .versus { grid-template-columns: 1fr; gap: 10px; }
+            .versus-center { font-size: 1.8rem; text-align: center; }
+            .bar-label { width: 90px; font-size: 0.85rem; }
+            .bar-container { height: 28px; margin: 0 8px; }
+            .bar { font-size: 0.75rem; padding-right: 8px; }
+            table { font-size: 1rem; }
+            th, td { padding: 10px 12px; }
+            .nav-hint { font-size: 0.75rem; right: 15px; bottom: 15px; }
+            .slide-counter { font-size: 0.75rem; left: 15px; bottom: 15px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="slide-container">
+
+        <!-- ============================================= -->
+        <!-- BLOQUE 1: APERTURA (slides 1-5)               -->
+        <!-- ============================================= -->
+
+        <!-- SLIDE 1: Portada -->
+        <div class="slide bg-respaldo portada active">
+            <h1>Mercado de trabajo</h1>
+            <p class="subtitle">Oferta, demanda y un modelo que explica (casi) todo</p>
+            <p style="margin-top: 40px; opacity: 0.6; font-size: 1.2rem;">Felipe Venancio &mdash; Econom&iacute;a</p>
+        </div>
+
+        <!-- SLIDE 2: Factores de producción -->
+        <div class="slide bg-blanco">
+            <h2>Factores de <span class="highlight">producci&oacute;n</span></h2>
+            <p>Los elementos b&aacute;sicos que se combinan para crear bienes y servicios</p>
+            <div class="stats-grid stats-grid-2" style="margin-top: 30px;">
+                <div class="concepto-box">
+                    <h4>Trabajo</h4>
+                    <p>Esfuerzo f&iacute;sico e intelectual de las personas dedicado a la producci&oacute;n</p>
+                </div>
+                <div class="concepto-box">
+                    <h4>Tierra</h4>
+                    <p>Recursos naturales: suelo, minerales, agua, energ&iacute;a</p>
+                </div>
+                <div class="concepto-box">
+                    <h4>Capital</h4>
+                    <p>M&aacute;quinas, herramientas, edificios &mdash; bienes que producen otros bienes</p>
+                </div>
+                <div class="concepto-box">
+                    <h4>Tecnolog&iacute;a</h4>
+                    <p>Conocimiento aplicado: c&oacute;mo se combinan los otros factores</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE 3: Rendimientos decrecientes - tabla SIN PMgL -->
+        <div class="slide bg-blanco">
+            <h2>M&aacute;s trabajadores, m&aacute;s producci&oacute;n&hellip; <span class="highlight">&iquest;siempre?</span></h2>
+            <p>Imaginemos una fotocopiadora y sumamos trabajadores:</p>
+            <table>
+                <thead>
+                    <tr><th>Trabajadores</th><th>Fotocopiadoras</th><th>Copias / d&iacute;a</th></tr>
+                </thead>
+                <tbody>
+                    <tr><td>1</td><td>1</td><td>100</td></tr>
+                    <tr><td>2</td><td>1</td><td>150</td></tr>
+                    <tr><td>3</td><td>1</td><td>170</td></tr>
+                </tbody>
+            </table>
+            <p style="margin-top: 15px; opacity: 0.7; font-size: 1.2rem;">&iquest;Notaron algo en el ritmo de crecimiento?</p>
+        </div>
+
+        <!-- SLIDE 4: Rendimientos decrecientes - tabla CON PMgL -->
+        <div class="slide bg-blanco">
+            <h2>Producto marginal del trabajo <span class="highlight">(PMgL)</span></h2>
+            <p>La producci&oacute;n <strong>adicional</strong> que genera cada trabajador extra:</p>
+            <table>
+                <thead>
+                    <tr><th>Trabajadores</th><th>Fotocopiadoras</th><th>Copias / d&iacute;a</th><th style="color: var(--azul-impulso);">PMgL</th></tr>
+                </thead>
+                <tbody>
+                    <tr><td>1</td><td>1</td><td>100</td><td style="color: var(--azul-impulso); font-weight: 700;">+100</td></tr>
+                    <tr><td>2</td><td>1</td><td>150</td><td style="color: var(--azul-impulso); font-weight: 700;">+50</td></tr>
+                    <tr><td>3</td><td>1</td><td>170</td><td style="color: var(--azul-impulso); font-weight: 700;">+20</td></tr>
+                </tbody>
+            </table>
+            <div class="concepto-box" style="margin-top: 20px; text-align: left;">
+                <h4>Ley de rendimientos marginales decrecientes</h4>
+                <p>Si aument&aacute;s un factor (trabajo) manteniendo los dem&aacute;s constantes (1 fotocopiadora), la producci&oacute;n crece pero <strong>cada vez m&aacute;s lento</strong>.</p>
+            </div>
+        </div>
+
+        <!-- SLIDE 5: Gráficos Producto Total + PMgL -->
+        <div class="slide bg-blanco">
+            <h2>Producto total y <span class="highlight">producto marginal</span></h2>
+            <div class="two-cols">
+                <div>
+                    <svg viewBox="0 0 400 300" width="100%" xmlns="http://www.w3.org/2000/svg">
+                        <line x1="60" y1="250" x2="380" y2="250" stroke="#021751" stroke-width="2"/>
+                        <line x1="60" y1="250" x2="60" y2="30" stroke="#021751" stroke-width="2"/>
+                        <polygon points="380,250 370,244 370,256" fill="#021751"/>
+                        <polygon points="60,30 54,40 66,40" fill="#021751"/>
+                        <text x="220" y="285" font-family="Albert Sans" font-size="14" fill="#021751" text-anchor="middle">Trabajadores</text>
+                        <text x="25" y="140" font-family="Albert Sans" font-size="14" fill="#021751" text-anchor="middle" transform="rotate(-90, 25, 140)">Producci&oacute;n</text>
+                        <line x1="160" y1="250" x2="160" y2="245" stroke="#021751" stroke-width="1"/>
+                        <line x1="260" y1="250" x2="260" y2="245" stroke="#021751" stroke-width="1"/>
+                        <line x1="360" y1="250" x2="360" y2="245" stroke="#021751" stroke-width="1"/>
+                        <text x="160" y="268" font-family="Albert Sans" font-size="12" fill="#021751" text-anchor="middle">1</text>
+                        <text x="260" y="268" font-family="Albert Sans" font-size="12" fill="#021751" text-anchor="middle">2</text>
+                        <text x="360" y="268" font-family="Albert Sans" font-size="12" fill="#021751" text-anchor="middle">3</text>
+                        <line x1="55" y1="130" x2="60" y2="130" stroke="#021751" stroke-width="1"/>
+                        <text x="48" y="134" font-family="Albert Sans" font-size="11" fill="#021751" text-anchor="end">100</text>
+                        <line x1="55" y1="70" x2="60" y2="70" stroke="#021751" stroke-width="1"/>
+                        <text x="48" y="74" font-family="Albert Sans" font-size="11" fill="#021751" text-anchor="end">150</text>
+                        <line x1="55" y1="46" x2="60" y2="46" stroke="#021751" stroke-width="1"/>
+                        <text x="48" y="50" font-family="Albert Sans" font-size="11" fill="#021751" text-anchor="end">170</text>
+                        <line x1="60" y1="130" x2="160" y2="130" stroke="#021751" stroke-width="0.5" stroke-dasharray="4"/>
+                        <line x1="60" y1="70" x2="260" y2="70" stroke="#021751" stroke-width="0.5" stroke-dasharray="4"/>
+                        <line x1="60" y1="46" x2="360" y2="46" stroke="#021751" stroke-width="0.5" stroke-dasharray="4"/>
+                        <path d="M 60,250 Q 110,200 160,130 Q 210,80 260,70 Q 310,52 360,46" stroke="#1036E2" stroke-width="3" fill="none"/>
+                        <circle cx="160" cy="130" r="5" fill="#1036E2"/>
+                        <circle cx="260" cy="70" r="5" fill="#1036E2"/>
+                        <circle cx="360" cy="46" r="5" fill="#1036E2"/>
+                        <text x="220" y="20" font-family="Albert Sans" font-size="15" fill="#021751" text-anchor="middle" font-weight="600">Producto Total</text>
+                    </svg>
+                </div>
+                <div>
+                    <svg viewBox="0 0 400 300" width="100%" xmlns="http://www.w3.org/2000/svg">
+                        <line x1="60" y1="250" x2="380" y2="250" stroke="#021751" stroke-width="2"/>
+                        <line x1="60" y1="250" x2="60" y2="30" stroke="#021751" stroke-width="2"/>
+                        <polygon points="380,250 370,244 370,256" fill="#021751"/>
+                        <polygon points="60,30 54,40 66,40" fill="#021751"/>
+                        <text x="220" y="285" font-family="Albert Sans" font-size="14" fill="#021751" text-anchor="middle">Trabajadores</text>
+                        <text x="25" y="140" font-family="Albert Sans" font-size="14" fill="#021751" text-anchor="middle" transform="rotate(-90, 25, 140)">PMgL</text>
+                        <line x1="160" y1="250" x2="160" y2="245" stroke="#021751" stroke-width="1"/>
+                        <line x1="260" y1="250" x2="260" y2="245" stroke="#021751" stroke-width="1"/>
+                        <line x1="360" y1="250" x2="360" y2="245" stroke="#021751" stroke-width="1"/>
+                        <text x="160" y="268" font-family="Albert Sans" font-size="12" fill="#021751" text-anchor="middle">1</text>
+                        <text x="260" y="268" font-family="Albert Sans" font-size="12" fill="#021751" text-anchor="middle">2</text>
+                        <text x="360" y="268" font-family="Albert Sans" font-size="12" fill="#021751" text-anchor="middle">3</text>
+                        <rect x="120" y="70" width="80" height="180" fill="#1036E2" rx="4" opacity="0.8"/>
+                        <text x="160" y="60" font-family="Albert Sans" font-size="13" fill="#1036E2" text-anchor="middle" font-weight="600">+100</text>
+                        <rect x="220" y="130" width="80" height="120" fill="#1036E2" rx="4" opacity="0.6"/>
+                        <text x="260" y="120" font-family="Albert Sans" font-size="13" fill="#1036E2" text-anchor="middle" font-weight="600">+50</text>
+                        <rect x="320" y="190" width="80" height="60" fill="#1036E2" rx="4" opacity="0.4"/>
+                        <text x="360" y="180" font-family="Albert Sans" font-size="13" fill="#1036E2" text-anchor="middle" font-weight="600">+20</text>
+                        <text x="220" y="20" font-family="Albert Sans" font-size="15" fill="#021751" text-anchor="middle" font-weight="600">Producto Marginal (PMgL)</text>
+                    </svg>
+                </div>
+            </div>
+        </div>
+
+        <!-- ============================================= -->
+        <!-- BLOQUE 2: DESVÍO EPISTEMOLÓGICO (slides 6-8)  -->
+        <!-- ============================================= -->
+
+        <!-- SLIDE 6: Separador Modelos -->
+        <div class="slide bg-impulso seccion-titulo">
+            <h3>Antes de seguir&hellip;</h3>
+            <h1>&iquest;Para qu&eacute; sirve un <span style="color: var(--amarillo);">modelo</span>?</h1>
+        </div>
+
+        <!-- SLIDE 7: Endógenas/exógenas + ceteris paribus -->
+        <div class="slide bg-blanco">
+            <h2>Las reglas del juego</h2>
+            <div class="three-cols">
+                <div class="concepto-box">
+                    <h4>Variables end&oacute;genas</h4>
+                    <p>Las que el modelo <strong>explica</strong>: salario (w) y empleo (N)</p>
+                </div>
+                <div class="concepto-box">
+                    <h4>Variables ex&oacute;genas</h4>
+                    <p>Las que tomamos <strong>como dadas</strong>: tecnolog&iacute;a, preferencias, instituciones</p>
+                </div>
+                <div class="concepto-box">
+                    <h4>Ceteris paribus</h4>
+                    <p>Cambiamos <strong>una cosa a la vez</strong> para aislar el efecto</p>
+                </div>
+            </div>
+            <blockquote style="margin-top: 30px;">
+                &ldquo;Los supuestos no tienen que ser realistas. Tienen que generar predicciones &uacute;tiles.&rdquo;
+                <cite>Milton Friedman, &ldquo;The Methodology of Positive Economics&rdquo; (1953)</cite>
+            </blockquote>
+        </div>
+
+        <!-- SLIDE 8: Homo economicus -->
+        <div class="slide bg-respaldo">
+            <h2>El <span class="highlight">homo economicus</span></h2>
+            <p>Nuestros agentes son racionales: maximizan utilidad (trabajadores) o beneficio (empresas).</p>
+            <div class="two-cols" style="margin-top: 25px;">
+                <div>
+                    <p style="font-size: 1.3rem;">&iquest;La gente es as&iacute; en la vida real?</p>
+                    <p style="font-size: 1.3rem;">No necesariamente. Pero <strong>en promedio</strong> se comporta <em>como si</em> lo fuera.</p>
+                    <p style="font-size: 1.3rem; opacity: 0.8;">Es como la f&iacute;sica con la part&iacute;cula ideal: nadie cree que exista, pero el modelo funciona.</p>
+                </div>
+                <div class="concepto-box">
+                    <h4>Supuesto clave</h4>
+                    <p>Trabajadores eligen entre <strong>ocio</strong> y <strong>trabajo</strong> seg&uacute;n el salario.<br><br>Empresas contratan hasta que el costo del trabajador extra <strong>iguala</strong> lo que produce.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- ============================================= -->
+        <!-- BLOQUE 3: OFERTA DE TRABAJO (slides 9-15)     -->
+        <!-- ============================================= -->
+
+        <!-- SLIDE 9: Separador Oferta -->
+        <div class="slide bg-verde seccion-titulo">
+            <h3>Parte I</h3>
+            <h1>Oferta de trabajo</h1>
+            <p class="subtitle" style="margin-top: 15px;">&iquest;Cu&aacute;nto quieren trabajar las personas?</p>
+        </div>
+
+        <!-- SLIDE 10: ¿Costa o changa? (pregunta sola) -->
+        <div class="slide bg-respaldo" style="justify-content: center; align-items: center;">
+            <p class="pregunta-grande">&iquest;Costa o changa?</p>
+            <p style="margin-top: 30px; font-size: 1.4rem; opacity: 0.7;">Es s&aacute;bado. Pod&eacute;s ir a la playa o hacer una changa.</p>
+        </div>
+
+        <!-- SLIDE 11: ¿Costa o changa? → respuesta -->
+        <div class="slide bg-respaldo" style="justify-content: center; align-items: center;">
+            <p class="pregunta-grande">&iquest;Costa o changa?</p>
+            <p style="margin-top: 30px; font-size: 1.4rem; opacity: 0.7;">Es s&aacute;bado. Pod&eacute;s ir a la playa o hacer una changa.</p>
+            <p class="respuesta-reveal" style="margin-top: 40px;">Depende de cu&aacute;nto paguen.</p>
+            <p style="font-size: 1.2rem; opacity: 0.7; margin-top: 15px;">Si te ofrecen $500, voy a la playa. Si me ofrecen $50.000, trabajo.<br>Eso es la <strong>oferta de trabajo</strong>: a mayor salario, m&aacute;s gente dispuesta a trabajar.</p>
+        </div>
+
+        <!-- SLIDE 12: Determinantes de la oferta -->
+        <div class="slide bg-blanco">
+            <h2>Determinantes de la <span class="highlight">oferta de trabajo</span></h2>
+            <div class="two-cols">
+                <div>
+                    <h3 style="color: var(--azul-impulso);">Sobre la curva</h3>
+                    <ul>
+                        <li>El <strong>salario</strong>: a mayor salario, m&aacute;s personas quieren trabajar</li>
+                        <li>Movimiento <strong>a lo largo</strong> de la curva</li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 style="color: var(--azul-impulso);">Desplazan la curva</h3>
+                    <ul>
+                        <li><strong>Demograf&iacute;a</strong>: m&aacute;s poblaci&oacute;n en edad de trabajar</li>
+                        <li><strong>Preferencias</strong>: cambios culturales (ej: incorporaci&oacute;n femenina)</li>
+                        <li><strong>Instituciones</strong>: seguro de desempleo, jubilaciones</li>
+                        <li><strong>Oportunidades alternativas</strong>: emigraci&oacute;n, trabajo informal</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE 13: Función de oferta - curva SOLA -->
+        <div class="slide bg-blanco">
+            <h2>Funci&oacute;n de <span class="highlight">oferta de trabajo</span></h2>
+            <div class="two-cols">
+                <div>
+                    <svg viewBox="0 0 500 380" width="100%" xmlns="http://www.w3.org/2000/svg">
+                        <line x1="70" y1="320" x2="470" y2="320" stroke="#021751" stroke-width="2"/>
+                        <line x1="70" y1="320" x2="70" y2="30" stroke="#021751" stroke-width="2"/>
+                        <polygon points="470,320 460,314 460,326" fill="#021751"/>
+                        <polygon points="70,30 64,40 76,40" fill="#021751"/>
+                        <text x="470" y="345" font-family="Albert Sans" font-size="15" fill="#021751" text-anchor="end">N (trabajo)</text>
+                        <text x="45" y="40" font-family="Albert Sans" font-size="15" fill="#021751" text-anchor="end">w</text>
+                        <!-- Supply curve Ls -->
+                        <line x1="110" y1="290" x2="420" y2="60" stroke="#1036E2" stroke-width="3" stroke-linecap="round"/>
+                        <text x="430" y="55" font-family="Albert Sans" font-size="16" fill="#1036E2" font-weight="700">Ls</text>
+                        <!-- Reference points -->
+                        <circle cx="180" cy="238" r="5" fill="#1036E2"/>
+                        <text x="190" y="255" font-family="Albert Sans" font-size="12" fill="#021751">Salario bajo: pocos quieren trabajar</text>
+                        <circle cx="360" cy="104" r="5" fill="#1036E2"/>
+                        <text x="250" y="95" font-family="Albert Sans" font-size="12" fill="#021751">Salario alto: muchos quieren trabajar</text>
+                    </svg>
+                </div>
+                <div style="display: flex; flex-direction: column; justify-content: center;">
+                    <p style="font-size: 1.3rem;">La curva de oferta tiene <strong>pendiente positiva</strong>.</p>
+                    <p style="font-size: 1.3rem;">A mayor salario &rarr; m&aacute;s personas est&aacute;n dispuestas a trabajar.</p>
+                    <p style="font-size: 1.1rem; opacity: 0.7; margin-top: 15px;">El <strong>costo de oportunidad del ocio</strong> sube: la playa se vuelve m&aacute;s &ldquo;cara&rdquo;.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE 14: Función de oferta - curva + DESPLAZADA -->
+        <div class="slide bg-blanco">
+            <h2>Desplazamiento de la <span class="highlight">oferta</span></h2>
+            <div class="two-cols">
+                <div>
+                    <svg viewBox="0 0 500 380" width="100%" xmlns="http://www.w3.org/2000/svg">
+                        <line x1="70" y1="320" x2="470" y2="320" stroke="#021751" stroke-width="2"/>
+                        <line x1="70" y1="320" x2="70" y2="30" stroke="#021751" stroke-width="2"/>
+                        <polygon points="470,320 460,314 460,326" fill="#021751"/>
+                        <polygon points="70,30 64,40 76,40" fill="#021751"/>
+                        <text x="470" y="345" font-family="Albert Sans" font-size="15" fill="#021751" text-anchor="end">N</text>
+                        <text x="45" y="40" font-family="Albert Sans" font-size="15" fill="#021751" text-anchor="end">w</text>
+                        <!-- Original Ls -->
+                        <line x1="110" y1="290" x2="420" y2="60" stroke="#1036E2" stroke-width="3" stroke-linecap="round"/>
+                        <text x="430" y="55" font-family="Albert Sans" font-size="16" fill="#1036E2" font-weight="700">Ls</text>
+                        <!-- Shifted Ls' (left shift - unemployment insurance) -->
+                        <line x1="80" y1="260" x2="360" y2="50" stroke="#F59E0B" stroke-width="3" stroke-linecap="round"/>
+                        <text x="365" y="42" font-family="Albert Sans" font-size="16" fill="#F59E0B" font-weight="700">Ls'</text>
+                        <!-- Arrow showing shift direction -->
+                        <line x1="300" y1="150" x2="240" y2="165" stroke="#F59E0B" stroke-width="2" stroke-dasharray="6"/>
+                        <polygon points="240,165 250,158 248,170" fill="#F59E0B"/>
+                    </svg>
+                </div>
+                <div style="display: flex; flex-direction: column; justify-content: center;">
+                    <p style="font-size: 1.3rem;"><strong>Ejemplo: seguro de desempleo</strong></p>
+                    <p style="font-size: 1.2rem;">Si el Estado ofrece un ingreso por no trabajar, el costo de oportunidad del ocio baja.</p>
+                    <p style="font-size: 1.2rem;">A cada salario, <strong>menos personas</strong> est&aacute;n dispuestas a trabajar.</p>
+                    <p style="font-size: 1.2rem; color: var(--azul-impulso); font-weight: 600; margin-top: 15px;">La curva se desplaza a la izquierda (Ls &rarr; Ls')</p>
+                    <p style="font-size: 1rem; opacity: 0.7;">Otros ejemplos: inmigraci&oacute;n masiva desplaza a la derecha; envejecimiento poblacional desplaza a la izquierda.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE 15: Curiosidad backward-bending -->
+        <div class="slide bg-blanco">
+            <h2>Curiosidad: la oferta que <span class="highlight">se da vuelta</span></h2>
+            <div class="two-cols">
+                <div>
+                    <svg viewBox="0 0 500 380" width="100%" xmlns="http://www.w3.org/2000/svg">
+                        <line x1="70" y1="320" x2="470" y2="320" stroke="#021751" stroke-width="2"/>
+                        <line x1="70" y1="320" x2="70" y2="30" stroke="#021751" stroke-width="2"/>
+                        <polygon points="470,320 460,314 460,326" fill="#021751"/>
+                        <polygon points="70,30 64,40 76,40" fill="#021751"/>
+                        <text x="470" y="345" font-family="Albert Sans" font-size="15" fill="#021751" text-anchor="end">N (horas)</text>
+                        <text x="45" y="40" font-family="Albert Sans" font-size="15" fill="#021751" text-anchor="end">w</text>
+                        <!-- Backward-bending supply curve -->
+                        <path d="M 120,290 C 200,240 320,180 380,120 Q 400,90 370,55" stroke="#1036E2" stroke-width="3" fill="none" stroke-linecap="round"/>
+                        <!-- Annotations -->
+                        <text x="300" y="210" font-family="Albert Sans" font-size="12" fill="#00C600" font-weight="600">Sustituci&oacute;n &gt; Ingreso</text>
+                        <text x="320" y="60" font-family="Albert Sans" font-size="12" fill="#DC2626" font-weight="600">Ingreso &gt; Sustituci&oacute;n</text>
+                        <!-- Dashed horizontal at bend point -->
+                        <line x1="70" y1="120" x2="380" y2="120" stroke="#021751" stroke-width="1" stroke-dasharray="4" opacity="0.3"/>
+                    </svg>
+                </div>
+                <div style="display: flex; flex-direction: column; justify-content: center;">
+                    <p style="font-size: 1.3rem;">A salarios muy altos, la gente trabaja <strong>menos</strong>.</p>
+                    <p style="font-size: 1.2rem;"><span style="color: var(--azul-impulso); font-weight: 600;">Efecto sustituci&oacute;n:</span> salario sube &rarr; ocio m&aacute;s caro &rarr; trabajo m&aacute;s</p>
+                    <p style="font-size: 1.2rem;"><span style="color: var(--rojo-alerta); font-weight: 600;">Efecto ingreso:</span> salario sube &rarr; ya gano bastante &rarr; trabajo menos</p>
+                    <p style="font-size: 1.1rem; opacity: 0.7; margin-top: 15px;">Cuando el efecto ingreso domina, la curva se &ldquo;dobla hacia atr&aacute;s&rdquo;. Los pa&iacute;ses ricos trabajan menos horas que hace 100 a&ntilde;os.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- ============================================= -->
+        <!-- BLOQUE 4: DEMANDA DE TRABAJO (slides 16-20)   -->
+        <!-- ============================================= -->
+
+        <!-- SLIDE 16: Separador Demanda -->
+        <div class="slide bg-impulso seccion-titulo">
+            <h3>Parte II</h3>
+            <h1>Demanda de trabajo</h1>
+            <p class="subtitle" style="margin-top: 15px;">&iquest;Cu&aacute;ntos trabajadores quieren contratar las empresas?</p>
+        </div>
+
+        <!-- SLIDE 17: Determinantes de la demanda -->
+        <div class="slide bg-blanco">
+            <h2>Determinantes de la <span class="highlight">demanda de trabajo</span></h2>
+            <div class="two-cols">
+                <div>
+                    <h3 style="color: var(--azul-impulso);">Sobre la curva</h3>
+                    <ul>
+                        <li>El <strong>salario</strong>: a mayor salario, menos trabajadores quieren contratar</li>
+                        <li>Movimiento <strong>a lo largo</strong> de la curva</li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 style="color: var(--azul-impulso);">Desplazan la curva</h3>
+                    <ul>
+                        <li><strong>Tecnolog&iacute;a</strong>: mejor tecnolog&iacute;a puede aumentar PMgL</li>
+                        <li><strong>Precio del producto</strong>: si sube, el trabajo vale m&aacute;s</li>
+                        <li><strong>Capital disponible</strong>: m&aacute;s m&aacute;quinas = cada trabajador produce m&aacute;s</li>
+                        <li><strong>Regulaciones</strong>: costos de contrataci&oacute;n/despido</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="formula" style="margin-top: 25px;">
+                Regla: contratar mientras <strong>PMgL &ge; w</strong>
+            </div>
+        </div>
+
+        <!-- SLIDE 18: Función de demanda - curva SOLA -->
+        <div class="slide bg-blanco">
+            <h2>Funci&oacute;n de <span class="highlight">demanda de trabajo</span></h2>
+            <div class="two-cols">
+                <div>
+                    <svg viewBox="0 0 500 380" width="100%" xmlns="http://www.w3.org/2000/svg">
+                        <line x1="70" y1="320" x2="470" y2="320" stroke="#021751" stroke-width="2"/>
+                        <line x1="70" y1="320" x2="70" y2="30" stroke="#021751" stroke-width="2"/>
+                        <polygon points="470,320 460,314 460,326" fill="#021751"/>
+                        <polygon points="70,30 64,40 76,40" fill="#021751"/>
+                        <text x="470" y="345" font-family="Albert Sans" font-size="15" fill="#021751" text-anchor="end">N (trabajo)</text>
+                        <text x="45" y="40" font-family="Albert Sans" font-size="15" fill="#021751" text-anchor="end">w</text>
+                        <!-- Demand curve Ld -->
+                        <line x1="110" y1="60" x2="420" y2="290" stroke="#DC2626" stroke-width="3" stroke-linecap="round"/>
+                        <text x="430" y="295" font-family="Albert Sans" font-size="16" fill="#DC2626" font-weight="700">Ld</text>
+                        <!-- Reference points -->
+                        <circle cx="180" cy="112" r="5" fill="#DC2626"/>
+                        <text x="190" y="105" font-family="Albert Sans" font-size="12" fill="#021751">Salario alto: pocas contrataciones</text>
+                        <circle cx="360" cy="246" r="5" fill="#DC2626"/>
+                        <text x="230" y="265" font-family="Albert Sans" font-size="12" fill="#021751">Salario bajo: muchas contrataciones</text>
+                    </svg>
+                </div>
+                <div style="display: flex; flex-direction: column; justify-content: center;">
+                    <p style="font-size: 1.3rem;">La curva de demanda tiene <strong>pendiente negativa</strong>.</p>
+                    <p style="font-size: 1.3rem;">A mayor salario &rarr; menos trabajadores le conviene contratar a la empresa.</p>
+                    <p style="font-size: 1.1rem; opacity: 0.7; margin-top: 15px;">&iquest;Por qu&eacute;? Porque el <strong>PMgL es decreciente</strong>. Si el salario sube, los &uacute;ltimos trabajadores ya no &ldquo;se pagan solos&rdquo;.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE 19: Función de demanda - curva + DESPLAZADA -->
+        <div class="slide bg-blanco">
+            <h2>Desplazamiento de la <span class="highlight">demanda</span></h2>
+            <div class="two-cols">
+                <div>
+                    <svg viewBox="0 0 500 380" width="100%" xmlns="http://www.w3.org/2000/svg">
+                        <line x1="70" y1="320" x2="470" y2="320" stroke="#021751" stroke-width="2"/>
+                        <line x1="70" y1="320" x2="70" y2="30" stroke="#021751" stroke-width="2"/>
+                        <polygon points="470,320 460,314 460,326" fill="#021751"/>
+                        <polygon points="70,30 64,40 76,40" fill="#021751"/>
+                        <text x="470" y="345" font-family="Albert Sans" font-size="15" fill="#021751" text-anchor="end">N</text>
+                        <text x="45" y="40" font-family="Albert Sans" font-size="15" fill="#021751" text-anchor="end">w</text>
+                        <!-- Original Ld -->
+                        <line x1="110" y1="60" x2="420" y2="290" stroke="#DC2626" stroke-width="3" stroke-linecap="round"/>
+                        <text x="430" y="295" font-family="Albert Sans" font-size="16" fill="#DC2626" font-weight="700">Ld</text>
+                        <!-- Shifted Ld' (right shift - PMgL increase) -->
+                        <line x1="170" y1="60" x2="460" y2="270" stroke="#F59E0B" stroke-width="3" stroke-linecap="round"/>
+                        <text x="465" y="262" font-family="Albert Sans" font-size="16" fill="#F59E0B" font-weight="700">Ld'</text>
+                        <!-- Arrow showing shift direction -->
+                        <line x1="230" y1="180" x2="290" y2="165" stroke="#F59E0B" stroke-width="2" stroke-dasharray="6"/>
+                        <polygon points="290,165 280,158 282,170" fill="#F59E0B"/>
+                    </svg>
+                </div>
+                <div style="display: flex; flex-direction: column; justify-content: center;">
+                    <p style="font-size: 1.3rem;"><strong>Ejemplo: aumento del PMgL</strong></p>
+                    <p style="font-size: 1.2rem;">Una nueva tecnolog&iacute;a hace que cada trabajador produzca m&aacute;s.</p>
+                    <p style="font-size: 1.2rem;">A cada salario, la empresa quiere contratar <strong>m&aacute;s</strong> trabajadores.</p>
+                    <p style="font-size: 1.2rem; color: var(--rojo-alerta); font-weight: 600; margin-top: 15px;">La curva se desplaza a la derecha (Ld &rarr; Ld')</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE 20: Tabla costo-beneficio fanegas -->
+        <div class="slide bg-blanco">
+            <h2>La decisi&oacute;n del <span class="highlight">empresario</span></h2>
+            <p>Un chacarero produce fanegas de trigo y paga salarios en fanegas:</p>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Trabajadores</th>
+                        <th>Producci&oacute;n total</th>
+                        <th>PMgL</th>
+                        <th>Salario</th>
+                        <th>&iquest;Contrata?</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>1</td>
+                        <td>10 fanegas</td>
+                        <td style="font-weight: 700; color: var(--azul-impulso);">10</td>
+                        <td>5</td>
+                        <td style="color: var(--verde-activo); font-weight: 700;">&check; Gana 5</td>
+                    </tr>
+                    <tr>
+                        <td>2</td>
+                        <td>18 fanegas</td>
+                        <td style="font-weight: 700; color: var(--azul-impulso);">8</td>
+                        <td>5</td>
+                        <td style="color: var(--verde-activo); font-weight: 700;">&check; Gana 3</td>
+                    </tr>
+                    <tr>
+                        <td>3</td>
+                        <td>24 fanegas</td>
+                        <td style="font-weight: 700; color: var(--azul-impulso);">6</td>
+                        <td>5</td>
+                        <td style="color: var(--verde-activo); font-weight: 700;">&check; Gana 1</td>
+                    </tr>
+                    <tr>
+                        <td>4</td>
+                        <td>28 fanegas</td>
+                        <td style="font-weight: 700; color: var(--azul-impulso);">4</td>
+                        <td>5</td>
+                        <td style="color: var(--rojo-alerta); font-weight: 700;">&cross; Pierde 1</td>
+                    </tr>
+                </tbody>
+            </table>
+            <div class="formula" style="margin-top: 15px;">
+                Contratar mientras <strong>PMgL &ge; w</strong> &rarr; &oacute;ptimo: 3 trabajadores
+            </div>
+        </div>
+
+        <!-- ============================================= -->
+        <!-- BLOQUE 5: EQUILIBRIO (slides 21-31)           -->
+        <!-- ============================================= -->
+
+        <!-- SLIDE 21: Separador Equilibrio -->
+        <div class="slide bg-verde seccion-titulo">
+            <h3>Parte III</h3>
+            <h1>Equilibrio</h1>
+            <p class="subtitle" style="margin-top: 15px;">Donde la oferta y la demanda se encuentran</p>
+        </div>
+
+        <!-- SLIDE 22: Desvío equilibrio vs estabilidad -->
+        <div class="slide bg-respaldo">
+            <h2>Equilibrio <span class="highlight">&ne;</span> deseable</h2>
+            <p style="font-size: 1.4rem;">Un equilibrio es un estado donde <strong>nadie tiene incentivo a cambiar</strong> su comportamiento.</p>
+            <div class="two-cols" style="margin-top: 30px;">
+                <div class="concepto-box">
+                    <h4>Equilibrio</h4>
+                    <p>&ldquo;La habitaci&oacute;n est&aacute; en equilibrio t&eacute;rmico a 5&deg;C.&rdquo;<br><br>Es estable. Pero no es c&oacute;modo.</p>
+                </div>
+                <div class="concepto-box">
+                    <h4>Implicancia</h4>
+                    <p>Que el mercado de trabajo est&eacute; en equilibrio <strong>no significa</strong> que el resultado sea justo o deseable.<br><br>Significa que las fuerzas del modelo no empujan en ninguna direcci&oacute;n.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE 23: Equilibrio S∩D con w* y N* -->
+        <div class="slide bg-blanco">
+            <h2>Equilibrio del <span class="highlight">mercado de trabajo</span></h2>
+            <svg viewBox="0 0 500 380" width="65%" style="margin: 0 auto; display: block;" xmlns="http://www.w3.org/2000/svg">
+                <!-- Axes -->
+                <line x1="70" y1="320" x2="470" y2="320" stroke="#021751" stroke-width="2"/>
+                <line x1="70" y1="320" x2="70" y2="30" stroke="#021751" stroke-width="2"/>
+                <polygon points="470,320 460,314 460,326" fill="#021751"/>
+                <polygon points="70,30 64,40 76,40" fill="#021751"/>
+                <text x="470" y="345" font-family="Albert Sans" font-size="15" fill="#021751" text-anchor="end">N</text>
+                <text x="45" y="40" font-family="Albert Sans" font-size="15" fill="#021751" text-anchor="end">w</text>
+                <!-- Supply Ls -->
+                <line x1="110" y1="290" x2="420" y2="60" stroke="#1036E2" stroke-width="3" stroke-linecap="round"/>
+                <text x="430" y="55" font-family="Albert Sans" font-size="16" fill="#1036E2" font-weight="700">Ls</text>
+                <!-- Demand Ld -->
+                <line x1="110" y1="60" x2="420" y2="290" stroke="#DC2626" stroke-width="3" stroke-linecap="round"/>
+                <text x="430" y="295" font-family="Albert Sans" font-size="16" fill="#DC2626" font-weight="700">Ld</text>
+                <!-- Equilibrium point -->
+                <circle cx="265" cy="175" r="7" fill="#00C600"/>
+                <!-- Dashed lines to axes -->
+                <line x1="70" y1="175" x2="265" y2="175" stroke="#00C600" stroke-width="2" stroke-dasharray="6"/>
+                <line x1="265" y1="175" x2="265" y2="320" stroke="#00C600" stroke-width="2" stroke-dasharray="6"/>
+                <!-- Labels -->
+                <text x="50" y="180" font-family="Albert Sans" font-size="15" fill="#00C600" font-weight="700" text-anchor="end">w*</text>
+                <text x="265" y="340" font-family="Albert Sans" font-size="15" fill="#00C600" font-weight="700" text-anchor="middle">N*</text>
+            </svg>
+            <p style="text-align: center; margin-top: 15px; font-size: 1.2rem;">En <strong>w*</strong> la cantidad de trabajo que se ofrece es exactamente igual a la que se demanda: <strong>N*</strong></p>
+        </div>
+
+        <!-- SLIDE 24: Salarios por encima - PASO 1 -->
+        <div class="slide bg-blanco">
+            <h2>&iquest;Qu&eacute; pasa si el salario est&aacute; <span class="highlight-red">por encima</span>?</h2>
+            <svg viewBox="0 0 500 380" width="60%" style="margin: 0 auto; display: block;" xmlns="http://www.w3.org/2000/svg">
+                <line x1="70" y1="320" x2="470" y2="320" stroke="#021751" stroke-width="2"/>
+                <line x1="70" y1="320" x2="70" y2="30" stroke="#021751" stroke-width="2"/>
+                <polygon points="470,320 460,314 460,326" fill="#021751"/>
+                <polygon points="70,30 64,40 76,40" fill="#021751"/>
+                <text x="470" y="345" font-family="Albert Sans" font-size="15" fill="#021751" text-anchor="end">N</text>
+                <text x="45" y="40" font-family="Albert Sans" font-size="15" fill="#021751" text-anchor="end">w</text>
+                <line x1="110" y1="290" x2="420" y2="60" stroke="#1036E2" stroke-width="3" stroke-linecap="round"/>
+                <text x="430" y="55" font-family="Albert Sans" font-size="16" fill="#1036E2" font-weight="700">Ls</text>
+                <line x1="110" y1="60" x2="420" y2="290" stroke="#DC2626" stroke-width="3" stroke-linecap="round"/>
+                <text x="430" y="295" font-family="Albert Sans" font-size="16" fill="#DC2626" font-weight="700">Ld</text>
+                <!-- w_alto line -->
+                <line x1="70" y1="120" x2="450" y2="120" stroke="#DC2626" stroke-width="2" stroke-dasharray="8"/>
+                <text x="50" y="125" font-family="Albert Sans" font-size="14" fill="#DC2626" font-weight="700" text-anchor="end">w&#8593;</text>
+                <!-- Nd at w_alto -->
+                <line x1="191" y1="120" x2="191" y2="320" stroke="#DC2626" stroke-width="1.5" stroke-dasharray="4"/>
+                <circle cx="191" cy="120" r="5" fill="#DC2626"/>
+                <text x="191" y="340" font-family="Albert Sans" font-size="13" fill="#DC2626" text-anchor="middle" font-weight="600">N<tspan font-size="10" dy="3">d</tspan></text>
+                <!-- Ns at w_alto -->
+                <line x1="339" y1="120" x2="339" y2="320" stroke="#1036E2" stroke-width="1.5" stroke-dasharray="4"/>
+                <circle cx="339" cy="120" r="5" fill="#1036E2"/>
+                <text x="339" y="340" font-family="Albert Sans" font-size="13" fill="#1036E2" text-anchor="middle" font-weight="600">N<tspan font-size="10" dy="3">s</tspan></text>
+                <!-- Unemployment bracket -->
+                <line x1="191" y1="105" x2="339" y2="105" stroke="#DC2626" stroke-width="2"/>
+                <line x1="191" y1="100" x2="191" y2="110" stroke="#DC2626" stroke-width="2"/>
+                <line x1="339" y1="100" x2="339" y2="110" stroke="#DC2626" stroke-width="2"/>
+                <text x="265" y="96" font-family="Albert Sans" font-size="14" fill="#DC2626" font-weight="700" text-anchor="middle">Desempleo</text>
+            </svg>
+            <p style="text-align: center; margin-top: 10px; font-size: 1.2rem;">Oferta &gt; Demanda &rarr; <strong style="color: var(--rojo-alerta);">hay gente que quiere trabajar y no consigue empleo</strong></p>
+        </div>
+
+        <!-- SLIDE 25: Salarios por encima - PASO 2: flecha bajando -->
+        <div class="slide bg-blanco">
+            <h2>El mercado <span class="highlight">ajusta</span>: el salario baja</h2>
+            <svg viewBox="0 0 500 380" width="60%" style="margin: 0 auto; display: block;" xmlns="http://www.w3.org/2000/svg">
+                <line x1="70" y1="320" x2="470" y2="320" stroke="#021751" stroke-width="2"/>
+                <line x1="70" y1="320" x2="70" y2="30" stroke="#021751" stroke-width="2"/>
+                <polygon points="470,320 460,314 460,326" fill="#021751"/>
+                <polygon points="70,30 64,40 76,40" fill="#021751"/>
+                <text x="470" y="345" font-family="Albert Sans" font-size="15" fill="#021751" text-anchor="end">N</text>
+                <text x="45" y="40" font-family="Albert Sans" font-size="15" fill="#021751" text-anchor="end">w</text>
+                <line x1="110" y1="290" x2="420" y2="60" stroke="#1036E2" stroke-width="3" stroke-linecap="round"/>
+                <text x="430" y="55" font-family="Albert Sans" font-size="16" fill="#1036E2" font-weight="700">Ls</text>
+                <line x1="110" y1="60" x2="420" y2="290" stroke="#DC2626" stroke-width="3" stroke-linecap="round"/>
+                <text x="430" y="295" font-family="Albert Sans" font-size="16" fill="#DC2626" font-weight="700">Ld</text>
+                <!-- w_alto line (faded) -->
+                <line x1="70" y1="120" x2="450" y2="120" stroke="#DC2626" stroke-width="1.5" stroke-dasharray="8" opacity="0.3"/>
+                <text x="50" y="125" font-family="Albert Sans" font-size="14" fill="#DC2626" font-weight="700" text-anchor="end" opacity="0.4">w&#8593;</text>
+                <!-- Unemployment bracket (faded) -->
+                <line x1="191" y1="120" x2="191" y2="320" stroke="#DC2626" stroke-width="1" stroke-dasharray="4" opacity="0.2"/>
+                <line x1="339" y1="120" x2="339" y2="320" stroke="#1036E2" stroke-width="1" stroke-dasharray="4" opacity="0.2"/>
+                <!-- Big arrow going DOWN from w_alto to w* -->
+                <line x1="140" y1="130" x2="140" y2="168" stroke="#F59E0B" stroke-width="4"/>
+                <polygon points="140,175 132,162 148,162" fill="#F59E0B"/>
+                <!-- Equilibrium -->
+                <circle cx="265" cy="175" r="7" fill="#00C600"/>
+                <line x1="70" y1="175" x2="265" y2="175" stroke="#00C600" stroke-width="2" stroke-dasharray="6"/>
+                <line x1="265" y1="175" x2="265" y2="320" stroke="#00C600" stroke-width="2" stroke-dasharray="6"/>
+                <text x="50" y="180" font-family="Albert Sans" font-size="15" fill="#00C600" font-weight="700" text-anchor="end">w*</text>
+                <text x="265" y="340" font-family="Albert Sans" font-size="15" fill="#00C600" font-weight="700" text-anchor="middle">N*</text>
+            </svg>
+            <p style="text-align: center; margin-top: 10px; font-size: 1.2rem;">Los desempleados aceptan salarios m&aacute;s bajos &rarr; <strong style="color: var(--amarillo);">w baja hasta w*</strong></p>
+        </div>
+
+        <!-- SLIDE 26: Salarios por encima - PASO 3: flechitas sobre curvas -->
+        <div class="slide bg-blanco">
+            <h2>Convergencia al <span class="highlight">equilibrio</span></h2>
+            <svg viewBox="0 0 500 380" width="60%" style="margin: 0 auto; display: block;" xmlns="http://www.w3.org/2000/svg">
+                <line x1="70" y1="320" x2="470" y2="320" stroke="#021751" stroke-width="2"/>
+                <line x1="70" y1="320" x2="70" y2="30" stroke="#021751" stroke-width="2"/>
+                <polygon points="470,320 460,314 460,326" fill="#021751"/>
+                <polygon points="70,30 64,40 76,40" fill="#021751"/>
+                <text x="470" y="345" font-family="Albert Sans" font-size="15" fill="#021751" text-anchor="end">N</text>
+                <text x="45" y="40" font-family="Albert Sans" font-size="15" fill="#021751" text-anchor="end">w</text>
+                <line x1="110" y1="290" x2="420" y2="60" stroke="#1036E2" stroke-width="3" stroke-linecap="round"/>
+                <text x="430" y="55" font-family="Albert Sans" font-size="16" fill="#1036E2" font-weight="700">Ls</text>
+                <line x1="110" y1="60" x2="420" y2="290" stroke="#DC2626" stroke-width="3" stroke-linecap="round"/>
+                <text x="430" y="295" font-family="Albert Sans" font-size="16" fill="#DC2626" font-weight="700">Ld</text>
+                <!-- w_alto start points (faded) -->
+                <circle cx="191" cy="120" r="4" fill="#DC2626" opacity="0.4"/>
+                <circle cx="339" cy="120" r="4" fill="#1036E2" opacity="0.4"/>
+                <!-- Arrow on Ld curve: from Nd toward equilibrium (rightward/down on curve) -->
+                <path d="M 195,125 Q 220,145 240,160" stroke="#F59E0B" stroke-width="3" fill="none" marker-end="url(#arrowOrange)"/>
+                <!-- Arrow on Ls curve: from Ns toward equilibrium (leftward/down on curve) -->
+                <path d="M 335,125 Q 310,145 290,160" stroke="#F59E0B" stroke-width="3" fill="none" marker-end="url(#arrowOrange)"/>
+                <!-- Arrow marker definition -->
+                <defs>
+                    <marker id="arrowOrange" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+                        <polygon points="0 0, 10 3.5, 0 7" fill="#F59E0B"/>
+                    </marker>
+                </defs>
+                <!-- Equilibrium -->
+                <circle cx="265" cy="175" r="8" fill="#00C600"/>
+                <line x1="70" y1="175" x2="265" y2="175" stroke="#00C600" stroke-width="2" stroke-dasharray="6"/>
+                <line x1="265" y1="175" x2="265" y2="320" stroke="#00C600" stroke-width="2" stroke-dasharray="6"/>
+                <text x="50" y="180" font-family="Albert Sans" font-size="15" fill="#00C600" font-weight="700" text-anchor="end">w*</text>
+                <text x="265" y="340" font-family="Albert Sans" font-size="15" fill="#00C600" font-weight="700" text-anchor="middle">N*</text>
+                <!-- Labels on arrows -->
+                <text x="200" y="155" font-family="Albert Sans" font-size="11" fill="#F59E0B" font-weight="600">Nd sube</text>
+                <text x="310" y="155" font-family="Albert Sans" font-size="11" fill="#F59E0B" font-weight="600">Ns baja</text>
+            </svg>
+            <p style="text-align: center; margin-top: 10px; font-size: 1.2rem;">Al bajar w: las empresas contratan m&aacute;s, algunos trabajadores se retiran &rarr; <strong style="color: var(--verde-activo);">converge a N*</strong></p>
+        </div>
+
+        <!-- SLIDE 27: Reflexión desempleo en equilibrio -->
+        <div class="slide bg-respaldo" style="justify-content: center; align-items: center;">
+            <p class="pregunta-grande">&iquest;Hay lugar para el desempleo<br>en el equilibrio?</p>
+            <p style="margin-top: 30px; font-size: 1.3rem; max-width: 700px; text-align: center; opacity: 0.85;">En este modelo, en w* <strong>todos los que quieren trabajar al salario vigente, trabajan</strong>. El desempleo solo existe fuera de equilibrio. &iquest;Es realista? No del todo &mdash; pero es un punto de partida.</p>
+        </div>
+
+        <!-- SLIDE 28: Salarios por debajo - PASO 1 -->
+        <div class="slide bg-blanco">
+            <h2>&iquest;Qu&eacute; pasa si el salario est&aacute; <span class="highlight">por debajo</span>?</h2>
+            <svg viewBox="0 0 500 380" width="60%" style="margin: 0 auto; display: block;" xmlns="http://www.w3.org/2000/svg">
+                <line x1="70" y1="320" x2="470" y2="320" stroke="#021751" stroke-width="2"/>
+                <line x1="70" y1="320" x2="70" y2="30" stroke="#021751" stroke-width="2"/>
+                <polygon points="470,320 460,314 460,326" fill="#021751"/>
+                <polygon points="70,30 64,40 76,40" fill="#021751"/>
+                <text x="470" y="345" font-family="Albert Sans" font-size="15" fill="#021751" text-anchor="end">N</text>
+                <text x="45" y="40" font-family="Albert Sans" font-size="15" fill="#021751" text-anchor="end">w</text>
+                <line x1="110" y1="290" x2="420" y2="60" stroke="#1036E2" stroke-width="3" stroke-linecap="round"/>
+                <text x="430" y="55" font-family="Albert Sans" font-size="16" fill="#1036E2" font-weight="700">Ls</text>
+                <line x1="110" y1="60" x2="420" y2="290" stroke="#DC2626" stroke-width="3" stroke-linecap="round"/>
+                <text x="430" y="295" font-family="Albert Sans" font-size="16" fill="#DC2626" font-weight="700">Ld</text>
+                <!-- w_bajo line -->
+                <line x1="70" y1="230" x2="450" y2="230" stroke="#1036E2" stroke-width="2" stroke-dasharray="8"/>
+                <text x="50" y="235" font-family="Albert Sans" font-size="14" fill="#1036E2" font-weight="700" text-anchor="end">w&#8595;</text>
+                <!-- Ns at w_bajo (supply is LOW) -->
+                <line x1="191" y1="230" x2="191" y2="320" stroke="#1036E2" stroke-width="1.5" stroke-dasharray="4"/>
+                <circle cx="191" cy="230" r="5" fill="#1036E2"/>
+                <text x="191" y="340" font-family="Albert Sans" font-size="13" fill="#1036E2" text-anchor="middle" font-weight="600">N<tspan font-size="10" dy="3">s</tspan></text>
+                <!-- Nd at w_bajo (demand is HIGH) -->
+                <line x1="339" y1="230" x2="339" y2="320" stroke="#DC2626" stroke-width="1.5" stroke-dasharray="4"/>
+                <circle cx="339" cy="230" r="5" fill="#DC2626"/>
+                <text x="339" y="340" font-family="Albert Sans" font-size="13" fill="#DC2626" text-anchor="middle" font-weight="600">N<tspan font-size="10" dy="3">d</tspan></text>
+                <!-- Shortage bracket -->
+                <line x1="191" y1="215" x2="339" y2="215" stroke="#1036E2" stroke-width="2"/>
+                <line x1="191" y1="210" x2="191" y2="220" stroke="#1036E2" stroke-width="2"/>
+                <line x1="339" y1="210" x2="339" y2="220" stroke="#1036E2" stroke-width="2"/>
+                <text x="265" y="207" font-family="Albert Sans" font-size="14" fill="#1036E2" font-weight="700" text-anchor="middle">Escasez de trabajadores</text>
+            </svg>
+            <p style="text-align: center; margin-top: 10px; font-size: 1.2rem;">Demanda &gt; Oferta &rarr; <strong style="color: var(--azul-impulso);">las empresas no consiguen cubrir sus vacantes</strong></p>
+        </div>
+
+        <!-- SLIDE 29: Salarios por debajo - PASO 2: flecha subiendo -->
+        <div class="slide bg-blanco">
+            <h2>El mercado <span class="highlight">ajusta</span>: el salario sube</h2>
+            <svg viewBox="0 0 500 380" width="60%" style="margin: 0 auto; display: block;" xmlns="http://www.w3.org/2000/svg">
+                <line x1="70" y1="320" x2="470" y2="320" stroke="#021751" stroke-width="2"/>
+                <line x1="70" y1="320" x2="70" y2="30" stroke="#021751" stroke-width="2"/>
+                <polygon points="470,320 460,314 460,326" fill="#021751"/>
+                <polygon points="70,30 64,40 76,40" fill="#021751"/>
+                <text x="470" y="345" font-family="Albert Sans" font-size="15" fill="#021751" text-anchor="end">N</text>
+                <text x="45" y="40" font-family="Albert Sans" font-size="15" fill="#021751" text-anchor="end">w</text>
+                <line x1="110" y1="290" x2="420" y2="60" stroke="#1036E2" stroke-width="3" stroke-linecap="round"/>
+                <text x="430" y="55" font-family="Albert Sans" font-size="16" fill="#1036E2" font-weight="700">Ls</text>
+                <line x1="110" y1="60" x2="420" y2="290" stroke="#DC2626" stroke-width="3" stroke-linecap="round"/>
+                <text x="430" y="295" font-family="Albert Sans" font-size="16" fill="#DC2626" font-weight="700">Ld</text>
+                <!-- w_bajo line (faded) -->
+                <line x1="70" y1="230" x2="450" y2="230" stroke="#1036E2" stroke-width="1.5" stroke-dasharray="8" opacity="0.3"/>
+                <text x="50" y="235" font-family="Albert Sans" font-size="14" fill="#1036E2" font-weight="700" text-anchor="end" opacity="0.4">w&#8595;</text>
+                <!-- Faded start points -->
+                <line x1="191" y1="230" x2="191" y2="320" stroke="#1036E2" stroke-width="1" stroke-dasharray="4" opacity="0.2"/>
+                <line x1="339" y1="230" x2="339" y2="320" stroke="#DC2626" stroke-width="1" stroke-dasharray="4" opacity="0.2"/>
+                <!-- Big arrow going UP from w_bajo to w* -->
+                <line x1="140" y1="222" x2="140" y2="185" stroke="#F59E0B" stroke-width="4"/>
+                <polygon points="140,178 132,191 148,191" fill="#F59E0B"/>
+                <!-- Equilibrium -->
+                <circle cx="265" cy="175" r="7" fill="#00C600"/>
+                <line x1="70" y1="175" x2="265" y2="175" stroke="#00C600" stroke-width="2" stroke-dasharray="6"/>
+                <line x1="265" y1="175" x2="265" y2="320" stroke="#00C600" stroke-width="2" stroke-dasharray="6"/>
+                <text x="50" y="180" font-family="Albert Sans" font-size="15" fill="#00C600" font-weight="700" text-anchor="end">w*</text>
+                <text x="265" y="340" font-family="Albert Sans" font-size="15" fill="#00C600" font-weight="700" text-anchor="middle">N*</text>
+            </svg>
+            <p style="text-align: center; margin-top: 10px; font-size: 1.2rem;">Las empresas compiten ofreciendo salarios m&aacute;s altos &rarr; <strong style="color: var(--amarillo);">w sube hasta w*</strong></p>
+        </div>
+
+        <!-- SLIDE 30: Salarios por debajo - PASO 3: flechitas sobre curvas -->
+        <div class="slide bg-blanco">
+            <h2>Convergencia desde <span class="highlight">abajo</span></h2>
+            <svg viewBox="0 0 500 380" width="60%" style="margin: 0 auto; display: block;" xmlns="http://www.w3.org/2000/svg">
+                <defs>
+                    <marker id="arrowOrange2" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+                        <polygon points="0 0, 10 3.5, 0 7" fill="#F59E0B"/>
+                    </marker>
+                </defs>
+                <line x1="70" y1="320" x2="470" y2="320" stroke="#021751" stroke-width="2"/>
+                <line x1="70" y1="320" x2="70" y2="30" stroke="#021751" stroke-width="2"/>
+                <polygon points="470,320 460,314 460,326" fill="#021751"/>
+                <polygon points="70,30 64,40 76,40" fill="#021751"/>
+                <text x="470" y="345" font-family="Albert Sans" font-size="15" fill="#021751" text-anchor="end">N</text>
+                <text x="45" y="40" font-family="Albert Sans" font-size="15" fill="#021751" text-anchor="end">w</text>
+                <line x1="110" y1="290" x2="420" y2="60" stroke="#1036E2" stroke-width="3" stroke-linecap="round"/>
+                <text x="430" y="55" font-family="Albert Sans" font-size="16" fill="#1036E2" font-weight="700">Ls</text>
+                <line x1="110" y1="60" x2="420" y2="290" stroke="#DC2626" stroke-width="3" stroke-linecap="round"/>
+                <text x="430" y="295" font-family="Albert Sans" font-size="16" fill="#DC2626" font-weight="700">Ld</text>
+                <!-- Faded start points -->
+                <circle cx="191" cy="230" r="4" fill="#1036E2" opacity="0.4"/>
+                <circle cx="339" cy="230" r="4" fill="#DC2626" opacity="0.4"/>
+                <!-- Arrow on Ls: from Ns toward equilibrium (rightward/up on curve) -->
+                <path d="M 195,226 Q 220,210 240,195" stroke="#F59E0B" stroke-width="3" fill="none" marker-end="url(#arrowOrange2)"/>
+                <!-- Arrow on Ld: from Nd toward equilibrium (leftward/up on curve) -->
+                <path d="M 335,226 Q 310,210 290,195" stroke="#F59E0B" stroke-width="3" fill="none" marker-end="url(#arrowOrange2)"/>
+                <!-- Equilibrium -->
+                <circle cx="265" cy="175" r="8" fill="#00C600"/>
+                <line x1="70" y1="175" x2="265" y2="175" stroke="#00C600" stroke-width="2" stroke-dasharray="6"/>
+                <line x1="265" y1="175" x2="265" y2="320" stroke="#00C600" stroke-width="2" stroke-dasharray="6"/>
+                <text x="50" y="180" font-family="Albert Sans" font-size="15" fill="#00C600" font-weight="700" text-anchor="end">w*</text>
+                <text x="265" y="340" font-family="Albert Sans" font-size="15" fill="#00C600" font-weight="700" text-anchor="middle">N*</text>
+                <text x="200" y="215" font-family="Albert Sans" font-size="11" fill="#F59E0B" font-weight="600">Ns sube</text>
+                <text x="305" y="215" font-family="Albert Sans" font-size="11" fill="#F59E0B" font-weight="600">Nd baja</text>
+            </svg>
+            <p style="text-align: center; margin-top: 10px; font-size: 1.2rem;">Al subir w: m&aacute;s gente quiere trabajar, las empresas reducen vacantes &rarr; <strong style="color: var(--verde-activo);">converge a N*</strong></p>
+        </div>
+
+        <!-- SLIDE 31: Biden "Pagadles más" -->
+        <div class="slide bg-impulso" style="justify-content: center; align-items: center;">
+            <blockquote style="font-size: 2.2rem; max-width: 700px; border-left-color: var(--blanco); text-align: center;">
+                &ldquo;Pay them more.&rdquo;
+                <cite style="color: rgba(255,255,255,0.7); font-size: 1.2rem;">Joe Biden, cuando le preguntaron qu&eacute; hacer ante la escasez de trabajadores (2021)</cite>
+            </blockquote>
+            <p style="margin-top: 30px; font-size: 1.3rem; opacity: 0.85; max-width: 600px; text-align: center;">El modelo predice exactamente eso: si w &lt; w*, subi el salario y aparecen los trabajadores.</p>
+        </div>
+
+        <!-- ============================================= -->
+        <!-- BLOQUE 6: CAMBIO TECNOLÓGICO (slides 32-41)   -->
+        <!-- ============================================= -->
+
+        <!-- SLIDE 32: Separador Aplicaciones -->
+        <div class="slide bg-verde seccion-titulo">
+            <h3>Parte IV</h3>
+            <h1>Aplicaciones</h1>
+            <p class="subtitle" style="margin-top: 15px;">Usando el modelo para entender el mundo real</p>
+        </div>
+
+        <!-- SLIDE 33: Intro cambio tecnológico -->
+        <div class="slide bg-respaldo">
+            <h2>Cambio <span class="highlight">tecnol&oacute;gico</span></h2>
+            <p style="font-size: 1.4rem;">En los &uacute;ltimos 200 a&ntilde;os, la tecnolog&iacute;a transform&oacute; radicalmente el mercado de trabajo.</p>
+            <div class="two-cols" style="margin-top: 30px;">
+                <div class="concepto-box">
+                    <h4>El miedo</h4>
+                    <p>&ldquo;Las m&aacute;quinas van a reemplazar a los trabajadores&rdquo;<br><br>Luditas (1811), cajeros autom&aacute;ticos, inteligencia artificial&hellip;</p>
+                </div>
+                <div class="concepto-box">
+                    <h4>La pregunta</h4>
+                    <p>&iquest;Qu&eacute; predice <strong>nuestro modelo</strong> cuando hay un avance tecnol&oacute;gico?<br><br>Vamos paso a paso.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE 34: Tech Paso 1 - equilibrio + pregunta -->
+        <div class="slide bg-blanco">
+            <h2>Cambio tecnol&oacute;gico: <span class="highlight">Paso 1</span></h2>
+            <svg viewBox="0 0 500 380" width="55%" style="margin: 0 auto; display: block;" xmlns="http://www.w3.org/2000/svg">
+                <line x1="70" y1="320" x2="470" y2="320" stroke="#021751" stroke-width="2"/>
+                <line x1="70" y1="320" x2="70" y2="30" stroke="#021751" stroke-width="2"/>
+                <polygon points="470,320 460,314 460,326" fill="#021751"/>
+                <polygon points="70,30 64,40 76,40" fill="#021751"/>
+                <text x="470" y="345" font-family="Albert Sans" font-size="15" fill="#021751" text-anchor="end">N</text>
+                <text x="45" y="40" font-family="Albert Sans" font-size="15" fill="#021751" text-anchor="end">w</text>
+                <line x1="110" y1="290" x2="420" y2="60" stroke="#1036E2" stroke-width="3" stroke-linecap="round"/>
+                <text x="430" y="55" font-family="Albert Sans" font-size="16" fill="#1036E2" font-weight="700">Ls</text>
+                <line x1="110" y1="60" x2="420" y2="290" stroke="#DC2626" stroke-width="3" stroke-linecap="round"/>
+                <text x="430" y="295" font-family="Albert Sans" font-size="16" fill="#DC2626" font-weight="700">Ld</text>
+                <circle cx="265" cy="175" r="7" fill="#00C600"/>
+                <line x1="70" y1="175" x2="265" y2="175" stroke="#00C600" stroke-width="2" stroke-dasharray="6"/>
+                <line x1="265" y1="175" x2="265" y2="320" stroke="#00C600" stroke-width="2" stroke-dasharray="6"/>
+                <text x="50" y="180" font-family="Albert Sans" font-size="15" fill="#00C600" font-weight="700" text-anchor="end">w*</text>
+                <text x="265" y="340" font-family="Albert Sans" font-size="15" fill="#00C600" font-weight="700" text-anchor="middle">N*</text>
+            </svg>
+            <div class="formula" style="margin-top: 15px;">
+                La tecnolog&iacute;a aumenta el PMgL &rarr; <strong>&iquest;Qu&eacute; curva se desplaza?</strong>
+            </div>
+        </div>
+
+        <!-- SLIDE 35: Tech Paso 1 respuesta - agrega Ld' -->
+        <div class="slide bg-blanco">
+            <h2>Cambio tecnol&oacute;gico: <span class="highlight">la demanda se desplaza</span></h2>
+            <svg viewBox="0 0 500 380" width="55%" style="margin: 0 auto; display: block;" xmlns="http://www.w3.org/2000/svg">
+                <line x1="70" y1="320" x2="470" y2="320" stroke="#021751" stroke-width="2"/>
+                <line x1="70" y1="320" x2="70" y2="30" stroke="#021751" stroke-width="2"/>
+                <polygon points="470,320 460,314 460,326" fill="#021751"/>
+                <polygon points="70,30 64,40 76,40" fill="#021751"/>
+                <text x="470" y="345" font-family="Albert Sans" font-size="15" fill="#021751" text-anchor="end">N</text>
+                <text x="45" y="40" font-family="Albert Sans" font-size="15" fill="#021751" text-anchor="end">w</text>
+                <line x1="110" y1="290" x2="420" y2="60" stroke="#1036E2" stroke-width="3" stroke-linecap="round"/>
+                <text x="430" y="55" font-family="Albert Sans" font-size="16" fill="#1036E2" font-weight="700">Ls</text>
+                <!-- Original Ld (faded) -->
+                <line x1="110" y1="60" x2="420" y2="290" stroke="#DC2626" stroke-width="2" stroke-linecap="round" opacity="0.3"/>
+                <text x="430" y="295" font-family="Albert Sans" font-size="14" fill="#DC2626" font-weight="600" opacity="0.4">Ld</text>
+                <!-- Shifted Ld' -->
+                <line x1="170" y1="60" x2="460" y2="270" stroke="#F59E0B" stroke-width="3" stroke-linecap="round"/>
+                <text x="465" y="262" font-family="Albert Sans" font-size="16" fill="#F59E0B" font-weight="700">Ld'</text>
+                <!-- Old equilibrium (faded) -->
+                <circle cx="265" cy="175" r="5" fill="#00C600" opacity="0.3"/>
+                <line x1="70" y1="175" x2="265" y2="175" stroke="#00C600" stroke-width="1.5" stroke-dasharray="6" opacity="0.3"/>
+                <line x1="265" y1="175" x2="265" y2="320" stroke="#00C600" stroke-width="1.5" stroke-dasharray="6" opacity="0.3"/>
+                <text x="50" y="180" font-family="Albert Sans" font-size="14" fill="#00C600" font-weight="600" text-anchor="end" opacity="0.4">w*</text>
+                <text x="265" y="340" font-family="Albert Sans" font-size="14" fill="#00C600" font-weight="600" text-anchor="middle" opacity="0.4">N*</text>
+            </svg>
+            <p style="text-align: center; margin-top: 10px; font-size: 1.3rem;">M&aacute;s PMgL &rarr; a cada salario la empresa quiere contratar m&aacute;s &rarr; <strong style="color: var(--amarillo);">Ld se desplaza a la derecha</strong></p>
+        </div>
+
+        <!-- SLIDE 36: Tech Paso 2 - al salario viejo + pregunta -->
+        <div class="slide bg-blanco">
+            <h2>Al salario inicial: <span class="highlight">&iquest;qu&eacute; situaci&oacute;n hay?</span></h2>
+            <svg viewBox="0 0 500 380" width="55%" style="margin: 0 auto; display: block;" xmlns="http://www.w3.org/2000/svg">
+                <line x1="70" y1="320" x2="470" y2="320" stroke="#021751" stroke-width="2"/>
+                <line x1="70" y1="320" x2="70" y2="30" stroke="#021751" stroke-width="2"/>
+                <polygon points="470,320 460,314 460,326" fill="#021751"/>
+                <polygon points="70,30 64,40 76,40" fill="#021751"/>
+                <text x="470" y="345" font-family="Albert Sans" font-size="15" fill="#021751" text-anchor="end">N</text>
+                <text x="45" y="40" font-family="Albert Sans" font-size="15" fill="#021751" text-anchor="end">w</text>
+                <line x1="110" y1="290" x2="420" y2="60" stroke="#1036E2" stroke-width="3" stroke-linecap="round"/>
+                <text x="430" y="55" font-family="Albert Sans" font-size="16" fill="#1036E2" font-weight="700">Ls</text>
+                <line x1="110" y1="60" x2="420" y2="290" stroke="#DC2626" stroke-width="2" stroke-linecap="round" opacity="0.3"/>
+                <line x1="170" y1="60" x2="460" y2="270" stroke="#F59E0B" stroke-width="3" stroke-linecap="round"/>
+                <text x="465" y="262" font-family="Albert Sans" font-size="16" fill="#F59E0B" font-weight="700">Ld'</text>
+                <!-- Old w* line -->
+                <line x1="70" y1="175" x2="450" y2="175" stroke="#00C600" stroke-width="2" stroke-dasharray="8"/>
+                <text x="50" y="180" font-family="Albert Sans" font-size="14" fill="#00C600" font-weight="700" text-anchor="end">w*</text>
+                <!-- Ns at w* = 265 (on Ls) -->
+                <line x1="265" y1="175" x2="265" y2="320" stroke="#1036E2" stroke-width="1.5" stroke-dasharray="4"/>
+                <circle cx="265" cy="175" r="5" fill="#1036E2"/>
+                <text x="265" y="340" font-family="Albert Sans" font-size="13" fill="#1036E2" text-anchor="middle" font-weight="600">N<tspan font-size="10" dy="3">s</tspan></text>
+                <!-- Nd' at w* = 325 (on Ld') -->
+                <line x1="325" y1="175" x2="325" y2="320" stroke="#F59E0B" stroke-width="1.5" stroke-dasharray="4"/>
+                <circle cx="325" cy="175" r="5" fill="#F59E0B"/>
+                <text x="325" y="340" font-family="Albert Sans" font-size="13" fill="#F59E0B" text-anchor="middle" font-weight="600">N<tspan font-size="10" dy="3">d</tspan>'</text>
+            </svg>
+            <div class="formula" style="margin-top: 10px;">
+                Al salario viejo w*: N<sub>d</sub>' &gt; N<sub>s</sub> &rarr; <strong>&iquest;Qu&eacute; situaci&oacute;n es esta?</strong>
+            </div>
+        </div>
+
+        <!-- SLIDE 37: Tech Paso 2 respuesta - etiqueta escasez -->
+        <div class="slide bg-blanco">
+            <h2><span class="highlight-red">Escasez</span> de trabajadores</h2>
+            <svg viewBox="0 0 500 380" width="55%" style="margin: 0 auto; display: block;" xmlns="http://www.w3.org/2000/svg">
+                <line x1="70" y1="320" x2="470" y2="320" stroke="#021751" stroke-width="2"/>
+                <line x1="70" y1="320" x2="70" y2="30" stroke="#021751" stroke-width="2"/>
+                <polygon points="470,320 460,314 460,326" fill="#021751"/>
+                <polygon points="70,30 64,40 76,40" fill="#021751"/>
+                <text x="470" y="345" font-family="Albert Sans" font-size="15" fill="#021751" text-anchor="end">N</text>
+                <text x="45" y="40" font-family="Albert Sans" font-size="15" fill="#021751" text-anchor="end">w</text>
+                <line x1="110" y1="290" x2="420" y2="60" stroke="#1036E2" stroke-width="3" stroke-linecap="round"/>
+                <text x="430" y="55" font-family="Albert Sans" font-size="16" fill="#1036E2" font-weight="700">Ls</text>
+                <line x1="110" y1="60" x2="420" y2="290" stroke="#DC2626" stroke-width="2" stroke-linecap="round" opacity="0.3"/>
+                <line x1="170" y1="60" x2="460" y2="270" stroke="#F59E0B" stroke-width="3" stroke-linecap="round"/>
+                <text x="465" y="262" font-family="Albert Sans" font-size="16" fill="#F59E0B" font-weight="700">Ld'</text>
+                <line x1="70" y1="175" x2="450" y2="175" stroke="#00C600" stroke-width="2" stroke-dasharray="8"/>
+                <text x="50" y="180" font-family="Albert Sans" font-size="14" fill="#00C600" font-weight="700" text-anchor="end">w*</text>
+                <line x1="265" y1="175" x2="265" y2="320" stroke="#1036E2" stroke-width="1.5" stroke-dasharray="4"/>
+                <circle cx="265" cy="175" r="5" fill="#1036E2"/>
+                <text x="265" y="340" font-family="Albert Sans" font-size="13" fill="#1036E2" text-anchor="middle" font-weight="600">N<tspan font-size="10" dy="3">s</tspan></text>
+                <line x1="325" y1="175" x2="325" y2="320" stroke="#F59E0B" stroke-width="1.5" stroke-dasharray="4"/>
+                <circle cx="325" cy="175" r="5" fill="#F59E0B"/>
+                <text x="325" y="340" font-family="Albert Sans" font-size="13" fill="#F59E0B" text-anchor="middle" font-weight="600">N<tspan font-size="10" dy="3">d</tspan>'</text>
+                <!-- Shortage bracket -->
+                <line x1="265" y1="160" x2="325" y2="160" stroke="#DC2626" stroke-width="2.5"/>
+                <line x1="265" y1="155" x2="265" y2="165" stroke="#DC2626" stroke-width="2.5"/>
+                <line x1="325" y1="155" x2="325" y2="165" stroke="#DC2626" stroke-width="2.5"/>
+                <text x="295" y="150" font-family="Albert Sans" font-size="14" fill="#DC2626" font-weight="700" text-anchor="middle">Escasez</text>
+            </svg>
+            <p style="text-align: center; margin-top: 10px; font-size: 1.2rem;">Las empresas quieren m&aacute;s trabajadores de los que hay disponibles al salario vigente.</p>
+        </div>
+
+        <!-- SLIDE 38: Tech Paso 3 - pregunta ajuste -->
+        <div class="slide bg-blanco">
+            <h2>&iquest;C&oacute;mo <span class="highlight">ajusta</span> el modelo?</h2>
+            <svg viewBox="0 0 500 380" width="55%" style="margin: 0 auto; display: block;" xmlns="http://www.w3.org/2000/svg">
+                <line x1="70" y1="320" x2="470" y2="320" stroke="#021751" stroke-width="2"/>
+                <line x1="70" y1="320" x2="70" y2="30" stroke="#021751" stroke-width="2"/>
+                <polygon points="470,320 460,314 460,326" fill="#021751"/>
+                <polygon points="70,30 64,40 76,40" fill="#021751"/>
+                <text x="470" y="345" font-family="Albert Sans" font-size="15" fill="#021751" text-anchor="end">N</text>
+                <text x="45" y="40" font-family="Albert Sans" font-size="15" fill="#021751" text-anchor="end">w</text>
+                <line x1="110" y1="290" x2="420" y2="60" stroke="#1036E2" stroke-width="3" stroke-linecap="round"/>
+                <text x="430" y="55" font-family="Albert Sans" font-size="16" fill="#1036E2" font-weight="700">Ls</text>
+                <line x1="110" y1="60" x2="420" y2="290" stroke="#DC2626" stroke-width="2" stroke-linecap="round" opacity="0.3"/>
+                <line x1="170" y1="60" x2="460" y2="270" stroke="#F59E0B" stroke-width="3" stroke-linecap="round"/>
+                <text x="465" y="262" font-family="Albert Sans" font-size="16" fill="#F59E0B" font-weight="700">Ld'</text>
+                <line x1="70" y1="175" x2="340" y2="175" stroke="#00C600" stroke-width="1.5" stroke-dasharray="8" opacity="0.4"/>
+                <!-- Shortage bracket (faded) -->
+                <line x1="265" y1="160" x2="325" y2="160" stroke="#DC2626" stroke-width="2" opacity="0.4"/>
+                <text x="295" y="150" font-family="Albert Sans" font-size="13" fill="#DC2626" font-weight="600" text-anchor="middle" opacity="0.5">Escasez</text>
+                <!-- Big question mark -->
+                <text x="250" y="270" font-family="Albert Sans" font-size="60" fill="#021751" text-anchor="middle" font-weight="800" opacity="0.15">?</text>
+            </svg>
+            <div class="formula" style="margin-top: 10px;">
+                Hay escasez &rarr; las empresas compiten por trabajadores &rarr; <strong>&iquest;qu&eacute; pasa con w y N?</strong>
+            </div>
+        </div>
+
+        <!-- SLIDE 39: Tech Paso 3 respuesta - nuevo equilibrio -->
+        <div class="slide bg-blanco">
+            <h2>Nuevo equilibrio: <span class="highlight">suben w y N</span></h2>
+            <svg viewBox="0 0 500 380" width="55%" style="margin: 0 auto; display: block;" xmlns="http://www.w3.org/2000/svg">
+                <defs>
+                    <marker id="arrowGreen" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+                        <polygon points="0 0, 10 3.5, 0 7" fill="#00C600"/>
+                    </marker>
+                </defs>
+                <line x1="70" y1="320" x2="470" y2="320" stroke="#021751" stroke-width="2"/>
+                <line x1="70" y1="320" x2="70" y2="30" stroke="#021751" stroke-width="2"/>
+                <polygon points="470,320 460,314 460,326" fill="#021751"/>
+                <polygon points="70,30 64,40 76,40" fill="#021751"/>
+                <text x="470" y="345" font-family="Albert Sans" font-size="15" fill="#021751" text-anchor="end">N</text>
+                <text x="45" y="40" font-family="Albert Sans" font-size="15" fill="#021751" text-anchor="end">w</text>
+                <line x1="110" y1="290" x2="420" y2="60" stroke="#1036E2" stroke-width="3" stroke-linecap="round"/>
+                <text x="430" y="55" font-family="Albert Sans" font-size="16" fill="#1036E2" font-weight="700">Ls</text>
+                <line x1="110" y1="60" x2="420" y2="290" stroke="#DC2626" stroke-width="2" stroke-linecap="round" opacity="0.3"/>
+                <line x1="170" y1="60" x2="460" y2="270" stroke="#F59E0B" stroke-width="3" stroke-linecap="round"/>
+                <text x="465" y="262" font-family="Albert Sans" font-size="16" fill="#F59E0B" font-weight="700">Ld'</text>
+                <!-- Old equilibrium (faded) -->
+                <circle cx="265" cy="175" r="5" fill="#00C600" opacity="0.3"/>
+                <line x1="70" y1="175" x2="265" y2="175" stroke="#00C600" stroke-width="1.5" stroke-dasharray="6" opacity="0.3"/>
+                <line x1="265" y1="175" x2="265" y2="320" stroke="#00C600" stroke-width="1.5" stroke-dasharray="6" opacity="0.3"/>
+                <text x="50" y="180" font-family="Albert Sans" font-size="13" fill="#00C600" font-weight="600" text-anchor="end" opacity="0.4">w*</text>
+                <text x="265" y="340" font-family="Albert Sans" font-size="13" fill="#00C600" font-weight="600" text-anchor="middle" opacity="0.4">N*</text>
+                <!-- NEW equilibrium at (295, 153) -->
+                <circle cx="295" cy="153" r="8" fill="#00C600"/>
+                <line x1="70" y1="153" x2="295" y2="153" stroke="#00C600" stroke-width="2" stroke-dasharray="6"/>
+                <line x1="295" y1="153" x2="295" y2="320" stroke="#00C600" stroke-width="2" stroke-dasharray="6"/>
+                <text x="50" y="158" font-family="Albert Sans" font-size="15" fill="#00C600" font-weight="700" text-anchor="end">w**</text>
+                <text x="295" y="355" font-family="Albert Sans" font-size="15" fill="#00C600" font-weight="700" text-anchor="middle">N**</text>
+                <!-- Arrows showing the change -->
+                <path d="M 265,180 L 265,195 L 295,195 L 295,165" stroke="#00C600" stroke-width="2.5" fill="none" marker-end="url(#arrowGreen)"/>
+            </svg>
+            <div class="solucion-box" style="margin-top: 10px; text-align: center;">
+                <p style="margin-bottom: 0;"><strong>Predicci&oacute;n del modelo:</strong> el cambio tecnol&oacute;gico sube salarios <strong>y</strong> empleo.<br>Las m&aacute;quinas no destruyen trabajo: lo hacen m&aacute;s valioso.</p>
+            </div>
+        </div>
+
+        <!-- SLIDE 40: Evidencia - horas y salarios USA -->
+        <div class="slide bg-respaldo">
+            <h2>Evidencia: <span class="highlight">salarios y empleo en EE.UU.</span></h2>
+            <p style="font-size: 1.2rem; opacity: 0.8;">En los &uacute;ltimos 100 a&ntilde;os, tanto los salarios reales como el empleo total aumentaron.</p>
+            <div class="stats-grid" style="margin-top: 30px;">
+                <div class="stat-box">
+                    <div class="stat-numero">+600%</div>
+                    <div class="stat-label">Salario real por hora<br>(1900&ndash;2000)</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-numero">+250%</div>
+                    <div class="stat-label">Empleo total<br>(1900&ndash;2000)</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-numero">&minus;30%</div>
+                    <div class="stat-label">Horas semanales<br>(de 60 a 40 hs)</div>
+                </div>
+            </div>
+            <p style="margin-top: 25px; font-size: 1.1rem; opacity: 0.7; text-align: center;">Consistente con desplazamientos sucesivos de demanda (tecnolog&iacute;a) + efecto ingreso (menos horas).</p>
+            <p style="font-size: 0.95rem; opacity: 0.5; text-align: center;">Fuente: Samuelson &amp; Nordhaus, <em>Economics</em></p>
+        </div>
+
+        <!-- SLIDE 41: Evidencia - desigualdad salarial -->
+        <div class="slide bg-blanco">
+            <h2>Pero no todos ganan igual: <span class="highlight">prima salarial universitaria</span></h2>
+            <p>El cambio tecnol&oacute;gico es <strong>sesgado hacia la calificaci&oacute;n</strong>: aumenta m&aacute;s la demanda de trabajo calificado.</p>
+            <div class="bar-chart" style="margin-top: 30px;">
+                <div class="bar-row">
+                    <div class="bar-label">1980</div>
+                    <div class="bar-container"><div class="bar azul" style="width: 40%;">+40%</div></div>
+                </div>
+                <div class="bar-row">
+                    <div class="bar-label">2000</div>
+                    <div class="bar-container"><div class="bar azul" style="width: 70%;">+70%</div></div>
+                </div>
+                <div class="bar-row">
+                    <div class="bar-label">2020</div>
+                    <div class="bar-container"><div class="bar azul" style="width: 80%;">+80%</div></div>
+                </div>
+            </div>
+            <p style="font-size: 1rem; opacity: 0.7;">Brecha salarial entre graduados universitarios y secundarios en EE.UU.</p>
+            <div class="cita-paper">
+                <div class="titulo">Skills, Tasks, and Technologies: Implications for Employment and Earnings</div>
+                <div class="autores">Daron Acemoglu &amp; David Autor (2011)</div>
+                <div class="contenido">El cambio tecnol&oacute;gico sesgado hacia la calificaci&oacute;n explica el aumento persistente de la desigualdad salarial.</div>
+            </div>
+        </div>
+
+        <!-- ============================================= -->
+        <!-- BLOQUE 7: SINDICATOS (slides 42-45)           -->
+        <!-- ============================================= -->
+
+        <!-- SLIDE 42: Separador Sindicatos -->
+        <div class="slide bg-impulso seccion-titulo">
+            <h3>Aplicaci&oacute;n II</h3>
+            <h1>Sindicatos</h1>
+            <p class="subtitle" style="margin-top: 15px;">Insiders, outsiders y el poder de negociaci&oacute;n</p>
+        </div>
+
+        <!-- SLIDE 43: Sindicatos - insiders y outsiders -->
+        <div class="slide bg-blanco">
+            <h2>Sindicatos: <span class="highlight">insiders vs. outsiders</span></h2>
+            <div class="two-cols">
+                <div>
+                    <svg viewBox="0 0 500 380" width="100%" xmlns="http://www.w3.org/2000/svg">
+                        <line x1="70" y1="320" x2="470" y2="320" stroke="#021751" stroke-width="2"/>
+                        <line x1="70" y1="320" x2="70" y2="30" stroke="#021751" stroke-width="2"/>
+                        <polygon points="470,320 460,314 460,326" fill="#021751"/>
+                        <polygon points="70,30 64,40 76,40" fill="#021751"/>
+                        <text x="470" y="345" font-family="Albert Sans" font-size="15" fill="#021751" text-anchor="end">N</text>
+                        <text x="45" y="40" font-family="Albert Sans" font-size="15" fill="#021751" text-anchor="end">w</text>
+                        <line x1="110" y1="290" x2="420" y2="60" stroke="#1036E2" stroke-width="3" stroke-linecap="round"/>
+                        <text x="430" y="55" font-family="Albert Sans" font-size="16" fill="#1036E2" font-weight="700">Ls</text>
+                        <line x1="110" y1="60" x2="420" y2="290" stroke="#DC2626" stroke-width="3" stroke-linecap="round"/>
+                        <text x="430" y="295" font-family="Albert Sans" font-size="16" fill="#DC2626" font-weight="700">Ld</text>
+                        <!-- Equilibrium (faded) -->
+                        <circle cx="265" cy="175" r="5" fill="#00C600" opacity="0.3"/>
+                        <line x1="70" y1="175" x2="265" y2="175" stroke="#00C600" stroke-width="1.5" stroke-dasharray="6" opacity="0.3"/>
+                        <text x="50" y="180" font-family="Albert Sans" font-size="13" fill="#00C600" font-weight="600" text-anchor="end" opacity="0.4">w*</text>
+                        <!-- Union wage floor -->
+                        <line x1="70" y1="120" x2="450" y2="120" stroke="#F59E0B" stroke-width="2.5"/>
+                        <text x="455" y="118" font-family="Albert Sans" font-size="14" fill="#F59E0B" font-weight="700">w sindical</text>
+                        <!-- Nd (insiders) -->
+                        <line x1="191" y1="120" x2="191" y2="320" stroke="#DC2626" stroke-width="1.5" stroke-dasharray="4"/>
+                        <circle cx="191" cy="120" r="5" fill="#DC2626"/>
+                        <!-- Ns -->
+                        <line x1="339" y1="120" x2="339" y2="320" stroke="#1036E2" stroke-width="1.5" stroke-dasharray="4"/>
+                        <circle cx="339" cy="120" r="5" fill="#1036E2"/>
+                        <!-- Insiders region -->
+                        <rect x="71" y="310" width="120" height="8" fill="#00C600" rx="2" opacity="0.6"/>
+                        <text x="131" y="307" font-family="Albert Sans" font-size="12" fill="#00C600" font-weight="700" text-anchor="middle">Insiders</text>
+                        <!-- Outsiders region -->
+                        <rect x="191" y="310" width="148" height="8" fill="#DC2626" rx="2" opacity="0.6"/>
+                        <text x="265" y="307" font-family="Albert Sans" font-size="12" fill="#DC2626" font-weight="700" text-anchor="middle">Outsiders</text>
+                    </svg>
+                </div>
+                <div style="display: flex; flex-direction: column; justify-content: center;">
+                    <p style="font-size: 1.2rem;"><strong style="color: var(--verde-activo);">Insiders:</strong> los que tienen empleo. Cobran w sindical &gt; w*.</p>
+                    <p style="font-size: 1.2rem;"><strong style="color: var(--rojo-alerta);">Outsiders:</strong> los que querr&iacute;an trabajar a w sindical pero no consiguen empleo.</p>
+                    <p style="font-size: 1.1rem; margin-top: 15px; opacity: 0.8;">El sindicato mejora la situaci&oacute;n de sus miembros a costa de generar desempleo entre los no-miembros.</p>
+                    <div class="cita-paper" style="margin-top: 15px;">
+                        <div class="titulo">The Insider-Outsider Theory</div>
+                        <div class="autores">Lindbeck &amp; Snower (1988)</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE 44: Elasticidad - definición + gráfico comparativo -->
+        <div class="slide bg-blanco">
+            <h2>Clave: la <span class="highlight">elasticidad</span> de la demanda</h2>
+            <p>&iquest;Cu&aacute;nto cambia el empleo cuando cambia el salario?</p>
+            <div class="two-cols" style="margin-top: 20px;">
+                <div style="text-align: center;">
+                    <svg viewBox="0 0 280 280" width="90%" xmlns="http://www.w3.org/2000/svg">
+                        <line x1="40" y1="240" x2="260" y2="240" stroke="#021751" stroke-width="2"/>
+                        <line x1="40" y1="240" x2="40" y2="20" stroke="#021751" stroke-width="2"/>
+                        <text x="150" y="270" font-family="Albert Sans" font-size="12" fill="#021751" text-anchor="middle">N</text>
+                        <text x="22" y="25" font-family="Albert Sans" font-size="12" fill="#021751" text-anchor="end">w</text>
+                        <!-- Elastic demand (flat) -->
+                        <line x1="50" y1="100" x2="250" y2="180" stroke="#DC2626" stroke-width="3" stroke-linecap="round"/>
+                        <text x="253" y="175" font-family="Albert Sans" font-size="13" fill="#DC2626" font-weight="700">Ld</text>
+                        <text x="150" y="15" font-family="Albert Sans" font-size="14" fill="#021751" font-weight="600" text-anchor="middle">Demanda EL&Aacute;STICA</text>
+                        <text x="150" y="215" font-family="Albert Sans" font-size="11" fill="#021751" text-anchor="middle" opacity="0.7">Peque&ntilde;o cambio en w</text>
+                        <text x="150" y="230" font-family="Albert Sans" font-size="11" fill="#021751" text-anchor="middle" opacity="0.7">&rarr; gran cambio en N</text>
+                    </svg>
+                </div>
+                <div style="text-align: center;">
+                    <svg viewBox="0 0 280 280" width="90%" xmlns="http://www.w3.org/2000/svg">
+                        <line x1="40" y1="240" x2="260" y2="240" stroke="#021751" stroke-width="2"/>
+                        <line x1="40" y1="240" x2="40" y2="20" stroke="#021751" stroke-width="2"/>
+                        <text x="150" y="270" font-family="Albert Sans" font-size="12" fill="#021751" text-anchor="middle">N</text>
+                        <text x="22" y="25" font-family="Albert Sans" font-size="12" fill="#021751" text-anchor="end">w</text>
+                        <!-- Inelastic demand (steep) -->
+                        <line x1="110" y1="40" x2="170" y2="230" stroke="#DC2626" stroke-width="3" stroke-linecap="round"/>
+                        <text x="175" y="225" font-family="Albert Sans" font-size="13" fill="#DC2626" font-weight="700">Ld</text>
+                        <text x="150" y="15" font-family="Albert Sans" font-size="14" fill="#021751" font-weight="600" text-anchor="middle">Demanda INEL&Aacute;STICA</text>
+                        <text x="150" y="215" font-family="Albert Sans" font-size="11" fill="#021751" text-anchor="middle" opacity="0.7">Gran cambio en w</text>
+                        <text x="150" y="230" font-family="Albert Sans" font-size="11" fill="#021751" text-anchor="middle" opacity="0.7">&rarr; peque&ntilde;o cambio en N</text>
+                    </svg>
+                </div>
+            </div>
+            <div class="formula" style="margin-top: 10px;">
+                Elasticidad = &Delta;%N / &Delta;%w &mdash; mide la <strong>sensibilidad</strong> del empleo al salario
+            </div>
+        </div>
+
+        <!-- SLIDE 45: Elasticidad - efecto en sindicatos (MEJORADO) -->
+        <div class="slide bg-blanco">
+            <h2>Elasticidad y <span class="highlight">poder sindical</span></h2>
+            <div class="two-cols">
+                <div style="text-align: center;">
+                    <svg viewBox="0 0 320 300" width="95%" xmlns="http://www.w3.org/2000/svg">
+                        <!-- Axes -->
+                        <line x1="55" y1="260" x2="300" y2="260" stroke="#021751" stroke-width="2"/>
+                        <line x1="55" y1="260" x2="55" y2="15" stroke="#021751" stroke-width="2"/>
+                        <polygon points="300,260 291,255 291,265" fill="#021751"/>
+                        <polygon points="55,15 50,24 60,24" fill="#021751"/>
+                        <text x="300" y="278" font-family="Albert Sans" font-size="12" fill="#021751" text-anchor="end">N</text>
+                        <text x="38" y="22" font-family="Albert Sans" font-size="12" fill="#021751" text-anchor="end">w</text>
+                        <!-- Title -->
+                        <text x="175" y="12" font-family="Albert Sans" font-size="13" fill="#021751" font-weight="700" text-anchor="middle">Demanda EL&Aacute;STICA</text>
+                        <!-- Supply Ls: (75,240) to (260,45) -->
+                        <line x1="75" y1="240" x2="260" y2="45" stroke="#1036E2" stroke-width="2.5" stroke-linecap="round"/>
+                        <text x="267" y="42" font-family="Albert Sans" font-size="13" fill="#1036E2" font-weight="700">Ls</text>
+                        <!-- Elastic demand Ld: (65,95) to (280,195) — flat -->
+                        <line x1="65" y1="95" x2="280" y2="195" stroke="#DC2626" stroke-width="2.5" stroke-linecap="round"/>
+                        <text x="283" y="200" font-family="Albert Sans" font-size="13" fill="#DC2626" font-weight="700">Ld</text>
+                        <!-- Equilibrium at (167, 143) -->
+                        <circle cx="167" cy="143" r="5" fill="#00C600" opacity="0.5"/>
+                        <line x1="55" y1="143" x2="167" y2="143" stroke="#00C600" stroke-width="1.5" stroke-dasharray="4" opacity="0.5"/>
+                        <line x1="167" y1="143" x2="167" y2="260" stroke="#00C600" stroke-width="1.5" stroke-dasharray="4" opacity="0.5"/>
+                        <text x="42" y="147" font-family="Albert Sans" font-size="10" fill="#00C600" font-weight="600" text-anchor="end">w*</text>
+                        <text x="167" y="272" font-family="Albert Sans" font-size="10" fill="#00C600" font-weight="600" text-anchor="middle">N*</text>
+                        <!-- Union wage at y=105 -->
+                        <line x1="55" y1="105" x2="280" y2="105" stroke="#F59E0B" stroke-width="2.5"/>
+                        <text x="282" y="100" font-family="Albert Sans" font-size="11" fill="#F59E0B" font-weight="700">w sind.</text>
+                        <!-- Nd at w_sind on Ld = 87 -->
+                        <circle cx="87" cy="105" r="4" fill="#DC2626"/>
+                        <line x1="87" y1="105" x2="87" y2="260" stroke="#DC2626" stroke-width="1.5" stroke-dasharray="4"/>
+                        <text x="87" y="272" font-family="Albert Sans" font-size="10" fill="#DC2626" font-weight="600" text-anchor="middle">N<tspan font-size="8" dy="2">d</tspan></text>
+                        <!-- Ns at w_sind on Ls = 203 -->
+                        <circle cx="203" cy="105" r="4" fill="#1036E2"/>
+                        <line x1="203" y1="105" x2="203" y2="260" stroke="#1036E2" stroke-width="1.5" stroke-dasharray="4"/>
+                        <text x="203" y="272" font-family="Albert Sans" font-size="10" fill="#1036E2" font-weight="600" text-anchor="middle">N<tspan font-size="8" dy="2">s</tspan></text>
+                        <!-- Gap shading -->
+                        <rect x="87" y="100" width="116" height="10" fill="#DC2626" opacity="0.15" rx="2"/>
+                        <!-- Gap bracket -->
+                        <line x1="87" y1="90" x2="203" y2="90" stroke="#DC2626" stroke-width="2"/>
+                        <line x1="87" y1="86" x2="87" y2="94" stroke="#DC2626" stroke-width="2"/>
+                        <line x1="203" y1="86" x2="203" y2="94" stroke="#DC2626" stroke-width="2"/>
+                        <text x="145" y="83" font-family="Albert Sans" font-size="11" fill="#DC2626" font-weight="700" text-anchor="middle">Gran desempleo</text>
+                    </svg>
+                    <p style="font-size: 1.05rem; color: var(--rojo-alerta); font-weight: 600; margin-top: 5px;">Subir w destruye mucho empleo</p>
+                </div>
+                <div style="text-align: center;">
+                    <svg viewBox="0 0 320 300" width="95%" xmlns="http://www.w3.org/2000/svg">
+                        <!-- Axes -->
+                        <line x1="55" y1="260" x2="300" y2="260" stroke="#021751" stroke-width="2"/>
+                        <line x1="55" y1="260" x2="55" y2="15" stroke="#021751" stroke-width="2"/>
+                        <polygon points="300,260 291,255 291,265" fill="#021751"/>
+                        <polygon points="55,15 50,24 60,24" fill="#021751"/>
+                        <text x="300" y="278" font-family="Albert Sans" font-size="12" fill="#021751" text-anchor="end">N</text>
+                        <text x="38" y="22" font-family="Albert Sans" font-size="12" fill="#021751" text-anchor="end">w</text>
+                        <!-- Title -->
+                        <text x="175" y="12" font-family="Albert Sans" font-size="13" fill="#021751" font-weight="700" text-anchor="middle">Demanda INEL&Aacute;STICA</text>
+                        <!-- Supply Ls: (75,240) to (260,45) — same as left panel -->
+                        <line x1="75" y1="240" x2="260" y2="45" stroke="#1036E2" stroke-width="2.5" stroke-linecap="round"/>
+                        <text x="267" y="42" font-family="Albert Sans" font-size="13" fill="#1036E2" font-weight="700">Ls</text>
+                        <!-- Inelastic demand Ld: (125,30) to (210,250) — steep -->
+                        <line x1="125" y1="30" x2="210" y2="250" stroke="#DC2626" stroke-width="2.5" stroke-linecap="round"/>
+                        <text x="215" y="248" font-family="Albert Sans" font-size="13" fill="#DC2626" font-weight="700">Ld</text>
+                        <!-- Equilibrium at (168, 142) -->
+                        <circle cx="168" cy="142" r="5" fill="#00C600" opacity="0.5"/>
+                        <line x1="55" y1="142" x2="168" y2="142" stroke="#00C600" stroke-width="1.5" stroke-dasharray="4" opacity="0.5"/>
+                        <line x1="168" y1="142" x2="168" y2="260" stroke="#00C600" stroke-width="1.5" stroke-dasharray="4" opacity="0.5"/>
+                        <text x="42" y="146" font-family="Albert Sans" font-size="10" fill="#00C600" font-weight="600" text-anchor="end">w*</text>
+                        <text x="168" y="272" font-family="Albert Sans" font-size="10" fill="#00C600" font-weight="600" text-anchor="middle">N*</text>
+                        <!-- Union wage at y=105 -->
+                        <line x1="55" y1="105" x2="280" y2="105" stroke="#F59E0B" stroke-width="2.5"/>
+                        <text x="282" y="100" font-family="Albert Sans" font-size="11" fill="#F59E0B" font-weight="700">w sind.</text>
+                        <!-- Nd at w_sind on Ld = 154 -->
+                        <circle cx="154" cy="105" r="4" fill="#DC2626"/>
+                        <line x1="154" y1="105" x2="154" y2="260" stroke="#DC2626" stroke-width="1.5" stroke-dasharray="4"/>
+                        <text x="154" y="272" font-family="Albert Sans" font-size="10" fill="#DC2626" font-weight="600" text-anchor="middle">N<tspan font-size="8" dy="2">d</tspan></text>
+                        <!-- Ns at w_sind on Ls = 203 -->
+                        <circle cx="203" cy="105" r="4" fill="#1036E2"/>
+                        <line x1="203" y1="105" x2="203" y2="260" stroke="#1036E2" stroke-width="1.5" stroke-dasharray="4"/>
+                        <text x="203" y="272" font-family="Albert Sans" font-size="10" fill="#1036E2" font-weight="600" text-anchor="middle">N<tspan font-size="8" dy="2">s</tspan></text>
+                        <!-- Gap shading -->
+                        <rect x="154" y="100" width="49" height="10" fill="#1036E2" opacity="0.12" rx="2"/>
+                        <!-- Gap bracket -->
+                        <line x1="154" y1="90" x2="203" y2="90" stroke="#1036E2" stroke-width="2"/>
+                        <line x1="154" y1="86" x2="154" y2="94" stroke="#1036E2" stroke-width="2"/>
+                        <line x1="203" y1="86" x2="203" y2="94" stroke="#1036E2" stroke-width="2"/>
+                        <text x="178" y="83" font-family="Albert Sans" font-size="11" fill="#1036E2" font-weight="700" text-anchor="middle">Poco desempleo</text>
+                    </svg>
+                    <p style="font-size: 1.05rem; color: var(--azul-impulso); font-weight: 600; margin-top: 5px;">Subir w casi no afecta empleo</p>
+                </div>
+            </div>
+            <p style="text-align: center; margin-top: 8px; font-size: 1.1rem; opacity: 0.8;">El sindicato es m&aacute;s &ldquo;poderoso&rdquo; cuando la demanda es inel&aacute;stica: sube salarios sin perder muchos puestos.</p>
+        </div>
+
+        <!-- ============================================= -->
+        <!-- BLOQUE 8: REFORMA LABORAL (slides 46-48)      -->
+        <!-- ============================================= -->
+
+        <!-- SLIDE 46: Separador Reforma laboral -->
+        <div class="slide bg-verde seccion-titulo">
+            <h3>Aplicaci&oacute;n III</h3>
+            <h1>Reforma laboral</h1>
+            <p class="subtitle" style="margin-top: 15px;">&iquest;Qu&eacute; dice el modelo?</p>
+        </div>
+
+        <!-- SLIDE 47: Reforma laboral - análisis con modelo -->
+        <div class="slide bg-blanco">
+            <h2>Reforma laboral: <span class="highlight">el argumento</span></h2>
+            <div class="two-cols">
+                <div>
+                    <svg viewBox="0 0 500 380" width="100%" xmlns="http://www.w3.org/2000/svg">
+                        <line x1="70" y1="320" x2="470" y2="320" stroke="#021751" stroke-width="2"/>
+                        <line x1="70" y1="320" x2="70" y2="30" stroke="#021751" stroke-width="2"/>
+                        <polygon points="470,320 460,314 460,326" fill="#021751"/>
+                        <polygon points="70,30 64,40 76,40" fill="#021751"/>
+                        <text x="470" y="345" font-family="Albert Sans" font-size="15" fill="#021751" text-anchor="end">N</text>
+                        <text x="45" y="40" font-family="Albert Sans" font-size="15" fill="#021751" text-anchor="end">w</text>
+                        <line x1="110" y1="290" x2="420" y2="60" stroke="#1036E2" stroke-width="3" stroke-linecap="round"/>
+                        <text x="430" y="55" font-family="Albert Sans" font-size="16" fill="#1036E2" font-weight="700">Ls</text>
+                        <!-- Original Ld (faded) -->
+                        <line x1="110" y1="60" x2="420" y2="290" stroke="#DC2626" stroke-width="2" stroke-linecap="round" opacity="0.3"/>
+                        <text x="430" y="295" font-family="Albert Sans" font-size="14" fill="#DC2626" font-weight="600" opacity="0.4">Ld</text>
+                        <!-- Shifted Ld' -->
+                        <line x1="170" y1="60" x2="460" y2="270" stroke="#F59E0B" stroke-width="3" stroke-linecap="round"/>
+                        <text x="465" y="262" font-family="Albert Sans" font-size="16" fill="#F59E0B" font-weight="700">Ld'</text>
+                        <!-- Old equilibrium -->
+                        <circle cx="265" cy="175" r="5" fill="#021751" opacity="0.3"/>
+                        <!-- New equilibrium -->
+                        <circle cx="295" cy="153" r="7" fill="#00C600"/>
+                        <line x1="70" y1="153" x2="295" y2="153" stroke="#00C600" stroke-width="2" stroke-dasharray="6"/>
+                        <line x1="295" y1="153" x2="295" y2="320" stroke="#00C600" stroke-width="2" stroke-dasharray="6"/>
+                    </svg>
+                </div>
+                <div style="display: flex; flex-direction: column; justify-content: center;">
+                    <p style="font-size: 1.2rem;">Si una reforma reduce costos de contrataci&oacute;n/despido:</p>
+                    <ul>
+                        <li>El costo efectivo del trabajo baja</li>
+                        <li>A cada salario, las empresas quieren contratar m&aacute;s</li>
+                        <li><strong>Ld se desplaza a la derecha</strong></li>
+                    </ul>
+                    <p style="font-size: 1.2rem; margin-top: 15px;">Resultado: <strong style="color: var(--verde-activo);">m&aacute;s empleo</strong>. Pero&hellip; &iquest;cu&aacute;nto m&aacute;s?</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE 48: Reforma - depende de elasticidad -->
+        <div class="slide bg-blanco">
+            <h2>Depende de la <span class="highlight">elasticidad</span></h2>
+            <div class="two-cols">
+                <div class="concepto-box">
+                    <h4 style="color: var(--verde-activo);">Si Ld es el&aacute;stica</h4>
+                    <p style="font-size: 1.15rem;">Reducir costos laborales genera un <strong>gran aumento del empleo</strong>.</p>
+                    <p style="font-size: 1.15rem; margin-top: 10px;">La reforma &ldquo;funciona&rdquo;: muchos puestos nuevos.</p>
+                    <p style="font-size: 1rem; opacity: 0.7; margin-top: 10px;">T&iacute;pico de sectores con mucha competencia y m&aacute;rgenes finos.</p>
+                </div>
+                <div class="concepto-box">
+                    <h4 style="color: var(--rojo-alerta);">Si Ld es inel&aacute;stica</h4>
+                    <p style="font-size: 1.15rem;">Reducir costos genera <strong>poco empleo nuevo</strong>.</p>
+                    <p style="font-size: 1.15rem; margin-top: 10px;">La reforma &ldquo;no mueve la aguja&rdquo;: los puestos no aparecen.</p>
+                    <p style="font-size: 1rem; opacity: 0.7; margin-top: 10px;">T&iacute;pico de sectores concentrados o con capital muy espec&iacute;fico.</p>
+                </div>
+            </div>
+            <div class="problema-box" style="margin-top: 20px; text-align: center;">
+                <p style="margin-bottom: 0;">Por eso el debate sobre reforma laboral es <strong>emp&iacute;rico</strong>, no te&oacute;rico: depende de la elasticidad real de cada sector y pa&iacute;s.</p>
+            </div>
+        </div>
+
+        <!-- ============================================= -->
+        <!-- BLOQUE 9: INDICADORES (slides 49-57)          -->
+        <!-- Fuente: INDEC, EPH 3er trimestre 2025          -->
+        <!-- Publicado 18/02/2026                           -->
+        <!-- ============================================= -->
+
+        <!-- SLIDE 49: Separador Indicadores -->
+        <div class="slide bg-impulso seccion-titulo">
+            <h3>Parte V</h3>
+            <h1>Argentina hoy</h1>
+            <p class="subtitle" style="margin-top: 15px;">El mercado de trabajo seg&uacute;n la EPH &mdash; INDEC, 3er trimestre 2025</p>
+        </div>
+
+        <!-- SLIDE 50: Población y PEA - flow diagram con números reales -->
+        <div class="slide bg-blanco">
+            <h2>De la poblaci&oacute;n al <span class="highlight">mercado de trabajo</span></h2>
+            <div class="flow-diagram" style="flex-direction: column; gap: 20px; align-items: center;">
+                <div class="flow-box" style="font-size: 1.3rem; padding: 18px 40px; background: rgba(16, 54, 226, 0.15);">
+                    <strong>Poblaci&oacute;n urbana total</strong>
+                </div>
+                <div class="flow-arrow" style="transform: rotate(90deg);">&#9654;</div>
+                <div style="display: flex; gap: 30px; align-items: stretch; flex-wrap: wrap; justify-content: center;">
+                    <div class="flow-box" style="background: rgba(16, 54, 226, 0.12); min-width: 220px;">
+                        <strong style="color: var(--azul-impulso); font-size: 1.3rem;">PEA: 14,6 M</strong><br>
+                        <span style="font-size: 1rem;">Poblaci&oacute;n Econ&oacute;micamente Activa</span><br>
+                        <span style="font-size: 0.9rem; opacity: 0.7;">Quieren trabajar (48,6% de la poblaci&oacute;n)</span>
+                    </div>
+                    <div class="flow-box" style="background: rgba(0,0,0,0.04); min-width: 220px;">
+                        <strong style="font-size: 1.3rem;">PEI: 15,4 M</strong><br>
+                        <span style="font-size: 1rem;">Poblaci&oacute;n Econ. Inactiva</span><br>
+                        <span style="font-size: 0.9rem; opacity: 0.7;">Estudiantes, jubilados, amas de casa</span>
+                    </div>
+                </div>
+                <div class="flow-arrow" style="transform: rotate(90deg);">&#9654;</div>
+                <div style="display: flex; gap: 30px; align-items: stretch; flex-wrap: wrap; justify-content: center;">
+                    <div class="flow-box" style="background: rgba(0, 198, 0, 0.15); min-width: 200px;">
+                        <strong style="color: var(--verde-activo); font-size: 1.3rem;">Ocupados: 13,6 M</strong><br>
+                        <span style="font-size: 0.9rem; opacity: 0.7;">Trabajan al menos 1 hora/semana</span>
+                    </div>
+                    <div class="flow-box" style="background: rgba(220, 38, 38, 0.12); min-width: 200px;">
+                        <strong style="color: var(--rojo-alerta); font-size: 1.3rem;">Desocupados: 958 mil</strong><br>
+                        <span style="font-size: 0.9rem; opacity: 0.7;">Buscan activamente y no consiguen</span>
+                    </div>
+                </div>
+            </div>
+            <p style="text-align: center; margin-top: 10px; font-size: 0.9rem; opacity: 0.5;">31 aglomerados urbanos &mdash; INDEC, EPH 3T 2025</p>
+        </div>
+
+        <!-- SLIDE 51: Las tres tasas - definiciones -->
+        <div class="slide bg-blanco">
+            <h2>Las tres tasas <span class="highlight">fundamentales</span></h2>
+            <div class="three-cols" style="margin-top: 20px;">
+                <div class="concepto-box">
+                    <h4>Tasa de actividad</h4>
+                    <div class="formula" style="font-size: 1.3rem; padding: 15px; margin: 10px 0;">PEA / Poblaci&oacute;n</div>
+                    <p style="font-size: 1rem; opacity: 0.7;">Qu&eacute; proporci&oacute;n de la poblaci&oacute;n participa del mercado de trabajo (trabajando o buscando)</p>
+                </div>
+                <div class="concepto-box">
+                    <h4>Tasa de empleo</h4>
+                    <div class="formula" style="font-size: 1.3rem; padding: 15px; margin: 10px 0;">Ocupados / Poblaci&oacute;n</div>
+                    <p style="font-size: 1rem; opacity: 0.7;">Qu&eacute; proporci&oacute;n de la poblaci&oacute;n efectivamente trabaja</p>
+                </div>
+                <div class="concepto-box">
+                    <h4>Tasa de desocupaci&oacute;n</h4>
+                    <div class="formula" style="font-size: 1.3rem; padding: 15px; margin: 10px 0;">Desocupados / PEA</div>
+                    <p style="font-size: 1rem; opacity: 0.7;">Qu&eacute; proporci&oacute;n de los que quieren trabajar no consiguen</p>
+                </div>
+            </div>
+            <div class="problema-box" style="margin-top: 20px;">
+                <p style="margin-bottom: 0; font-size: 1.1rem;"><strong>Ojo:</strong> la tasa de desocupaci&oacute;n divide por PEA, no por poblaci&oacute;n total. Si alguien deja de buscar trabajo, <em>baja</em> la tasa de desocupaci&oacute;n aunque su situaci&oacute;n no mejor&oacute;.</p>
+            </div>
+        </div>
+
+        <!-- SLIDE 52: Tasas principales Argentina Q3 2025 -->
+        <div class="slide bg-respaldo">
+            <h2>Argentina, 3er trimestre <span class="highlight">2025</span></h2>
+            <div class="stats-grid stats-grid-4" style="margin-top: 25px;">
+                <div class="stat-box">
+                    <div class="stat-numero">48,6%</div>
+                    <div class="stat-label">Tasa de actividad</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-numero">45,4%</div>
+                    <div class="stat-label">Tasa de empleo</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-numero" style="color: var(--rojo-alerta);">6,6%</div>
+                    <div class="stat-label">Tasa de desocupaci&oacute;n</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-numero" style="color: var(--amarillo);">10,9%</div>
+                    <div class="stat-label">Tasa de subocupaci&oacute;n</div>
+                </div>
+            </div>
+            <table style="margin-top: 25px; font-size: 1.15rem;">
+                <thead>
+                    <tr><th>Indicador</th><th>Q1 2025</th><th>Q2 2025</th><th>Q3 2025</th><th>Q3 2024</th></tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Desocupaci&oacute;n</td>
+                        <td>7,9%</td>
+                        <td>7,6%</td>
+                        <td style="color: var(--verde-activo); font-weight: 700;">6,6%</td>
+                        <td>6,9%</td>
+                    </tr>
+                    <tr>
+                        <td>Empleo</td>
+                        <td>43,2%</td>
+                        <td>44,5%</td>
+                        <td style="color: var(--verde-activo); font-weight: 700;">45,4%</td>
+                        <td>45,0%</td>
+                    </tr>
+                </tbody>
+            </table>
+            <p style="text-align: center; margin-top: 10px; font-size: 1rem; opacity: 0.7;">Tendencia: la desocupaci&oacute;n baj&oacute; <strong>1,3 p.p.</strong> entre Q1 y Q3 de 2025</p>
+            <p style="text-align: center; font-size: 0.85rem; opacity: 0.4;">Fuente: INDEC, EPH &mdash; 31 aglomerados urbanos</p>
+        </div>
+
+        <!-- SLIDE 53: Calidad del empleo - la trampa -->
+        <div class="slide bg-blanco">
+            <h2>Pero&hellip; <span class="highlight-red">&iquest;qu&eacute; tipo de empleo crece?</span></h2>
+            <p>De los <strong>238.000 nuevos puestos</strong> creados en el &uacute;ltimo a&ntilde;o:</p>
+            <div class="stats-grid stats-grid-2" style="margin-top: 25px;">
+                <div class="stat-box">
+                    <div class="stat-numero" style="color: var(--rojo-alerta);">85%</div>
+                    <div class="stat-label">Empleo informal<br><span style="font-size: 0.9rem; opacity: 0.7;">(~201.000 puestos)</span></div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-numero">15%</div>
+                    <div class="stat-label">Empleo formal<br><span style="font-size: 0.9rem; opacity: 0.7;">(~37.000 puestos)</span></div>
+                </div>
+            </div>
+            <div class="two-cols" style="margin-top: 25px;">
+                <div class="problema-box">
+                    <p style="margin-bottom: 0;"><strong>Informalidad: 43,3%</strong><br>Subi&oacute; 0,7 p.p. interanual. Casi la mitad de los trabajadores no tiene aportes jubilatorios, obra social ni protecci&oacute;n legal.</p>
+                </div>
+                <div class="concepto-box" style="text-align: left;">
+                    <h4>Composici&oacute;n del empleo</h4>
+                    <p style="font-size: 1.05rem; text-align: left;"><strong>71,9%</strong> asalariados (baj&oacute; desde 73,1%)<br><strong>24,5%</strong> cuentapropistas (subi&oacute; desde 23,3%)<br><strong>3,2%</strong> patrones</p>
+                </div>
+            </div>
+            <p style="text-align: center; margin-top: 10px; font-size: 0.85rem; opacity: 0.4;">Fuente: INDEC, EPH 3T 2025 &mdash; An&aacute;lisis CEPA</p>
+        </div>
+
+        <!-- SLIDE 54: Brecha de género -->
+        <div class="slide bg-blanco">
+            <h2>Brechas de <span class="highlight">g&eacute;nero y edad</span></h2>
+            <div class="two-cols" style="margin-top: 15px;">
+                <div>
+                    <h3 style="color: var(--azul-impulso); margin-bottom: 15px;">Tasa de actividad</h3>
+                    <div class="bar-chart">
+                        <div class="bar-row">
+                            <div class="bar-label">Varones</div>
+                            <div class="bar-container"><div class="bar azul" style="width: 88%;">70,1%</div></div>
+                        </div>
+                        <div class="bar-row">
+                            <div class="bar-label">Mujeres</div>
+                            <div class="bar-container"><div class="bar" style="width: 66%; background: var(--amarillo); color: #000;">52,6%</div></div>
+                        </div>
+                    </div>
+                    <p style="font-size: 1rem; opacity: 0.7; margin-top: 10px;">Brecha de 17,5 p.p. en participaci&oacute;n laboral</p>
+                </div>
+                <div>
+                    <h3 style="color: var(--rojo-alerta); margin-bottom: 15px;">Tasa de desocupaci&oacute;n</h3>
+                    <div class="bar-chart">
+                        <div class="bar-row">
+                            <div class="bar-label">Varones 30-64</div>
+                            <div class="bar-container"><div class="bar" style="width: 20%; background: var(--verde-activo);">4,0%</div></div>
+                        </div>
+                        <div class="bar-row">
+                            <div class="bar-label">Varones &lt;29</div>
+                            <div class="bar-container"><div class="bar rojo" style="width: 45%;">9,1%</div></div>
+                        </div>
+                        <div class="bar-row">
+                            <div class="bar-label">Mujeres 30-64</div>
+                            <div class="bar-container"><div class="bar" style="width: 30%; background: var(--amarillo); color: #000;">5,8%</div></div>
+                        </div>
+                        <div class="bar-row">
+                            <div class="bar-label">Mujeres &lt;29</div>
+                            <div class="bar-container"><div class="bar rojo" style="width: 63%;">12,7%</div></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="problema-box" style="margin-top: 15px; text-align: center;">
+                <p style="margin-bottom: 0;">Las <strong>mujeres j&oacute;venes</strong> tienen una desocupaci&oacute;n del <strong>12,7%</strong> &mdash; casi el doble de la tasa general (6,6%).</p>
+            </div>
+        </div>
+
+        <!-- SLIDE 55: Luces y sombras - diagnóstico -->
+        <div class="slide bg-respaldo">
+            <h2>Luces y <span class="highlight-red">sombras</span></h2>
+            <div class="two-cols" style="margin-top: 25px;">
+                <div>
+                    <h3 style="color: var(--verde-activo); margin-bottom: 15px;">&#9650; Lo positivo</h3>
+                    <ul>
+                        <li>Desocupaci&oacute;n baj&oacute; de <strong>7,9% a 6,6%</strong> en 2025</li>
+                        <li>Empleo subi&oacute; 0,4 p.p. interanual</li>
+                        <li>Presi&oacute;n sobre el mercado laboral cay&oacute; 5,9 p.p.</li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 style="color: var(--rojo-alerta); margin-bottom: 15px;">&#9660; Lo preocupante</h3>
+                    <ul>
+                        <li><strong>85%</strong> de los nuevos empleos son informales</li>
+                        <li>Informalidad subi&oacute; a <strong>43,3%</strong> del empleo total</li>
+                        <li>Cae la proporci&oacute;n de asalariados, sube el cuentapropismo</li>
+                        <li>Mujeres j&oacute;venes: <strong>12,7%</strong> de desempleo</li>
+                    </ul>
+                </div>
+            </div>
+            <blockquote style="margin-top: 25px; text-align: center; border-left: none;">
+                &ldquo;El empleo crece, pero crece de mala calidad.&rdquo;
+            </blockquote>
+            <p style="text-align: center; font-size: 0.85rem; opacity: 0.4; margin-top: 10px;">Fuentes: INDEC EPH 3T 2025, Informe Mercado de Trabajo (publicado 18/02/2026)</p>
+        </div>
+
+        <!-- ============================================= -->
+        <!-- BLOQUE 10: CIERRE (slides 52-55)              -->
+        <!-- ============================================= -->
+
+        <!-- SLIDE 52: Lo que vimos hoy -->
+        <div class="slide bg-respaldo">
+            <h2>Lo que vimos hoy</h2>
+            <div class="three-cols" style="margin-top: 30px;">
+                <div class="concepto-box">
+                    <h4>El modelo</h4>
+                    <p>Oferta (trabajadores) + Demanda (empresas) = equilibrio con w* y N*. Cualquier desequilibrio se corrige.</p>
+                </div>
+                <div class="concepto-box">
+                    <h4>Las aplicaciones</h4>
+                    <p>Cambio tecnol&oacute;gico sube w y N. Sindicatos suben w pero bajan N. Reforma laboral: depende de la elasticidad.</p>
+                </div>
+                <div class="concepto-box">
+                    <h4>Los l&iacute;mites</h4>
+                    <p>El modelo es una simplificaci&oacute;n. No explica todo. Pero es el punto de partida para pensar pol&iacute;tica laboral.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE 53: Referencias -->
+        <div class="slide bg-blanco" style="overflow-y: auto;">
+            <h2>Referencias</h2>
+            <div class="cita-paper">
+                <div class="titulo">Economics</div>
+                <div class="autores">Paul Samuelson &amp; William Nordhaus</div>
+                <div class="contenido">Manual cl&aacute;sico de econom&iacute;a. Datos hist&oacute;ricos sobre horas trabajadas y salarios reales en Estados Unidos.</div>
+            </div>
+            <div class="cita-paper">
+                <div class="titulo">The Methodology of Positive Economics</div>
+                <div class="autores">Milton Friedman (1953)</div>
+                <div class="contenido">Los supuestos de un modelo no necesitan ser realistas; lo que importa es la capacidad predictiva.</div>
+            </div>
+            <div class="cita-paper">
+                <div class="titulo">Skills, Tasks, and Technologies: Implications for Employment and Earnings</div>
+                <div class="autores">Daron Acemoglu &amp; David Autor (2011)</div>
+                <div class="contenido">An&aacute;lisis del impacto del cambio tecnol&oacute;gico sesgado hacia la calificaci&oacute;n y la desigualdad salarial.</div>
+            </div>
+            <div class="cita-paper">
+                <div class="titulo">The Insider-Outsider Theory of Employment and Unemployment</div>
+                <div class="autores">Assar Lindbeck &amp; Dennis Snower (1988)</div>
+                <div class="contenido">Teor&iacute;a sobre c&oacute;mo los trabajadores empleados (insiders) pueden perjudicar a los desempleados (outsiders).</div>
+            </div>
+        </div>
+
+        <!-- SLIDE 55: Gracias -->
+        <div class="slide bg-verde portada" style="justify-content: center; align-items: center;">
+            <h1 style="font-size: 4.5rem;">&iexcl;Gracias!</h1>
+            <p style="margin-top: 20px; font-size: 1.4rem; opacity: 0.9;">Felipe Venancio &mdash; Econom&iacute;a</p>
+        </div>
+
+    </div>
+
+    <div class="slide-counter">
+        <span id="current">1</span> / <span id="total"></span>
+    </div>
+    <div class="nav-hint">
+        &larr; &rarr; para navegar | F para pantalla completa
+    </div>
+
+    <script>
+        const slides = document.querySelectorAll('.slide');
+        let currentSlide = 0;
+        const total = slides.length;
+        document.getElementById('total').textContent = total;
+
+        function showSlide(n) {
+            slides[currentSlide].classList.remove('active');
+            currentSlide = (n + total) % total;
+            slides[currentSlide].classList.add('active');
+            document.getElementById('current').textContent = currentSlide + 1;
+        }
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowRight' || e.key === ' ' || e.key === 'Enter') {
+                showSlide(currentSlide + 1);
+            } else if (e.key === 'ArrowLeft') {
+                showSlide(currentSlide - 1);
+            } else if (e.key === 'Home') {
+                showSlide(0);
+            } else if (e.key === 'End') {
+                showSlide(total - 1);
+            } else if (e.key === 'f' || e.key === 'F') {
+                if (document.fullscreenElement) {
+                    document.exitFullscreen();
+                } else {
+                    document.documentElement.requestFullscreen();
+                }
+            }
+        });
+
+        let touchStartX = 0;
+        document.addEventListener('touchstart', (e) => { touchStartX = e.touches[0].clientX; });
+        document.addEventListener('touchend', (e) => {
+            const diff = touchStartX - e.changedTouches[0].clientX;
+            if (Math.abs(diff) > 50) { showSlide(currentSlide + (diff > 0 ? 1 : -1)); }
+        });
+
+        document.querySelector('.slide-container').addEventListener('click', (e) => {
+            if (e.clientX > window.innerWidth / 2) { showSlide(currentSlide + 1); }
+            else { showSlide(currentSlide - 1); }
+        });
+    </script>
+</body>
+</html>
