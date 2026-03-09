@@ -1,0 +1,1423 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crecimiento y Desarrollo Económico</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Albert+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --azul-impulso: #1036E2;
+            --verde-activo: #00C600;
+            --azul-respaldo: #021751;
+            --blanco: #FFFFFF;
+            --negro: #000000;
+            --rojo-alerta: #DC2626;
+            --amarillo: #F59E0B;
+            --naranja: #EA580C;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Albert Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--azul-respaldo);
+            color: var(--blanco);
+            overflow: hidden;
+        }
+
+        .slide-container {
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .slide {
+            display: none;
+            width: 100%;
+            height: 100%;
+            padding: 60px 80px;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .slide.active { display: flex; }
+
+        /* Fondos */
+        .bg-respaldo { background: var(--azul-respaldo); color: var(--blanco); }
+        .bg-impulso { background: var(--azul-impulso); color: var(--blanco); }
+        .bg-verde { background: var(--verde-activo); color: var(--blanco); }
+        .bg-blanco { background: var(--blanco); color: var(--azul-respaldo); }
+        .bg-oscuro { background: #0a0a0a; color: var(--blanco); }
+
+        /* Tipografía */
+        h1 { font-size: 3.8rem; font-weight: 700; line-height: 1.1; margin-bottom: 30px; }
+        h2 { font-size: 2.6rem; font-weight: 600; margin-bottom: 25px; }
+        h3 { font-size: 1.8rem; font-weight: 500; margin-bottom: 20px; opacity: 0.9; }
+        p, li { font-size: 1.5rem; line-height: 1.6; margin-bottom: 15px; }
+        .subtitle { font-size: 1.6rem; opacity: 0.8; font-weight: 400; }
+        .highlight { color: var(--verde-activo); }
+        .bg-blanco .highlight { color: var(--azul-impulso); }
+        .highlight-red { color: var(--rojo-alerta); }
+        .highlight-yellow { color: var(--amarillo); }
+        .bg-verde .highlight { color: var(--azul-respaldo); }
+
+        blockquote {
+            font-size: 1.7rem; font-style: italic;
+            border-left: 4px solid var(--verde-activo);
+            padding-left: 30px; margin: 25px 0; opacity: 0.95;
+        }
+        blockquote cite { display: block; font-size: 1.1rem; margin-top: 12px; font-style: normal; opacity: 0.7; }
+        .bg-blanco blockquote { border-left-color: var(--azul-impulso); }
+        .traduccion { font-size: 1rem; opacity: 0.6; font-style: normal; margin-top: 8px; }
+
+        ul { list-style: none; padding-left: 0; }
+        ul li { padding-left: 35px; position: relative; margin-bottom: 18px; }
+        ul li::before { content: "\25B8"; position: absolute; left: 0; color: var(--verde-activo); font-size: 1.4rem; }
+        .bg-verde ul li::before, .bg-impulso ul li::before { color: var(--blanco); }
+        .bg-blanco ul li::before { color: var(--azul-impulso); }
+
+        /* Tablas */
+        table { width: 100%; border-collapse: collapse; margin: 25px 0; font-size: 1.3rem; }
+        th, td { padding: 18px 22px; text-align: left; border-bottom: 1px solid rgba(255,255,255,0.2); }
+        .bg-blanco th, .bg-blanco td { border-bottom: 1px solid rgba(0,0,0,0.1); }
+        th { font-weight: 600; opacity: 0.7; font-size: 1rem; text-transform: uppercase; letter-spacing: 1px; }
+
+        /* Fórmula */
+        .formula {
+            font-size: 2rem; text-align: center; padding: 30px;
+            background: rgba(255,255,255,0.08); border-radius: 12px; margin: 25px 0;
+            font-weight: 500; letter-spacing: 2px;
+        }
+        .bg-blanco .formula { background: rgba(16,54,226,0.06); }
+        .formula-grande { font-size: 2.5rem; padding: 40px; }
+
+        /* Flow diagram */
+        .flow-diagram { display: flex; align-items: center; justify-content: center; gap: 15px; margin: 35px 0; flex-wrap: wrap; }
+        .flow-box { background: rgba(255,255,255,0.1); padding: 20px 28px; border-radius: 10px; font-size: 1.2rem; font-weight: 500; text-align: center; }
+        .bg-blanco .flow-box { background: rgba(16,54,226,0.1); }
+        .flow-arrow { font-size: 1.8rem; color: var(--verde-activo); }
+        .bg-verde .flow-arrow { color: var(--azul-respaldo); }
+        .bg-impulso .flow-arrow { color: var(--blanco); }
+
+        /* Columnas */
+        .two-cols { display: grid; grid-template-columns: 1fr 1fr; gap: 50px; margin-top: 25px; }
+        .three-cols { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 30px; margin-top: 25px; }
+
+        /* Concepto box */
+        .concepto-box { background: rgba(255,255,255,0.08); padding: 25px; border-radius: 12px; text-align: center; }
+        .bg-blanco .concepto-box { background: rgba(16,54,226,0.06); }
+        .concepto-box h4 { font-size: 1.3rem; font-weight: 600; margin-bottom: 12px; color: var(--verde-activo); }
+        .bg-blanco .concepto-box h4 { color: var(--azul-impulso); }
+        .bg-verde .concepto-box h4 { color: var(--azul-respaldo); }
+        .concepto-box p { font-size: 1.15rem; margin-bottom: 0; }
+
+        /* Cita paper */
+        .cita-paper { background: rgba(255,255,255,0.06); padding: 25px 30px; border-radius: 10px; margin: 20px 0; border-left: 4px solid var(--verde-activo); }
+        .bg-blanco .cita-paper { background: rgba(16,54,226,0.04); border-left-color: var(--azul-impulso); }
+        .cita-paper .titulo { font-weight: 600; font-size: 1.15rem; margin-bottom: 8px; }
+        .cita-paper .autores { font-size: 0.95rem; opacity: 0.7; margin-bottom: 12px; }
+        .cita-paper .contenido { font-size: 1.2rem; line-height: 1.5; font-style: italic; }
+
+        /* Barras */
+        .bar-chart { margin: 30px 0; }
+        .bar-row { display: flex; align-items: center; margin-bottom: 15px; }
+        .bar-label { width: 140px; font-size: 1.1rem; font-weight: 500; }
+        .bar-container { flex: 1; height: 35px; background: rgba(255,255,255,0.1); border-radius: 5px; overflow: hidden; margin: 0 15px; }
+        .bg-blanco .bar-container { background: rgba(0,0,0,0.05); }
+        .bar { height: 100%; background: var(--verde-activo); border-radius: 5px; display: flex; align-items: center; justify-content: flex-end; padding-right: 12px; font-weight: 600; font-size: 0.95rem; color: white; }
+        .bar.rojo { background: var(--rojo-alerta); }
+        .bar.azul { background: var(--azul-impulso); }
+        .bar.amarillo { background: var(--amarillo); color: #000; }
+
+        /* Stats */
+        .stat-box { text-align: center; padding: 25px; }
+        .stat-numero { font-size: 4.5rem; font-weight: 800; color: var(--verde-activo); line-height: 1; }
+        .bg-blanco .stat-numero { color: var(--azul-impulso); }
+        .stat-numero.rojo { color: var(--rojo-alerta); }
+        .stat-label { font-size: 1.2rem; opacity: 0.8; margin-top: 10px; }
+        .stats-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 35px; margin-top: 35px; }
+        .stats-grid-4 { grid-template-columns: repeat(4, 1fr); }
+
+        /* Versus */
+        .versus { display: grid; grid-template-columns: 1fr auto 1fr; gap: 25px; align-items: center; margin: 25px 0; }
+        .versus-center { font-size: 2.5rem; font-weight: 800; opacity: 0.3; }
+
+        /* Problema/Solución */
+        .problema-box { background: rgba(220,38,38,0.15); border-left: 4px solid var(--rojo-alerta); padding: 20px 25px; border-radius: 0 10px 10px 0; margin: 12px 0; }
+        .solucion-box { background: rgba(0,198,0,0.15); border-left: 4px solid var(--verde-activo); padding: 20px 25px; border-radius: 0 10px 10px 0; margin: 12px 0; }
+        .bg-blanco .problema-box { background: rgba(220,38,38,0.08); }
+        .bg-blanco .solucion-box { background: rgba(0,198,0,0.08); }
+
+        /* Timeline */
+        .timeline { display: flex; flex-direction: column; gap: 18px; margin: 25px 0; }
+        .timeline-item { display: flex; gap: 20px; align-items: flex-start; }
+        .timeline-year { font-weight: 700; font-size: 1rem; color: var(--verde-activo); min-width: 60px; }
+        .bg-blanco .timeline-year { color: var(--azul-impulso); }
+
+        /* Portada */
+        .portada { text-align: center; }
+        .portada h1 { font-size: 4.2rem; margin-bottom: 20px; }
+
+        /* Sección título */
+        .seccion-titulo { text-align: center; }
+        .seccion-titulo h3 { text-transform: uppercase; letter-spacing: 3px; font-size: 1.2rem; opacity: 0.7; margin-bottom: 15px; }
+
+        /* Nota académica */
+        .nota-academica { font-size: 0.95rem; opacity: 0.6; margin-top: 25px; padding-top: 15px; border-top: 1px solid rgba(255,255,255,0.15); }
+        .bg-blanco .nota-academica { border-top-color: rgba(0,0,0,0.1); }
+
+        /* Anexo badge */
+        .anexo-badge { background: var(--amarillo); color: #000; padding: 5px 15px; border-radius: 20px; font-size: 0.9rem; font-weight: 600; display: inline-block; margin-bottom: 20px; }
+
+        /* Big number */
+        .big-number { font-size: 8rem; font-weight: 800; text-align: center; line-height: 1; }
+
+        /* Navegación */
+        .nav-hint { position: fixed; bottom: 30px; right: 40px; font-size: 0.9rem; opacity: 0.5; }
+        .slide-counter { position: fixed; bottom: 30px; left: 40px; font-size: 0.9rem; opacity: 0.5; }
+
+        /* Responsive */
+        @media (max-width: 1200px) {
+            h1 { font-size: 2.8rem; }
+            h2 { font-size: 2rem; }
+            p, li { font-size: 1.2rem; }
+            .slide { padding: 40px 50px; }
+            .two-cols, .three-cols { grid-template-columns: 1fr; gap: 25px; }
+            .stats-grid { grid-template-columns: repeat(2, 1fr); }
+        }
+        @media (max-width: 768px) {
+            .slide { padding: 25px 20px; }
+            h1 { font-size: 2rem; }
+            h2 { font-size: 1.5rem; }
+            h3 { font-size: 1.2rem; }
+            p, li { font-size: 0.95rem; line-height: 1.5; margin-bottom: 10px; }
+            .subtitle { font-size: 1rem; }
+            blockquote { font-size: 1.15rem; padding-left: 18px; margin: 15px 0; }
+            blockquote cite { font-size: 0.85rem; }
+            .portada h1 { font-size: 2.2rem; }
+            .two-cols, .three-cols { grid-template-columns: 1fr; gap: 15px; }
+            .stats-grid { grid-template-columns: repeat(2, 1fr); gap: 15px; margin-top: 20px; }
+            .stats-grid-4 { grid-template-columns: repeat(2, 1fr); }
+            .stat-numero { font-size: 2.8rem; }
+            .stat-label { font-size: 0.95rem; }
+            .stat-box { padding: 15px; }
+            .concepto-box { padding: 15px; }
+            .concepto-box h4 { font-size: 1.05rem; }
+            .concepto-box p { font-size: 0.95rem; }
+            .problema-box, .solucion-box { padding: 12px 15px; margin: 8px 0; }
+            .cita-paper { padding: 15px 18px; margin: 12px 0; }
+            .cita-paper .titulo { font-size: 1rem; }
+            .cita-paper .autores { font-size: 0.8rem; }
+            .cita-paper .contenido { font-size: 1rem; }
+            .nota-academica { font-size: 0.8rem; margin-top: 15px; padding-top: 10px; }
+            .formula { font-size: 1.3rem; padding: 18px; margin: 15px 0; }
+            .formula-grande { font-size: 1.6rem; padding: 25px; }
+            .flow-diagram { gap: 8px; margin: 20px 0; }
+            .flow-box { padding: 12px 16px; font-size: 0.95rem; }
+            .flow-arrow { font-size: 1.3rem; }
+            .versus { grid-template-columns: 1fr; gap: 10px; }
+            .versus-center { font-size: 1.8rem; text-align: center; }
+            .bar-label { width: 90px; font-size: 0.85rem; }
+            .bar-container { height: 28px; margin: 0 8px; }
+            .bar { font-size: 0.75rem; padding-right: 8px; }
+            table { font-size: 1rem; }
+            th, td { padding: 10px 12px; }
+            th { font-size: 0.8rem; }
+            .nav-hint { bottom: 15px; right: 15px; font-size: 0.75rem; }
+            .slide-counter { bottom: 15px; left: 15px; font-size: 0.75rem; }
+            ul li { padding-left: 25px; margin-bottom: 12px; }
+            ul li::before { font-size: 1.1rem; }
+            .big-number { font-size: 4.5rem; }
+            .timeline-item { gap: 12px; }
+            .timeline-year { min-width: 45px; font-size: 0.85rem; }
+        }
+    </style>
+</head>
+<body>
+    <div class="slide-container">
+
+        <!-- SLIDE 1: Portada -->
+        <div class="slide bg-respaldo portada active">
+            <h3 style="text-transform: uppercase; letter-spacing: 3px; opacity: 0.6; margin-bottom: 20px;">Felipe Venancio</h3>
+            <h1>Crecimiento y<br>Desarrollo Económico</h1>
+            <p class="subtitle">¿Por qué algunos países son ricos y otros pobres?</p>
+        </div>
+
+        <!-- SLIDE 2: La pregunta central -->
+        <div class="slide bg-oscuro">
+            <h2>La pregunta que desvela a los economistas</h2>
+            <blockquote>
+                "The consequences for human welfare involved in questions like these are simply staggering: Once one starts to think about them, it is hard to think about anything else."
+                <cite>— Robert Lucas, "On the Mechanics of Economic Development" (1988)</cite>
+                <span class="traduccion">"Las consecuencias para el bienestar humano de preguntas como estas son simplemente abrumadoras: una vez que empezás a pensar en ellas, es difícil pensar en otra cosa."</span>
+            </blockquote>
+            <p style="margin-top: 30px;">¿Por qué un noruego promedio gana <span class="highlight">80 veces</span> más que un chadiano promedio? ¿Suerte? ¿Recursos? ¿Cultura? ¿Instituciones?</p>
+        </div>
+
+        <!-- SLIDE 3: PBI y PBI per cápita -->
+        <div class="slide bg-blanco">
+            <h2>¿Cómo medimos la riqueza de un país?</h2>
+            <div class="two-cols">
+                <div class="concepto-box">
+                    <h4>PBI (Producto Bruto Interno)</h4>
+                    <p>Valor de todos los bienes y servicios finales producidos en un país durante un año</p>
+                    <p style="margin-top: 15px; font-weight: 600;">Mide el <em>tamaño</em> de la economía</p>
+                </div>
+                <div class="concepto-box">
+                    <h4>PBI per cápita</h4>
+                    <p>PBI dividido por la población. Aproxima el nivel de vida promedio</p>
+                    <p style="margin-top: 15px; font-weight: 600;">Mide el <em>bienestar</em> promedio</p>
+                </div>
+            </div>
+            <div class="stats-grid" style="margin-top: 30px;">
+                <div class="stat-box">
+                    <div class="stat-numero">$105K</div>
+                    <div class="stat-label">PBI p/c Noruega (PPP)</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-numero">$23K</div>
+                    <div class="stat-label">PBI p/c Argentina (PPP)</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-numero">$1.6K</div>
+                    <div class="stat-label">PBI p/c Chad (PPP)</div>
+                </div>
+            </div>
+            <p class="nota-academica">Fuente: FMI, World Economic Outlook 2024. PPP = Paridad de Poder Adquisitivo.</p>
+        </div>
+
+        <!-- SLIDE 4: El poder del interés compuesto -->
+        <div class="slide bg-respaldo">
+            <h2>El poder del interés compuesto</h2>
+            <p>Una diferencia de pocos puntos en la tasa de crecimiento, sostenida en el tiempo, genera <span class="highlight">abismos</span>.</p>
+            <svg viewBox="0 0 700 350" style="width: 100%; max-width: 700px; margin: 20px auto; display: block;">
+                <!-- Ejes -->
+                <line x1="80" y1="300" x2="660" y2="300" stroke="rgba(255,255,255,0.4)" stroke-width="2"/>
+                <line x1="80" y1="300" x2="80" y2="30" stroke="rgba(255,255,255,0.4)" stroke-width="2"/>
+                <!-- Líneas de referencia -->
+                <line x1="80" y1="200" x2="660" y2="200" stroke="rgba(255,255,255,0.08)" stroke-width="1"/>
+                <line x1="80" y1="100" x2="660" y2="100" stroke="rgba(255,255,255,0.08)" stroke-width="1"/>
+                <!-- Curva 2% anual (100 a ~269 en 50 años) -->
+                <path d="M80,280 Q250,270 370,250 Q500,220 580,190 L660,165" fill="none" stroke="var(--amarillo)" stroke-width="3"/>
+                <text x="665" y="165" fill="var(--amarillo)" font-size="14" font-weight="600">2% anual</text>
+                <!-- Curva 5% anual (100 a ~1147 en 50 años) -->
+                <path d="M80,280 Q200,270 320,230 Q430,160 530,80 L580,50" fill="none" stroke="var(--verde-activo)" stroke-width="3"/>
+                <text x="585" y="50" fill="var(--verde-activo)" font-size="14" font-weight="600">5% anual</text>
+                <!-- Etiquetas -->
+                <text x="75" y="295" fill="rgba(255,255,255,0.6)" font-size="12" text-anchor="end">100</text>
+                <text x="75" y="195" fill="rgba(255,255,255,0.6)" font-size="12" text-anchor="end">500</text>
+                <text x="75" y="95" fill="rgba(255,255,255,0.6)" font-size="12" text-anchor="end">1.000</text>
+                <text x="80" y="320" fill="rgba(255,255,255,0.6)" font-size="12">Año 0</text>
+                <text x="370" y="320" fill="rgba(255,255,255,0.6)" font-size="12" text-anchor="middle">Año 25</text>
+                <text x="660" y="320" fill="rgba(255,255,255,0.6)" font-size="12" text-anchor="end">Año 50</text>
+                <!-- Punto inicial compartido -->
+                <circle cx="80" cy="280" r="5" fill="white"/>
+            </svg>
+            <p style="text-align: center; font-size: 1.3rem;">En 50 años: al 2% tu ingreso se <span class="highlight-yellow">triplica</span>. Al 5%, se <span class="highlight">multiplica por 11</span>.</p>
+        </div>
+
+        <!-- SLIDE 5: La Gran Divergencia -->
+        <div class="slide bg-blanco">
+            <h2>La Gran Divergencia</h2>
+            <p>Durante milenios, todos los países fueron igualmente pobres. A partir de 1800, Occidente se despegó.</p>
+            <svg viewBox="0 0 700 320" style="width: 100%; max-width: 700px; margin: 15px auto; display: block;">
+                <!-- Ejes -->
+                <line x1="80" y1="280" x2="660" y2="280" stroke="rgba(0,0,0,0.3)" stroke-width="2"/>
+                <line x1="80" y1="280" x2="80" y2="20" stroke="rgba(0,0,0,0.3)" stroke-width="2"/>
+                <!-- Línea Occidente: plana hasta ~1800 luego despegue -->
+                <path d="M90,260 L250,258 L320,250 L380,220 L440,170 L500,110 L560,60 L620,40" fill="none" stroke="var(--azul-impulso)" stroke-width="3"/>
+                <text x="625" y="38" fill="var(--azul-impulso)" font-size="13" font-weight="600">Occidente</text>
+                <!-- Línea Asia/África: plana, leve mejora reciente -->
+                <path d="M90,262 L250,260 L320,258 L380,255 L440,248 L500,230 L560,200 L620,180" fill="none" stroke="var(--rojo-alerta)" stroke-width="3"/>
+                <text x="625" y="178" fill="var(--rojo-alerta)" font-size="13" font-weight="600">Asia/África</text>
+                <!-- China: plana, despegue tardío fuerte -->
+                <path d="M90,261 L250,259 L320,257 L380,254 L440,250 L500,230 L560,150 L620,100" fill="none" stroke="var(--verde-activo)" stroke-width="3" stroke-dasharray="8,4"/>
+                <text x="625" y="98" fill="var(--verde-activo)" font-size="13" font-weight="600">China</text>
+                <!-- Etiquetas tiempo -->
+                <text x="90" y="298" fill="rgba(0,0,0,0.5)" font-size="11">1000</text>
+                <text x="250" y="298" fill="rgba(0,0,0,0.5)" font-size="11">1500</text>
+                <text x="380" y="298" fill="rgba(0,0,0,0.5)" font-size="11">1800</text>
+                <text x="500" y="298" fill="rgba(0,0,0,0.5)" font-size="11">1950</text>
+                <text x="620" y="298" fill="rgba(0,0,0,0.5)" font-size="11">2020</text>
+                <!-- Línea vertical: Revolución Industrial -->
+                <line x1="380" y1="280" x2="380" y2="30" stroke="rgba(0,0,0,0.15)" stroke-width="1" stroke-dasharray="4,4"/>
+                <text x="385" y="28" fill="rgba(0,0,0,0.4)" font-size="10">Rev. Industrial</text>
+                <text x="35" y="270" fill="rgba(0,0,0,0.5)" font-size="11" text-anchor="middle" transform="rotate(-90,35,200)">PBI per cápita</text>
+            </svg>
+            <p class="nota-academica">Basado en datos de Angus Maddison, "The World Economy: A Millennial Perspective" (2001). Los valores son esquemáticos.</p>
+        </div>
+
+        <!-- SLIDE 6: Hechos estilizados de Kaldor -->
+        <div class="slide bg-respaldo">
+            <h2>Hechos estilizados del crecimiento</h2>
+            <h3>Kaldor (1961): patrones que toda teoría debe explicar</h3>
+            <ul>
+                <li>El <span class="highlight">producto per cápita</span> crece sostenidamente en el tiempo</li>
+                <li>El <span class="highlight">capital por trabajador</span> también crece sostenidamente</li>
+                <li>La <span class="highlight">tasa de retorno al capital</span> es aproximadamente constante</li>
+                <li>La <span class="highlight">relación capital/producto</span> es aproximadamente constante</li>
+                <li>Las <span class="highlight">participaciones</span> del trabajo y del capital en el ingreso son estables</li>
+                <li>Existen <span class="highlight">diferencias significativas</span> en las tasas de crecimiento entre países</li>
+            </ul>
+            <p class="nota-academica">Kaldor, N. (1961). "Capital Accumulation and Economic Growth", en The Theory of Capital, Macmillan.</p>
+        </div>
+
+        <!-- SLIDE 7: Crecimiento vs Desarrollo -->
+        <div class="slide bg-impulso">
+            <h2>Crecimiento ≠ Desarrollo</h2>
+            <div class="versus">
+                <div class="concepto-box" style="background: rgba(255,255,255,0.15);">
+                    <h4 style="color: white;">Crecimiento</h4>
+                    <p>Aumento del PBI o PBI per cápita. Más producción, más ingreso.</p>
+                    <p style="margin-top: 10px; font-weight: 600;">Concepto <em>cuantitativo</em></p>
+                </div>
+                <div class="versus-center">vs</div>
+                <div class="concepto-box" style="background: rgba(255,255,255,0.15);">
+                    <h4 style="color: white;">Desarrollo</h4>
+                    <p>Mejoras en salud, educación, libertades, reducción de la pobreza.</p>
+                    <p style="margin-top: 10px; font-weight: 600;">Concepto <em>cualitativo</em></p>
+                </div>
+            </div>
+            <blockquote style="border-left-color: white;">
+                "Development can be seen as a process of expanding the real freedoms that people enjoy."
+                <cite>— Amartya Sen, "Development as Freedom" (1999)</cite>
+                <span class="traduccion">"El desarrollo puede verse como un proceso de expansión de las libertades reales que disfruta la gente."</span>
+            </blockquote>
+        </div>
+
+        <!-- SLIDE 8: Mapa del desarrollo -->
+        <div class="slide bg-blanco">
+            <h2>El mapa del desarrollo</h2>
+            <div class="stats-grid stats-grid-4">
+                <div class="stat-box">
+                    <div class="stat-numero">0.966</div>
+                    <div class="stat-label">IDH Noruega</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-numero">0.842</div>
+                    <div class="stat-label">IDH Argentina</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-numero">0.600</div>
+                    <div class="stat-label">IDH India</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-numero rojo">0.394</div>
+                    <div class="stat-label">IDH Chad</div>
+                </div>
+            </div>
+            <div class="two-cols" style="margin-top: 30px;">
+                <div>
+                    <h3>Esperanza de vida</h3>
+                    <div class="bar-chart">
+                        <div class="bar-row"><span class="bar-label">Japón</span><div class="bar-container"><div class="bar" style="width: 95%;">84 años</div></div></div>
+                        <div class="bar-row"><span class="bar-label">Argentina</span><div class="bar-container"><div class="bar azul" style="width: 86%;">77 años</div></div></div>
+                        <div class="bar-row"><span class="bar-label">Sierra Leona</span><div class="bar-container"><div class="bar rojo" style="width: 61%;">54 años</div></div></div>
+                    </div>
+                </div>
+                <div>
+                    <h3>Mortalidad infantil (‰)</h3>
+                    <div class="bar-chart">
+                        <div class="bar-row"><span class="bar-label">Finlandia</span><div class="bar-container"><div class="bar" style="width: 8%;">2</div></div></div>
+                        <div class="bar-row"><span class="bar-label">Argentina</span><div class="bar-container"><div class="bar azul" style="width: 30%;">9</div></div></div>
+                        <div class="bar-row"><span class="bar-label">Somalia</span><div class="bar-container"><div class="bar rojo" style="width: 95%;">75</div></div></div>
+                    </div>
+                </div>
+            </div>
+            <p class="nota-academica">Fuente: UNDP Human Development Report 2024, World Bank Data.</p>
+        </div>
+
+        <!-- SLIDE 9: SECCIÓN — TEORÍAS DEL CRECIMIENTO -->
+        <div class="slide bg-verde seccion-titulo">
+            <h3>Bloque II</h3>
+            <h1>Teorías del Crecimiento</h1>
+            <p class="subtitle">De Adam Smith a las instituciones</p>
+        </div>
+
+        <!-- SLIDE 10: Adam Smith -->
+        <div class="slide bg-respaldo">
+            <h2>Adam Smith y la división del trabajo</h2>
+            <p>La primera gran teoría del crecimiento. Smith (1776) explica que la riqueza de las naciones viene de la <span class="highlight">especialización</span> y la <span class="highlight">extensión del mercado</span>.</p>
+            <div class="three-cols" style="margin-top: 25px;">
+                <div class="concepto-box">
+                    <h4>Pin Factory</h4>
+                    <p>Un trabajador solo: 1 alfiler/día. 10 trabajadores especializados: 48.000 alfileres/día</p>
+                </div>
+                <div class="concepto-box">
+                    <h4>Especialización</h4>
+                    <p>Dividir tareas aumenta la destreza, ahorra tiempo y permite innovar en cada etapa</p>
+                </div>
+                <div class="concepto-box">
+                    <h4>Extensión del mercado</h4>
+                    <p>Cuanto más grande el mercado, más viable la especialización. Comercio = crecimiento</p>
+                </div>
+            </div>
+            <p class="nota-academica">Smith, A. (1776). "An Inquiry into the Nature and Causes of the Wealth of Nations", Book I, Ch. 1-3.</p>
+        </div>
+
+        <!-- SLIDE 11: Solow — Función de producción -->
+        <div class="slide bg-blanco">
+            <h2>El modelo de Solow (1956)</h2>
+            <p>El marco que dominó la macroeconomía del crecimiento durante décadas.</p>
+            <div class="formula-grande">Y = A · F(K, L)</div>
+            <div class="three-cols">
+                <div class="concepto-box">
+                    <h4>Y</h4>
+                    <p>Producto total de la economía</p>
+                </div>
+                <div class="concepto-box">
+                    <h4>K y L</h4>
+                    <p>Capital (máquinas, edificios) y Trabajo (horas-hombre)</p>
+                </div>
+                <div class="concepto-box">
+                    <h4>A (PTF)</h4>
+                    <p>Productividad Total de los Factores. Tecnología, eficiencia, conocimiento</p>
+                </div>
+            </div>
+            <p style="margin-top: 25px;">La clave de Solow: en el largo plazo, <span class="highlight">solo A</span> (el progreso tecnológico) genera crecimiento sostenido del producto per cápita.</p>
+            <p class="nota-academica">Solow, R. (1956). "A Contribution to the Theory of Economic Growth", Quarterly Journal of Economics, 70(1).</p>
+        </div>
+
+        <!-- SLIDE 12: Diagrama de Solow -->
+        <div class="slide bg-respaldo">
+            <h2>El estado estacionario de Solow</h2>
+            <svg viewBox="0 0 700 380" style="width: 100%; max-width: 700px; margin: 10px auto; display: block;">
+                <!-- Ejes -->
+                <line x1="80" y1="330" x2="650" y2="330" stroke="rgba(255,255,255,0.4)" stroke-width="2"/>
+                <line x1="80" y1="330" x2="80" y2="30" stroke="rgba(255,255,255,0.4)" stroke-width="2"/>
+                <!-- sf(k): cóncava, crece rápido, se aplana -->
+                <path d="M80,330 Q180,200 280,140 Q380,95 500,70 L620,58" fill="none" stroke="var(--verde-activo)" stroke-width="3"/>
+                <text x="625" y="55" fill="var(--verde-activo)" font-size="14" font-weight="600">s·f(k)</text>
+                <!-- (n+δ)k: línea recta desde origen -->
+                <path d="M80,330 L620,80" fill="none" stroke="var(--rojo-alerta)" stroke-width="3"/>
+                <text x="625" y="78" fill="var(--rojo-alerta)" font-size="14" font-weight="600">(n+δ)k</text>
+                <!-- Punto de intersección (estado estacionario) -->
+                <circle cx="430" cy="118" r="8" fill="var(--amarillo)" stroke="white" stroke-width="2"/>
+                <text x="435" y="108" fill="var(--amarillo)" font-size="16" font-weight="700">k*</text>
+                <!-- Línea punteada vertical al eje x -->
+                <line x1="430" y1="118" x2="430" y2="330" stroke="var(--amarillo)" stroke-width="1.5" stroke-dasharray="6,4"/>
+                <!-- Flechas de convergencia -->
+                <text x="250" y="290" fill="rgba(255,255,255,0.7)" font-size="24">→</text>
+                <text x="550" y="200" fill="rgba(255,255,255,0.7)" font-size="24">←</text>
+                <!-- Labels -->
+                <text x="360" y="360" fill="rgba(255,255,255,0.6)" font-size="14">capital per cápita (k)</text>
+                <text x="30" y="180" fill="rgba(255,255,255,0.6)" font-size="12" text-anchor="middle" transform="rotate(-90,30,180)">inversión / depreciación</text>
+            </svg>
+            <div class="two-cols" style="margin-top: 15px;">
+                <div>
+                    <p><span class="highlight">s·f(k)</span> = inversión bruta per cápita (ahorro × productividad)</p>
+                </div>
+                <div>
+                    <p><span class="highlight-red">(n+δ)k</span> = inversión necesaria para reponer capital depreciado y equipar nuevos trabajadores</p>
+                </div>
+            </div>
+            <p style="text-align: center; margin-top: 10px;">En <span class="highlight-yellow">k*</span> la economía se frena: todo el ahorro se usa en reponer. Sin progreso tecnológico, no hay crecimiento per cápita.</p>
+        </div>
+
+        <!-- SLIDE 13: Implicancias de Solow -->
+        <div class="slide bg-blanco">
+            <h2>Implicancias del modelo de Solow</h2>
+            <div class="two-cols">
+                <div>
+                    <h3 style="color: var(--azul-impulso);">Lo que explica</h3>
+                    <ul>
+                        <li>Países con más ahorro/inversión tienen más capital per cápita y más ingreso</li>
+                        <li>Países con alto crecimiento poblacional tienden a ser más pobres</li>
+                        <li>El crecimiento por acumulación de capital tiene rendimientos decrecientes</li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 style="color: var(--rojo-alerta);">Lo que no explica</h3>
+                    <ul>
+                        <li>¿De dónde viene A (la tecnología)? Es <em>exógeno</em>, cae del cielo</li>
+                        <li>Las enormes diferencias de ingreso entre países</li>
+                        <li>Por qué muchos países pobres <em>no convergen</em> hacia los ricos</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="cita-paper" style="margin-top: 25px;">
+                <div class="titulo">"A measure of our ignorance"</div>
+                <div class="autores">Moses Abramovitz (1956), sobre el residuo de Solow</div>
+                <div class="contenido">El 80% del crecimiento de EEUU no se explicaba por acumulación de capital o trabajo. Se debía a "A": la productividad total de los factores. Solow llamó a esto el "residuo".</div>
+            </div>
+        </div>
+
+        <!-- SLIDE 14: Convergencia -->
+        <div class="slide bg-respaldo">
+            <h2>¿Los países pobres convergen?</h2>
+            <p>Solow predice <span class="highlight">convergencia condicional</span>: países con parámetros similares (ahorro, demografía, tecnología) deberían converger en ingreso per cápita.</p>
+            <div class="two-cols" style="margin-top: 25px;">
+                <div class="solucion-box">
+                    <p style="font-weight: 600; margin-bottom: 8px;">Evidencia a favor</p>
+                    <p style="font-size: 1.2rem;">Los países de la OCDE convergieron entre 1950-2000. Los estados de EEUU convergieron. China e India están convergiendo.</p>
+                </div>
+                <div class="problema-box">
+                    <p style="font-weight: 600; margin-bottom: 8px;">Evidencia en contra</p>
+                    <p style="font-size: 1.2rem;">África subsahariana no converge. La brecha global se amplió durante 200 años. Argentina divergió.</p>
+                </div>
+            </div>
+            <p style="margin-top: 25px;">Conclusión: la convergencia funciona <em>dentro</em> de grupos similares, pero no como ley universal. Los países pobres <em>no convergen automáticamente</em>.</p>
+        </div>
+
+        <!-- SLIDE 15: Crecimiento endógeno — Romer -->
+        <div class="slide bg-blanco">
+            <h2>Crecimiento endógeno: Romer (1990)</h2>
+            <p>Si el progreso tecnológico es la clave del crecimiento... ¿de dónde viene?</p>
+            <div class="flow-diagram">
+                <div class="flow-box"><strong>Empresas</strong><br>invierten en I+D</div>
+                <div class="flow-arrow">→</div>
+                <div class="flow-box"><strong>Ideas nuevas</strong><br>(bien no rival)</div>
+                <div class="flow-arrow">→</div>
+                <div class="flow-box"><strong>Productividad</strong><br>aumenta para todos</div>
+                <div class="flow-arrow">→</div>
+                <div class="flow-box"><strong>Más ganancias</strong><br>para reinvertir</div>
+            </div>
+            <div class="cita-paper">
+                <div class="titulo">La revolución de Romer</div>
+                <div class="autores">Paul Romer (1990). "Endogenous Technological Change", Journal of Political Economy, 98(5).</div>
+                <div class="contenido">Las ideas son bienes no rivales: una vez creadas, pueden ser usadas por infinitas personas simultáneamente. Esto genera rendimientos crecientes a escala y justifica las patentes, los subsidios a I+D y la educación como motores del crecimiento.</div>
+            </div>
+            <p style="margin-top: 15px; font-weight: 500;">Implicancia de política: invertir en <span class="highlight">educación, ciencia e innovación</span> no es un gasto, es una inversión en crecimiento.</p>
+        </div>
+
+        <!-- SLIDE 16: Capital humano — Lucas -->
+        <div class="slide bg-impulso">
+            <h2>Capital humano: Lucas (1988)</h2>
+            <blockquote style="border-left-color: white;">
+                "Human capital accumulation — through schooling and learning by doing — is the engine of growth."
+                <cite>— Robert Lucas, Journal of Monetary Economics (1988)</cite>
+                <span class="traduccion">"La acumulación de capital humano — a través de la educación y el aprendizaje en la práctica — es el motor del crecimiento."</span>
+            </blockquote>
+            <div class="two-cols" style="margin-top: 25px;">
+                <div class="concepto-box" style="background: rgba(255,255,255,0.12);">
+                    <h4 style="color: white;">Efecto interno</h4>
+                    <p>Más educación → más productividad individual → más ingreso para el trabajador</p>
+                </div>
+                <div class="concepto-box" style="background: rgba(255,255,255,0.12);">
+                    <h4 style="color: white;">Efecto externo (externalidad)</h4>
+                    <p>Trabajadores educados elevan la productividad de quienes los rodean. Spillovers de conocimiento</p>
+                </div>
+            </div>
+            <p style="margin-top: 25px;">Lucas explica por qué el capital no fluye masivamente de países ricos a pobres (como predeciría Solow): <span style="color: var(--amarillo);">la productividad del capital depende del capital humano circundante</span>.</p>
+        </div>
+
+        <!-- SLIDE 17: Instituciones — AJR -->
+        <div class="slide bg-oscuro">
+            <h2>Instituciones: Acemoglu, Johnson & Robinson (2001)</h2>
+            <p>La teoría que ganó el Nobel de Economía 2024.</p>
+            <div class="versus" style="margin: 25px 0;">
+                <div class="concepto-box" style="background: rgba(0,198,0,0.15);">
+                    <h4>Instituciones inclusivas</h4>
+                    <p>Derechos de propiedad seguros, igualdad ante la ley, mercados abiertos, educación pública. Incentivan la inversión y la innovación.</p>
+                    <p style="margin-top: 10px; font-weight: 600; color: var(--verde-activo);">→ Crecimiento sostenido</p>
+                </div>
+                <div class="versus-center">vs</div>
+                <div class="concepto-box" style="background: rgba(220,38,38,0.15);">
+                    <h4 style="color: var(--rojo-alerta);">Instituciones extractivas</h4>
+                    <p>Poder concentrado, expropiación, barreras a la entrada, elite rentista. Desincentivan la inversión productiva.</p>
+                    <p style="margin-top: 10px; font-weight: 600; color: var(--rojo-alerta);">→ Estancamiento o declive</p>
+                </div>
+            </div>
+            <p class="nota-academica">Acemoglu, D., Johnson, S. & Robinson, J. (2001). "The Colonial Origins of Comparative Development", AER, 91(5). Premio Nobel 2024.</p>
+        </div>
+
+        <!-- SLIDE 18: El experimento colonial -->
+        <div class="slide bg-blanco">
+            <h2>El experimento natural colonial</h2>
+            <p>AJR encontraron una <span class="highlight">reversión de fortunas</span>: las colonias que eran ricas en 1500 son pobres hoy, y viceversa. ¿Por qué?</p>
+            <div class="flow-diagram">
+                <div class="flow-box">Colonias con baja<br>mortalidad del colono</div>
+                <div class="flow-arrow">→</div>
+                <div class="flow-box">Colonos se asentaron<br>y crearon instituciones</div>
+                <div class="flow-arrow">→</div>
+                <div class="flow-box">Instituciones<br><strong>inclusivas</strong></div>
+                <div class="flow-arrow">→</div>
+                <div class="flow-box" style="background: rgba(0,198,0,0.2); border: 1px solid var(--verde-activo);">Ricas hoy<br>(EEUU, Canadá, Australia)</div>
+            </div>
+            <div class="flow-diagram" style="margin-top: 10px;">
+                <div class="flow-box">Colonias con alta<br>mortalidad del colono</div>
+                <div class="flow-arrow">→</div>
+                <div class="flow-box">Colonos extrajeron<br>sin asentarse</div>
+                <div class="flow-arrow">→</div>
+                <div class="flow-box">Instituciones<br><strong>extractivas</strong></div>
+                <div class="flow-arrow">→</div>
+                <div class="flow-box" style="background: rgba(220,38,38,0.12); border: 1px solid var(--rojo-alerta);">Pobres hoy<br>(Congo, Bolivia, Haití)</div>
+            </div>
+            <p style="margin-top: 20px;">Las instituciones coloniales <em>persistieron</em> después de la independencia. La historia importa.</p>
+        </div>
+
+        <!-- SLIDE 19: Geografía vs Instituciones -->
+        <div class="slide bg-respaldo">
+            <h2>El gran debate: ¿Geografía o instituciones?</h2>
+            <div class="versus">
+                <div>
+                    <h3 style="color: var(--amarillo);">Jeffrey Sachs</h3>
+                    <p style="font-weight: 500;">La geografía importa</p>
+                    <ul>
+                        <li>Clima tropical → enfermedades → baja productividad</li>
+                        <li>Sin salida al mar → alto costo de transporte</li>
+                        <li>Suelos pobres → baja productividad agrícola</li>
+                    </ul>
+                    <p style="font-size: 1.1rem; opacity: 0.7; margin-top: 10px;">"The End of Poverty" (2005)</p>
+                </div>
+                <div class="versus-center">vs</div>
+                <div>
+                    <h3 style="color: var(--verde-activo);">Acemoglu & Robinson</h3>
+                    <p style="font-weight: 500;">Las instituciones importan</p>
+                    <ul>
+                        <li>Corea del Norte vs Sur: misma geografía, distintas instituciones</li>
+                        <li>Nogales (Arizona) vs Nogales (Sonora): misma ciudad, distinto país</li>
+                        <li>Botswana vs Zimbabwe: misma región, distintas trayectorias</li>
+                    </ul>
+                    <p style="font-size: 1.1rem; opacity: 0.7; margin-top: 10px;">"Why Nations Fail" (2012)</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE 20: La síntesis -->
+        <div class="slide bg-verde">
+            <h2>La síntesis: ¿qué determina el crecimiento?</h2>
+            <div class="flow-diagram" style="flex-wrap: wrap; gap: 20px;">
+                <div class="flow-box" style="background: rgba(0,0,0,0.2); border: 2px solid rgba(0,0,0,0.3);">
+                    <strong>Instituciones</strong><br>
+                    <span style="font-size: 1rem;">Reglas del juego, derechos de propiedad</span>
+                </div>
+                <div class="flow-arrow" style="color: var(--azul-respaldo);">→</div>
+                <div class="flow-box" style="background: rgba(0,0,0,0.2); border: 2px solid rgba(0,0,0,0.3);">
+                    <strong>Incentivos</strong><br>
+                    <span style="font-size: 1rem;">Invertir, innovar, educarse</span>
+                </div>
+                <div class="flow-arrow" style="color: var(--azul-respaldo);">→</div>
+                <div class="flow-box" style="background: rgba(0,0,0,0.2); border: 2px solid rgba(0,0,0,0.3);">
+                    <strong>Acumulación</strong><br>
+                    <span style="font-size: 1rem;">K físico + K humano + tecnología</span>
+                </div>
+                <div class="flow-arrow" style="color: var(--azul-respaldo);">→</div>
+                <div class="flow-box" style="background: rgba(0,0,0,0.2); border: 2px solid rgba(0,0,0,0.3);">
+                    <strong>Crecimiento</strong><br>
+                    <span style="font-size: 1rem;">Más producto per cápita</span>
+                </div>
+            </div>
+            <p style="margin-top: 30px; font-size: 1.4rem; text-align: center;">
+                Capital y trabajo son las <span class="highlight">causas próximas</span>.<br>
+                Instituciones, geografía y cultura son las <span class="highlight">causas profundas</span>.
+            </p>
+            <p style="text-align: center; margin-top: 15px; opacity: 0.8;">La analogía del fútbol: los jugadores (K, L) son las causas próximas. El director técnico, la cancha y las reglas del juego son las causas profundas.</p>
+        </div>
+
+        <!-- SLIDE 21: SECCIÓN — TRAMPAS Y OBSTÁCULOS -->
+        <div class="slide bg-oscuro seccion-titulo">
+            <h3>Bloque III</h3>
+            <h1>Trampas y Obstáculos<br>al Desarrollo</h1>
+            <p class="subtitle">Lo que impide crecer a los que no crecen</p>
+        </div>
+
+        <!-- SLIDE 22: La trampa de pobreza -->
+        <div class="slide bg-blanco">
+            <h2>La trampa de pobreza</h2>
+            <p>Algunos países están atrapados en un <span class="highlight">equilibrio bajo estable</span>: son pobres porque son pobres.</p>
+            <div class="flow-diagram">
+                <div class="flow-box">Ingreso bajo</div>
+                <div class="flow-arrow">→</div>
+                <div class="flow-box">Ahorro bajo</div>
+                <div class="flow-arrow">→</div>
+                <div class="flow-box">Inversión baja</div>
+                <div class="flow-arrow">→</div>
+                <div class="flow-box">Productividad baja</div>
+                <div class="flow-arrow">→</div>
+                <div class="flow-box">Ingreso bajo</div>
+            </div>
+            <div class="versus" style="margin-top: 25px;">
+                <div class="concepto-box">
+                    <h4>Sachs: Big Push</h4>
+                    <p>Se necesita una inyección masiva de ayuda externa para salir de la trampa. Plan Marshall para África.</p>
+                    <p style="font-size: 0.9rem; opacity: 0.6; margin-top: 8px;">"The End of Poverty" (2005)</p>
+                </div>
+                <div class="versus-center">vs</div>
+                <div class="concepto-box">
+                    <h4>Easterly: Bottom-up</h4>
+                    <p>La ayuda masiva genera corrupción y dependencia. Las soluciones deben venir de abajo, con incentivos locales.</p>
+                    <p style="font-size: 0.9rem; opacity: 0.6; margin-top: 8px;">"The White Man's Burden" (2006)</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE 23: Enfermedad holandesa -->
+        <div class="slide bg-respaldo">
+            <h2>La enfermedad holandesa</h2>
+            <p>Cuando un boom de recursos naturales <span class="highlight-red">destruye</span> al resto de la economía.</p>
+            <div class="flow-diagram">
+                <div class="flow-box">Boom exportador<br>(petróleo, soja, gas)</div>
+                <div class="flow-arrow">→</div>
+                <div class="flow-box">Entran muchos<br>dólares</div>
+                <div class="flow-arrow">→</div>
+                <div class="flow-box">Tipo de cambio<br>se <strong>aprecia</strong></div>
+                <div class="flow-arrow">→</div>
+                <div class="flow-box" style="background: rgba(220,38,38,0.2);">Industria y servicios<br>pierden competitividad</div>
+            </div>
+            <div class="two-cols" style="margin-top: 30px;">
+                <div class="concepto-box">
+                    <h4>Caso histórico: Países Bajos (1960s)</h4>
+                    <p>Descubrimiento de gas natural en Groningen → boom exportador → tipo de cambio real se apreció → sector manufacturero colapsó. De ahí el nombre.</p>
+                </div>
+                <div class="concepto-box">
+                    <h4>Caso argentino: boom sojero (2003-2013)</h4>
+                    <p>Precios de la soja en máximos históricos → entrada masiva de dólares → apreciación real → se profundizó la reprimarización de exportaciones.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE 24: La maldición de los recursos -->
+        <div class="slide bg-blanco">
+            <h2>La maldición de los recursos</h2>
+            <blockquote>
+                "Countries with great natural resource wealth tend to grow less rapidly than resource-poor countries."
+                <cite>— Sachs & Warner, NBER Working Paper 5398 (1995)</cite>
+                <span class="traduccion">"Los países con gran riqueza en recursos naturales tienden a crecer más lentamente que los países pobres en recursos."</span>
+            </blockquote>
+            <h3 style="margin-top: 20px;">¿Por qué los recursos pueden ser una maldición?</h3>
+            <div class="three-cols">
+                <div class="concepto-box">
+                    <h4>Rent-seeking</h4>
+                    <p>La elite pelea por capturar la renta del recurso en vez de producir. Corrupción y conflicto.</p>
+                </div>
+                <div class="concepto-box">
+                    <h4>Instituciones débiles</h4>
+                    <p>No necesitan cobrar impuestos → no necesitan rendir cuentas → no hay democracia real.</p>
+                </div>
+                <div class="concepto-box">
+                    <h4>Volatilidad</h4>
+                    <p>Los precios de commodities son muy volátiles. Boom and bust. Imposible planificar.</p>
+                </div>
+            </div>
+            <p style="margin-top: 20px;">Contraejemplos: <span class="highlight">Noruega, Botswana, Chile</span> — se puede escapar de la maldición con buenas instituciones y fondos soberanos.</p>
+        </div>
+
+        <!-- SLIDE 25: Desigualdad y crecimiento -->
+        <div class="slide bg-impulso">
+            <h2>Desigualdad y crecimiento</h2>
+            <p>¿La desigualdad frena o impulsa el crecimiento? Un debate que lleva décadas.</p>
+            <div class="two-cols" style="margin-top: 25px;">
+                <div>
+                    <h3 style="color: var(--amarillo);">Kuznets (1955): la U invertida</h3>
+                    <p>En las primeras etapas del desarrollo, la desigualdad <em>aumenta</em> (migración rural-urbana). Después, con educación y redistribución, <em>baja</em>.</p>
+                    <p style="margin-top: 10px;">Implicancia optimista: el crecimiento resuelve la desigualdad en el largo plazo.</p>
+                </div>
+                <div>
+                    <h3 style="color: var(--amarillo);">Piketty (2014): r > g</h3>
+                    <p>Cuando el retorno al capital (r) supera la tasa de crecimiento (g), la riqueza se concentra indefinidamente.</p>
+                    <p style="margin-top: 10px;">Implicancia pesimista: sin intervención (impuestos progresivos), la desigualdad se amplía siempre.</p>
+                </div>
+            </div>
+            <div class="formula" style="margin-top: 25px; background: rgba(255,255,255,0.12);">
+                r > g → La riqueza heredada crece más rápido que la economía → Concentración patrimonial
+            </div>
+        </div>
+
+        <!-- SLIDE 26: Coeficiente de Gini -->
+        <div class="slide bg-blanco">
+            <h2>El coeficiente de Gini</h2>
+            <p>Mide la desigualdad de ingresos: 0 = igualdad perfecta, 1 = desigualdad total.</p>
+            <div class="bar-chart" style="margin-top: 25px;">
+                <div class="bar-row"><span class="bar-label">Escandinavia</span><div class="bar-container"><div class="bar" style="width: 27%;">0.27</div></div></div>
+                <div class="bar-row"><span class="bar-label">Alemania</span><div class="bar-container"><div class="bar" style="width: 32%;">0.32</div></div></div>
+                <div class="bar-row"><span class="bar-label">EEUU</span><div class="bar-container"><div class="bar azul" style="width: 39%;">0.39</div></div></div>
+                <div class="bar-row"><span class="bar-label">Argentina</span><div class="bar-container"><div class="bar amarillo" style="width: 42%;">0.42</div></div></div>
+                <div class="bar-row"><span class="bar-label">Brasil</span><div class="bar-container"><div class="bar amarillo" style="width: 53%;">0.53</div></div></div>
+                <div class="bar-row"><span class="bar-label">Sudáfrica</span><div class="bar-container"><div class="bar rojo" style="width: 63%;">0.63</div></div></div>
+            </div>
+            <p style="margin-top: 15px;">América Latina es la <span class="highlight">región más desigual del mundo</span>. La desigualdad es mayor que en países más pobres de Asia o África.</p>
+            <p class="nota-academica">Fuente: World Bank, Gini Index (últimos datos disponibles, 2019-2023).</p>
+        </div>
+
+        <!-- SLIDE 27: Pobreza: medición y tendencias -->
+        <div class="slide bg-respaldo">
+            <h2>El gran descenso de la pobreza global</h2>
+            <div class="stats-grid">
+                <div class="stat-box">
+                    <div class="stat-numero">36%</div>
+                    <div class="stat-label">Pobreza extrema global<br>en 1990</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-numero" style="color: var(--verde-activo);">9%</div>
+                    <div class="stat-label">Pobreza extrema global<br>en 2019</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-numero">1.000M</div>
+                    <div class="stat-label">Personas sacadas de<br>la pobreza extrema</div>
+                </div>
+            </div>
+            <p style="margin-top: 30px;">El mayor descenso de la pobreza en la historia humana, impulsado por <span class="highlight">China e India</span> (crecimiento económico + apertura comercial).</p>
+            <div class="problema-box" style="margin-top: 20px;">
+                <p style="margin-bottom: 0;"><strong>Pero:</strong> la pobreza extrema persiste en África subsahariana (~35%). Y la línea de US$2.15/día es brutalmente baja. Con US$6.85/día, casi la mitad del mundo es pobre.</p>
+            </div>
+            <p class="nota-academica">Fuente: World Bank, Poverty and Inequality Platform. Línea de pobreza extrema: US$2.15/día (PPP 2017).</p>
+        </div>
+
+        <!-- SLIDE 28: Demografía y crecimiento -->
+        <div class="slide bg-blanco">
+            <h2>Demografía y crecimiento</h2>
+            <h3>La transición demográfica</h3>
+            <div class="flow-diagram">
+                <div class="flow-box"><strong>Fase 1</strong><br>Alta natalidad<br>Alta mortalidad<br>Crecimiento lento</div>
+                <div class="flow-arrow">→</div>
+                <div class="flow-box"><strong>Fase 2</strong><br>Alta natalidad<br>Baja mortalidad<br>Explosión demográfica</div>
+                <div class="flow-arrow">→</div>
+                <div class="flow-box"><strong>Fase 3</strong><br>Baja natalidad<br>Baja mortalidad<br>Bono demográfico</div>
+                <div class="flow-arrow">→</div>
+                <div class="flow-box"><strong>Fase 4</strong><br>Muy baja natalidad<br>Envejecimiento<br>Desafío fiscal</div>
+            </div>
+            <div class="three-cols" style="margin-top: 25px;">
+                <div class="concepto-box">
+                    <h4>Japón (Fase 4)</h4>
+                    <p>29% mayores de 65. Población cayendo. Presión fiscal enorme. Estancamiento.</p>
+                </div>
+                <div class="concepto-box">
+                    <h4>India (Fase 3)</h4>
+                    <p>Bono demográfico pleno. Población joven y creciente. Ventana de oportunidad.</p>
+                </div>
+                <div class="concepto-box">
+                    <h4>Argentina (entre 3 y 4)</h4>
+                    <p>Bono demográfico terminando. Tasa de fecundidad en mínimos históricos (1.4).</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE 29: SECCIÓN — ARGENTINA -->
+        <div class="slide bg-oscuro seccion-titulo">
+            <h3>Bloque IV</h3>
+            <h1>Argentina:<br>El Gran Misterio</h1>
+            <p class="subtitle">De potencia mundial a caso de estudio</p>
+        </div>
+
+        <!-- SLIDE 30: De potencia a decadencia -->
+        <div class="slide bg-respaldo">
+            <h2>Argentina: de potencia a decadencia</h2>
+            <p>En 1900, Argentina tenía un PBI per cápita similar al de Francia y mayor que el de Italia. Hoy es un país de ingreso medio-alto... estancado.</p>
+            <svg viewBox="0 0 700 320" style="width: 100%; max-width: 700px; margin: 15px auto; display: block;">
+                <!-- Ejes -->
+                <line x1="80" y1="280" x2="660" y2="280" stroke="rgba(255,255,255,0.4)" stroke-width="2"/>
+                <line x1="80" y1="280" x2="80" y2="30" stroke="rgba(255,255,255,0.4)" stroke-width="2"/>
+                <!-- EEUU: crecimiento sostenido -->
+                <path d="M90,220 L180,200 L270,180 L360,140 L450,100 L540,65 L630,45" fill="none" stroke="var(--verde-activo)" stroke-width="3"/>
+                <text x="635" y="42" fill="var(--verde-activo)" font-size="13" font-weight="600">EEUU</text>
+                <!-- Australia: similar a EEUU -->
+                <path d="M90,230 L180,215 L270,195 L360,160 L450,125 L540,90 L630,70" fill="none" stroke="var(--azul-impulso)" stroke-width="2.5"/>
+                <text x="635" y="67" fill="var(--azul-impulso)" font-size="13" font-weight="600">Australia</text>
+                <!-- Argentina: empieza alto, se estanca -->
+                <path d="M90,235 L180,210 L270,195 L360,185 L450,180 L540,185 L630,190" fill="none" stroke="var(--rojo-alerta)" stroke-width="3"/>
+                <text x="635" y="188" fill="var(--rojo-alerta)" font-size="13" font-weight="600">Argentina</text>
+                <!-- Labels -->
+                <text x="90" y="298" fill="rgba(255,255,255,0.5)" font-size="11">1900</text>
+                <text x="270" y="298" fill="rgba(255,255,255,0.5)" font-size="11">1940</text>
+                <text x="450" y="298" fill="rgba(255,255,255,0.5)" font-size="11">1980</text>
+                <text x="630" y="298" fill="rgba(255,255,255,0.5)" font-size="11">2020</text>
+                <text x="30" y="160" fill="rgba(255,255,255,0.5)" font-size="11" text-anchor="middle" transform="rotate(-90,30,160)">PBI per cápita (log)</text>
+            </svg>
+            <p style="text-align: center;">Argentina en 1900: <span class="highlight">~80%</span> del PBI p/c de EEUU. Hoy: <span class="highlight-red">~25%</span>. La mayor divergencia del siglo XX.</p>
+        </div>
+
+        <!-- SLIDE 31: Timeline Argentina -->
+        <div class="slide bg-blanco">
+            <h2>120 años de historia económica argentina</h2>
+            <div class="timeline" style="font-size: 1.15rem;">
+                <div class="timeline-item">
+                    <span class="timeline-year">1880-1930</span>
+                    <span>Modelo agroexportador. "Granero del mundo". Crecimiento acelerado, inmigración masiva.</span>
+                </div>
+                <div class="timeline-item">
+                    <span class="timeline-year">1930-1976</span>
+                    <span>ISI (Industrialización por Sustitución de Importaciones). Peronismo. Stop & go. Economía cerrada.</span>
+                </div>
+                <div class="timeline-item">
+                    <span class="timeline-year">1976-1983</span>
+                    <span>Dictadura. Apertura financiera, tablita cambiaria, deuda externa masiva.</span>
+                </div>
+                <div class="timeline-item">
+                    <span class="timeline-year">1983-1989</span>
+                    <span>Democracia + crisis. Plan Austral, Plan Primavera. Hiperinflación (3.080% en 1989).</span>
+                </div>
+                <div class="timeline-item">
+                    <span class="timeline-year">1991-2001</span>
+                    <span>Convertibilidad. Estabilización + reformas. Crecimiento → recesión → colapso.</span>
+                </div>
+                <div class="timeline-item">
+                    <span class="timeline-year">2002-2011</span>
+                    <span>Recuperación post-default. Boom de commodities. Superávits gemelos → gasto creciente.</span>
+                </div>
+                <div class="timeline-item">
+                    <span class="timeline-year">2012-2023</span>
+                    <span>Estanflación. Cepo, controles, déficit crónico. PBI per cápita cae 16%.</span>
+                </div>
+                <div class="timeline-item">
+                    <span class="timeline-year">2024-</span>
+                    <span>Ajuste fiscal drástico. Desregulación. Motosierra. ¿Nuevo ciclo o nuevo péndulo?</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE 32: ¿Qué falló? -->
+        <div class="slide bg-respaldo">
+            <h2>¿Qué falló?</h2>
+            <h3>Las hipótesis de la decadencia argentina</h3>
+            <div class="two-cols">
+                <div>
+                    <div class="concepto-box" style="margin-bottom: 20px;">
+                        <h4>Instituciones débiles (AJR)</h4>
+                        <p>Reglas del juego que cambian cada gobierno. Inseguridad jurídica. Expropiaciones (YPF, AFJP). Nadie invierte a largo plazo.</p>
+                    </div>
+                    <div class="concepto-box">
+                        <h4>Populismo fiscal (Dornbusch & Edwards)</h4>
+                        <p>Ciclo: expansión fiscal → inflación → crisis de balanza de pagos → ajuste brutal. Repetido una y otra vez.</p>
+                    </div>
+                </div>
+                <div>
+                    <div class="concepto-box" style="margin-bottom: 20px;">
+                        <h4>Falta de consensos</h4>
+                        <p>No hay acuerdo en política económica básica: apertura vs protección, dólar libre vs controlado, Estado grande vs chico.</p>
+                    </div>
+                    <div class="concepto-box">
+                        <h4>Economía cerrada</h4>
+                        <p>Exportaciones/PBI ~15% (Chile: 30%, Corea: 45%). Poco comercio = poca competencia = poca innovación.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE 33: Populismo macro — Dornbusch & Edwards -->
+        <div class="slide bg-impulso">
+            <h2>El ciclo del populismo macroeconómico</h2>
+            <p>Dornbusch & Edwards (1991) identificaron un patrón que Argentina repitió sistemáticamente:</p>
+            <div class="flow-diagram" style="margin-top: 25px;">
+                <div class="flow-box" style="background: rgba(255,255,255,0.15);">
+                    <strong>Fase 1</strong><br>Expansión fiscal y monetaria.<br>Crece el PBI, cae el desempleo.<br>"Esta vez es diferente"
+                </div>
+                <div class="flow-arrow" style="color: white;">→</div>
+                <div class="flow-box" style="background: rgba(255,255,255,0.15);">
+                    <strong>Fase 2</strong><br>Aparecen cuellos de botella.<br>Inflación sube. Reservas caen.<br>Controles de precios y cambios
+                </div>
+                <div class="flow-arrow" style="color: white;">→</div>
+                <div class="flow-box" style="background: rgba(255,255,255,0.15);">
+                    <strong>Fase 3</strong><br>Crisis abierta. Fuga de capitales.<br>Devaluación. Caída del salario real.<br>Ajuste ortodoxo forzado
+                </div>
+            </div>
+            <p style="margin-top: 25px; text-align: center;">Lo dramático: <span style="color: var(--amarillo);">los ajustes terminan siendo más duros que si se hubiera mantenido la disciplina desde el principio</span>.</p>
+            <p class="nota-academica" style="border-top-color: rgba(255,255,255,0.2);">Dornbusch, R. & Edwards, S. (1991). "The Macroeconomics of Populism in Latin America", University of Chicago Press.</p>
+        </div>
+
+        <!-- SLIDE 34: Productividad estancada -->
+        <div class="slide bg-blanco">
+            <h2>Productividad estancada</h2>
+            <p>La PTF (Productividad Total de los Factores) argentina está <span class="highlight">estancada desde los años 70</span>.</p>
+            <div class="bar-chart" style="margin-top: 25px;">
+                <h3>Crecimiento promedio anual de la PTF (1990-2020)</h3>
+                <div class="bar-row"><span class="bar-label">Corea del Sur</span><div class="bar-container"><div class="bar" style="width: 60%;">2.1%</div></div></div>
+                <div class="bar-row"><span class="bar-label">Chile</span><div class="bar-container"><div class="bar" style="width: 43%;">1.5%</div></div></div>
+                <div class="bar-row"><span class="bar-label">EEUU</span><div class="bar-container"><div class="bar azul" style="width: 29%;">1.0%</div></div></div>
+                <div class="bar-row"><span class="bar-label">Brasil</span><div class="bar-container"><div class="bar amarillo" style="width: 14%;">0.5%</div></div></div>
+                <div class="bar-row"><span class="bar-label">Argentina</span><div class="bar-container"><div class="bar rojo" style="width: 6%;">0.2%</div></div></div>
+            </div>
+            <p style="margin-top: 20px;">Sin mejoras en productividad, no hay crecimiento sostenible. Más capital y más trabajo no alcanzan si se usan <span class="highlight-red">cada vez peor</span>.</p>
+            <p class="nota-academica">Fuente: Penn World Table 10.01, Conference Board Total Economy Database.</p>
+        </div>
+
+        <!-- SLIDE 35: Capital humano en Argentina -->
+        <div class="slide bg-respaldo">
+            <h2>La paradoja del capital humano argentino</h2>
+            <div class="stats-grid stats-grid-4">
+                <div class="stat-box">
+                    <div class="stat-numero">5.5%</div>
+                    <div class="stat-label">Gasto en educación<br>(% del PBI)</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-numero rojo">401</div>
+                    <div class="stat-label">Puntaje PISA<br>Matemáticas (2022)</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-numero">99%</div>
+                    <div class="stat-label">Tasa de<br>alfabetización</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-numero rojo">50%</div>
+                    <div class="stat-label">Secundarios que no<br>terminan en tiempo</div>
+                </div>
+            </div>
+            <div class="problema-box" style="margin-top: 30px;">
+                <p style="font-weight: 600; margin-bottom: 8px;">La paradoja</p>
+                <p style="margin-bottom: 0;">Argentina gasta más en educación (% PBI) que el promedio de la OCDE, pero obtiene resultados educativos de país de ingreso medio-bajo. El problema no es la cantidad de gasto sino su <span class="highlight-red">calidad y asignación</span>.</p>
+            </div>
+            <p class="nota-academica">Fuentes: OECD PISA 2022, UNESCO, Ministerio de Educación de Argentina.</p>
+        </div>
+
+        <!-- SLIDE 36: Apertura comercial -->
+        <div class="slide bg-blanco">
+            <h2>Apertura comercial y crecimiento</h2>
+            <p>Argentina es una de las economías <span class="highlight">más cerradas</span> del mundo en relación a su tamaño.</p>
+            <div class="bar-chart" style="margin-top: 20px;">
+                <h3>Exportaciones + Importaciones como % del PBI</h3>
+                <div class="bar-row"><span class="bar-label">Corea del Sur</span><div class="bar-container"><div class="bar" style="width: 90%;">86%</div></div></div>
+                <div class="bar-row"><span class="bar-label">Chile</span><div class="bar-container"><div class="bar" style="width: 62%;">60%</div></div></div>
+                <div class="bar-row"><span class="bar-label">México</span><div class="bar-container"><div class="bar azul" style="width: 78%;">75%</div></div></div>
+                <div class="bar-row"><span class="bar-label">Colombia</span><div class="bar-container"><div class="bar amarillo" style="width: 38%;">37%</div></div></div>
+                <div class="bar-row"><span class="bar-label">Brasil</span><div class="bar-container"><div class="bar amarillo" style="width: 32%;">31%</div></div></div>
+                <div class="bar-row"><span class="bar-label">Argentina</span><div class="bar-container"><div class="bar rojo" style="width: 28%;">27%</div></div></div>
+            </div>
+            <p style="margin-top: 15px;">Sachs & Warner (1995) y Dollar & Kraay (2004) muestran que países más abiertos crecen más rápido. Argentina eligió cerrarse sistemáticamente.</p>
+        </div>
+
+        <!-- SLIDE 37: Estructura productiva desequilibrada -->
+        <div class="slide bg-impulso">
+            <h2>El péndulo argentino</h2>
+            <blockquote style="border-left-color: white;">
+                "Argentina posee una estructura productiva desequilibrada: un sector primario que genera divisas pero poco empleo, y un sector industrial que genera empleo pero no divisas."
+                <cite>— Marcelo Diamand, "La estructura productiva desequilibrada argentina y el tipo de cambio" (1972)</cite>
+            </blockquote>
+            <div class="versus" style="margin-top: 25px;">
+                <div class="concepto-box" style="background: rgba(255,255,255,0.12);">
+                    <h4 style="color: white;">Campo</h4>
+                    <p>Productivo, competitivo, genera dólares. Pero genera poco empleo directo.</p>
+                </div>
+                <div class="versus-center" style="color: rgba(255,255,255,0.5);">vs</div>
+                <div class="concepto-box" style="background: rgba(255,255,255,0.12);">
+                    <h4 style="color: white;">Industria</h4>
+                    <p>Genera empleo, pero necesita protección. Consume dólares (importa insumos).</p>
+                </div>
+            </div>
+            <p style="margin-top: 20px; text-align: center;">El dilema que Argentina nunca resolvió: cada vez que favoreció a uno, perjudicó al otro.</p>
+        </div>
+
+        <!-- SLIDE 38: ¿Hay salida? -->
+        <div class="slide bg-blanco">
+            <h2>¿Hay salida?</h2>
+            <h3>Lo que la evidencia internacional sugiere</h3>
+            <div class="two-cols">
+                <div>
+                    <div class="solucion-box" style="margin-bottom: 15px;">
+                        <p style="font-weight: 600; margin-bottom: 5px;">1. Estabilidad macroeconómica</p>
+                        <p style="font-size: 1.1rem; margin-bottom: 0;">Inflación baja y predecible. Cuentas fiscales ordenadas. Tipo de cambio creíble.</p>
+                    </div>
+                    <div class="solucion-box" style="margin-bottom: 15px;">
+                        <p style="font-weight: 600; margin-bottom: 5px;">2. Apertura comercial gradual</p>
+                        <p style="font-size: 1.1rem; margin-bottom: 0;">Integración al mundo. Acuerdos comerciales. Competencia como motor de eficiencia.</p>
+                    </div>
+                </div>
+                <div>
+                    <div class="solucion-box" style="margin-bottom: 15px;">
+                        <p style="font-weight: 600; margin-bottom: 5px;">3. Calidad institucional</p>
+                        <p style="font-size: 1.1rem; margin-bottom: 0;">Reglas del juego estables. Justicia independiente. Derechos de propiedad seguros.</p>
+                    </div>
+                    <div class="solucion-box" style="margin-bottom: 15px;">
+                        <p style="font-weight: 600; margin-bottom: 5px;">4. Capital humano de calidad</p>
+                        <p style="font-size: 1.1rem; margin-bottom: 0;">Educación orientada a resultados. Formación técnica. Inversión en ciencia y tecnología.</p>
+                    </div>
+                </div>
+            </div>
+            <p style="margin-top: 20px; text-align: center; font-weight: 600; font-size: 1.3rem;">No hay receta mágica. Pero <span class="highlight">todos los países que salieron de la trampa</span> hicieron estas cuatro cosas.</p>
+        </div>
+
+        <!-- SLIDE 39: SECCIÓN — CIERRE -->
+        <div class="slide bg-verde seccion-titulo">
+            <h3>Cierre</h3>
+            <h1>Tres ideas<br>para llevarse</h1>
+        </div>
+
+        <!-- SLIDE 40: Tres ideas -->
+        <div class="slide bg-respaldo">
+            <h2>Tres ideas para llevarse</h2>
+            <div class="three-cols" style="margin-top: 30px;">
+                <div class="concepto-box">
+                    <h4>1. Las instituciones importan más que los recursos</h4>
+                    <p>Noruega y Venezuela tienen petróleo. Botswana y Sierra Leona tienen diamantes. La diferencia son las instituciones.</p>
+                </div>
+                <div class="concepto-box">
+                    <h4>2. La tecnología es el motor de largo plazo</h4>
+                    <p>Acumular capital tiene rendimientos decrecientes. Solo las ideas —no rivales, acumulables— generan crecimiento sostenido.</p>
+                </div>
+                <div class="concepto-box">
+                    <h4>3. No hay atajos</h4>
+                    <p>No hay Big Push, ni commodity boom, ni plan heterodoxo que reemplace la estabilidad, la apertura y la educación de calidad.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE 41: La cita final -->
+        <div class="slide bg-oscuro">
+            <div style="text-align: center; max-width: 800px; margin: 0 auto;">
+                <blockquote style="border-left: none; text-align: center; font-size: 2.2rem; padding: 0;">
+                    "The consequences for human welfare involved in questions like these are simply staggering: Once one starts to think about them, it is hard to think about anything else."
+                    <cite style="font-size: 1.3rem; margin-top: 20px;">— Robert Lucas, 1988</cite>
+                    <span class="traduccion" style="display: block; margin-top: 15px; font-size: 1.1rem;">"Las consecuencias para el bienestar humano de preguntas como estas son simplemente abrumadoras: una vez que empezás a pensar en ellas, es difícil pensar en otra cosa."</span>
+                </blockquote>
+                <p style="margin-top: 40px; opacity: 0.5; font-size: 1.1rem;">Lucas tenía razón. Es difícil pensar en otra cosa.</p>
+            </div>
+        </div>
+
+        <!-- SLIDE 42: Mensajes clave -->
+        <div class="slide bg-impulso">
+            <h2>Mensajes clave</h2>
+            <ul style="margin-top: 25px;">
+                <li>El crecimiento económico es el mayor reductor de pobreza de la historia: 1.000 millones de personas salieron de la pobreza extrema desde 1990</li>
+                <li>Crecimiento no es lo mismo que desarrollo: Sen nos enseñó que importan las libertades, no solo el ingreso</li>
+                <li>Solow mostró que la acumulación de capital sola no alcanza: necesitamos progreso tecnológico</li>
+                <li>Romer y Lucas explicaron de dónde vienen las ideas y el capital humano: de la inversión en educación, ciencia e innovación</li>
+                <li>Acemoglu, Johnson y Robinson demostraron que las instituciones son la causa profunda del desarrollo</li>
+                <li>Argentina es el caso más dramático de divergencia del siglo XX: tenemos los recursos, nos faltan las instituciones y los consensos</li>
+            </ul>
+        </div>
+
+        <!-- SLIDE 43: Cierre -->
+        <div class="slide bg-respaldo portada">
+            <h1>Gracias</h1>
+            <p class="subtitle" style="margin-top: 20px; font-size: 2rem;">¿Preguntas?</p>
+            <p style="margin-top: 50px; opacity: 0.5; font-size: 1.1rem;">Crecimiento y Desarrollo Económico — Felipe Venancio</p>
+        </div>
+
+        <!-- ===== ANEXO DE PAPERS ===== -->
+
+        <!-- SLIDE 44: Portada Anexo -->
+        <div class="slide bg-oscuro seccion-titulo">
+            <span class="anexo-badge">ANEXO</span>
+            <h1>Papers en Profundidad</h1>
+            <p class="subtitle">8 trabajos fundamentales sobre crecimiento y desarrollo</p>
+        </div>
+
+        <!-- SLIDE 45: Solow (1956) -->
+        <div class="slide bg-blanco">
+            <span class="anexo-badge">PAPER 1</span>
+            <h2>Solow (1956)</h2>
+            <div class="cita-paper">
+                <div class="titulo">"A Contribution to the Theory of Economic Growth"</div>
+                <div class="autores">Robert Solow — Quarterly Journal of Economics, Vol. 70, No. 1, pp. 65-94</div>
+                <div class="contenido">
+                    Solow construyó un modelo donde el crecimiento de largo plazo depende del progreso tecnológico exógeno, no de la acumulación de capital. Introdujo los conceptos de función de producción neoclásica, estado estacionario y convergencia. Demostró que sin cambio tecnológico, los rendimientos decrecientes del capital eventualmente detienen el crecimiento per cápita.
+                </div>
+            </div>
+            <ul>
+                <li><strong>Aporte central:</strong> Formalizó la teoría del crecimiento con Y = A·F(K,L) y los rendimientos decrecientes</li>
+                <li><strong>Implicancia de política:</strong> La inversión en capital físico genera crecimiento transitorio, no permanente</li>
+                <li><strong>Legado:</strong> Premio Nobel 1987. Base de toda la macroeconomía del crecimiento posterior</li>
+            </ul>
+        </div>
+
+        <!-- SLIDE 46: Lucas (1988) -->
+        <div class="slide bg-respaldo">
+            <span class="anexo-badge">PAPER 2</span>
+            <h2>Lucas (1988)</h2>
+            <div class="cita-paper">
+                <div class="titulo">"On the Mechanics of Economic Development"</div>
+                <div class="autores">Robert Lucas — Journal of Monetary Economics, Vol. 22, No. 1, pp. 3-42</div>
+                <div class="contenido">
+                    Lucas modeló las externalidades del capital humano: trabajadores educados elevan la productividad de quienes los rodean. Esto explica por qué el capital no fluye de países ricos a pobres (el "Lucas Paradox") y por qué las diferencias de ingreso persisten. La acumulación de capital humano, no solo físico, es el motor del crecimiento.
+                </div>
+            </div>
+            <ul>
+                <li><strong>Aporte central:</strong> Introdujo externalidades del capital humano en el modelo de crecimiento</li>
+                <li><strong>Implicancia de política:</strong> Invertir en educación genera retornos sociales mayores que los privados</li>
+                <li><strong>La frase icónica:</strong> "Once one starts to think about growth, it is hard to think about anything else"</li>
+            </ul>
+        </div>
+
+        <!-- SLIDE 47: Romer (1990) -->
+        <div class="slide bg-blanco">
+            <span class="anexo-badge">PAPER 3</span>
+            <h2>Romer (1990)</h2>
+            <div class="cita-paper">
+                <div class="titulo">"Endogenous Technological Change"</div>
+                <div class="autores">Paul Romer — Journal of Political Economy, Vol. 98, No. 5, pp. S71-S102</div>
+                <div class="contenido">
+                    Romer resolvió el problema de Solow: ¿de dónde viene A? Las ideas son bienes no rivales que se producen intencionalmente mediante inversión en I+D. Los incentivos de mercado (patentes, monopolio temporal) impulsan la innovación. Pero como las ideas generan spillovers, el mercado subinvierte en I+D: se justifica el subsidio público a la ciencia.
+                </div>
+            </div>
+            <ul>
+                <li><strong>Aporte central:</strong> Endogeneizó el cambio tecnológico. Las ideas como bien económico con propiedades únicas</li>
+                <li><strong>Implicancia de política:</strong> Subsidios a I+D, patentes y educación superior son clave para el crecimiento</li>
+                <li><strong>Legado:</strong> Premio Nobel 2018 (compartido con Nordhaus)</li>
+            </ul>
+        </div>
+
+        <!-- SLIDE 48: Acemoglu, Johnson & Robinson (2001) -->
+        <div class="slide bg-respaldo">
+            <span class="anexo-badge">PAPER 4</span>
+            <h2>Acemoglu, Johnson & Robinson (2001)</h2>
+            <div class="cita-paper">
+                <div class="titulo">"The Colonial Origins of Comparative Development: An Empirical Investigation"</div>
+                <div class="autores">Daron Acemoglu, Simon Johnson & James Robinson — American Economic Review, Vol. 91, No. 5, pp. 1369-1401</div>
+                <div class="contenido">
+                    Usaron la mortalidad de colonos europeos como variable instrumental para demostrar el efecto causal de las instituciones sobre el desarrollo. Donde los colonos podían asentarse, crearon instituciones inclusivas; donde la mortalidad era alta, crearon instituciones extractivas. Estas instituciones persistieron y determinan la riqueza actual.
+                </div>
+            </div>
+            <ul>
+                <li><strong>Aporte central:</strong> Primera evidencia causal (no solo correlación) de que las instituciones causan desarrollo</li>
+                <li><strong>El "Reversal of Fortune":</strong> Colonias ricas en 1500 (Aztecas, Incas) son pobres hoy, y viceversa</li>
+                <li><strong>Legado:</strong> Premio Nobel 2024 para Acemoglu, Johnson y Robinson</li>
+            </ul>
+        </div>
+
+        <!-- SLIDE 49: Sachs & Warner (1995) -->
+        <div class="slide bg-blanco">
+            <span class="anexo-badge">PAPER 5</span>
+            <h2>Sachs & Warner (1995)</h2>
+            <div class="cita-paper">
+                <div class="titulo">"Natural Resource Abundance and Economic Growth"</div>
+                <div class="autores">Jeffrey Sachs & Andrew Warner — NBER Working Paper No. 5398</div>
+                <div class="contenido">
+                    Documentaron empíricamente la "maldición de los recursos": países con alta dependencia de exportaciones de recursos naturales crecieron significativamente más lento entre 1970-1990. Los mecanismos incluyen enfermedad holandesa, debilitamiento institucional por rent-seeking, y volatilidad de términos de intercambio.
+                </div>
+            </div>
+            <ul>
+                <li><strong>Aporte central:</strong> Evidencia cross-country de que abundancia de recursos correlaciona negativamente con crecimiento</li>
+                <li><strong>Debate:</strong> Algunos autores cuestionan la causalidad: ¿los recursos causan mal desempeño, o las malas instituciones impiden usar bien los recursos?</li>
+                <li><strong>Relevancia para Argentina:</strong> País rico en recursos agrícolas que no logró diversificarse</li>
+            </ul>
+        </div>
+
+        <!-- SLIDE 50: Kuznets (1955) -->
+        <div class="slide bg-respaldo">
+            <span class="anexo-badge">PAPER 6</span>
+            <h2>Kuznets (1955)</h2>
+            <div class="cita-paper">
+                <div class="titulo">"Economic Growth and Income Inequality"</div>
+                <div class="autores">Simon Kuznets — American Economic Review, Vol. 45, No. 1, pp. 1-28</div>
+                <div class="contenido">
+                    Kuznets propuso que la desigualdad sigue una U invertida durante el desarrollo: primero aumenta (migración del campo a la ciudad, sector moderno vs tradicional) y luego disminuye (urbanización completa, educación masiva, redistribución). Fue la primera teoría que vinculó crecimiento con distribución del ingreso.
+                </div>
+            </div>
+            <ul>
+                <li><strong>Aporte central:</strong> La "Curva de Kuznets" como relación entre nivel de desarrollo y desigualdad</li>
+                <li><strong>Evidencia mixta:</strong> Funcionó para los países industrializados del siglo XIX-XX, pero no para todas las experiencias posteriores</li>
+                <li><strong>Legado:</strong> Premio Nobel 1971. Abrió el campo de estudio de desigualdad y crecimiento</li>
+            </ul>
+        </div>
+
+        <!-- SLIDE 51: Piketty (2014) -->
+        <div class="slide bg-blanco">
+            <span class="anexo-badge">PAPER 7</span>
+            <h2>Piketty (2014)</h2>
+            <div class="cita-paper">
+                <div class="titulo">"Capital in the Twenty-First Century"</div>
+                <div class="autores">Thomas Piketty — Harvard University Press (traducido de Éditions du Seuil, 2013)</div>
+                <div class="contenido">
+                    Con datos históricos de 20 países durante 200 años, Piketty demostró que cuando la tasa de retorno al capital (r) supera la tasa de crecimiento económico (g), la riqueza heredada crece más rápido que los ingresos del trabajo, generando una concentración patrimonial creciente. Propuso un impuesto global al capital como solución.
+                </div>
+            </div>
+            <ul>
+                <li><strong>Aporte central:</strong> r > g como "ley fundamental" de la dinámica de la desigualdad patrimonial</li>
+                <li><strong>Controversia:</strong> Debate sobre la robustez de los datos, la viabilidad política del impuesto global, y si r > g es realmente una ley</li>
+                <li><strong>Impacto:</strong> Bestseller global. Puso la desigualdad en el centro del debate económico del siglo XXI</li>
+            </ul>
+        </div>
+
+        <!-- SLIDE 52: Dornbusch & Edwards (1991) -->
+        <div class="slide bg-respaldo">
+            <span class="anexo-badge">PAPER 8</span>
+            <h2>Dornbusch & Edwards (1991)</h2>
+            <div class="cita-paper">
+                <div class="titulo">"The Macroeconomics of Populism in Latin America"</div>
+                <div class="autores">Rudiger Dornbusch & Sebastian Edwards (eds.) — University of Chicago Press</div>
+                <div class="contenido">
+                    Estudiaron episodios populistas en América Latina (Perón, Allende, Alan García, Sarney) e identificaron un ciclo recurrente: expansión fiscal y salarial agresiva → inflación → crisis de balanza de pagos → ajuste ortodoxo brutal. El patrón se repite porque cada nuevo gobierno ignora las restricciones presupuestarias y las lecciones del pasado.
+                </div>
+            </div>
+            <ul>
+                <li><strong>Aporte central:</strong> Modelo de 4 fases del populismo macroeconómico latinoamericano</li>
+                <li><strong>Relevancia para Argentina:</strong> Describe con precisión quirúrgica los ciclos argentinos de los últimos 80 años</li>
+                <li><strong>Lección:</strong> La expansión sin respaldo fiscal y monetario siempre termina en crisis que perjudica más a los que se buscaba ayudar</li>
+            </ul>
+        </div>
+
+        <!-- SLIDE 53: Bibliografía -->
+        <div class="slide bg-blanco" style="justify-content: flex-start; padding-top: 40px;">
+            <span class="anexo-badge">BIBLIOGRAFÍA</span>
+            <h2 style="font-size: 2rem;">Referencias completas</h2>
+            <div style="column-count: 2; column-gap: 40px; font-size: 0.85rem; line-height: 1.6; margin-top: 15px; color: var(--azul-respaldo);">
+                <p style="font-size: 0.85rem; margin-bottom: 10px;">Acemoglu, D., Johnson, S. & Robinson, J. (2001). "The Colonial Origins of Comparative Development", <em>AER</em>, 91(5).</p>
+                <p style="font-size: 0.85rem; margin-bottom: 10px;">Diamand, M. (1972). "La estructura productiva desequilibrada argentina y el tipo de cambio", <em>Desarrollo Económico</em>, 12(45).</p>
+                <p style="font-size: 0.85rem; margin-bottom: 10px;">Dornbusch, R. & Edwards, S. (1991). <em>The Macroeconomics of Populism in Latin America</em>, University of Chicago Press.</p>
+                <p style="font-size: 0.85rem; margin-bottom: 10px;">Easterly, W. (2006). <em>The White Man's Burden</em>, Penguin Press.</p>
+                <p style="font-size: 0.85rem; margin-bottom: 10px;">Kaldor, N. (1961). "Capital Accumulation and Economic Growth", en <em>The Theory of Capital</em>, Macmillan.</p>
+                <p style="font-size: 0.85rem; margin-bottom: 10px;">Kuznets, S. (1955). "Economic Growth and Income Inequality", <em>AER</em>, 45(1).</p>
+                <p style="font-size: 0.85rem; margin-bottom: 10px;">Lucas, R. (1988). "On the Mechanics of Economic Development", <em>Journal of Monetary Economics</em>, 22(1).</p>
+                <p style="font-size: 0.85rem; margin-bottom: 10px;">Maddison, A. (2001). <em>The World Economy: A Millennial Perspective</em>, OECD.</p>
+                <p style="font-size: 0.85rem; margin-bottom: 10px;">Piketty, T. (2014). <em>Capital in the Twenty-First Century</em>, Harvard University Press.</p>
+                <p style="font-size: 0.85rem; margin-bottom: 10px;">Romer, P. (1990). "Endogenous Technological Change", <em>JPE</em>, 98(5).</p>
+                <p style="font-size: 0.85rem; margin-bottom: 10px;">Sachs, J. (2005). <em>The End of Poverty</em>, Penguin Press.</p>
+                <p style="font-size: 0.85rem; margin-bottom: 10px;">Sachs, J. & Warner, A. (1995). "Natural Resource Abundance and Economic Growth", NBER WP 5398.</p>
+                <p style="font-size: 0.85rem; margin-bottom: 10px;">Sen, A. (1999). <em>Development as Freedom</em>, Knopf.</p>
+                <p style="font-size: 0.85rem; margin-bottom: 10px;">Solow, R. (1956). "A Contribution to the Theory of Economic Growth", <em>QJE</em>, 70(1).</p>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="slide-counter">
+        <span id="current">1</span> / <span id="total">0</span>
+    </div>
+
+    <div class="nav-hint">
+        &larr; &rarr; para navegar | F para pantalla completa
+    </div>
+
+    <script>
+        const slides = document.querySelectorAll('.slide');
+        let currentSlide = 0;
+        const total = slides.length;
+
+        document.getElementById('total').textContent = total;
+
+        function showSlide(n) {
+            slides[currentSlide].classList.remove('active');
+            currentSlide = (n + total) % total;
+            slides[currentSlide].classList.add('active');
+            document.getElementById('current').textContent = currentSlide + 1;
+        }
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowRight' || e.key === ' ' || e.key === 'Enter') {
+                showSlide(currentSlide + 1);
+            } else if (e.key === 'ArrowLeft') {
+                showSlide(currentSlide - 1);
+            } else if (e.key === 'Home') {
+                showSlide(0);
+            } else if (e.key === 'End') {
+                showSlide(total - 1);
+            } else if (e.key === 'f' || e.key === 'F') {
+                if (document.fullscreenElement) {
+                    document.exitFullscreen();
+                } else {
+                    document.documentElement.requestFullscreen();
+                }
+            }
+        });
+
+        let touchStartX = 0;
+        document.addEventListener('touchstart', (e) => {
+            touchStartX = e.touches[0].clientX;
+        });
+
+        document.addEventListener('touchend', (e) => {
+            const touchEndX = e.changedTouches[0].clientX;
+            const diff = touchStartX - touchEndX;
+            if (Math.abs(diff) > 50) {
+                if (diff > 0) {
+                    showSlide(currentSlide + 1);
+                } else {
+                    showSlide(currentSlide - 1);
+                }
+            }
+        });
+
+        document.querySelector('.slide-container').addEventListener('click', (e) => {
+            if (e.clientX > window.innerWidth / 2) {
+                showSlide(currentSlide + 1);
+            } else {
+                showSlide(currentSlide - 1);
+            }
+        });
+    </script>
+</body>
+</html>
