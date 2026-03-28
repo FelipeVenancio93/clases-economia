@@ -730,27 +730,27 @@
                     <!-- Axis labels -->
                     <text x="315" y="390" text-anchor="middle" fill="#021751" font-size="16" font-weight="600">Cantidad (clientes/mes)</text>
                     <text x="25" y="190" text-anchor="middle" fill="#021751" font-size="16" font-weight="600" transform="rotate(-90, 25, 190)">Precio ($)</text>
-                    <!-- Demand curve -->
-                    <path d="M 120 60 Q 250 120 350 200 Q 450 280 520 320" stroke="#3B82F6" stroke-width="3" fill="none"/>
-                    <text x="525" y="310" fill="#3B82F6" font-size="16" font-weight="700">D</text>
-                    <!-- Data point 1: P=$500k, Q=2 -->
-                    <circle cx="140" cy="75" r="5" fill="#3B82F6"/>
-                    <line x1="80" y1="75" x2="140" y2="75" stroke="#3B82F6" stroke-width="1" stroke-dasharray="4,3"/>
-                    <line x1="140" y1="75" x2="140" y2="350" stroke="#3B82F6" stroke-width="1" stroke-dasharray="4,3"/>
-                    <text x="55" y="80" text-anchor="end" fill="#021751" font-size="13">$500k</text>
-                    <text x="140" y="370" text-anchor="middle" fill="#021751" font-size="13">2</text>
-                    <!-- Data point 2: P=$200k, Q=8 -->
-                    <circle cx="300" cy="180" r="5" fill="#3B82F6"/>
-                    <line x1="80" y1="180" x2="300" y2="180" stroke="#3B82F6" stroke-width="1" stroke-dasharray="4,3"/>
-                    <line x1="300" y1="180" x2="300" y2="350" stroke="#3B82F6" stroke-width="1" stroke-dasharray="4,3"/>
-                    <text x="55" y="185" text-anchor="end" fill="#021751" font-size="13">$200k</text>
-                    <text x="300" y="370" text-anchor="middle" fill="#021751" font-size="13">8</text>
-                    <!-- Data point 3: P=$50k, Q=20 -->
-                    <circle cx="490" cy="305" r="5" fill="#3B82F6"/>
-                    <line x1="80" y1="305" x2="490" y2="305" stroke="#3B82F6" stroke-width="1" stroke-dasharray="4,3"/>
-                    <line x1="490" y1="305" x2="490" y2="350" stroke="#3B82F6" stroke-width="1" stroke-dasharray="4,3"/>
-                    <text x="55" y="310" text-anchor="end" fill="#021751" font-size="13">$50k</text>
-                    <text x="490" y="370" text-anchor="middle" fill="#021751" font-size="13">20</text>
+                    <!-- Demand curve: (130,70) to (490,330) -->
+                    <line x1="130" y1="70" x2="490" y2="330" stroke="#3B82F6" stroke-width="3"/>
+                    <text x="495" y="340" fill="#3B82F6" font-size="16" font-weight="700">D</text>
+                    <!-- Data point 1: P=$500k — y=100, x=172 -->
+                    <circle cx="172" cy="100" r="5" fill="#3B82F6"/>
+                    <line x1="80" y1="100" x2="172" y2="100" stroke="#3B82F6" stroke-width="1" stroke-dasharray="4,3"/>
+                    <line x1="172" y1="100" x2="172" y2="350" stroke="#3B82F6" stroke-width="1" stroke-dasharray="4,3"/>
+                    <text x="55" y="105" text-anchor="end" fill="#021751" font-size="13">$500k</text>
+                    <text x="172" y="370" text-anchor="middle" fill="#021751" font-size="13">2</text>
+                    <!-- Data point 2: P=$200k — y=200, x=310 -->
+                    <circle cx="310" cy="200" r="5" fill="#3B82F6"/>
+                    <line x1="80" y1="200" x2="310" y2="200" stroke="#3B82F6" stroke-width="1" stroke-dasharray="4,3"/>
+                    <line x1="310" y1="200" x2="310" y2="350" stroke="#3B82F6" stroke-width="1" stroke-dasharray="4,3"/>
+                    <text x="55" y="205" text-anchor="end" fill="#021751" font-size="13">$200k</text>
+                    <text x="310" y="370" text-anchor="middle" fill="#021751" font-size="13">8</text>
+                    <!-- Data point 3: P=$50k — y=300, x=449 -->
+                    <circle cx="449" cy="300" r="5" fill="#3B82F6"/>
+                    <line x1="80" y1="300" x2="449" y2="300" stroke="#3B82F6" stroke-width="1" stroke-dasharray="4,3"/>
+                    <line x1="449" y1="300" x2="449" y2="350" stroke="#3B82F6" stroke-width="1" stroke-dasharray="4,3"/>
+                    <text x="55" y="305" text-anchor="end" fill="#021751" font-size="13">$50k</text>
+                    <text x="449" y="370" text-anchor="middle" fill="#021751" font-size="13">20</text>
                     <!-- Title -->
                     <text x="315" y="25" text-anchor="middle" fill="#021751" font-size="14" font-style="italic" opacity="0.6">Mercado de diseño de packaging</text>
                 </svg>
@@ -786,24 +786,24 @@
             <p>Cuando la economía crece, las empresas invierten más en diseño y branding.</p>
             <div class="graph-container">
                 <svg viewBox="0 0 600 400" width="600" height="400" style="font-family: 'Albert Sans', sans-serif;">
-                    <!-- Axes -->
-                    <line x1="80" y1="350" x2="550" y2="350" stroke="#021751" stroke-width="2"/>
-                    <line x1="80" y1="30" x2="80" y2="350" stroke="#021751" stroke-width="2"/>
-                    <text x="315" y="390" text-anchor="middle" fill="#021751" font-size="16" font-weight="600">Q</text>
-                    <text x="25" y="190" text-anchor="middle" fill="#021751" font-size="16" font-weight="600" transform="rotate(-90, 25, 190)">P</text>
-                    <!-- Original D -->
-                    <line x1="120" y1="60" x2="450" y2="330" stroke="#3B82F6" stroke-width="3"/>
-                    <text x="455" y="340" fill="#3B82F6" font-size="16" font-weight="700">D</text>
-                    <!-- New D' shifted right -->
-                    <line x1="200" y1="60" x2="530" y2="330" stroke="#3B82F6" stroke-width="3" stroke-dasharray="8,4"/>
-                    <text x="535" y="340" fill="#3B82F6" font-size="16" font-weight="700">D'</text>
-                    <!-- Arrow showing shift -->
-                    <line x1="280" y1="200" x2="350" y2="200" stroke="#021751" stroke-width="2" marker-end="url(#arrowDark)"/>
                     <defs>
                         <marker id="arrowDark" markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto">
                             <polygon points="0 0, 10 3.5, 0 7" fill="#021751"/>
                         </marker>
                     </defs>
+                    <!-- Axes -->
+                    <line x1="80" y1="350" x2="550" y2="350" stroke="#021751" stroke-width="2"/>
+                    <line x1="80" y1="30" x2="80" y2="350" stroke="#021751" stroke-width="2"/>
+                    <text x="315" y="390" text-anchor="middle" fill="#021751" font-size="16" font-weight="600">Q</text>
+                    <text x="25" y="190" text-anchor="middle" fill="#021751" font-size="16" font-weight="600" transform="rotate(-90, 25, 190)">P</text>
+                    <!-- Original D: (130,70) to (490,330) -->
+                    <line x1="130" y1="70" x2="490" y2="330" stroke="#3B82F6" stroke-width="3"/>
+                    <text x="495" y="340" fill="#3B82F6" font-size="16" font-weight="700">D</text>
+                    <!-- New D' shifted right 80px: (210,70) to (550,316) -->
+                    <line x1="210" y1="70" x2="550" y2="316" stroke="#3B82F6" stroke-width="3" stroke-dasharray="8,4"/>
+                    <text x="545" y="330" fill="#3B82F6" font-size="16" font-weight="700">D'</text>
+                    <!-- Arrow showing shift -->
+                    <line x1="290" y1="200" x2="360" y2="200" stroke="#021751" stroke-width="2" marker-end="url(#arrowDark)"/>
                     <!-- Label -->
                     <text x="315" y="25" text-anchor="middle" fill="#021751" font-size="14" font-style="italic" opacity="0.6">Crecimiento económico → más demanda de diseño</text>
                 </svg>
@@ -816,24 +816,24 @@
             <p>Cuando las empresas tienen más plata, dejan de usar templates genéricos.</p>
             <div class="graph-container">
                 <svg viewBox="0 0 600 400" width="600" height="400" style="font-family: 'Albert Sans', sans-serif;">
-                    <!-- Axes -->
-                    <line x1="80" y1="350" x2="550" y2="350" stroke="#021751" stroke-width="2"/>
-                    <line x1="80" y1="30" x2="80" y2="350" stroke="#021751" stroke-width="2"/>
-                    <text x="315" y="390" text-anchor="middle" fill="#021751" font-size="16" font-weight="600">Q</text>
-                    <text x="25" y="190" text-anchor="middle" fill="#021751" font-size="16" font-weight="600" transform="rotate(-90, 25, 190)">P</text>
-                    <!-- Original D -->
-                    <line x1="200" y1="60" x2="530" y2="330" stroke="#3B82F6" stroke-width="3"/>
-                    <text x="535" y="340" fill="#3B82F6" font-size="16" font-weight="700">D</text>
-                    <!-- New D' shifted left -->
-                    <line x1="120" y1="60" x2="450" y2="330" stroke="#3B82F6" stroke-width="3" stroke-dasharray="8,4"/>
-                    <text x="455" y="340" fill="#3B82F6" font-size="16" font-weight="700">D'</text>
-                    <!-- Arrow showing shift left -->
-                    <line x1="360" y1="200" x2="290" y2="200" stroke="#021751" stroke-width="2" marker-end="url(#arrowDark2)"/>
                     <defs>
                         <marker id="arrowDark2" markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto">
                             <polygon points="0 0, 10 3.5, 0 7" fill="#021751"/>
                         </marker>
                     </defs>
+                    <!-- Axes -->
+                    <line x1="80" y1="350" x2="550" y2="350" stroke="#021751" stroke-width="2"/>
+                    <line x1="80" y1="30" x2="80" y2="350" stroke="#021751" stroke-width="2"/>
+                    <text x="315" y="390" text-anchor="middle" fill="#021751" font-size="16" font-weight="600">Q</text>
+                    <text x="25" y="190" text-anchor="middle" fill="#021751" font-size="16" font-weight="600" transform="rotate(-90, 25, 190)">P</text>
+                    <!-- Original D: (130,70) to (490,330) -->
+                    <line x1="130" y1="70" x2="490" y2="330" stroke="#3B82F6" stroke-width="3"/>
+                    <text x="495" y="340" fill="#3B82F6" font-size="16" font-weight="700">D</text>
+                    <!-- New D' shifted left 80px: (50,70) to (410,330) -->
+                    <line x1="80" y1="92" x2="410" y2="330" stroke="#3B82F6" stroke-width="3" stroke-dasharray="8,4"/>
+                    <text x="415" y="340" fill="#3B82F6" font-size="16" font-weight="700">D'</text>
+                    <!-- Arrow showing shift left -->
+                    <line x1="350" y1="200" x2="280" y2="200" stroke="#021751" stroke-width="2" marker-end="url(#arrowDark2)"/>
                     <!-- Label -->
                     <text x="315" y="25" text-anchor="middle" fill="#021751" font-size="14" font-style="italic" opacity="0.6">↑ Ingreso → menos demanda de Canva premium</text>
                 </svg>
@@ -900,21 +900,21 @@
                     <line x1="80" y1="30" x2="80" y2="350" stroke="#021751" stroke-width="2"/>
                     <text x="315" y="390" text-anchor="middle" fill="#021751" font-size="16" font-weight="600">Q (proyectos/mes)</text>
                     <text x="25" y="190" text-anchor="middle" fill="#021751" font-size="16" font-weight="600" transform="rotate(-90, 25, 190)">P ($)</text>
-                    <!-- Supply curve -->
-                    <line x1="120" y1="320" x2="500" y2="60" stroke="#00C600" stroke-width="3"/>
-                    <text x="505" y="55" fill="#00C600" font-size="16" font-weight="700">S</text>
-                    <!-- Data point 1: P=$100k, Q=3 -->
-                    <circle cx="190" cy="272" r="5" fill="#00C600"/>
-                    <line x1="80" y1="272" x2="190" y2="272" stroke="#00C600" stroke-width="1" stroke-dasharray="4,3"/>
-                    <line x1="190" y1="272" x2="190" y2="350" stroke="#00C600" stroke-width="1" stroke-dasharray="4,3"/>
-                    <text x="55" y="277" text-anchor="end" fill="#021751" font-size="13">$100k</text>
-                    <text x="190" y="370" text-anchor="middle" fill="#021751" font-size="13">3</text>
-                    <!-- Data point 2: P=$300k, Q=8 -->
-                    <circle cx="380" cy="142" r="5" fill="#00C600"/>
-                    <line x1="80" y1="142" x2="380" y2="142" stroke="#00C600" stroke-width="1" stroke-dasharray="4,3"/>
-                    <line x1="380" y1="142" x2="380" y2="350" stroke="#00C600" stroke-width="1" stroke-dasharray="4,3"/>
-                    <text x="55" y="147" text-anchor="end" fill="#021751" font-size="13">$300k</text>
-                    <text x="380" y="370" text-anchor="middle" fill="#021751" font-size="13">8</text>
+                    <!-- Supply curve: (130,330) to (490,70) -->
+                    <line x1="130" y1="330" x2="490" y2="70" stroke="#00C600" stroke-width="3"/>
+                    <text x="495" y="65" fill="#00C600" font-size="16" font-weight="700">S</text>
+                    <!-- Data point 1: P=$100k — y=250, x=241 -->
+                    <circle cx="241" cy="250" r="5" fill="#00C600"/>
+                    <line x1="80" y1="250" x2="241" y2="250" stroke="#00C600" stroke-width="1" stroke-dasharray="4,3"/>
+                    <line x1="241" y1="250" x2="241" y2="350" stroke="#00C600" stroke-width="1" stroke-dasharray="4,3"/>
+                    <text x="55" y="255" text-anchor="end" fill="#021751" font-size="13">$100k</text>
+                    <text x="241" y="370" text-anchor="middle" fill="#021751" font-size="13">3</text>
+                    <!-- Data point 2: P=$300k — y=150, x=379 -->
+                    <circle cx="379" cy="150" r="5" fill="#00C600"/>
+                    <line x1="80" y1="150" x2="379" y2="150" stroke="#00C600" stroke-width="1" stroke-dasharray="4,3"/>
+                    <line x1="379" y1="150" x2="379" y2="350" stroke="#00C600" stroke-width="1" stroke-dasharray="4,3"/>
+                    <text x="55" y="155" text-anchor="end" fill="#021751" font-size="13">$300k</text>
+                    <text x="379" y="370" text-anchor="middle" fill="#021751" font-size="13">8</text>
                     <!-- Label -->
                     <text x="315" y="25" text-anchor="middle" fill="#021751" font-size="14" font-style="italic" opacity="0.6">A mayor precio, más diseñadores quieren ofrecer sus servicios</text>
                 </svg>
@@ -956,19 +956,19 @@
                     <line x1="80" y1="30" x2="80" y2="350" stroke="#021751" stroke-width="2"/>
                     <text x="315" y="390" text-anchor="middle" fill="#021751" font-size="16" font-weight="600">Q</text>
                     <text x="25" y="190" text-anchor="middle" fill="#021751" font-size="16" font-weight="600" transform="rotate(-90, 25, 190)">P</text>
-                    <!-- Demand curve D -->
-                    <line x1="120" y1="60" x2="500" y2="330" stroke="#3B82F6" stroke-width="3"/>
-                    <text x="505" y="340" fill="#3B82F6" font-size="16" font-weight="700">D</text>
-                    <!-- Supply curve S -->
-                    <line x1="120" y1="330" x2="500" y2="60" stroke="#00C600" stroke-width="3"/>
-                    <text x="505" y="55" fill="#00C600" font-size="16" font-weight="700">S</text>
-                    <!-- Equilibrium point -->
-                    <circle cx="310" cy="195" r="6" fill="#00C600"/>
+                    <!-- Demand curve D: (130,70) to (490,330) -->
+                    <line x1="130" y1="70" x2="490" y2="330" stroke="#3B82F6" stroke-width="3"/>
+                    <text x="495" y="340" fill="#3B82F6" font-size="16" font-weight="700">D</text>
+                    <!-- Supply curve S: (130,330) to (490,70) -->
+                    <line x1="130" y1="330" x2="490" y2="70" stroke="#00C600" stroke-width="3"/>
+                    <text x="495" y="65" fill="#00C600" font-size="16" font-weight="700">S</text>
+                    <!-- Equilibrium point: (310,200) -->
+                    <circle cx="310" cy="200" r="6" fill="#00C600"/>
                     <!-- Dashed lines to axes -->
-                    <line x1="80" y1="195" x2="310" y2="195" stroke="#021751" stroke-width="1.5" stroke-dasharray="6,3"/>
-                    <line x1="310" y1="195" x2="310" y2="350" stroke="#021751" stroke-width="1.5" stroke-dasharray="6,3"/>
+                    <line x1="80" y1="200" x2="310" y2="200" stroke="#021751" stroke-width="1.5" stroke-dasharray="6,3"/>
+                    <line x1="310" y1="200" x2="310" y2="350" stroke="#021751" stroke-width="1.5" stroke-dasharray="6,3"/>
                     <!-- Labels -->
-                    <text x="65" y="200" text-anchor="end" fill="#021751" font-size="15" font-weight="600">P*</text>
+                    <text x="65" y="205" text-anchor="end" fill="#021751" font-size="15" font-weight="600">P*</text>
                     <text x="310" y="370" text-anchor="middle" fill="#021751" font-size="15" font-weight="600">Q*</text>
                     <text x="315" y="25" text-anchor="middle" fill="#021751" font-size="14" font-style="italic" opacity="0.6">Mercado de diseño de packaging</text>
                 </svg>
@@ -991,26 +991,26 @@
                     <line x1="80" y1="30" x2="80" y2="350" stroke="#021751" stroke-width="2"/>
                     <text x="315" y="390" text-anchor="middle" fill="#021751" font-size="16" font-weight="600">Q</text>
                     <text x="25" y="190" text-anchor="middle" fill="#021751" font-size="16" font-weight="600" transform="rotate(-90, 25, 190)">P</text>
-                    <!-- Supply curve S -->
-                    <line x1="120" y1="330" x2="500" y2="60" stroke="#00C600" stroke-width="3"/>
-                    <text x="505" y="55" fill="#00C600" font-size="16" font-weight="700">S</text>
-                    <!-- Original D -->
-                    <line x1="120" y1="60" x2="450" y2="330" stroke="#3B82F6" stroke-width="2" opacity="0.4"/>
-                    <text x="455" y="340" fill="#3B82F6" font-size="14" opacity="0.4">D</text>
-                    <!-- New D' shifted right -->
-                    <line x1="200" y1="60" x2="530" y2="330" stroke="#3B82F6" stroke-width="3" stroke-dasharray="8,4"/>
-                    <text x="535" y="340" fill="#3B82F6" font-size="16" font-weight="700">D'</text>
-                    <!-- Old equilibrium -->
-                    <circle cx="285" cy="195" r="4" fill="#021751" opacity="0.3"/>
-                    <!-- New equilibrium -->
-                    <circle cx="340" cy="170" r="6" fill="#00C600"/>
+                    <!-- Supply curve S: (130,330) to (490,70) -->
+                    <line x1="130" y1="330" x2="490" y2="70" stroke="#00C600" stroke-width="3"/>
+                    <text x="495" y="65" fill="#00C600" font-size="16" font-weight="700">S</text>
+                    <!-- Original D: (130,70) to (490,330) -->
+                    <line x1="130" y1="70" x2="490" y2="330" stroke="#3B82F6" stroke-width="2" opacity="0.4"/>
+                    <text x="495" y="340" fill="#3B82F6" font-size="14" opacity="0.4">D</text>
+                    <!-- New D' shifted right 80px: (210,70) to (550,316) -->
+                    <line x1="210" y1="70" x2="550" y2="316" stroke="#3B82F6" stroke-width="3" stroke-dasharray="8,4"/>
+                    <text x="545" y="330" fill="#3B82F6" font-size="16" font-weight="700">D'</text>
+                    <!-- Old equilibrium: (310,200) -->
+                    <circle cx="310" cy="200" r="4" fill="#021751" opacity="0.3"/>
+                    <!-- New equilibrium: (350,171) -->
+                    <circle cx="350" cy="171" r="6" fill="#00C600"/>
                     <!-- Dashed lines new eq -->
-                    <line x1="80" y1="170" x2="340" y2="170" stroke="#021751" stroke-width="1.5" stroke-dasharray="6,3"/>
-                    <line x1="340" y1="170" x2="340" y2="350" stroke="#021751" stroke-width="1.5" stroke-dasharray="6,3"/>
-                    <text x="65" y="175" text-anchor="end" fill="#021751" font-size="14" font-weight="600">P₂</text>
-                    <text x="340" y="370" text-anchor="middle" fill="#021751" font-size="14" font-weight="600">Q₂</text>
+                    <line x1="80" y1="171" x2="350" y2="171" stroke="#021751" stroke-width="1.5" stroke-dasharray="6,3"/>
+                    <line x1="350" y1="171" x2="350" y2="350" stroke="#021751" stroke-width="1.5" stroke-dasharray="6,3"/>
+                    <text x="65" y="176" text-anchor="end" fill="#021751" font-size="14" font-weight="600">P₂</text>
+                    <text x="350" y="370" text-anchor="middle" fill="#021751" font-size="14" font-weight="600">Q₂</text>
                     <!-- Arrow -->
-                    <line x1="290" y1="200" x2="330" y2="178" stroke="#00C600" stroke-width="2" marker-end="url(#arrowGreen)"/>
+                    <line x1="310" y1="200" x2="340" y2="178" stroke="#00C600" stroke-width="2" marker-end="url(#arrowGreen)"/>
                     <!-- Label -->
                     <text x="315" y="25" text-anchor="middle" fill="#021751" font-size="14" font-style="italic" opacity="0.6">↑ Demanda → sube precio y cantidad de equilibrio</text>
                 </svg>
@@ -1033,26 +1033,26 @@
                     <line x1="80" y1="30" x2="80" y2="350" stroke="#021751" stroke-width="2"/>
                     <text x="315" y="390" text-anchor="middle" fill="#021751" font-size="16" font-weight="600">Q</text>
                     <text x="25" y="190" text-anchor="middle" fill="#021751" font-size="16" font-weight="600" transform="rotate(-90, 25, 190)">P</text>
-                    <!-- Demand curve D -->
-                    <line x1="120" y1="60" x2="500" y2="330" stroke="#3B82F6" stroke-width="3"/>
-                    <text x="505" y="340" fill="#3B82F6" font-size="16" font-weight="700">D</text>
-                    <!-- Original S -->
-                    <line x1="120" y1="330" x2="500" y2="60" stroke="#00C600" stroke-width="2" opacity="0.4"/>
-                    <text x="505" y="55" fill="#00C600" font-size="14" opacity="0.4">S</text>
-                    <!-- New S' shifted right -->
-                    <line x1="200" y1="330" x2="540" y2="90" stroke="#00C600" stroke-width="3" stroke-dasharray="8,4"/>
-                    <text x="545" y="85" fill="#00C600" font-size="16" font-weight="700">S'</text>
-                    <!-- Old equilibrium -->
-                    <circle cx="310" cy="195" r="4" fill="#021751" opacity="0.3"/>
-                    <!-- New equilibrium -->
-                    <circle cx="350" cy="222" r="6" fill="#00C600"/>
+                    <!-- Demand curve D: (130,70) to (490,330) -->
+                    <line x1="130" y1="70" x2="490" y2="330" stroke="#3B82F6" stroke-width="3"/>
+                    <text x="495" y="340" fill="#3B82F6" font-size="16" font-weight="700">D</text>
+                    <!-- Original S: (130,330) to (490,70) -->
+                    <line x1="130" y1="330" x2="490" y2="70" stroke="#00C600" stroke-width="2" opacity="0.4"/>
+                    <text x="495" y="65" fill="#00C600" font-size="14" opacity="0.4">S</text>
+                    <!-- New S' shifted right 80px: (210,330) to (550,84) -->
+                    <line x1="210" y1="330" x2="550" y2="84" stroke="#00C600" stroke-width="3" stroke-dasharray="8,4"/>
+                    <text x="545" y="78" fill="#00C600" font-size="16" font-weight="700">S'</text>
+                    <!-- Old equilibrium: (310,200) -->
+                    <circle cx="310" cy="200" r="4" fill="#021751" opacity="0.3"/>
+                    <!-- New equilibrium: (350,229) -->
+                    <circle cx="350" cy="229" r="6" fill="#00C600"/>
                     <!-- Dashed lines new eq -->
-                    <line x1="80" y1="222" x2="350" y2="222" stroke="#021751" stroke-width="1.5" stroke-dasharray="6,3"/>
-                    <line x1="350" y1="222" x2="350" y2="350" stroke="#021751" stroke-width="1.5" stroke-dasharray="6,3"/>
-                    <text x="65" y="227" text-anchor="end" fill="#021751" font-size="14" font-weight="600">P₂</text>
+                    <line x1="80" y1="229" x2="350" y2="229" stroke="#021751" stroke-width="1.5" stroke-dasharray="6,3"/>
+                    <line x1="350" y1="229" x2="350" y2="350" stroke="#021751" stroke-width="1.5" stroke-dasharray="6,3"/>
+                    <text x="65" y="234" text-anchor="end" fill="#021751" font-size="14" font-weight="600">P₂</text>
                     <text x="350" y="370" text-anchor="middle" fill="#021751" font-size="14" font-weight="600">Q₂</text>
                     <!-- Arrow -->
-                    <line x1="310" y1="200" x2="340" y2="220" stroke="#00C600" stroke-width="2" marker-end="url(#arrowGreen2)"/>
+                    <line x1="310" y1="200" x2="340" y2="222" stroke="#00C600" stroke-width="2" marker-end="url(#arrowGreen2)"/>
                     <!-- Label -->
                     <text x="315" y="25" text-anchor="middle" fill="#021751" font-size="14" font-style="italic" opacity="0.6">↑ Oferta → baja precio y sube cantidad de equilibrio</text>
                 </svg>
@@ -1074,26 +1074,26 @@
                     <line x1="80" y1="30" x2="80" y2="350" stroke="#FFFFFF" stroke-width="2"/>
                     <text x="315" y="390" text-anchor="middle" fill="#FFFFFF" font-size="16" font-weight="600">Q</text>
                     <text x="25" y="190" text-anchor="middle" fill="#FFFFFF" font-size="16" font-weight="600" transform="rotate(-90, 25, 190)">P</text>
-                    <!-- Demand curve D -->
-                    <line x1="120" y1="60" x2="500" y2="330" stroke="#3B82F6" stroke-width="3"/>
-                    <text x="505" y="340" fill="#3B82F6" font-size="16" font-weight="700">D</text>
-                    <!-- Supply curve S -->
-                    <line x1="120" y1="330" x2="500" y2="60" stroke="#00C600" stroke-width="3"/>
-                    <text x="505" y="55" fill="#00C600" font-size="16" font-weight="700">S</text>
-                    <!-- Price above equilibrium -->
+                    <!-- Demand curve D: (130,70) to (490,330) -->
+                    <line x1="130" y1="70" x2="490" y2="330" stroke="#3B82F6" stroke-width="3"/>
+                    <text x="495" y="340" fill="#3B82F6" font-size="16" font-weight="700">D</text>
+                    <!-- Supply curve S: (130,330) to (490,70) -->
+                    <line x1="130" y1="330" x2="490" y2="70" stroke="#00C600" stroke-width="3"/>
+                    <text x="495" y="65" fill="#00C600" font-size="16" font-weight="700">S</text>
+                    <!-- Price above equilibrium at y=140 -->
                     <line x1="80" y1="140" x2="520" y2="140" stroke="#FFFFFF" stroke-width="1.5" stroke-dasharray="6,3" opacity="0.5"/>
                     <text x="65" y="145" text-anchor="end" fill="#FFFFFF" font-size="15" font-weight="600">P₁</text>
-                    <!-- Qd point on D -->
-                    <circle cx="210" cy="140" r="5" fill="#3B82F6"/>
-                    <line x1="210" y1="140" x2="210" y2="350" stroke="#3B82F6" stroke-width="1.5" stroke-dasharray="4,3"/>
-                    <text x="210" y="370" text-anchor="middle" fill="#3B82F6" font-size="14" font-weight="600">Qd</text>
-                    <!-- Qs point on S -->
-                    <circle cx="430" cy="140" r="5" fill="#00C600"/>
-                    <line x1="430" y1="140" x2="430" y2="350" stroke="#00C600" stroke-width="1.5" stroke-dasharray="4,3"/>
-                    <text x="430" y="370" text-anchor="middle" fill="#00C600" font-size="14" font-weight="600">Qs</text>
+                    <!-- Qd point on D at y=140: x=227 -->
+                    <circle cx="227" cy="140" r="5" fill="#3B82F6"/>
+                    <line x1="227" y1="140" x2="227" y2="350" stroke="#3B82F6" stroke-width="1.5" stroke-dasharray="4,3"/>
+                    <text x="227" y="370" text-anchor="middle" fill="#3B82F6" font-size="14" font-weight="600">Qd</text>
+                    <!-- Qs point on S at y=140: x=393 -->
+                    <circle cx="393" cy="140" r="5" fill="#00C600"/>
+                    <line x1="393" y1="140" x2="393" y2="350" stroke="#00C600" stroke-width="1.5" stroke-dasharray="4,3"/>
+                    <text x="393" y="370" text-anchor="middle" fill="#00C600" font-size="14" font-weight="600">Qs</text>
                     <!-- Excess label -->
-                    <line x1="230" y1="130" x2="410" y2="130" stroke="#DC2626" stroke-width="2"/>
-                    <text x="320" y="122" text-anchor="middle" fill="#DC2626" font-size="14" font-weight="600">Exceso de oferta</text>
+                    <line x1="247" y1="130" x2="373" y2="130" stroke="#DC2626" stroke-width="2"/>
+                    <text x="310" y="122" text-anchor="middle" fill="#DC2626" font-size="14" font-weight="600">Exceso de oferta</text>
                 </svg>
             </div>
             <p>Resultado: los diseñadores bajan sus tarifas para conseguir clientes. El precio tiende al equilibrio.</p>
@@ -1110,26 +1110,26 @@
                     <line x1="80" y1="30" x2="80" y2="350" stroke="#021751" stroke-width="2"/>
                     <text x="315" y="390" text-anchor="middle" fill="#021751" font-size="16" font-weight="600">Q</text>
                     <text x="25" y="190" text-anchor="middle" fill="#021751" font-size="16" font-weight="600" transform="rotate(-90, 25, 190)">P</text>
-                    <!-- Demand curve D -->
-                    <line x1="120" y1="60" x2="500" y2="330" stroke="#3B82F6" stroke-width="3"/>
-                    <text x="505" y="340" fill="#3B82F6" font-size="16" font-weight="700">D</text>
-                    <!-- Supply curve S -->
-                    <line x1="120" y1="330" x2="500" y2="60" stroke="#00C600" stroke-width="3"/>
-                    <text x="505" y="55" fill="#00C600" font-size="16" font-weight="700">S</text>
-                    <!-- Price below equilibrium -->
-                    <line x1="80" y1="270" x2="520" y2="270" stroke="#021751" stroke-width="1.5" stroke-dasharray="6,3" opacity="0.4"/>
-                    <text x="65" y="275" text-anchor="end" fill="#021751" font-size="15" font-weight="600">P₁</text>
-                    <!-- Qs point on S -->
-                    <circle cx="190" cy="270" r="5" fill="#00C600"/>
-                    <line x1="190" y1="270" x2="190" y2="350" stroke="#00C600" stroke-width="1.5" stroke-dasharray="4,3"/>
-                    <text x="190" y="370" text-anchor="middle" fill="#00C600" font-size="14" font-weight="600">Qs</text>
-                    <!-- Qd point on D -->
-                    <circle cx="420" cy="270" r="5" fill="#3B82F6"/>
-                    <line x1="420" y1="270" x2="420" y2="350" stroke="#3B82F6" stroke-width="1.5" stroke-dasharray="4,3"/>
-                    <text x="420" y="370" text-anchor="middle" fill="#3B82F6" font-size="14" font-weight="600">Qd</text>
+                    <!-- Demand curve D: (130,70) to (490,330) -->
+                    <line x1="130" y1="70" x2="490" y2="330" stroke="#3B82F6" stroke-width="3"/>
+                    <text x="495" y="340" fill="#3B82F6" font-size="16" font-weight="700">D</text>
+                    <!-- Supply curve S: (130,330) to (490,70) -->
+                    <line x1="130" y1="330" x2="490" y2="70" stroke="#00C600" stroke-width="3"/>
+                    <text x="495" y="65" fill="#00C600" font-size="16" font-weight="700">S</text>
+                    <!-- Price below equilibrium at y=260 -->
+                    <line x1="80" y1="260" x2="520" y2="260" stroke="#021751" stroke-width="1.5" stroke-dasharray="6,3" opacity="0.4"/>
+                    <text x="65" y="265" text-anchor="end" fill="#021751" font-size="15" font-weight="600">P₁</text>
+                    <!-- Qs point on S at y=260: x=227 -->
+                    <circle cx="227" cy="260" r="5" fill="#00C600"/>
+                    <line x1="227" y1="260" x2="227" y2="350" stroke="#00C600" stroke-width="1.5" stroke-dasharray="4,3"/>
+                    <text x="227" y="370" text-anchor="middle" fill="#00C600" font-size="14" font-weight="600">Qs</text>
+                    <!-- Qd point on D at y=260: x=393 -->
+                    <circle cx="393" cy="260" r="5" fill="#3B82F6"/>
+                    <line x1="393" y1="260" x2="393" y2="350" stroke="#3B82F6" stroke-width="1.5" stroke-dasharray="4,3"/>
+                    <text x="393" y="370" text-anchor="middle" fill="#3B82F6" font-size="14" font-weight="600">Qd</text>
                     <!-- Excess label -->
-                    <line x1="210" y1="260" x2="400" y2="260" stroke="#DC2626" stroke-width="2"/>
-                    <text x="305" y="252" text-anchor="middle" fill="#DC2626" font-size="14" font-weight="600">Exceso de demanda</text>
+                    <line x1="247" y1="250" x2="373" y2="250" stroke="#DC2626" stroke-width="2"/>
+                    <text x="310" y="242" text-anchor="middle" fill="#DC2626" font-size="14" font-weight="600">Exceso de demanda</text>
                 </svg>
             </div>
             <p>Resultado: los diseñadores suben sus tarifas. El precio tiende al equilibrio.</p>
@@ -1178,19 +1178,19 @@
                     <line x1="80" y1="30" x2="80" y2="350" stroke="#021751" stroke-width="2"/>
                     <text x="315" y="390" text-anchor="middle" fill="#021751" font-size="16" font-weight="600">Q</text>
                     <text x="25" y="190" text-anchor="middle" fill="#021751" font-size="16" font-weight="600" transform="rotate(-90, 25, 190)">P</text>
-                    <!-- Inelastic demand (steep) -->
-                    <line x1="220" y1="60" x2="300" y2="330" stroke="#3B82F6" stroke-width="3"/>
-                    <text x="310" y="340" fill="#3B82F6" font-size="14" font-weight="600">D inelástica</text>
-                    <!-- Elastic demand (flat) -->
-                    <line x1="220" y1="60" x2="520" y2="200" stroke="#3B82F6" stroke-width="3" stroke-dasharray="8,4"/>
-                    <text x="440" y="225" fill="#3B82F6" font-size="14" font-weight="600">D elástica</text>
-                    <!-- Starting point -->
-                    <circle cx="220" cy="60" r="5" fill="#021751"/>
+                    <!-- Inelastic demand (steep): (280,70) to (340,330) -->
+                    <line x1="280" y1="70" x2="340" y2="330" stroke="#3B82F6" stroke-width="3"/>
+                    <text x="350" y="340" fill="#3B82F6" font-size="14" font-weight="600">D inelástica</text>
+                    <!-- Elastic demand (flat): (130,180) to (490,220) -->
+                    <line x1="130" y1="180" x2="490" y2="220" stroke="#3B82F6" stroke-width="3" stroke-dasharray="8,4"/>
+                    <text x="440" y="245" fill="#3B82F6" font-size="14" font-weight="600">D elástica</text>
+                    <!-- Reference point where both curves cross: approx (310,200) -->
+                    <circle cx="310" cy="200" r="5" fill="#021751"/>
                     <!-- Labels -->
-                    <text x="145" y="310" text-anchor="middle" fill="#021751" font-size="13" font-style="italic" opacity="0.7">Branding</text>
-                    <text x="145" y="328" text-anchor="middle" fill="#021751" font-size="13" font-style="italic" opacity="0.7">especializado</text>
-                    <text x="500" y="170" text-anchor="middle" fill="#021751" font-size="13" font-style="italic" opacity="0.7">Flyers</text>
-                    <text x="500" y="188" text-anchor="middle" fill="#021751" font-size="13" font-style="italic" opacity="0.7">genéricos</text>
+                    <text x="200" y="310" text-anchor="middle" fill="#021751" font-size="13" font-style="italic" opacity="0.7">Branding</text>
+                    <text x="200" y="328" text-anchor="middle" fill="#021751" font-size="13" font-style="italic" opacity="0.7">especializado</text>
+                    <text x="470" y="170" text-anchor="middle" fill="#021751" font-size="13" font-style="italic" opacity="0.7">Flyers</text>
+                    <text x="470" y="188" text-anchor="middle" fill="#021751" font-size="13" font-style="italic" opacity="0.7">genéricos</text>
                 </svg>
             </div>
         </div>
@@ -1232,52 +1232,55 @@
                 <div class="graph-panel">
                     <h4 style="color: var(--azul-respaldo);">Demanda inelástica</h4>
                     <svg viewBox="0 0 280 220" width="280" height="220" style="font-family: 'Albert Sans', sans-serif;">
-                        <!-- Axes -->
-                        <line x1="40" y1="200" x2="260" y2="200" stroke="#021751" stroke-width="2"/>
-                        <line x1="40" y1="10" x2="40" y2="200" stroke="#021751" stroke-width="2"/>
-                        <text x="150" y="218" text-anchor="middle" fill="#021751" font-size="11">Q</text>
-                        <text x="15" y="105" text-anchor="middle" fill="#021751" font-size="11" transform="rotate(-90, 15, 105)">P</text>
-                        <!-- Steep D (inelastic) -->
-                        <line x1="130" y1="25" x2="170" y2="190" stroke="#3B82F6" stroke-width="2.5"/>
-                        <text x="178" y="190" fill="#3B82F6" font-size="11" font-weight="700">D</text>
-                        <!-- Original S -->
-                        <line x1="60" y1="180" x2="250" y2="40" stroke="#00C600" stroke-width="2" opacity="0.4"/>
-                        <text x="252" y="36" fill="#00C600" font-size="10" opacity="0.4">S</text>
-                        <!-- S with tax (shifted up) -->
-                        <line x1="60" y1="140" x2="250" y2="15" stroke="#00C600" stroke-width="2.5" stroke-dasharray="6,3"/>
-                        <text x="252" y="12" fill="#00C600" font-size="11" font-weight="700">S+t</text>
-                        <!-- Price rises a lot -->
-                        <line x1="40" y1="120" x2="145" y2="120" stroke="#DC2626" stroke-width="1" stroke-dasharray="3,2"/>
-                        <line x1="40" y1="85" x2="148" y2="85" stroke="#DC2626" stroke-width="1" stroke-dasharray="3,2"/>
-                        <text x="8" y="105" fill="#DC2626" font-size="10" font-weight="600">↑P</text>
+                        <!-- Axes: x=40 y-axis, y=190 x-axis -->
+                        <line x1="40" y1="190" x2="260" y2="190" stroke="#021751" stroke-width="2"/>
+                        <line x1="40" y1="10" x2="40" y2="190" stroke="#021751" stroke-width="2"/>
+                        <text x="150" y="208" text-anchor="middle" fill="#021751" font-size="11">Q</text>
+                        <text x="15" y="100" text-anchor="middle" fill="#021751" font-size="11" transform="rotate(-90, 15, 100)">P</text>
+                        <!-- Steep D (inelastic): (130,25) to (160,185) -->
+                        <line x1="130" y1="25" x2="160" y2="185" stroke="#3B82F6" stroke-width="2.5"/>
+                        <text x="168" y="185" fill="#3B82F6" font-size="11" font-weight="700">D</text>
+                        <!-- Original S: (60,185) to (230,30) -->
+                        <line x1="60" y1="185" x2="230" y2="30" stroke="#00C600" stroke-width="2" opacity="0.4"/>
+                        <text x="232" y="26" fill="#00C600" font-size="10" opacity="0.4">S</text>
+                        <!-- S with tax (shifted up 25px): (60,160) to (230,5) -->
+                        <line x1="60" y1="160" x2="230" y2="5" stroke="#00C600" stroke-width="2.5" stroke-dasharray="6,3"/>
+                        <text x="232" y="5" fill="#00C600" font-size="11" font-weight="700">S+t</text>
+                        <!-- Old eq: (145,107), New eq: (141,86) — price rises a lot -->
+                        <circle cx="145" cy="107" r="3" fill="#021751" opacity="0.3"/>
+                        <circle cx="141" cy="86" r="3.5" fill="#DC2626"/>
+                        <line x1="40" y1="107" x2="145" y2="107" stroke="#DC2626" stroke-width="1" stroke-dasharray="3,2" opacity="0.5"/>
+                        <line x1="40" y1="86" x2="141" y2="86" stroke="#DC2626" stroke-width="1" stroke-dasharray="3,2"/>
+                        <text x="8" y="99" fill="#DC2626" font-size="10" font-weight="600">↑P</text>
                         <!-- Annotation -->
-                        <text x="150" y="218" text-anchor="middle" fill="#DC2626" font-size="10" font-weight="600"></text>
-                        <text x="140" y="160" fill="#021751" font-size="10" font-style="italic" opacity="0.6">Consumidor paga</text>
+                        <text x="170" y="145" fill="#021751" font-size="10" font-style="italic" opacity="0.6">Consumidor paga</text>
                     </svg>
                 </div>
                 <div class="graph-panel">
                     <h4 style="color: var(--azul-respaldo);">Demanda elástica</h4>
                     <svg viewBox="0 0 280 220" width="280" height="220" style="font-family: 'Albert Sans', sans-serif;">
-                        <!-- Axes -->
-                        <line x1="40" y1="200" x2="260" y2="200" stroke="#021751" stroke-width="2"/>
-                        <line x1="40" y1="10" x2="40" y2="200" stroke="#021751" stroke-width="2"/>
-                        <text x="150" y="218" text-anchor="middle" fill="#021751" font-size="11">Q</text>
-                        <text x="15" y="105" text-anchor="middle" fill="#021751" font-size="11" transform="rotate(-90, 15, 105)">P</text>
-                        <!-- Flat D (elastic) -->
-                        <line x1="60" y1="100" x2="250" y2="140" stroke="#3B82F6" stroke-width="2.5"/>
-                        <text x="252" y="145" fill="#3B82F6" font-size="11" font-weight="700">D</text>
-                        <!-- Original S -->
-                        <line x1="60" y1="180" x2="250" y2="40" stroke="#00C600" stroke-width="2" opacity="0.4"/>
-                        <text x="252" y="36" fill="#00C600" font-size="10" opacity="0.4">S</text>
-                        <!-- S with tax (shifted up) -->
-                        <line x1="60" y1="140" x2="250" y2="15" stroke="#00C600" stroke-width="2.5" stroke-dasharray="6,3"/>
-                        <text x="252" y="12" fill="#00C600" font-size="11" font-weight="700">S+t</text>
-                        <!-- Price barely rises -->
-                        <line x1="40" y1="118" x2="140" y2="118" stroke="#DC2626" stroke-width="1" stroke-dasharray="3,2"/>
-                        <line x1="40" y1="112" x2="130" y2="112" stroke="#DC2626" stroke-width="1" stroke-dasharray="3,2"/>
-                        <text x="8" y="118" fill="#DC2626" font-size="10" font-weight="600">≈P</text>
+                        <!-- Axes: x=40 y-axis, y=190 x-axis -->
+                        <line x1="40" y1="190" x2="260" y2="190" stroke="#021751" stroke-width="2"/>
+                        <line x1="40" y1="10" x2="40" y2="190" stroke="#021751" stroke-width="2"/>
+                        <text x="150" y="208" text-anchor="middle" fill="#021751" font-size="11">Q</text>
+                        <text x="15" y="100" text-anchor="middle" fill="#021751" font-size="11" transform="rotate(-90, 15, 100)">P</text>
+                        <!-- Flat D (elastic): (50,90) to (250,120) -->
+                        <line x1="50" y1="90" x2="250" y2="120" stroke="#3B82F6" stroke-width="2.5"/>
+                        <text x="252" y="125" fill="#3B82F6" font-size="11" font-weight="700">D</text>
+                        <!-- Original S: (60,185) to (230,30) -->
+                        <line x1="60" y1="185" x2="230" y2="30" stroke="#00C600" stroke-width="2" opacity="0.4"/>
+                        <text x="232" y="26" fill="#00C600" font-size="10" opacity="0.4">S</text>
+                        <!-- S with tax (shifted up 25px): (60,160) to (230,5) -->
+                        <line x1="60" y1="160" x2="230" y2="5" stroke="#00C600" stroke-width="2.5" stroke-dasharray="6,3"/>
+                        <text x="232" y="5" fill="#00C600" font-size="11" font-weight="700">S+t</text>
+                        <!-- Old eq: (148,105), New eq: (125,101) — price barely rises -->
+                        <circle cx="148" cy="105" r="3" fill="#021751" opacity="0.3"/>
+                        <circle cx="125" cy="101" r="3.5" fill="#DC2626"/>
+                        <line x1="40" y1="105" x2="148" y2="105" stroke="#DC2626" stroke-width="1" stroke-dasharray="3,2" opacity="0.5"/>
+                        <line x1="40" y1="101" x2="125" y2="101" stroke="#DC2626" stroke-width="1" stroke-dasharray="3,2"/>
+                        <text x="8" y="106" fill="#DC2626" font-size="10" font-weight="600">≈P</text>
                         <!-- Annotation -->
-                        <text x="140" y="170" fill="#021751" font-size="10" font-style="italic" opacity="0.6">Productor paga</text>
+                        <text x="170" y="155" fill="#021751" font-size="10" font-style="italic" opacity="0.6">Productor paga</text>
                     </svg>
                 </div>
             </div>
