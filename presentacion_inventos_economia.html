@@ -1,0 +1,856 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>6 Inventos que Explican la Economía — Felipe Venancio</title>
+    <link href="https://fonts.googleapis.com/css2?family=Albert+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --azul-impulso: #1036E2;
+            --verde-activo: #00C600;
+            --azul-respaldo: #021751;
+            --blanco: #FFFFFF;
+            --negro: #000000;
+            --rojo-alerta: #DC2626;
+            --amarillo: #F59E0B;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Albert Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--azul-respaldo);
+            color: var(--blanco);
+            overflow: hidden;
+        }
+
+        .slide-container {
+            width: 100vw; height: 100vh;
+            display: flex; align-items: center; justify-content: center;
+        }
+
+        .slide {
+            display: none; width: 100%; height: 100%;
+            padding: 60px 80px; flex-direction: column; justify-content: center;
+        }
+        .slide.active { display: flex; }
+
+        .bg-respaldo { background: var(--azul-respaldo); color: var(--blanco); }
+        .bg-impulso { background: var(--azul-impulso); color: var(--blanco); }
+        .bg-verde { background: var(--verde-activo); color: var(--blanco); }
+        .bg-blanco { background: var(--blanco); color: var(--azul-respaldo); }
+
+        h1 { font-size: 3.8rem; font-weight: 700; line-height: 1.1; margin-bottom: 30px; }
+        h2 { font-size: 2.6rem; font-weight: 600; margin-bottom: 25px; }
+        h3 { font-size: 1.8rem; font-weight: 500; margin-bottom: 20px; opacity: 0.9; }
+        p, li { font-size: 1.5rem; line-height: 1.6; margin-bottom: 15px; }
+        .subtitle { font-size: 1.6rem; opacity: 0.8; font-weight: 400; }
+        .highlight { color: var(--verde-activo); }
+        .bg-blanco .highlight { color: var(--azul-impulso); }
+        .highlight-red { color: var(--rojo-alerta); }
+
+        blockquote {
+            font-size: 1.6rem; font-style: italic;
+            border-left: 4px solid var(--verde-activo);
+            padding-left: 30px; margin: 25px 0; opacity: 0.95;
+        }
+        blockquote cite {
+            display: block; font-size: 1.1rem; margin-top: 12px;
+            font-style: normal; opacity: 0.7;
+        }
+
+        .cita-paper {
+            background: rgba(255,255,255,0.08);
+            padding: 25px 30px; border-radius: 10px;
+            margin: 20px 0; border-left: 4px solid var(--verde-activo);
+        }
+        .bg-blanco .cita-paper {
+            background: rgba(16,54,226,0.06);
+            border-left-color: var(--azul-impulso);
+        }
+        .cita-paper .titulo { font-weight: 600; font-size: 1.2rem; margin-bottom: 8px; }
+        .cita-paper .autores { font-size: 1rem; opacity: 0.7; margin-bottom: 12px; }
+        .cita-paper .contenido { font-size: 1.25rem; line-height: 1.5; }
+
+        ul { list-style: none; padding-left: 0; }
+        ul li { padding-left: 35px; position: relative; margin-bottom: 18px; }
+        ul li::before {
+            content: "▸"; position: absolute; left: 0;
+            color: var(--verde-activo); font-size: 1.4rem;
+        }
+        .bg-verde ul li::before, .bg-impulso ul li::before { color: var(--blanco); }
+
+        .two-cols { display: grid; grid-template-columns: 1fr 1fr; gap: 50px; margin-top: 25px; }
+        .three-cols { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 30px; margin-top: 25px; }
+
+        .portada { text-align: center; }
+        .portada h1 { font-size: 4rem; margin-bottom: 20px; }
+
+        .big-number { font-size: 7rem; font-weight: 800; color: var(--verde-activo); line-height: 1; }
+        .bg-blanco .big-number { color: var(--azul-impulso); }
+
+        .stat-box { text-align: center; padding: 25px; }
+        .stat-numero { font-size: 4.5rem; font-weight: 800; color: var(--verde-activo); line-height: 1; }
+        .bg-blanco .stat-numero { color: var(--azul-impulso); }
+        .stat-label { font-size: 1.2rem; opacity: 0.8; margin-top: 10px; }
+        .stats-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 35px; margin-top: 35px; }
+        .stats-grid.two-col { grid-template-columns: repeat(2, 1fr); }
+
+        .concepto-box {
+            background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.15);
+            padding: 25px; border-radius: 12px; margin: 15px 0;
+        }
+        .bg-blanco .concepto-box { background: rgba(16,54,226,0.03); border-color: rgba(16,54,226,0.15); }
+        .concepto-box h4 { font-size: 1.3rem; font-weight: 600; margin-bottom: 12px; color: var(--verde-activo); }
+        .bg-blanco .concepto-box h4 { color: var(--azul-impulso); }
+
+        .flow-diagram { display: flex; align-items: center; justify-content: center; gap: 15px; margin: 35px 0; flex-wrap: wrap; }
+        .flow-box { background: rgba(255,255,255,0.1); padding: 20px 28px; border-radius: 10px; font-size: 1.2rem; font-weight: 500; text-align: center; }
+        .bg-blanco .flow-box { background: rgba(16,54,226,0.1); }
+        .flow-arrow { font-size: 1.8rem; color: var(--verde-activo); }
+
+        .formula {
+            font-size: 2rem; text-align: center; padding: 30px;
+            background: rgba(255,255,255,0.08); border-radius: 12px;
+            margin: 25px 0; font-weight: 500; letter-spacing: 2px;
+        }
+        .bg-blanco .formula { background: rgba(16,54,226,0.06); }
+
+        .frase-final { font-size: 2rem; line-height: 1.5; text-align: center; max-width: 900px; margin: 0 auto; }
+        .frase-final em { color: var(--verde-activo); font-style: normal; }
+
+        .cita-grande { font-size: 2.2rem; font-style: italic; line-height: 1.4; text-align: center; max-width: 850px; margin: 0 auto; padding: 0 20px; }
+        .cita-grande .autor { display: block; font-size: 1.2rem; font-style: normal; margin-top: 25px; opacity: 0.6; font-weight: 500; }
+        .cita-grande .traduccion { display: block; font-size: 1rem; font-style: normal; margin-top: 10px; opacity: 0.4; }
+
+        .nota-academica { font-size: 0.95rem; opacity: 0.5; margin-top: 20px; text-align: center; }
+
+        .falla-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-top: 20px; }
+        .falla-card {
+            background: rgba(255,255,255,0.08); padding: 22px 25px;
+            border-radius: 10px; border-left: 3px solid var(--verde-activo);
+        }
+        .bg-blanco .falla-card { background: rgba(16,54,226,0.05); border-left-color: var(--azul-impulso); }
+        .falla-card h4 { font-size: 1.15rem; font-weight: 600; margin-bottom: 8px; color: var(--verde-activo); }
+        .bg-blanco .falla-card h4 { color: var(--azul-impulso); }
+        .falla-card p { font-size: 1.1rem; margin-bottom: 0; opacity: 0.85; }
+
+        .inv-badge {
+            display: inline-block; padding: 8px 20px; border-radius: 25px;
+            font-size: 1rem; font-weight: 700; text-transform: uppercase;
+            letter-spacing: 2px; margin-bottom: 20px;
+        }
+        .inv-1 { background: #3B82F6; }
+        .inv-2 { background: #F59E0B; color: #000; }
+        .inv-3 { background: #8B5CF6; }
+        .inv-4 { background: #EC4899; }
+        .inv-5 { background: #EF4444; }
+        .inv-6 { background: #14B8A6; }
+
+        .topic-tags {
+            display: flex; flex-wrap: wrap; gap: 10px;
+            justify-content: center; margin-top: 20px;
+        }
+        .topic-tag {
+            background: rgba(255,255,255,0.15);
+            border: 1px solid rgba(255,255,255,0.3);
+            padding: 6px 16px; border-radius: 20px;
+            font-size: 0.95rem; font-weight: 500;
+        }
+        .bg-blanco .topic-tag {
+            background: rgba(16,54,226,0.08);
+            border-color: rgba(16,54,226,0.2);
+            color: var(--azul-respaldo);
+        }
+
+        .inv-cover-img {
+            width: 280px; height: 200px; object-fit: cover;
+            border-radius: 12px; margin: 0 auto 20px;
+            display: block;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+        }
+
+        .preview-box {
+            background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.2);
+            padding: 20px 25px; border-radius: 10px; margin-top: 25px; text-align: center;
+        }
+        .bg-blanco .preview-box { background: rgba(16,54,226,0.05); border-color: rgba(16,54,226,0.15); }
+        .preview-box .preview-label {
+            font-size: 0.85rem; font-weight: 600; text-transform: uppercase;
+            letter-spacing: 1px; opacity: 0.5; margin-bottom: 8px;
+        }
+        .preview-box p { font-size: 1.2rem; margin-bottom: 0; }
+
+        .versus {
+            display: grid; grid-template-columns: 1fr auto 1fr;
+            gap: 30px; align-items: start; margin: 30px 0;
+        }
+        .versus-center {
+            font-size: 2.5rem; font-weight: 700; text-align: center;
+            opacity: 0.3; padding-top: 40px;
+        }
+
+        .circulo { display: flex; flex-direction: column; align-items: center; gap: 12px; margin: 25px 0; }
+        .circulo-item { background: rgba(255,255,255,0.1); padding: 16px 35px; border-radius: 50px; font-size: 1.1rem; }
+        .circulo-arrow { font-size: 1.3rem; color: var(--verde-activo); }
+
+        .section-badge {
+            display: inline-block; background: var(--verde-activo); color: white;
+            font-size: 0.85rem; font-weight: 700; padding: 6px 16px;
+            border-radius: 20px; text-transform: uppercase;
+            letter-spacing: 1px; margin-bottom: 20px;
+        }
+        .bg-blanco .section-badge { background: var(--azul-impulso); }
+
+        .mapa-item {
+            display: flex; align-items: center; gap: 15px;
+            background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.12);
+            padding: 14px 20px; border-radius: 8px; margin-bottom: 10px;
+        }
+        .mapa-item .inv-dot {
+            width: 12px; height: 12px; border-radius: 50%; flex-shrink: 0;
+        }
+        .mapa-item span { font-size: 1.15rem; }
+
+        .nav-hint { position: fixed; bottom: 30px; right: 40px; font-size: 0.9rem; opacity: 0.5; }
+        .slide-counter { position: fixed; bottom: 30px; left: 40px; font-size: 0.9rem; opacity: 0.5; }
+
+        @media (max-width: 768px) {
+            .slide { padding: 40px 20px; }
+            h1 { font-size: 2.2rem; } .portada h1 { font-size: 2.4rem; }
+            h2 { font-size: 1.8rem; } h3 { font-size: 1.4rem; }
+            p, li { font-size: 1.2rem; }
+            .two-cols, .three-cols, .falla-grid { grid-template-columns: 1fr; gap: 20px; }
+            .stats-grid { grid-template-columns: 1fr; gap: 20px; }
+            .stat-numero { font-size: 3rem; } .big-number { font-size: 4rem; }
+            .flow-diagram { flex-direction: column; gap: 10px; }
+            .frase-final { font-size: 1.5rem; } .cita-grande { font-size: 1.6rem; }
+            blockquote { font-size: 1.3rem; }
+            .cita-paper .contenido { font-size: 1.1rem; }
+            .inv-cover-img { width: 200px; height: 140px; }
+            .versus { grid-template-columns: 1fr; gap: 15px; }
+            .versus-center { padding-top: 0; }
+        }
+    </style>
+</head>
+<body>
+    <div class="slide-container">
+
+        <!-- SLIDE 1 — Portada -->
+        <div class="slide bg-respaldo portada active">
+            <h1>6 inventos que explican<br>la <span class="highlight">Economía</span></h1>
+            <p class="subtitle">Aspectos Económicos del Diseño — FADU</p>
+            <p style="margin-top: 15px; font-size: 1.2rem; opacity: 0.5;">Basado en Tim Harford — <em>Fifty Inventions That Shaped the Modern Economy</em> (2017)</p>
+            <p style="margin-top: 40px; font-size: 1.2rem; opacity: 0.6;">Felipe Venancio</p>
+        </div>
+
+        <!-- SLIDE 2 — Intro quote + map -->
+        <div class="slide bg-impulso">
+            <blockquote>
+                "We don't notice how much inventions shape our lives, because we have so little idea of what life would be like without them."
+                <cite>— Tim Harford, <em>Fifty Inventions That Shaped the Modern Economy</em> (2017)</cite>
+            </blockquote>
+
+            <div style="margin-top: 30px;">
+                <div class="mapa-item">
+                    <div class="inv-dot" style="background: #3B82F6;"></div>
+                    <span><strong>1.</strong> El contenedor de carga (1956)</span>
+                </div>
+                <div class="mapa-item">
+                    <div class="inv-dot" style="background: #F59E0B;"></div>
+                    <span><strong>2.</strong> La estantería Billy de IKEA (1979)</span>
+                </div>
+                <div class="mapa-item">
+                    <div class="inv-dot" style="background: #8B5CF6;"></div>
+                    <span><strong>3.</strong> El plástico (1907)</span>
+                </div>
+                <div class="mapa-item">
+                    <div class="inv-dot" style="background: #EC4899;"></div>
+                    <span><strong>4.</strong> El iPhone (2007)</span>
+                </div>
+                <div class="mapa-item">
+                    <div class="inv-dot" style="background: #EF4444;"></div>
+                    <span><strong>5.</strong> La lamparita eléctrica (1879)</span>
+                </div>
+                <div class="mapa-item">
+                    <div class="inv-dot" style="background: #14B8A6;"></div>
+                    <span><strong>6.</strong> El sifón — S-bend (1775)</span>
+                </div>
+            </div>
+
+            <p style="margin-top: 25px; text-align: center; opacity: 0.85;">Cada invento esconde una lección de economía. Cada lección aparece en algún punto del curso.</p>
+        </div>
+
+        <!-- ============================================ -->
+        <!-- INVENTION 1: EL CONTENEDOR DE CARGA          -->
+        <!-- ============================================ -->
+
+        <!-- SLIDE 3 — Cover -->
+        <div class="slide bg-blanco" style="text-align: center;">
+            <span class="inv-badge inv-1">Invento 1</span>
+            <h2>El contenedor de carga</h2>
+            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/1c/MAERSK_MC_KINNEY_M%C3%96LLER_%26_MARSEILLE_MAERSK_%2848694054418%29.jpg/960px-MAERSK_MC_KINNEY_M%C3%96LLER_%26_MARSEILLE_MAERSK_%2848694054418%29.jpg" class="inv-cover-img" alt="Contenedores de carga">
+            <div class="topic-tags">
+                <span class="topic-tag">Ventajas comparativas</span>
+                <span class="topic-tag">Costos de transacción</span>
+                <span class="topic-tag">Cadenas globales de valor</span>
+                <span class="topic-tag">Comercio internacional</span>
+            </div>
+        </div>
+
+        <!-- SLIDE 4 — Before -->
+        <div class="slide bg-respaldo">
+            <span class="inv-badge inv-1">Invento 1</span>
+            <h2>Antes del contenedor</h2>
+            <p>En 1956, cargar y descargar un barco era un caos. Los estibadores cargaban cajas, bolsas y bultos de distinto tamaño a mano.</p>
+            <div class="stats-grid two-col">
+                <div class="stat-box">
+                    <div class="stat-numero">$5.86</div>
+                    <div class="stat-label">por tonelada — costo de carga manual (1956)</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-numero">Días</div>
+                    <div class="stat-label">para cargar un barco promedio</div>
+                </div>
+            </div>
+            <p style="margin-top: 25px;">El transporte costaba tanto que muchos productos simplemente no valía la pena comerciar. La distancia era una barrera económica brutal.</p>
+        </div>
+
+        <!-- SLIDE 5 — The invention -->
+        <div class="slide bg-blanco">
+            <span class="inv-badge inv-1">Invento 1</span>
+            <h2>Malcolm McLean y la caja</h2>
+            <p>McLean no era ingeniero ni académico. Era un camionero de Carolina del Norte que se cansó de esperar en el puerto.</p>
+            <p>Su idea fue simple: ¿y si en vez de descargar el camión y cargar el barco, subimos el camión entero?</p>
+            <div class="flow-diagram">
+                <div class="flow-box">Camión</div>
+                <div class="flow-arrow">→</div>
+                <div class="flow-box">Se estandariza la caja</div>
+                <div class="flow-arrow">→</div>
+                <div class="flow-box">Se rediseña el barco</div>
+                <div class="flow-arrow">→</div>
+                <div class="flow-box">Se rediseña el puerto</div>
+            </div>
+            <p>El costo de carga bajó de <strong>$5.86 a $0.16</strong> por tonelada. Una reducción del <strong>97%</strong>.</p>
+        </div>
+
+        <!-- SLIDE 6 — Economic concept -->
+        <div class="slide bg-respaldo">
+            <span class="inv-badge inv-1">Invento 1</span>
+            <h2>¿Por qué importa? Ventajas comparativas</h2>
+            <div class="cita-paper">
+                <div class="titulo">Estimating the effects of the container revolution on world trade</div>
+                <div class="autores">Bernhofen, El-Sahli & Kneller (2016) — <em>Journal of International Economics</em></div>
+                <div class="contenido">"La adopción del contenedor aumentó el comercio bilateral entre países en un 790% en 20 años. Fue más importante que todos los acuerdos de libre comercio combinados."</div>
+            </div>
+            <p>El contenedor hizo viable lo que Ricardo teorizó en 1817: que cada país se especialice en lo que hace mejor y comercie el resto.</p>
+            <div class="preview-box">
+                <div class="preview-label">Temas del curso</div>
+                <p>Ventajas comparativas (Ricardo), costos de transacción, cadenas globales de valor → <strong>Comercio Internacional</strong></p>
+            </div>
+        </div>
+
+        <!-- SLIDE 7 — Lesson for designers -->
+        <div class="slide bg-impulso">
+            <span class="inv-badge inv-1" style="background: rgba(255,255,255,0.2);">Invento 1</span>
+            <h2>La lección para diseñadores</h2>
+            <p>Si tu producto compite con uno fabricado en China, no es por culpa de China. Es porque una caja metálica estandarizada hizo que transportar algo de Shenzhen a Buenos Aires cueste menos que un taxi del centro a Ezeiza.</p>
+            <div class="concepto-box">
+                <h4>Para el diseñador:</h4>
+                <p style="margin-bottom: 0;">Entender la logística global no es opcional. Si diseñás un producto físico, el contenedor es la razón por la que tu competencia puede estar en cualquier lugar del planeta. Tu ventaja competitiva tiene que venir de otro lado: diferenciación, customización, diseño.</p>
+            </div>
+        </div>
+
+        <!-- ============================================ -->
+        <!-- INVENTION 2: LA ESTANTERÍA BILLY             -->
+        <!-- ============================================ -->
+
+        <!-- SLIDE 8 — Cover -->
+        <div class="slide bg-blanco" style="text-align: center;">
+            <span class="inv-badge inv-2">Invento 2</span>
+            <h2>La estantería Billy de IKEA</h2>
+            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/d/dd/IKEA_Billy_bookshelf_%2880x106_cm_birch_veneer%29.jpg/800px-IKEA_Billy_bookshelf_%2880x106_cm_birch_veneer%29.jpg" class="inv-cover-img" alt="Estantería Billy IKEA">
+            <div class="topic-tags">
+                <span class="topic-tag">Economías de escala</span>
+                <span class="topic-tag">Eficiencia</span>
+                <span class="topic-tag">División del trabajo</span>
+                <span class="topic-tag">Design for manufacturing</span>
+            </div>
+        </div>
+
+        <!-- SLIDE 9 — The numbers -->
+        <div class="slide bg-respaldo">
+            <span class="inv-badge inv-2">Invento 2</span>
+            <h2>Los números de Billy</h2>
+            <div class="stats-grid">
+                <div class="stat-box">
+                    <div class="stat-numero">100M+</div>
+                    <div class="stat-label">unidades vendidas</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-numero">1 cada 5 seg</div>
+                    <div class="stat-label">se vende una Billy en el mundo</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-numero">€49</div>
+                    <div class="stat-label">precio promedio actual</div>
+                </div>
+            </div>
+            <p style="margin-top: 30px;">Es el mueble más vendido de la historia. No porque sea el más lindo, sino porque Ingvar Kamprad entendió algo que la mayoría de los diseñadores ignora: <strong>el diseño del producto determina el costo de producción.</strong></p>
+        </div>
+
+        <!-- SLIDE 10 — How it works -->
+        <div class="slide bg-blanco">
+            <span class="inv-badge inv-2">Invento 2</span>
+            <h2>Flat-pack: el diseño como estrategia de costos</h2>
+            <div class="flow-diagram">
+                <div class="flow-box">Diseño modular</div>
+                <div class="flow-arrow">→</div>
+                <div class="flow-box">Paquete plano</div>
+                <div class="flow-arrow">→</div>
+                <div class="flow-box">↓ Costo de transporte</div>
+                <div class="flow-arrow">→</div>
+                <div class="flow-box">↓ Costo de almacén</div>
+                <div class="flow-arrow">→</div>
+                <div class="flow-box">↓ Precio final</div>
+            </div>
+            <p>IKEA no ensambla muebles: te transfiere a vos el costo de ensamblaje. Eso elimina la mano de obra más cara del proceso.</p>
+            <div class="concepto-box">
+                <h4>El insight de Kamprad</h4>
+                <p style="margin-bottom: 0;">Si el cliente puede armar el mueble, el mueble no necesita salir armado de la fábrica. Un paquete plano ocupa 1/6 del espacio de un mueble armado. Eso cambia toda la economía del negocio.</p>
+            </div>
+        </div>
+
+        <!-- SLIDE 11 — Economic concept -->
+        <div class="slide bg-respaldo">
+            <span class="inv-badge inv-2">Invento 2</span>
+            <h2>Economías de escala</h2>
+            <div class="cita-paper">
+                <div class="titulo">Scale Economies, Product Differentiation, and the Pattern of Trade</div>
+                <div class="autores">Krugman (1980) — <em>American Economic Review</em></div>
+                <div class="contenido">"Las economías de escala permiten que países relativamente similares se beneficien del comercio: cada uno se especializa en una variedad distinta del mismo producto y logra costos unitarios más bajos."</div>
+            </div>
+            <p>IKEA es el ejemplo perfecto: produce millones de unidades idénticas, distribuye globalmente, y ofrece un precio que ningún carpintero local puede igualar. Adam Smith lo describió en 1776 con la fábrica de alfileres: la división del trabajo multiplicaba la productividad.</p>
+            <div class="preview-box">
+                <div class="preview-label">Temas del curso</div>
+                <p>Economías de escala, división del trabajo (Smith), eficiencia productiva → <strong>Introducción a la Economía · Comercio Internacional</strong></p>
+            </div>
+        </div>
+
+        <!-- SLIDE 12 — Lesson for designers -->
+        <div class="slide bg-verde">
+            <span class="inv-badge inv-2" style="background: rgba(255,255,255,0.2);">Invento 2</span>
+            <h2>La lección para diseñadores</h2>
+            <p>Billy nos enseña que el diseño más exitoso no es el más bello: es el que resuelve el problema de producción, logística y precio simultáneamente.</p>
+            <div class="two-cols">
+                <div class="concepto-box">
+                    <h4>Lo que IKEA hizo bien</h4>
+                    <p style="margin-bottom: 0;">Diseñó el producto pensando en la fábrica, el camión y el departamento del cliente. El diseño ES la estrategia de costos.</p>
+                </div>
+                <div class="concepto-box">
+                    <h4>Lo que el diseñador debe preguntarse</h4>
+                    <p style="margin-bottom: 0;">¿Cómo se fabrica esto? ¿Cómo se transporta? ¿Cómo se almacena? ¿Quién lo ensambla? Si no tenés respuesta, el diseño no está terminado.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- ============================================ -->
+        <!-- INVENTION 3: EL PLÁSTICO                     -->
+        <!-- ============================================ -->
+
+        <!-- SLIDE 13 — Cover -->
+        <div class="slide bg-blanco" style="text-align: center;">
+            <span class="inv-badge inv-3">Invento 3</span>
+            <h2>El plástico</h2>
+            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/0d/Black_telephone.jpg/960px-Black_telephone.jpg" class="inv-cover-img" alt="Teléfono de baquelita">
+            <div class="topic-tags">
+                <span class="topic-tag">Externalidades</span>
+                <span class="topic-tag">Impuesto pigouviano</span>
+                <span class="topic-tag">Tragedia de los comunes</span>
+                <span class="topic-tag">Política fiscal</span>
+            </div>
+        </div>
+
+        <!-- SLIDE 14 — The revolution -->
+        <div class="slide bg-respaldo">
+            <span class="inv-badge inv-3">Invento 3</span>
+            <h2>El material que democratizó el diseño</h2>
+            <p>En 1907, Leo Baekeland inventó la baquelita: el primer plástico totalmente sintético.</p>
+            <p>Antes del plástico, los objetos cotidianos eran de madera, metal, vidrio o cerámica. Caros, pesados, frágiles.</p>
+            <div class="two-cols">
+                <div class="concepto-box">
+                    <h4>Antes del plástico</h4>
+                    <p style="margin-bottom: 0;">Un peine de carey costaba lo que un día de trabajo. Un teléfono pesaba 5 kg. Un juguete era un lujo.</p>
+                </div>
+                <div class="concepto-box">
+                    <h4>Después del plástico</h4>
+                    <p style="margin-bottom: 0;">Objetos livianos, baratos, moldeables en cualquier forma. El diseño industrial explotó: de repente se podía diseñar para millones, no para pocos.</p>
+                </div>
+            </div>
+            <p style="margin-top: 20px;">El plástico fue la gran democratización del diseño.</p>
+        </div>
+
+        <!-- SLIDE 15 — The externality -->
+        <div class="slide bg-blanco">
+            <span class="inv-badge inv-3">Invento 3</span>
+            <h2>La factura</h2>
+            <div class="stats-grid">
+                <div class="stat-box">
+                    <div class="stat-numero">400M ton</div>
+                    <div class="stat-label">de plástico producidas por año</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-numero">8M ton</div>
+                    <div class="stat-label">terminan en el océano cada año</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-numero">500 años</div>
+                    <div class="stat-label">tarda en degradarse una botella PET</div>
+                </div>
+            </div>
+            <p style="margin-top: 25px;">Nadie anticipó esto. El precio del plástico nunca incluyó el costo de su descarte. Los economistas llaman a esto una <strong>externalidad negativa</strong>.</p>
+            <p class="nota-academica">Fuente: Jambeck et al. (2015) — "Plastic waste inputs from land into the ocean" — <em>Science</em>, 347(6223)</p>
+        </div>
+
+        <!-- SLIDE 16 — Economic concept -->
+        <div class="slide bg-respaldo">
+            <span class="inv-badge inv-3">Invento 3</span>
+            <h2>Pigou y las externalidades</h2>
+            <div class="cita-paper">
+                <div class="titulo">The Economics of Welfare</div>
+                <div class="autores">Pigou, A.C. (1920) — <em>Cambridge University Press</em></div>
+                <div class="contenido">"Cuando la actividad de un agente económico genera costos (o beneficios) sobre terceros que no se reflejan en el precio de mercado, el resultado de mercado es ineficiente. Se produce demasiado del bien que contamina y muy poco del que beneficia."</div>
+            </div>
+            <p>Pigou propuso la solución más elegante: un impuesto que iguale el costo privado al costo social. Si contaminar cuesta, contaminás menos. El impuesto pigouviano no prohíbe: encarece.</p>
+            <div class="preview-box">
+                <div class="preview-label">Temas del curso</div>
+                <p>Externalidades, impuesto pigouviano, costo social vs. costo privado → <strong>Introducción a la Economía · Política Fiscal</strong></p>
+            </div>
+        </div>
+
+        <!-- SLIDE 17 — Lesson for designers -->
+        <div class="slide bg-impulso">
+            <span class="inv-badge inv-3" style="background: rgba(255,255,255,0.2);">Invento 3</span>
+            <h2>La lección para diseñadores</h2>
+            <p>Cada material que elegís tiene un precio visible y un costo invisible. El plástico es barato en la góndola pero carísimo en el océano.</p>
+            <div class="concepto-box">
+                <h4>La decisión de diseño</h4>
+                <p style="margin-bottom: 0;">Cuando elegís un material, no estás eligiendo solo una propiedad física. Estás eligiendo una cadena de producción, un costo de descarte y una externalidad. El diseñador que entiende esto diseña mejor — y puede argumentar frente al cliente por qué el material sustentable vale más.</p>
+            </div>
+            <p>La pregunta no es "¿cuánto cuesta?" sino "¿quién paga lo que cuesta?"</p>
+        </div>
+
+        <!-- ============================================ -->
+        <!-- INVENTION 4: EL IPHONE                       -->
+        <!-- ============================================ -->
+
+        <!-- SLIDE 18 — Cover -->
+        <div class="slide bg-blanco" style="text-align: center;">
+            <span class="inv-badge inv-4">Invento 4</span>
+            <h2>El iPhone</h2>
+            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/ad/IPhone_1st_Gen.svg/250px-IPhone_1st_Gen.svg.png" class="inv-cover-img" style="object-fit: contain; background: white;" alt="iPhone primera generación">
+            <div class="topic-tags">
+                <span class="topic-tag">Competencia imperfecta</span>
+                <span class="topic-tag">Poder de mercado</span>
+                <span class="topic-tag">Economías de red</span>
+                <span class="topic-tag">Diferenciación</span>
+            </div>
+        </div>
+
+        <!-- SLIDE 19 — The paradox -->
+        <div class="slide bg-respaldo">
+            <span class="inv-badge inv-4">Invento 4</span>
+            <h2>El mismo chip, 10 veces el margen</h2>
+            <p>En 2007, Steve Jobs presentó un teléfono que no tenía teclado, no tenía la mejor cámara, y costaba el doble que la competencia.</p>
+            <div class="stats-grid">
+                <div class="stat-box">
+                    <div class="stat-numero">87%</div>
+                    <div class="stat-label">del beneficio global de smartphones lo captura Apple (2024)</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-numero">~18%</div>
+                    <div class="stat-label">del mercado en unidades vendidas</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-numero">~$2.000</div>
+                    <div class="stat-label">beneficio promedio por iPhone vendido</div>
+                </div>
+            </div>
+            <p style="margin-top: 25px;">Samsung vende más teléfonos. Xiaomi vende más baratos. Pero Apple se lleva casi todo el beneficio. ¿Cómo es posible?</p>
+        </div>
+
+        <!-- SLIDE 20 — Platform economics -->
+        <div class="slide bg-blanco">
+            <span class="inv-badge inv-4">Invento 4</span>
+            <h2>Economía de plataformas</h2>
+            <p>El iPhone no es un teléfono. Es una plataforma. Y las plataformas tienen una economía muy distinta:</p>
+            <div class="flow-diagram">
+                <div class="flow-box">Más usuarios</div>
+                <div class="flow-arrow">→</div>
+                <div class="flow-box">Más apps</div>
+                <div class="flow-arrow">→</div>
+                <div class="flow-box">Más usuarios</div>
+                <div class="flow-arrow">→</div>
+                <div class="flow-box">Más datos</div>
+                <div class="flow-arrow">→</div>
+                <div class="flow-box">Mejor experiencia</div>
+            </div>
+            <p>Este ciclo se llama <strong>economía de red</strong>: cuanta más gente usa la plataforma, más valiosa se vuelve para cada usuario. El resultado: el ganador se lleva (casi) todo.</p>
+            <div class="concepto-box">
+                <h4>Lock-in</h4>
+                <p style="margin-bottom: 0;">Una vez que compraste apps, música, y tenés tus fotos en iCloud, cambiarte a Android tiene un costo enorme. Apple no te obliga a quedarte — pero el costo de irte es altísimo. En economía, eso se llama <em>switching costs</em>.</p>
+            </div>
+        </div>
+
+        <!-- SLIDE 21 — Economic concept -->
+        <div class="slide bg-respaldo">
+            <span class="inv-badge inv-4">Invento 4</span>
+            <h2>Tirole y los mercados de dos lados</h2>
+            <div class="cita-paper">
+                <div class="titulo">Platform Competition in Two-Sided Markets</div>
+                <div class="autores">Rochet, J.C. & Tirole, J. (2003) — <em>Journal of the European Economic Association</em></div>
+                <div class="contenido">"Una plataforma conecta dos grupos que se necesitan mutuamente (usuarios y desarrolladores, compradores y vendedores). El precio óptimo no es el costo marginal de cada lado, sino el que maximiza la participación del lado que genera más valor para el otro."</div>
+            </div>
+            <p>Tirole (Nobel 2014) explicó por qué Apple puede cobrar 30% de comisión en la App Store: los desarrolladores necesitan a los usuarios, y los usuarios necesitan las apps. Apple controla el punto de encuentro.</p>
+            <div class="preview-box">
+                <div class="preview-label">Temas del curso</div>
+                <p>Competencia imperfecta, poder de mercado, monopolio natural, diferenciación → <strong>Introducción a la Economía</strong></p>
+            </div>
+        </div>
+
+        <!-- SLIDE 22 — Lesson for designers -->
+        <div class="slide bg-verde">
+            <span class="inv-badge inv-4" style="background: rgba(255,255,255,0.2);">Invento 4</span>
+            <h2>La lección para diseñadores</h2>
+            <p>Apple demostró que el diseño no es decoración: es la razón por la que podés cobrar el doble por el mismo procesador.</p>
+            <div class="two-cols">
+                <div class="concepto-box">
+                    <h4>Diseño como diferenciación</h4>
+                    <p style="margin-bottom: 0;">En un mercado donde el hardware se comoditizó, el diseño es lo único que separa un iPhone de un teléfono de $200. La diferenciación por diseño es la fuente de poder de mercado más legítima que existe.</p>
+                </div>
+                <div class="concepto-box">
+                    <h4>El ecosistema como moat</h4>
+                    <p style="margin-bottom: 0;">Jobs no diseñó un producto: diseñó un ecosistema. iTunes, App Store, iCloud — cada pieza hace más costoso irse. El diseñador que piensa en sistemas, no solo en objetos, crea valor exponencial.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- ============================================ -->
+        <!-- INVENTION 5: LA LAMPARITA ELÉCTRICA          -->
+        <!-- ============================================ -->
+
+        <!-- SLIDE 23 — Cover -->
+        <div class="slide bg-blanco" style="text-align: center;">
+            <span class="inv-badge inv-5">Invento 5</span>
+            <h2>La lamparita eléctrica</h2>
+            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/b4/Gluehlampe_01_KMJ.png/800px-Gluehlampe_01_KMJ.png" class="inv-cover-img" style="object-fit: contain; background: white;" alt="Lamparita incandescente">
+            <div class="topic-tags">
+                <span class="topic-tag">Incentivos</span>
+                <span class="topic-tag">Colusión y carteles</span>
+                <span class="topic-tag">Competencia imperfecta</span>
+                <span class="topic-tag">Obsolescencia programada</span>
+            </div>
+        </div>
+
+        <!-- SLIDE 24 — Edison -->
+        <div class="slide bg-respaldo">
+            <span class="inv-badge inv-5">Invento 5</span>
+            <h2>Edison y la promesa de la durabilidad</h2>
+            <p>En 1879, Thomas Edison presentó una lamparita que duraba 1.200 horas. Para 1924, la tecnología permitía fabricar lamparitas que duraran 2.500 horas o más.</p>
+            <p>Pero algo extraño pasó: en vez de durar más, empezaron a durar menos.</p>
+            <div class="concepto-box">
+                <h4>El dato</h4>
+                <p style="margin-bottom: 0;">En los años 20, las lamparitas duraban en promedio 2.500 horas. Para 1940, duraban exactamente 1.000. No fue un accidente.</p>
+            </div>
+        </div>
+
+        <!-- SLIDE 25 — Phoebus cartel -->
+        <div class="slide bg-blanco">
+            <span class="inv-badge inv-5">Invento 5</span>
+            <h2>El cartel Phoebus (1924)</h2>
+            <p>En 1924, los principales fabricantes del mundo — GE, Osram, Philips, Tungsram — firmaron un acuerdo secreto:</p>
+            <div class="falla-grid">
+                <div class="falla-card">
+                    <h4>Limitar la vida útil</h4>
+                    <p>Toda lamparita debía durar máximo 1.000 horas. El fabricante que superara ese límite recibía una multa.</p>
+                </div>
+                <div class="falla-card">
+                    <h4>Repartir mercados</h4>
+                    <p>Cada empresa tenía territorios asignados. No competían entre sí. Controlaban precios y cantidades.</p>
+                </div>
+            </div>
+            <p style="margin-top: 20px;">Es el caso más documentado de obsolescencia programada de la historia. Un cartel diseñó un producto para que falle.</p>
+            <p style="opacity: 0.7; font-size: 1.2rem;">El cartel funcionó hasta 1939, cuando la guerra lo disolvió.</p>
+        </div>
+
+        <!-- SLIDE 26 — Economic concept -->
+        <div class="slide bg-respaldo">
+            <span class="inv-badge inv-5">Invento 5</span>
+            <h2>Bulow y la obsolescencia planificada</h2>
+            <div class="cita-paper">
+                <div class="titulo">An Economic Theory of Planned Obsolescence</div>
+                <div class="autores">Bulow, J. (1986) — <em>Quarterly Journal of Economics</em></div>
+                <div class="contenido">"Un monopolista tiene incentivos a fabricar productos que duren menos de lo técnicamente posible. Si el producto dura para siempre, el mercado se satura y las ventas futuras se desploman. La obsolescencia planificada es una consecuencia lógica del poder de mercado, no un defecto moral."</div>
+            </div>
+            <p>Bulow formalizó lo que Phoebus hizo en la práctica: si controlás el mercado, te conviene que el producto se rompa. La competencia perfecta resolvería esto — otro fabricante ofrecería una lamparita que dure más. Pero si todos los fabricantes se coluden, el consumidor pierde.</p>
+            <div class="preview-box">
+                <div class="preview-label">Temas del curso</div>
+                <p>Incentivos, colusión, competencia imperfecta, poder de mercado → <strong>Introducción a la Economía</strong></p>
+            </div>
+        </div>
+
+        <!-- SLIDE 27 — Lesson for designers -->
+        <div class="slide bg-impulso">
+            <span class="inv-badge inv-5" style="background: rgba(255,255,255,0.2);">Invento 5</span>
+            <h2>La lección para diseñadores</h2>
+            <p>La lamparita plantea la pregunta más incómoda del diseño industrial:</p>
+            <p class="cita-grande" style="font-size: 2rem; color: white;">¿Diseñás para que dure o para que se reemplace?</p>
+            <p style="margin-top: 30px;">No es solo ética — es economía. La obsolescencia programada funciona cuando hay poder de mercado. En competencia, el que diseña para que dure gana al que diseña para que falle. La respuesta depende de la estructura del mercado, no de la moral del diseñador.</p>
+        </div>
+
+        <!-- ============================================ -->
+        <!-- INVENTION 6: EL S-BEND / SIFÓN              -->
+        <!-- ============================================ -->
+
+        <!-- SLIDE 28 — Cover -->
+        <div class="slide bg-blanco" style="text-align: center;">
+            <span class="inv-badge inv-6">Invento 6</span>
+            <h2>El sifón (S-bend)</h2>
+            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/86/Annotated_plumbing_trap.jpg/800px-Annotated_plumbing_trap.jpg" class="inv-cover-img" alt="Sifón de plomería">
+            <div class="topic-tags">
+                <span class="topic-tag">Bienes públicos</span>
+                <span class="topic-tag">Externalidades positivas</span>
+                <span class="topic-tag">Rol del Estado</span>
+                <span class="topic-tag">Política fiscal</span>
+            </div>
+        </div>
+
+        <!-- SLIDE 29 — The problem -->
+        <div class="slide bg-respaldo">
+            <span class="inv-badge inv-6">Invento 6</span>
+            <h2>Londres, 1858: The Great Stink</h2>
+            <p>En el verano de 1858, el olor del Támesis era tan insoportable que el Parlamento británico tuvo que suspender sesiones. El río era una cloaca a cielo abierto.</p>
+            <div class="stats-grid two-col">
+                <div class="stat-box">
+                    <div class="stat-numero">31.000</div>
+                    <div class="stat-label">muertos en las epidemias de cólera de Londres (1831-1866)</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-numero">0</div>
+                    <div class="stat-label">inversión privada en saneamiento — nadie tenía incentivo individual</div>
+                </div>
+            </div>
+            <p style="margin-top: 25px;">El problema era simple: las aguas residuales se mezclaban con el agua potable. Pero ningún individuo tenía incentivo a resolver el problema solo. Si yo limpio mi parte del río y mi vecino no, el río sigue contaminado.</p>
+        </div>
+
+        <!-- SLIDE 30 — The invention -->
+        <div class="slide bg-blanco">
+            <span class="inv-badge inv-6">Invento 6</span>
+            <h2>Alexander Cumming y la trampa de agua</h2>
+            <p>El S-bend (1775) es un tubo con forma de S que retiene agua y bloquea el paso de gases de la cloaca hacia la casa.</p>
+            <p>Es una tecnología absurdamente simple. Pero necesitaba algo que ningún individuo podía proveer solo:</p>
+            <div class="flow-diagram">
+                <div class="flow-box">S-bend en cada casa</div>
+                <div class="flow-arrow">→</div>
+                <div class="flow-box">Red cloacal conectada</div>
+                <div class="flow-arrow">→</div>
+                <div class="flow-box">Planta de tratamiento</div>
+                <div class="flow-arrow">→</div>
+                <div class="flow-box">Río limpio</div>
+            </div>
+            <p>Sin la red pública, el S-bend no sirve. Sin el S-bend, la red no funciona. Es un sistema que solo tiene sentido si es universal — y eso requiere al Estado.</p>
+        </div>
+
+        <!-- SLIDE 31 — Economic concept -->
+        <div class="slide bg-respaldo">
+            <span class="inv-badge inv-6">Invento 6</span>
+            <h2>Bienes públicos y el rol del Estado</h2>
+            <div class="cita-paper">
+                <div class="titulo">The Role of Public Health Improvements in Health Advances: The Twentieth-Century United States</div>
+                <div class="autores">Cutler, D. & Miller, G. (2005) — <em>Demography</em>, 42(1)</div>
+                <div class="contenido">"Las mejoras en saneamiento y agua potable explican aproximadamente la mitad de la reducción de la mortalidad en las ciudades de EE.UU. entre 1900 y 1940. Más que los antibióticos. Más que los hospitales."</div>
+            </div>
+            <p>El saneamiento es un bien público clásico: no es excluible (no podés impedir que tu vecino se beneficie de un río limpio) y no es rival (que yo disfrute del agua limpia no reduce la cantidad disponible para vos).</p>
+            <p>Ningún privado tiene incentivo a proveerlo porque no puede cobrar por él. Solo el Estado puede resolver esto — con impuestos y obra pública. Es el argumento más fuerte a favor de la intervención estatal.</p>
+            <div class="preview-box">
+                <div class="preview-label">Temas del curso</div>
+                <p>Bienes públicos, externalidades positivas, gasto público, impuestos → <strong>Introducción a la Economía · Política Fiscal</strong></p>
+            </div>
+        </div>
+
+        <!-- SLIDE 32 — Lesson for designers -->
+        <div class="slide bg-verde">
+            <span class="inv-badge inv-6" style="background: rgba(255,255,255,0.2);">Invento 6</span>
+            <h2>La lección para diseñadores</h2>
+            <p>El S-bend es el invento más subestimado de la historia. No ganó premios de diseño. Nadie lo exhibe en un museo. Pero salvó más vidas que la penicilina.</p>
+            <div class="concepto-box">
+                <h4>La infraestructura invisible</h4>
+                <p style="margin-bottom: 0;">Gran parte del diseño más importante es invisible: redes cloacales, cableado eléctrico, señalética de emergencia, estándares de accesibilidad. Nadie lo nota cuando funciona. Todos lo notan cuando falla.</p>
+            </div>
+            <p>El mercado no premia la infraestructura invisible porque nadie quiere pagar por lo que no ve. Por eso existe el Estado. Y por eso un diseñador que entiende bienes públicos entiende dónde su trabajo puede tener más impacto — aunque nadie lo aplauda.</p>
+        </div>
+
+        <!-- SLIDE 33 — Cierre -->
+        <div class="slide bg-respaldo portada">
+            <h2>6 inventos, una idea en común</h2>
+            <p class="frase-final" style="margin-top: 30px;">Detrás de cada objeto hay un <em>incentivo</em>, un <em>mercado</em>, una <em>decisión</em> y una <em>consecuencia</em>.<br><br>Entender eso es entender economía.<br>Y entender economía es diseñar mejor.</p>
+            <p style="margin-top: 50px; font-size: 1.2rem; opacity: 0.6;">Felipe Venancio — Aspectos Económicos del Diseño — FADU</p>
+        </div>
+
+    </div>
+
+    <div class="slide-counter"><span id="current">1</span> / <span id="total">33</span></div>
+    <div class="nav-hint">← → para navegar | F para pantalla completa</div>
+
+    <script>
+        const slides = document.querySelectorAll('.slide');
+        let currentSlide = 0;
+        const total = slides.length;
+        document.getElementById('total').textContent = total;
+        function showSlide(n) {
+            slides[currentSlide].classList.remove('active');
+            currentSlide = (n + total) % total;
+            slides[currentSlide].classList.add('active');
+            document.getElementById('current').textContent = currentSlide + 1;
+        }
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowRight' || e.key === ' ' || e.key === 'Enter') {
+                showSlide(currentSlide + 1);
+            } else if (e.key === 'ArrowLeft') {
+                showSlide(currentSlide - 1);
+            } else if (e.key === 'Home') {
+                showSlide(0);
+            } else if (e.key === 'End') {
+                showSlide(total - 1);
+            } else if (e.key === 'f' || e.key === 'F') {
+                if (!document.fullscreenElement) {
+                    document.documentElement.requestFullscreen();
+                } else {
+                    document.exitFullscreen();
+                }
+            }
+        });
+        let touchStartX = 0;
+        document.addEventListener('touchstart', (e) => {
+            touchStartX = e.touches[0].clientX;
+        });
+        document.addEventListener('touchend', (e) => {
+            const touchEndX = e.changedTouches[0].clientX;
+            const diff = touchStartX - touchEndX;
+            if (Math.abs(diff) > 50) {
+                if (diff > 0) showSlide(currentSlide + 1);
+                else showSlide(currentSlide - 1);
+            }
+        });
+        document.addEventListener('click', (e) => {
+            if (e.target.tagName === 'A' || e.target.tagName === 'BUTTON') return;
+            if (e.clientX > window.innerWidth / 2) {
+                showSlide(currentSlide + 1);
+            } else {
+                showSlide(currentSlide - 1);
+            }
+        });
+    </script>
+</body>
+</html>
