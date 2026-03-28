@@ -1,0 +1,578 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>5 Discusiones para Empezar — PARA PROYECTAR — Economía — Felipe Venancio</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Albert+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --azul-impulso: #1036E2;
+            --verde-activo: #00C600;
+            --azul-respaldo: #021751;
+            --blanco: #FFFFFF;
+            --negro: #000000;
+            --rojo-alerta: #DC2626;
+            --amarillo: #F59E0B;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Albert Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--azul-respaldo);
+            color: var(--blanco);
+            overflow: hidden;
+        }
+
+        .slide-container {
+            width: 100vw; height: 100vh;
+            display: flex; align-items: center; justify-content: center;
+        }
+
+        .slide {
+            display: none; width: 100%; height: 100%;
+            padding: 60px 100px; flex-direction: column; justify-content: center;
+        }
+        .slide.active { display: flex; }
+
+        .bg-respaldo { background: var(--azul-respaldo); color: var(--blanco); }
+        .bg-impulso { background: var(--azul-impulso); color: var(--blanco); }
+        .bg-verde { background: var(--verde-activo); color: var(--blanco); }
+        .bg-blanco { background: var(--blanco); color: var(--azul-respaldo); }
+
+        h1 { font-size: 5rem; font-weight: 700; line-height: 1.1; margin-bottom: 30px; }
+        h2 { font-size: 3.5rem; font-weight: 600; margin-bottom: 25px; }
+        h3 { font-size: 2.2rem; font-weight: 500; margin-bottom: 20px; opacity: 0.9; }
+        p, li { font-size: 1.8rem; line-height: 1.5; margin-bottom: 15px; }
+        .subtitle { font-size: 2rem; opacity: 0.8; font-weight: 400; }
+        .highlight { color: var(--verde-activo); }
+        .bg-blanco .highlight { color: var(--azul-impulso); }
+        .highlight-red { color: var(--rojo-alerta); }
+
+        blockquote {
+            font-size: 2rem; font-style: italic;
+            border-left: 4px solid var(--verde-activo);
+            padding-left: 30px; margin: 25px 0; opacity: 0.95;
+        }
+        blockquote cite {
+            display: block; font-size: 1.3rem; margin-top: 12px;
+            font-style: normal; opacity: 0.7;
+        }
+
+        ul { list-style: none; padding-left: 0; }
+        ul li { padding-left: 40px; position: relative; margin-bottom: 18px; }
+        ul li::before {
+            content: "▸"; position: absolute; left: 0;
+            color: var(--verde-activo); font-size: 1.8rem;
+        }
+        .bg-verde ul li::before, .bg-impulso ul li::before { color: var(--blanco); }
+
+        .two-cols { display: grid; grid-template-columns: 1fr 1fr; gap: 50px; margin-top: 25px; }
+        .three-cols { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 30px; margin-top: 25px; }
+
+        .portada { text-align: center; }
+        .portada h1 { font-size: 5.5rem; margin-bottom: 20px; }
+
+        .big-number { font-size: 9rem; font-weight: 800; color: var(--verde-activo); line-height: 1; }
+        .bg-blanco .big-number { color: var(--azul-impulso); }
+
+        .stat-box { text-align: center; padding: 25px; }
+        .stat-numero { font-size: 6rem; font-weight: 800; color: var(--verde-activo); line-height: 1; }
+        .bg-blanco .stat-numero { color: var(--azul-impulso); }
+        .stat-label { font-size: 1.4rem; opacity: 0.8; margin-top: 10px; }
+        .stats-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 35px; margin-top: 35px; }
+
+        .concepto-box {
+            background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.15);
+            padding: 25px; border-radius: 12px; margin: 15px 0;
+        }
+        .bg-blanco .concepto-box { background: rgba(16,54,226,0.03); border-color: rgba(16,54,226,0.15); }
+        .concepto-box h4 { font-size: 1.5rem; font-weight: 600; margin-bottom: 12px; color: var(--verde-activo); }
+        .bg-blanco .concepto-box h4 { color: var(--azul-impulso); }
+        .concepto-box p { font-size: 1.4rem; }
+
+        .flow-diagram { display: flex; align-items: center; justify-content: center; gap: 15px; margin: 35px 0; flex-wrap: wrap; }
+        .flow-box { background: rgba(255,255,255,0.1); padding: 25px 35px; border-radius: 10px; font-size: 1.5rem; font-weight: 500; text-align: center; }
+        .bg-blanco .flow-box { background: rgba(16,54,226,0.1); }
+        .flow-arrow { font-size: 2.2rem; color: var(--verde-activo); }
+
+        .bar-chart { margin: 35px 0; }
+        .bar-row { display: flex; align-items: center; margin-bottom: 18px; }
+        .bar-label { width: 200px; font-size: 1.4rem; font-weight: 500; }
+        .bar-container { flex: 1; height: 42px; background: rgba(255,255,255,0.1); border-radius: 5px; overflow: hidden; margin: 0 20px; }
+        .bg-blanco .bar-container { background: rgba(0,0,0,0.05); }
+        .bar { height: 100%; background: var(--verde-activo); border-radius: 5px; display: flex; align-items: center; justify-content: flex-end; padding-right: 15px; font-weight: 600; font-size: 1.4rem; color: white; }
+        .bar.azul { background: var(--azul-impulso); }
+        .bar.rojo { background: var(--rojo-alerta); }
+
+        .frase-final { font-size: 2.5rem; line-height: 1.5; text-align: center; max-width: 1000px; margin: 0 auto; }
+        .frase-final em { color: var(--verde-activo); font-style: normal; }
+
+        .cita-grande { font-size: 2.8rem; font-style: italic; line-height: 1.4; text-align: center; max-width: 950px; margin: 0 auto; padding: 0 20px; }
+        .cita-grande .autor { display: block; font-size: 1.4rem; font-style: normal; margin-top: 25px; opacity: 0.6; font-weight: 500; }
+        .cita-grande .traduccion { display: block; font-size: 1.4rem; font-style: normal; margin-top: 10px; opacity: 0.4; }
+
+        .disc-badge {
+            display: inline-block; padding: 8px 20px; border-radius: 25px;
+            font-size: 1rem; font-weight: 700; text-transform: uppercase;
+            letter-spacing: 2px; margin-bottom: 20px;
+        }
+        .disc-1 { background: #3B82F6; }
+        .disc-2 { background: #8B5CF6; }
+        .disc-3 { background: #EF4444; }
+        .disc-4 { background: #F59E0B; color: #000; }
+        .disc-5 { background: #EC4899; }
+
+        .preview-box {
+            background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.2);
+            padding: 20px 25px; border-radius: 10px; margin-top: 25px; text-align: center;
+        }
+        .bg-blanco .preview-box { background: rgba(16,54,226,0.05); border-color: rgba(16,54,226,0.15); }
+        .preview-box .preview-label {
+            font-size: 1.3rem; font-weight: 600; text-transform: uppercase;
+            letter-spacing: 1px; opacity: 0.5; margin-bottom: 8px;
+        }
+        .preview-box p { font-size: 1.4rem; margin-bottom: 0; }
+
+        .nav-hint { position: fixed; bottom: 30px; right: 40px; font-size: 0.9rem; opacity: 0.5; }
+        .slide-counter { position: fixed; bottom: 30px; left: 40px; font-size: 0.9rem; opacity: 0.5; }
+
+        /* Mapa visual del curso */
+        .mapa-item {
+            display: flex; align-items: center; gap: 15px;
+            background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.12);
+            padding: 14px 20px; border-radius: 8px; margin-bottom: 10px;
+        }
+        .mapa-item .disc-dot {
+            width: 14px; height: 14px; border-radius: 50%; flex-shrink: 0;
+        }
+        .mapa-item span { font-size: 1.5rem; }
+
+        /* Circulo items */
+        .circulo-item { font-size: 1.4rem; padding: 20px 40px; }
+
+        /* Formula */
+        .formula { font-size: 2.5rem; }
+
+        /* Section badge */
+        .section-badge { font-size: 1rem; padding: 8px 20px; }
+
+        /* Falla card */
+        .falla-card h4 { font-size: 1.4rem; }
+        .falla-card p { font-size: 1.3rem; }
+
+        /* Reference style (replaces nota-academica) */
+        .ref-small { font-size: 1.4rem; opacity: 0.5; margin-top: 15px; text-align: center; }
+
+        @media (max-width: 768px) {
+            .slide { padding: 40px 20px; }
+            h1 { font-size: 2.4rem; } .portada h1 { font-size: 2.6rem; }
+            h2 { font-size: 2rem; } h3 { font-size: 1.6rem; }
+            p, li { font-size: 1.3rem; }
+            .two-cols, .three-cols { grid-template-columns: 1fr; gap: 20px; }
+            .stats-grid { grid-template-columns: 1fr; gap: 20px; }
+            .stat-numero { font-size: 3.5rem; } .big-number { font-size: 5rem; }
+            .flow-diagram { flex-direction: column; gap: 10px; }
+            .frase-final { font-size: 1.8rem; } .cita-grande { font-size: 1.8rem; }
+            .bar-label { width: 100px; font-size: 1.3rem; }
+            .bar .bar-value { font-size: 1.3rem; }
+            blockquote { font-size: 1.5rem; }
+            .mapa-item span { font-size: 1.3rem; }
+            .preview-box p { font-size: 1.3rem; }
+            .concepto-box p { font-size: 1.3rem; }
+            .concepto-box h4 { font-size: 1.3rem; }
+            .flow-box { font-size: 1.3rem; }
+        }
+    </style>
+</head>
+<body>
+    <div class="slide-container">
+
+        <!-- SLIDE 1: PORTADA -->
+        <div class="slide active bg-respaldo portada">
+            <h1>5 discusiones<br>para empezar a pensar<br><span class="highlight">Economía</span></h1>
+            <p class="subtitle">Presentación del curso — PARA PROYECTAR</p>
+            <p style="margin-top: 40px; font-size: 1.5rem; opacity: 0.6;">Felipe Venancio</p>
+        </div>
+
+        <!-- SLIDE 2: KEYNES + PROPÓSITO -->
+        <div class="slide bg-impulso">
+            <div class="cita-grande" style="margin-top: 10px;">
+                "The ideas of economists and political philosophers, both when they are right and when they are wrong, are more powerful than is commonly understood. Indeed, the world is ruled by little else."
+                <span class="autor">John Maynard Keynes — <em>The General Theory</em> (1936)</span>
+                <span class="traduccion">"Las ideas de los economistas y filósofos políticos, tanto cuando aciertan como cuando se equivocan, son más poderosas de lo que comúnmente se entiende. En verdad, el mundo está gobernado por poco más que eso."</span>
+            </div>
+        </div>
+
+        <!-- SLIDE 2B: PROPÓSITO DEL CURSO -->
+        <div class="slide bg-impulso">
+            <h2 style="text-align: center;">En este curso no van a memorizar definiciones.</h2>
+            <p style="text-align: center; font-size: 2.5rem; margin-top: 30px;">Van a aprender a <strong>pensar problemas</strong>.</p>
+        </div>
+
+        <!-- SLIDE 3: HA-JOON CHANG -->
+        <div class="slide bg-blanco">
+            <div class="cita-grande" style="color: var(--azul-respaldo);">
+                "Economics is too important to be left to economists."
+                <span class="autor" style="color: var(--azul-respaldo);">Ha-Joon Chang — <em>Economics: The User's Guide</em> (2014)</span>
+                <span class="traduccion" style="color: var(--azul-respaldo);">"La economía es demasiado importante para dejársela a los economistas."</span>
+            </div>
+        </div>
+
+        <!-- SLIDE 3B: POR QUÉ IMPORTA -->
+        <div class="slide bg-blanco">
+            <h2>¿Por qué importa entender economía?</h2>
+            <ul style="margin-top: 20px;">
+                <li><strong>Afecta su vida diaria:</strong> cuánto vale su trabajo, cuánto sale el alquiler, si hay empleo, si hay inflación</li>
+                <li><strong class="highlight">Entender economía es entender las reglas del juego en el que ya están jugando</strong></li>
+            </ul>
+        </div>
+
+        <!-- SLIDE 4: LAS 5 PREGUNTAS -->
+        <div class="slide bg-respaldo">
+            <h2>5 preguntas que vamos a responder en este curso</h2>
+            <div style="margin-top: 20px;">
+                <div class="mapa-item"><div class="disc-dot" style="background: #3B82F6;"></div><span><strong>1.</strong> ¿Por qué un Big Mac sale USD 9 en Zurich y USD 3 en Buenos Aires?</span></div>
+                <div class="mapa-item"><div class="disc-dot" style="background: #8B5CF6;"></div><span><strong>2.</strong> ¿La inteligencia artificial nos va a dejar sin trabajo?</span></div>
+                <div class="mapa-item"><div class="disc-dot" style="background: #EF4444;"></div><span><strong>3.</strong> Trump y los aranceles: ¿proteger la industria o empobrecer al consumidor?</span></div>
+                <div class="mapa-item"><div class="disc-dot" style="background: #F59E0B;"></div><span><strong>4.</strong> ¿Por qué Argentina tiene el mismo PBI per cápita que en 2007?</span></div>
+                <div class="mapa-item"><div class="disc-dot" style="background: #EC4899;"></div><span><strong>5.</strong> ¿Cómo se frena una inflación de 25% mensual?</span></div>
+            </div>
+            <p style="text-align: center; margin-top: 30px; font-size: 1.6rem; opacity: 0.7;">Cada pregunta esconde un set de herramientas. Este curso se las va a dar.</p>
+        </div>
+
+        <!-- ===== DISCUSIÓN 1: EL BIG MAC ===== -->
+
+        <!-- SLIDE 5 -->
+        <div class="slide bg-blanco">
+            <span class="disc-badge disc-1">Discusión 1</span>
+            <h2>¿Por qué un Big Mac sale USD 9 en Zurich y USD 3 en Buenos Aires?</h2>
+            <div class="stats-grid" style="grid-template-columns: 1fr 1fr; margin-top: 25px;">
+                <div class="stat-box">
+                    <div class="stat-numero">$9</div>
+                    <div class="stat-label">Big Mac en Suiza<br>(el más caro del mundo)</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-numero">$3</div>
+                    <div class="stat-label">Big Mac en Argentina</div>
+                </div>
+            </div>
+            <p style="text-align: center; margin-top: 30px;">¿Argentina es "barata"? ¿Suiza es "cara"? ¿O la pregunta está mal planteada?</p>
+        </div>
+
+        <!-- SLIDE 6 -->
+        <div class="slide bg-respaldo">
+            <span class="disc-badge disc-1">Discusión 1</span>
+            <h2>Lo que esconde el precio de un Big Mac</h2>
+            <ul style="margin-top: 20px;">
+                <li><strong>Tipo de cambio:</strong> convierte precios locales a dólares, pero puede estar "desalineado"</li>
+                <li><strong>Productividad:</strong> determina cuánto puede pagar un país en salarios</li>
+                <li><strong>Ingresos:</strong> un suizo gana ~USD 6.000/mes, un argentino ~USD 800</li>
+                <li><strong>La verdadera pregunta:</strong> no cuántos dólares cuesta, sino cuántas <em>horas de trabajo</em> cuesta</li>
+            </ul>
+            <div class="preview-box">
+                <div class="preview-label">En este curso van a aprender</div>
+                <p>Tipo de cambio real, paridad de poder de compra, productividad y nivel de precios → <strong>Mercado de Cambios · Crecimiento · Comercio</strong></p>
+            </div>
+        </div>
+
+        <!-- ===== DISCUSIÓN 2: IA Y TRABAJO ===== -->
+
+        <!-- SLIDE 7 -->
+        <div class="slide bg-blanco">
+            <span class="disc-badge disc-2">Discusión 2</span>
+            <h2>¿La inteligencia artificial nos va a dejar sin trabajo?</h2>
+            <div class="stats-grid" style="grid-template-columns: 1fr 1fr; margin-top: 25px;">
+                <div class="stat-box">
+                    <div class="stat-numero">57%</div>
+                    <div class="stat-label">de las horas de trabajo en EE.UU.<br>podrían ser automatizadas</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-numero">7M</div>
+                    <div class="stat-label">de trabajadores ya requieren<br>"fluencia en IA" en su puesto</div>
+                </div>
+            </div>
+            <p style="text-align: center; margin-top: 30px;">Suena aterrador. Pero... ¿dijeron lo mismo con los cajeros automáticos?</p>
+            <p class="ref-small">McKinsey (2025)</p>
+        </div>
+
+        <!-- SLIDE 8 -->
+        <div class="slide bg-respaldo">
+            <span class="disc-badge disc-2">Discusión 2</span>
+            <h2>Destrucción creativa</h2>
+            <blockquote style="margin-top: 15px;">
+                "The opening up of new markets and the organizational development [...] illustrate the process of industrial mutation that incessantly revolutionizes the economic structure from within."
+                <cite>Joseph Schumpeter — <em>Capitalism, Socialism and Democracy</em> (1942)</cite>
+            </blockquote>
+            <ul style="margin-top: 20px;">
+                <li><strong>Agricultura:</strong> en 1900, el 40% trabajaba en el campo. Hoy el 2%. No hubo desempleo permanente</li>
+                <li><strong>Cajeros automáticos:</strong> no eliminaron empleados bancarios, los reasignaron a tareas de mayor valor</li>
+                <li><strong>La IA no elimina trabajos:</strong> transforma lo que hacemos dentro de cada trabajo</li>
+            </ul>
+        </div>
+
+        <!-- SLIDE 8B -->
+        <div class="slide bg-respaldo">
+            <span class="disc-badge disc-2">Discusión 2</span>
+            <h2>¿Qué van a aprender?</h2>
+            <div class="preview-box">
+                <div class="preview-label">En este curso van a aprender</div>
+                <p>Mercado de trabajo, productividad marginal, cambio tecnológico, oferta y demanda laboral → <strong>Mercado de Trabajo · Crecimiento</strong></p>
+            </div>
+        </div>
+
+        <!-- ===== DISCUSIÓN 3: TRUMP Y ARANCELES ===== -->
+
+        <!-- SLIDE 9 -->
+        <div class="slide bg-blanco">
+            <span class="disc-badge disc-3">Discusión 3</span>
+            <h2>Trump y los aranceles: ¿proteger o empobrecer?</h2>
+            <div class="stats-grid" style="grid-template-columns: 1fr 1fr 1fr; margin-top: 20px;">
+                <div class="stat-box">
+                    <div class="stat-numero" style="font-size: 5rem;">2,5%</div>
+                    <div class="stat-label">Arancel promedio<br>EE.UU. (enero 2025)</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-numero" style="font-size: 5rem; color: var(--rojo-alerta);">27%</div>
+                    <div class="stat-label">Arancel promedio<br>EE.UU. (abril 2025)</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-numero" style="font-size: 5rem;">$1.500</div>
+                    <div class="stat-label">Costo por hogar<br>estadounidense (2026)</div>
+                </div>
+            </div>
+            <p style="text-align: center; margin-top: 25px;">La mayor suba arancelaria en más de un siglo. ¿Protege empleos o empobrece consumidores?</p>
+            <p class="ref-small">Tax Foundation, Tariff Tracker (2026)</p>
+        </div>
+
+        <!-- SLIDE 10 -->
+        <div class="slide bg-impulso">
+            <span class="disc-badge disc-3" style="background: rgba(255,255,255,0.2);">Discusión 3</span>
+            <h2>¿Por qué un país comercia?</h2>
+            <p style="margin-top: 15px;"><strong>David Ricardo</strong> (hace 200 años): incluso si un país es mejor en todo, le conviene especializarse en lo que hace <em>relativamente</em> mejor.</p>
+            <div class="flow-diagram" style="margin: 25px 0;">
+                <div class="flow-box" style="background: rgba(255,255,255,0.15);">Cada país se<br>especializa</div>
+                <div class="flow-arrow" style="color: white;">→</div>
+                <div class="flow-box" style="background: rgba(255,255,255,0.15);">Produce más<br>de lo que puede<br>consumir solo</div>
+                <div class="flow-arrow" style="color: white;">→</div>
+                <div class="flow-box" style="background: rgba(255,255,255,0.15);">Comercia el<br>excedente</div>
+                <div class="flow-arrow" style="color: white;">→</div>
+                <div class="flow-box" style="background: rgba(255,255,255,0.15); border: 2px solid white;"><strong>Ambos ganan</strong></div>
+            </div>
+        </div>
+
+        <!-- SLIDE 10B -->
+        <div class="slide bg-impulso">
+            <span class="disc-badge disc-3" style="background: rgba(255,255,255,0.2);">Discusión 3</span>
+            <h2>Aranceles: ¿a quién benefician?</h2>
+            <ul style="margin-top: 20px;">
+                <li><strong>Protege</strong> a algunos productores locales</li>
+                <li><strong>Encarece todo</strong> para todos los consumidores</li>
+                <li><strong>La discusión:</strong> ¿el beneficio supera al costo?</li>
+            </ul>
+            <div class="preview-box" style="border-color: rgba(255,255,255,0.3);">
+                <div class="preview-label" style="color: rgba(255,255,255,0.5);">En este curso van a aprender</div>
+                <p>Ventajas comparativas, proteccionismo, cadenas globales de valor, balanza comercial → <strong>Comercio Internacional</strong></p>
+            </div>
+        </div>
+
+        <!-- ===== DISCUSIÓN 4: ARGENTINA NO CRECE ===== -->
+
+        <!-- SLIDE 11 -->
+        <div class="slide bg-blanco">
+            <span class="disc-badge disc-4">Discusión 4</span>
+            <h2>¿Por qué Argentina tiene el mismo PBI per cápita que en 2007?</h2>
+            <p style="text-align: center;">Variación del PBI per cápita desde 2010:</p>
+            <div class="bar-chart" style="margin-top: 15px;">
+                <div class="bar-row">
+                    <span class="bar-label">Perú</span>
+                    <div class="bar-container">
+                        <div class="bar" style="width: 47%;">+14%</div>
+                    </div>
+                </div>
+                <div class="bar-row">
+                    <span class="bar-label">Colombia</span>
+                    <div class="bar-container">
+                        <div class="bar" style="width: 43%;">+13%</div>
+                    </div>
+                </div>
+                <div class="bar-row">
+                    <span class="bar-label">Chile</span>
+                    <div class="bar-container">
+                        <div class="bar" style="width: 27%;">+8%</div>
+                    </div>
+                </div>
+                <div class="bar-row">
+                    <span class="bar-label">Brasil</span>
+                    <div class="bar-container">
+                        <div class="bar rojo" style="width: 20%;">-6%</div>
+                    </div>
+                </div>
+                <div class="bar-row">
+                    <span class="bar-label"><strong>Argentina</strong></span>
+                    <div class="bar-container">
+                        <div class="bar rojo" style="width: 53%;">-16%</div>
+                    </div>
+                </div>
+            </div>
+            <p style="text-align: center;"><strong class="highlight">El único país grande de la región que se empobreció en 15 años.</strong></p>
+            <p class="ref-small">Banco Mundial. Dólares constantes. 2010-2024.</p>
+        </div>
+
+        <!-- SLIDE 12 -->
+        <div class="slide bg-respaldo">
+            <span class="disc-badge disc-4">Discusión 4</span>
+            <h2>¿Qué le pasa a Argentina?</h2>
+            <p style="margin-bottom: 25px;">Una economía crece cuando <span class="highlight">invierte</span>. Argentina invierte poco porque <span class="highlight-red">ahorra poco</span>.</p>
+            <div class="three-cols" style="margin-top: 15px;">
+                <div class="concepto-box" style="text-align: center;">
+                    <h4 style="color: white;">Déficit crónico</h4>
+                    <p style="margin-bottom: 0;">El Estado se come el ahorro nacional. Déficit en 45 de 63 años.</p>
+                </div>
+                <div class="concepto-box" style="text-align: center;">
+                    <h4 style="color: white;">Inestabilidad</h4>
+                    <p style="margin-bottom: 0;">Las reglas cambian cada gobierno. Nadie apuesta a largo plazo.</p>
+                </div>
+                <div class="concepto-box" style="text-align: center;">
+                    <h4 style="color: white;">Fuga de ahorro</h4>
+                    <p style="margin-bottom: 0;">USD 250.000M fuera del sistema. Casi un PBI entero en colchones.</p>
+                </div>
+            </div>
+            <div class="preview-box">
+                <div class="preview-label">En este curso van a aprender</div>
+                <p>Modelo de ahorro e inversión, crowding out, mercado de capitales, política fiscal, crecimiento → <strong>Ahorro e Inversión · Fiscal · Crecimiento</strong></p>
+            </div>
+        </div>
+
+        <!-- ===== DISCUSIÓN 5: INFLACIÓN ===== -->
+
+        <!-- SLIDE 13 -->
+        <div class="slide bg-blanco">
+            <span class="disc-badge disc-5">Discusión 5</span>
+            <h2>¿Cómo se frena una inflación de 25% mensual?</h2>
+            <div class="stats-grid" style="grid-template-columns: 1fr 1fr; margin-top: 25px;">
+                <div class="stat-box">
+                    <div class="stat-numero">211%</div>
+                    <div class="stat-label">Inflación anual<br>Argentina (2023)</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-numero">25,5%</div>
+                    <div class="stat-label">Inflación mensual<br>diciembre 2023</div>
+                </div>
+            </div>
+            <p style="text-align: center; margin-top: 30px;">Argentina llegó al borde de la hiperinflación. ¿Qué la causa? ¿Cómo se sale?</p>
+        </div>
+
+        <!-- SLIDE 14 -->
+        <div class="slide bg-respaldo">
+            <span class="disc-badge disc-5">Discusión 5</span>
+            <h2>La inflación no es un misterio</h2>
+            <blockquote style="margin-top: 15px;">
+                "Inflation is always and everywhere a monetary phenomenon, in the sense that it is and can be produced only by a more rapid increase in the quantity of money than in output."
+                <cite>Milton Friedman — <em>A Monetary History of the United States</em> (1963)</cite>
+            </blockquote>
+            <p style="margin-top: 25px;">Pero frenarla no es solo cerrar la canilla monetaria. Hay que entender <strong>por qué se abrió:</strong></p>
+            <div class="flow-diagram" style="margin: 20px 0;">
+                <div class="flow-box">Déficit fiscal</div>
+                <div class="flow-arrow">→</div>
+                <div class="flow-box">Se financia<br>con emisión</div>
+                <div class="flow-arrow">→</div>
+                <div class="flow-box">Más dinero<br>que bienes</div>
+                <div class="flow-arrow">→</div>
+                <div class="flow-box" style="border: 2px solid var(--rojo-alerta);">Inflación</div>
+            </div>
+        </div>
+
+        <!-- SLIDE 14B -->
+        <div class="slide bg-respaldo">
+            <span class="disc-badge disc-5">Discusión 5</span>
+            <h2>¿Qué van a aprender?</h2>
+            <div class="preview-box">
+                <div class="preview-label">En este curso van a aprender</div>
+                <p>Dinero, banco central, expectativas, dominancia fiscal, curva de Phillips, credibilidad → <strong>Política Monetaria · Coordinación Fiscal-Monetaria</strong></p>
+            </div>
+        </div>
+
+        <!-- ===== CIERRE ===== -->
+
+        <!-- SLIDE 15: RESUMEN -->
+        <div class="slide bg-verde">
+            <h2>5 preguntas. Un set de herramientas.</h2>
+            <div style="margin-top: 20px;">
+                <div class="mapa-item" style="background: rgba(255,255,255,0.12); border-color: rgba(255,255,255,0.2);">
+                    <div class="disc-dot" style="background: #3B82F6;"></div>
+                    <span>El Big Mac → <strong>Tipo de cambio, precios relativos, productividad</strong></span>
+                </div>
+                <div class="mapa-item" style="background: rgba(255,255,255,0.12); border-color: rgba(255,255,255,0.2);">
+                    <div class="disc-dot" style="background: #8B5CF6;"></div>
+                    <span>La IA → <strong>Mercado de trabajo, destrucción creativa, cambio tecnológico</strong></span>
+                </div>
+                <div class="mapa-item" style="background: rgba(255,255,255,0.12); border-color: rgba(255,255,255,0.2);">
+                    <div class="disc-dot" style="background: #EF4444;"></div>
+                    <span>Trump → <strong>Ventajas comparativas, comercio, aranceles</strong></span>
+                </div>
+                <div class="mapa-item" style="background: rgba(255,255,255,0.12); border-color: rgba(255,255,255,0.2);">
+                    <div class="disc-dot" style="background: #F59E0B;"></div>
+                    <span>Argentina no crece → <strong>Ahorro/inversión, déficit, instituciones</strong></span>
+                </div>
+                <div class="mapa-item" style="background: rgba(255,255,255,0.12); border-color: rgba(255,255,255,0.2);">
+                    <div class="disc-dot" style="background: #EC4899;"></div>
+                    <span>Inflación → <strong>Política monetaria, fiscal, expectativas</strong></span>
+                </div>
+            </div>
+            <p style="text-align: center; margin-top: 30px;">Cada tema del programa responde a problemas reales.<br><strong>Economía no es teoría abstracta: es caja de herramientas.</strong></p>
+        </div>
+
+        <!-- SLIDE 16: CIERRE -->
+        <div class="slide bg-respaldo portada">
+            <h2>Felipe Venancio</h2>
+            <p style="margin-top: 20px; font-size: 1.6rem; opacity: 0.7;">Docencia en Economía y Finanzas</p>
+        </div>
+
+    </div>
+
+    <div class="slide-counter"><span id="current">1</span> / <span id="total">21</span></div>
+    <div class="nav-hint">← → para navegar | F para pantalla completa</div>
+
+    <script>
+        const slides = document.querySelectorAll('.slide');
+        let currentSlide = 0;
+        const total = slides.length;
+        document.getElementById('total').textContent = total;
+
+        function showSlide(n) {
+            slides[currentSlide].classList.remove('active');
+            currentSlide = (n + total) % total;
+            slides[currentSlide].classList.add('active');
+            document.getElementById('current').textContent = currentSlide + 1;
+        }
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowRight' || e.key === ' ' || e.key === 'Enter') showSlide(currentSlide + 1);
+            else if (e.key === 'ArrowLeft') showSlide(currentSlide - 1);
+            else if (e.key === 'Home') showSlide(0);
+            else if (e.key === 'End') showSlide(total - 1);
+            else if (e.key === 'f' || e.key === 'F') {
+                if (!document.fullscreenElement) document.documentElement.requestFullscreen();
+                else document.exitFullscreen();
+            }
+        });
+
+        let touchStartX = 0;
+        document.addEventListener('touchstart', (e) => { touchStartX = e.touches[0].clientX; });
+        document.addEventListener('touchend', (e) => {
+            const diff = touchStartX - e.changedTouches[0].clientX;
+            if (Math.abs(diff) > 50) { if (diff > 0) showSlide(currentSlide + 1); else showSlide(currentSlide - 1); }
+        });
+
+        document.addEventListener('click', (e) => {
+            if (e.target.tagName === 'A' || e.target.tagName === 'BUTTON') return;
+            if (e.clientX > window.innerWidth / 2) showSlide(currentSlide + 1);
+            else showSlide(currentSlide - 1);
+        });
+    </script>
+</body>
+</html>
