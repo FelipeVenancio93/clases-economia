@@ -1,0 +1,1745 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Oferta y Demanda — PARA PROYECTAR — Felipe Venancio</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Albert+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --azul-impulso: #1036E2;
+            --verde-activo: #00C600;
+            --azul-respaldo: #021751;
+            --blanco: #FFFFFF;
+            --negro: #000000;
+            --rojo-alerta: #DC2626;
+            --amarillo: #F59E0B;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Albert Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--azul-respaldo);
+            color: var(--blanco);
+            overflow: hidden;
+        }
+
+        .slide-container {
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .slide {
+            display: none;
+            width: 100%;
+            height: 100%;
+            padding: 60px 100px;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .slide.active {
+            display: flex;
+        }
+
+        /* Fondos */
+        .bg-respaldo { background: var(--azul-respaldo); color: var(--blanco); }
+        .bg-impulso { background: var(--azul-impulso); color: var(--blanco); }
+        .bg-verde { background: var(--verde-activo); color: var(--blanco); }
+        .bg-blanco { background: var(--blanco); color: var(--azul-respaldo); }
+
+        /* Tipografía */
+        h1 {
+            font-size: 5rem;
+            font-weight: 700;
+            line-height: 1.1;
+            margin-bottom: 30px;
+        }
+
+        h2 {
+            font-size: 3.5rem;
+            font-weight: 600;
+            margin-bottom: 25px;
+        }
+
+        h3 {
+            font-size: 2.2rem;
+            font-weight: 500;
+            margin-bottom: 20px;
+            opacity: 0.9;
+        }
+
+        p, li {
+            font-size: 1.8rem;
+            line-height: 1.5;
+            margin-bottom: 15px;
+        }
+
+        .subtitle {
+            font-size: 2rem;
+            opacity: 0.8;
+            font-weight: 400;
+        }
+
+        .highlight {
+            color: var(--verde-activo);
+        }
+
+        .bg-blanco .highlight {
+            color: var(--azul-impulso);
+        }
+
+        .highlight-red {
+            color: var(--rojo-alerta);
+        }
+
+        .highlight-yellow {
+            color: var(--amarillo);
+        }
+
+        blockquote {
+            font-size: 2rem;
+            font-style: italic;
+            border-left: 4px solid var(--verde-activo);
+            padding-left: 30px;
+            margin: 25px 0;
+            opacity: 0.95;
+        }
+
+        blockquote cite {
+            display: block;
+            font-size: 1.3rem;
+            margin-top: 12px;
+            font-style: normal;
+            opacity: 0.7;
+        }
+
+        /* Citas académicas */
+        .cita-paper {
+            background: rgba(255,255,255,0.08);
+            padding: 25px 30px;
+            border-radius: 10px;
+            margin: 20px 0;
+            border-left: 4px solid var(--verde-activo);
+        }
+
+        .bg-blanco .cita-paper {
+            background: rgba(16, 54, 226, 0.06);
+            border-left-color: var(--azul-impulso);
+        }
+
+        .cita-paper .titulo {
+            font-weight: 600;
+            font-size: 1.4rem;
+            margin-bottom: 8px;
+        }
+
+        .cita-paper .autores {
+            font-size: 1.2rem;
+            opacity: 0.7;
+            margin-bottom: 12px;
+        }
+
+        .cita-paper .contenido {
+            font-size: 1.4rem;
+            line-height: 1.5;
+        }
+
+        ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        ul li {
+            padding-left: 35px;
+            position: relative;
+            margin-bottom: 18px;
+        }
+
+        ul li::before {
+            content: "▸";
+            position: absolute;
+            left: 0;
+            color: var(--verde-activo);
+            font-size: 1.8rem;
+        }
+
+        .bg-verde ul li::before,
+        .bg-impulso ul li::before {
+            color: var(--blanco);
+        }
+
+        /* Tablas */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 25px 0;
+            font-size: 1.5rem;
+        }
+
+        th, td {
+            padding: 18px 22px;
+            text-align: left;
+            border-bottom: 1px solid rgba(255,255,255,0.2);
+        }
+
+        .bg-blanco th,
+        .bg-blanco td {
+            border-bottom: 1px solid rgba(0,0,0,0.1);
+        }
+
+        th {
+            font-weight: 600;
+            opacity: 0.7;
+            font-size: 1.3rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* Diagrama flujo */
+        .flow-diagram {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+            margin: 35px 0;
+            flex-wrap: wrap;
+        }
+
+        .flow-box {
+            background: rgba(255,255,255,0.1);
+            padding: 25px 35px;
+            border-radius: 10px;
+            font-size: 1.5rem;
+            font-weight: 500;
+            text-align: center;
+        }
+
+        .bg-blanco .flow-box {
+            background: rgba(16, 54, 226, 0.1);
+        }
+
+        .flow-arrow {
+            font-size: 2.2rem;
+            color: var(--verde-activo);
+        }
+
+        /* Dos columnas */
+        .two-cols {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 50px;
+            margin-top: 25px;
+        }
+
+        .three-cols {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 30px;
+            margin-top: 25px;
+        }
+
+        /* Navegación */
+        .nav-hint {
+            position: fixed;
+            bottom: 30px;
+            right: 40px;
+            font-size: 0.9rem;
+            opacity: 0.5;
+        }
+
+        .slide-counter {
+            position: fixed;
+            bottom: 30px;
+            left: 40px;
+            font-size: 0.9rem;
+            opacity: 0.5;
+        }
+
+        /* Portada especial */
+        .portada {
+            text-align: center;
+        }
+
+        .portada h1 {
+            font-size: 5.5rem;
+            margin-bottom: 20px;
+        }
+
+        /* Número grande */
+        .big-number {
+            font-size: 9rem;
+            font-weight: 800;
+            color: var(--verde-activo);
+            line-height: 1;
+        }
+
+        .bg-blanco .big-number {
+            color: var(--azul-impulso);
+        }
+
+        /* Fórmula/Ecuación */
+        .formula {
+            font-size: 2.5rem;
+            text-align: center;
+            padding: 30px;
+            background: rgba(255,255,255,0.08);
+            border-radius: 12px;
+            margin: 25px 0;
+            font-weight: 500;
+            letter-spacing: 2px;
+        }
+
+        .bg-blanco .formula {
+            background: rgba(16, 54, 226, 0.06);
+        }
+
+        /* Stats */
+        .stat-box {
+            text-align: center;
+            padding: 25px;
+        }
+
+        .stat-numero {
+            font-size: 6rem;
+            font-weight: 800;
+            color: var(--verde-activo);
+            line-height: 1;
+        }
+
+        .bg-blanco .stat-numero {
+            color: var(--azul-impulso);
+        }
+
+        .stat-label {
+            font-size: 1.4rem;
+            opacity: 0.8;
+            margin-top: 10px;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 35px;
+            margin-top: 35px;
+        }
+
+        /* Conceptos teóricos */
+        .concepto-box {
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.15);
+            padding: 25px;
+            border-radius: 12px;
+            margin: 15px 0;
+        }
+
+        .bg-blanco .concepto-box {
+            background: rgba(16, 54, 226, 0.03);
+            border-color: rgba(16, 54, 226, 0.15);
+        }
+
+        .concepto-box h4 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 12px;
+            color: var(--verde-activo);
+        }
+
+        .bg-blanco .concepto-box h4 {
+            color: var(--azul-impulso);
+        }
+
+        .concepto-box p {
+            font-size: 1.4rem;
+        }
+
+        /* Versus */
+        .versus {
+            display: grid;
+            grid-template-columns: 1fr auto 1fr;
+            gap: 30px;
+            align-items: start;
+            margin: 30px 0;
+        }
+
+        .versus-center {
+            font-size: 2.5rem;
+            font-weight: 700;
+            text-align: center;
+            opacity: 0.3;
+            padding-top: 40px;
+        }
+
+        /* Frase final */
+        .frase-final {
+            font-size: 2.5rem;
+            line-height: 1.5;
+            text-align: center;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .frase-final em {
+            color: var(--verde-activo);
+            font-style: normal;
+        }
+
+        /* Círculo virtuoso */
+        .circulo {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 12px;
+            margin: 25px 0;
+        }
+
+        .circulo-item {
+            background: rgba(255,255,255,0.1);
+            padding: 20px 40px;
+            border-radius: 50px;
+            font-size: 1.4rem;
+        }
+
+        .bg-blanco .circulo-item {
+            background: rgba(16, 54, 226, 0.08);
+        }
+
+        .circulo-arrow {
+            font-size: 1.3rem;
+            color: var(--verde-activo);
+        }
+
+        /* Badges */
+        .section-badge {
+            display: inline-block;
+            background: var(--verde-activo);
+            color: white;
+            font-size: 1rem;
+            font-weight: 700;
+            padding: 8px 20px;
+            border-radius: 20px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 20px;
+        }
+
+        .bg-blanco .section-badge {
+            background: var(--azul-impulso);
+        }
+
+        .bg-verde .section-badge,
+        .bg-impulso .section-badge {
+            background: rgba(255,255,255,0.25);
+        }
+
+        /* Cita grande */
+        .cita-grande {
+            font-size: 2.8rem;
+            font-style: italic;
+            line-height: 1.4;
+            text-align: center;
+            max-width: 850px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .cita-grande .autor {
+            display: block;
+            font-size: 1.4rem;
+            font-style: normal;
+            margin-top: 25px;
+            opacity: 0.6;
+            font-weight: 500;
+        }
+
+        /* Falla card */
+        .falla-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .falla-card {
+            background: rgba(255,255,255,0.08);
+            padding: 22px 25px;
+            border-radius: 10px;
+            border-left: 3px solid var(--verde-activo);
+        }
+
+        .bg-blanco .falla-card {
+            background: rgba(16, 54, 226, 0.05);
+            border-left-color: var(--azul-impulso);
+        }
+
+        .falla-card h4 {
+            font-size: 1.4rem;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: var(--verde-activo);
+        }
+
+        .bg-blanco .falla-card h4 {
+            color: var(--azul-impulso);
+        }
+
+        .falla-card p {
+            font-size: 1.3rem;
+            margin-bottom: 0;
+            opacity: 0.85;
+        }
+
+        .falla-card.roja {
+            border-left-color: var(--rojo-alerta);
+        }
+
+        .falla-card.roja h4 {
+            color: var(--rojo-alerta);
+        }
+
+        /* Graph container */
+        .graph-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 20px 0;
+        }
+
+        .graph-container svg {
+            max-width: 100%;
+            height: auto;
+        }
+
+        /* Dual graph container */
+        .dual-graph {
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            gap: 40px;
+            margin: 20px 0;
+        }
+
+        .dual-graph .mini-graph {
+            flex: 1;
+            text-align: center;
+        }
+
+        .dual-graph .mini-graph svg {
+            max-width: 100%;
+            height: auto;
+        }
+
+        .dual-graph .mini-graph p {
+            font-size: 1.4rem;
+            margin-top: 8px;
+            font-weight: 500;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .slide {
+                padding: 40px 20px;
+            }
+
+            h1 {
+                font-size: 2.4rem;
+            }
+
+            .portada h1 {
+                font-size: 2.6rem;
+            }
+
+            h2 {
+                font-size: 2rem;
+            }
+
+            h3 {
+                font-size: 1.5rem;
+            }
+
+            p, li {
+                font-size: 1.3rem;
+            }
+
+            .two-cols,
+            .three-cols,
+            .falla-grid {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+
+            .versus {
+                grid-template-columns: 1fr;
+                gap: 15px;
+            }
+
+            .versus-center {
+                padding-top: 0;
+            }
+
+            .stats-grid {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+
+            .stat-numero {
+                font-size: 3.5rem;
+            }
+
+            .big-number {
+                font-size: 5rem;
+            }
+
+            .flow-diagram {
+                flex-direction: column;
+                gap: 10px;
+            }
+
+            .frase-final {
+                font-size: 1.5rem;
+            }
+
+            .cita-grande {
+                font-size: 1.8rem;
+            }
+
+            blockquote {
+                font-size: 1.5rem;
+            }
+
+            .cita-paper .contenido {
+                font-size: 1.3rem;
+            }
+
+            table {
+                font-size: 1.3rem;
+            }
+
+            th, td {
+                padding: 12px 10px;
+            }
+
+            .dual-graph {
+                flex-direction: column;
+                gap: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="slide-container">
+
+        <!-- ============================================ -->
+        <!-- SECTION 1: INTRO (3 slides)                  -->
+        <!-- ============================================ -->
+
+        <!-- SLIDE 1: PORTADA -->
+        <div class="slide active bg-respaldo portada">
+            <h1>Oferta y<br><span class="highlight">Demanda</span></h1>
+            <p class="subtitle">Introducción a la Microeconomía — PARA PROYECTAR</p>
+            <p class="subtitle" style="margin-top: 30px; opacity: 0.6;">Felipe Venancio</p>
+        </div>
+
+        <!-- SLIDE 2: ESCASEZ RECAP -->
+        <div class="slide bg-blanco">
+            <h2>Recordemos</h2>
+            <div class="flow-diagram">
+                <div class="flow-box">Escasez</div>
+                <div class="flow-arrow">→</div>
+                <div class="flow-box">Producción</div>
+                <div class="flow-arrow">→</div>
+                <div class="flow-box">Necesidades</div>
+                <div class="flow-arrow">→</div>
+                <div class="flow-box">Decisión</div>
+            </div>
+            <ul>
+                <li><strong>Microeconomía:</strong> decisiones de individuos y empresas</li>
+                <li><strong>Foco:</strong> producción, consumo e interacción en mercados</li>
+            </ul>
+        </div>
+
+        <!-- SLIDE 3: OFERTA Y DEMANDA INTRO -->
+        <div class="slide bg-impulso">
+            <h2>Oferta y demanda</h2>
+            <ul>
+                <li><strong>Modelo más básico</strong> y más poderoso de la economía</li>
+                <li>Explica <strong>precios, cantidades</strong> y quién produce qué para quién</li>
+            </ul>
+        </div>
+
+        <!-- ============================================ -->
+        <!-- SECTION 2: DEMANDA (12 slides)               -->
+        <!-- ============================================ -->
+
+        <!-- SLIDE 4: DEMANDA TITLE -->
+        <div class="slide bg-verde portada">
+            <h1>Demanda</h1>
+        </div>
+
+        <!-- SLIDE 5: PREGUNTA MOTIVADORA -->
+        <div class="slide bg-blanco">
+            <h2>Si están pensando en comprarse una computadora...</h2>
+            <p style="font-size: 2.5rem; font-weight: 600; margin-top: 20px; color: var(--azul-impulso);">¿Qué cosas tienen en cuenta a la hora de elegirla?</p>
+        </div>
+
+        <!-- SLIDE 6: DETERMINANTES DE LA DEMANDA -->
+        <div class="slide bg-respaldo">
+            <h2>Determinantes de la demanda</h2>
+            <p>¿Qué cosas tenemos en cuenta a la hora de comprar algo?</p>
+            <ul>
+                <li><strong>Precio</strong> de ese producto</li>
+                <li><strong>Gustos</strong> / Preferencias</li>
+                <li><strong>Precio</strong> de otros productos</li>
+                <li><strong>Ingreso</strong> propio</li>
+                <li><strong>Expectativas</strong></li>
+            </ul>
+        </div>
+
+        <!-- SLIDE 7: CLASIFICACIÓN INTRO -->
+        <div class="slide bg-blanco">
+            <h2>Clasificación de bienes</h2>
+            <p>Cómo respondemos a cambios en estos factores determina qué tipo de producto es.</p>
+        </div>
+
+        <!-- SLIDE 8: DEMAND CURVE CONCEPT -->
+        <div class="slide bg-respaldo">
+            <h2>La curva de demanda</h2>
+            <p>Relación entre precio y cantidad demandada:</p>
+            <div class="flow-diagram">
+                <div class="flow-box">Precio ↑ caro</div>
+                <div class="flow-arrow">→</div>
+                <div class="flow-box">Cantidad ↓ lo quiero menos</div>
+            </div>
+            <p>A mayor precio, menor cantidad demandada. <span class="highlight">Ley de demanda.</span></p>
+        </div>
+
+        <!-- SLIDE 9: DEMAND CURVE GRAPH (sin números) -->
+        <div class="slide bg-blanco">
+            <h2>La curva de demanda</h2>
+            <div class="graph-container">
+                <svg viewBox="0 0 600 400" width="600" style="font-family: 'Albert Sans', sans-serif;">
+                    <!-- Grid lines -->
+                    <line x1="80" y1="100" x2="550" y2="100" stroke="#021751" stroke-width="0.5" opacity="0.1"/>
+                    <line x1="80" y1="200" x2="550" y2="200" stroke="#021751" stroke-width="0.5" opacity="0.1"/>
+                    <line x1="80" y1="300" x2="550" y2="300" stroke="#021751" stroke-width="0.5" opacity="0.1"/>
+                    <line x1="172" y1="30" x2="172" y2="350" stroke="#021751" stroke-width="0.5" opacity="0.1"/>
+                    <line x1="310" y1="30" x2="310" y2="350" stroke="#021751" stroke-width="0.5" opacity="0.1"/>
+                    <line x1="449" y1="30" x2="449" y2="350" stroke="#021751" stroke-width="0.5" opacity="0.1"/>
+                    <!-- Axes -->
+                    <line x1="80" y1="350" x2="550" y2="350" stroke="#021751" stroke-width="2"/>
+                    <line x1="80" y1="30" x2="80" y2="350" stroke="#021751" stroke-width="2"/>
+                    <!-- Axis labels -->
+                    <text x="550" y="390" font-size="20" fill="#021751" text-anchor="end">Q (cantidad)</text>
+                    <text x="20" y="30" font-size="20" fill="#021751">P ($)</text>
+                    <!-- Arrow hints -->
+                    <text x="45" y="70" font-size="18" fill="#021751" opacity="0.5" text-anchor="middle">caro</text>
+                    <text x="520" y="380" font-size="18" fill="#021751" opacity="0.5" text-anchor="middle">lo quiero</text>
+                    <!-- Demand curve D: from (130,70) to (490,330) -->
+                    <line x1="130" y1="70" x2="490" y2="330" stroke="#3B82F6" stroke-width="3"/>
+                    <!-- Label D -->
+                    <text x="500" y="340" font-size="20" fill="#3B82F6" font-weight="600">D</text>
+                </svg>
+            </div>
+        </div>
+
+        <!-- SLIDE 10: DEMAND CURVE GRAPH CON NÚMEROS -->
+        <div class="slide bg-blanco">
+            <h2>La curva de demanda</h2>
+            <div class="graph-container">
+                <svg viewBox="0 0 600 400" width="600" style="font-family: 'Albert Sans', sans-serif;">
+                    <!-- Grid lines -->
+                    <line x1="80" y1="100" x2="550" y2="100" stroke="#021751" stroke-width="0.5" opacity="0.1"/>
+                    <line x1="80" y1="200" x2="550" y2="200" stroke="#021751" stroke-width="0.5" opacity="0.1"/>
+                    <line x1="80" y1="300" x2="550" y2="300" stroke="#021751" stroke-width="0.5" opacity="0.1"/>
+                    <line x1="172" y1="30" x2="172" y2="350" stroke="#021751" stroke-width="0.5" opacity="0.1"/>
+                    <line x1="310" y1="30" x2="310" y2="350" stroke="#021751" stroke-width="0.5" opacity="0.1"/>
+                    <line x1="449" y1="30" x2="449" y2="350" stroke="#021751" stroke-width="0.5" opacity="0.1"/>
+                    <!-- Axes -->
+                    <line x1="80" y1="350" x2="550" y2="350" stroke="#021751" stroke-width="2"/>
+                    <line x1="80" y1="30" x2="80" y2="350" stroke="#021751" stroke-width="2"/>
+                    <!-- Axis labels -->
+                    <text x="550" y="390" font-size="20" fill="#021751" text-anchor="end">Q (cantidad)</text>
+                    <text x="20" y="30" font-size="20" fill="#021751">P ($)</text>
+                    <!-- Demand curve D: from (130,70) to (490,330) -->
+                    <line x1="130" y1="70" x2="490" y2="330" stroke="#3B82F6" stroke-width="3"/>
+                    <text x="500" y="340" font-size="20" fill="#3B82F6" font-weight="600">D</text>
+
+                    <!-- Point 1: P=$7 → y=100, x=172 -->
+                    <line x1="172" y1="100" x2="172" y2="350" stroke="#021751" stroke-width="1" stroke-dasharray="6,4" opacity="0.4"/>
+                    <line x1="80" y1="100" x2="172" y2="100" stroke="#021751" stroke-width="1" stroke-dasharray="6,4" opacity="0.4"/>
+                    <circle cx="172" cy="100" r="6" fill="#00C600"/>
+                    <text x="55" y="105" font-size="18" fill="#021751" font-weight="600" text-anchor="end">$7</text>
+                    <text x="172" y="370" font-size="18" fill="#021751" font-weight="600" text-anchor="middle">2</text>
+
+                    <!-- Point 2: P=$5 → y=200, x=310 -->
+                    <line x1="310" y1="200" x2="310" y2="350" stroke="#021751" stroke-width="1" stroke-dasharray="6,4" opacity="0.4"/>
+                    <line x1="80" y1="200" x2="310" y2="200" stroke="#021751" stroke-width="1" stroke-dasharray="6,4" opacity="0.4"/>
+                    <circle cx="310" cy="200" r="6" fill="#00C600"/>
+                    <text x="55" y="205" font-size="18" fill="#021751" font-weight="600" text-anchor="end">$5</text>
+                    <text x="310" y="370" font-size="18" fill="#021751" font-weight="600" text-anchor="middle">5</text>
+
+                    <!-- Point 3: P=$3 → y=300, x=449 -->
+                    <line x1="449" y1="300" x2="449" y2="350" stroke="#021751" stroke-width="1" stroke-dasharray="6,4" opacity="0.4"/>
+                    <line x1="80" y1="300" x2="449" y2="300" stroke="#021751" stroke-width="1" stroke-dasharray="6,4" opacity="0.4"/>
+                    <circle cx="449" cy="300" r="6" fill="#00C600"/>
+                    <text x="55" y="305" font-size="18" fill="#021751" font-weight="600" text-anchor="end">$3</text>
+                    <text x="449" y="370" font-size="18" fill="#021751" font-weight="600" text-anchor="middle">8</text>
+                </svg>
+            </div>
+        </div>
+
+        <!-- SLIDE 11: BIENES NORMALES -->
+        <div class="slide bg-respaldo">
+            <h2>Bienes normales</h2>
+            <div class="concepto-box">
+                <h4>↑ Ingreso → ↑ Compro más</h4>
+                <p style="opacity: 0.8;">Ejemplos: ropa de marca, sushi, electrónica</p>
+            </div>
+        </div>
+
+        <!-- SLIDE 11b: BIENES INFERIORES -->
+        <div class="slide bg-respaldo">
+            <h2>Bienes inferiores</h2>
+            <div class="concepto-box">
+                <h4>↑ Ingreso → ↓ Compro menos</h4>
+                <p style="opacity: 0.8;">Ejemplos: fideos secos, transporte público</p>
+            </div>
+        </div>
+
+        <!-- SLIDE 12: NORMAL GOODS DEMAND SHIFT -->
+        <div class="slide bg-blanco">
+            <h2>Bienes normales: sube el ingreso</h2>
+            <div class="graph-container">
+                <svg viewBox="0 0 600 400" width="600" style="font-family: 'Albert Sans', sans-serif;">
+                    <!-- Grid lines -->
+                    <line x1="80" y1="100" x2="550" y2="100" stroke="#021751" stroke-width="0.5" opacity="0.1"/>
+                    <line x1="80" y1="200" x2="550" y2="200" stroke="#021751" stroke-width="0.5" opacity="0.1"/>
+                    <line x1="80" y1="300" x2="550" y2="300" stroke="#021751" stroke-width="0.5" opacity="0.1"/>
+                    <!-- Axes -->
+                    <line x1="80" y1="350" x2="550" y2="350" stroke="#021751" stroke-width="2"/>
+                    <line x1="80" y1="30" x2="80" y2="350" stroke="#021751" stroke-width="2"/>
+                    <text x="550" y="390" font-size="20" fill="#021751" text-anchor="end">Q (cantidad)</text>
+                    <text x="20" y="30" font-size="20" fill="#021751">P ($)</text>
+
+                    <!-- Original D (solid): (130,70) to (490,330) -->
+                    <line x1="130" y1="70" x2="490" y2="330" stroke="#3B82F6" stroke-width="3"/>
+                    <text x="500" y="340" font-size="20" fill="#3B82F6" font-weight="600">D</text>
+
+                    <!-- New D' shifted RIGHT by 80px (dashed): (210,70) to (570,330) -->
+                    <line x1="210" y1="70" x2="570" y2="330" stroke="#3B82F6" stroke-width="3" stroke-dasharray="8,4"/>
+                    <text x="545" y="310" font-size="20" fill="#3B82F6" font-weight="600">D'</text>
+
+                    <!-- At P=$7 (y=100): horizontal reference line -->
+                    <line x1="80" y1="100" x2="260" y2="100" stroke="#021751" stroke-width="1" stroke-dasharray="6,4" opacity="0.3"/>
+                    <!-- Point on D at P=$7: x=172 -->
+                    <circle cx="172" cy="100" r="5" fill="#3B82F6"/>
+                    <line x1="172" y1="100" x2="172" y2="350" stroke="#021751" stroke-width="1" stroke-dasharray="6,4" opacity="0.3"/>
+                    <text x="172" y="370" font-size="18" fill="#021751" font-weight="600" text-anchor="middle">2</text>
+                    <!-- Point on D' at P=$7: x=252 -->
+                    <circle cx="252" cy="100" r="5" fill="#3B82F6"/>
+                    <line x1="252" y1="100" x2="252" y2="350" stroke="#021751" stroke-width="1" stroke-dasharray="6,4" opacity="0.3"/>
+                    <text x="252" y="370" font-size="18" fill="#021751" font-weight="600" text-anchor="middle">5</text>
+                    <text x="55" y="105" font-size="18" fill="#021751" font-weight="600" text-anchor="end">$7</text>
+
+                    <!-- Shift arrow -->
+                    <line x1="200" y1="210" x2="280" y2="210" stroke="#00C600" stroke-width="3" marker-end="url(#arrowGreenDark)"/>
+                    <defs>
+                        <marker id="arrowGreenDark" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+                            <polygon points="0 0, 10 3.5, 0 7" fill="#00C600"/>
+                        </marker>
+                    </defs>
+
+                    <!-- Label -->
+                    <text x="315" y="260" font-size="18" fill="#021751" text-anchor="middle" font-weight="500">↑ Ingreso → demanda</text>
+                    <text x="315" y="280" font-size="18" fill="#021751" text-anchor="middle" font-weight="500">se desplaza a la derecha</text>
+                </svg>
+            </div>
+        </div>
+
+        <!-- SLIDE 13: INFERIOR GOODS DEMAND SHIFT -->
+        <div class="slide bg-blanco">
+            <h2>Bienes inferiores: sube el ingreso</h2>
+            <div class="graph-container">
+                <svg viewBox="0 0 600 400" width="600" style="font-family: 'Albert Sans', sans-serif;">
+                    <!-- Grid lines -->
+                    <line x1="80" y1="100" x2="550" y2="100" stroke="#021751" stroke-width="0.5" opacity="0.1"/>
+                    <line x1="80" y1="200" x2="550" y2="200" stroke="#021751" stroke-width="0.5" opacity="0.1"/>
+                    <line x1="80" y1="300" x2="550" y2="300" stroke="#021751" stroke-width="0.5" opacity="0.1"/>
+                    <!-- Axes -->
+                    <line x1="80" y1="350" x2="550" y2="350" stroke="#021751" stroke-width="2"/>
+                    <line x1="80" y1="30" x2="80" y2="350" stroke="#021751" stroke-width="2"/>
+                    <text x="550" y="390" font-size="20" fill="#021751" text-anchor="end">Q (cantidad)</text>
+                    <text x="20" y="30" font-size="20" fill="#021751">P ($)</text>
+
+                    <!-- Original D (solid): (200,70) to (560,330) -->
+                    <line x1="200" y1="70" x2="560" y2="330" stroke="#3B82F6" stroke-width="3"/>
+                    <text x="540" y="320" font-size="20" fill="#3B82F6" font-weight="600">D</text>
+
+                    <!-- New D' shifted LEFT by 100px (dashed): (100,70) to (460,330) -->
+                    <line x1="100" y1="70" x2="460" y2="330" stroke="#3B82F6" stroke-width="3" stroke-dasharray="8,4"/>
+                    <text x="470" y="340" font-size="20" fill="#3B82F6" font-weight="600">D'</text>
+
+                    <!-- At P=$7 (y=100): horizontal reference line -->
+                    <line x1="80" y1="100" x2="250" y2="100" stroke="#021751" stroke-width="1" stroke-dasharray="6,4" opacity="0.3"/>
+                    <!-- Point on D at P=$7: x=242 -->
+                    <circle cx="242" cy="100" r="5" fill="#3B82F6"/>
+                    <line x1="242" y1="100" x2="242" y2="350" stroke="#021751" stroke-width="1" stroke-dasharray="6,4" opacity="0.3"/>
+                    <text x="242" y="370" font-size="18" fill="#021751" font-weight="600" text-anchor="middle">5</text>
+                    <!-- Point on D' at P=$7: x=142 -->
+                    <circle cx="142" cy="100" r="5" fill="#3B82F6"/>
+                    <line x1="142" y1="100" x2="142" y2="350" stroke="#021751" stroke-width="1" stroke-dasharray="6,4" opacity="0.3"/>
+                    <text x="142" y="370" font-size="18" fill="#021751" font-weight="600" text-anchor="middle">1</text>
+                    <text x="55" y="105" font-size="18" fill="#021751" font-weight="600" text-anchor="end">$7</text>
+
+                    <!-- Shift arrow (leftward) -->
+                    <line x1="230" y1="210" x2="160" y2="210" stroke="#DC2626" stroke-width="3" marker-end="url(#arrowRedDark)"/>
+                    <defs>
+                        <marker id="arrowRedDark" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+                            <polygon points="0 0, 10 3.5, 0 7" fill="#DC2626"/>
+                        </marker>
+                    </defs>
+
+                    <!-- Label -->
+                    <text x="315" y="260" font-size="18" fill="#021751" text-anchor="middle" font-weight="500">↑ Ingreso → demanda</text>
+                    <text x="315" y="280" font-size="18" fill="#021751" text-anchor="middle" font-weight="500">se desplaza a la izquierda</text>
+                </svg>
+            </div>
+        </div>
+
+        <!-- SLIDE 14: SUSTITUTOS -->
+        <div class="slide bg-respaldo">
+            <h2>Bienes sustitutos</h2>
+            <div class="concepto-box">
+                <h4>↑ Precio del otro bien → ↑ Compro este</h4>
+                <p style="opacity: 0.8;">Ejemplos: Coca y Pepsi, Uber y taxi</p>
+            </div>
+        </div>
+
+        <!-- SLIDE 14b: COMPLEMENTARIOS -->
+        <div class="slide bg-respaldo">
+            <h2>Bienes complementarios</h2>
+            <div class="concepto-box">
+                <h4>↑ Precio del otro bien → ↓ Compro este</h4>
+                <p style="opacity: 0.8;">Ejemplos: impresora y tinta, auto y nafta</p>
+            </div>
+        </div>
+
+        <!-- ============================================ -->
+        <!-- SECTION 3: OFERTA (4 slides)                 -->
+        <!-- ============================================ -->
+
+        <!-- SLIDE 15: OFERTA TITLE -->
+        <div class="slide bg-verde portada">
+            <h1>Oferta</h1>
+        </div>
+
+        <!-- SLIDE 16: PREGUNTA MOTIVADORA -->
+        <div class="slide bg-blanco">
+            <h2>¿Qué cosas tiene en cuenta el vendedor a la hora de poner a la venta su producto?</h2>
+        </div>
+
+        <!-- SLIDE 17: DETERMINANTES DE LA OFERTA -->
+        <div class="slide bg-respaldo">
+            <h2>Determinantes de la oferta</h2>
+            <ul>
+                <li><strong>Precio</strong> de ese producto</li>
+                <li><strong>Costo</strong> de producción</li>
+                <li><strong>Costo</strong> de producir cosas similares y sus precios</li>
+                <li><strong>Expectativas</strong> y tendencias</li>
+                <li><strong>Políticas gubernamentales</strong> (permisos, regulaciones)</li>
+            </ul>
+        </div>
+
+        <!-- SLIDE 18: SUPPLY CURVE GRAPH -->
+        <div class="slide bg-blanco">
+            <h2>La curva de oferta</h2>
+            <div class="graph-container">
+                <svg viewBox="0 0 600 400" width="600" style="font-family: 'Albert Sans', sans-serif;">
+                    <!-- Grid lines -->
+                    <line x1="80" y1="100" x2="550" y2="100" stroke="#021751" stroke-width="0.5" opacity="0.1"/>
+                    <line x1="80" y1="200" x2="550" y2="200" stroke="#021751" stroke-width="0.5" opacity="0.1"/>
+                    <line x1="80" y1="300" x2="550" y2="300" stroke="#021751" stroke-width="0.5" opacity="0.1"/>
+                    <line x1="172" y1="30" x2="172" y2="350" stroke="#021751" stroke-width="0.5" opacity="0.1"/>
+                    <line x1="310" y1="30" x2="310" y2="350" stroke="#021751" stroke-width="0.5" opacity="0.1"/>
+                    <line x1="449" y1="30" x2="449" y2="350" stroke="#021751" stroke-width="0.5" opacity="0.1"/>
+                    <!-- Axes -->
+                    <line x1="80" y1="350" x2="550" y2="350" stroke="#021751" stroke-width="2"/>
+                    <line x1="80" y1="30" x2="80" y2="350" stroke="#021751" stroke-width="2"/>
+                    <text x="550" y="390" font-size="20" fill="#021751" text-anchor="end">Q (cantidad)</text>
+                    <text x="20" y="30" font-size="20" fill="#021751">P ($)</text>
+
+                    <!-- Supply curve S: from (130,330) to (490,70) -->
+                    <line x1="130" y1="330" x2="490" y2="70" stroke="#00C600" stroke-width="3"/>
+                    <text x="500" y="65" font-size="20" fill="#00C600" font-weight="600">S</text>
+
+                    <!-- Point 1: P=$5 → y=200, x=310 -->
+                    <line x1="310" y1="200" x2="310" y2="350" stroke="#021751" stroke-width="1" stroke-dasharray="6,4" opacity="0.3"/>
+                    <line x1="80" y1="200" x2="310" y2="200" stroke="#021751" stroke-width="1" stroke-dasharray="6,4" opacity="0.3"/>
+                    <circle cx="310" cy="200" r="6" fill="#00C600"/>
+                    <text x="55" y="205" font-size="18" fill="#021751" font-weight="600" text-anchor="end">$5</text>
+                    <text x="310" y="370" font-size="18" fill="#021751" font-weight="600" text-anchor="middle">5</text>
+
+                    <!-- Point 2: P=$7 → y=100, x=449 -->
+                    <line x1="449" y1="100" x2="449" y2="350" stroke="#021751" stroke-width="1" stroke-dasharray="6,4" opacity="0.3"/>
+                    <line x1="80" y1="100" x2="449" y2="100" stroke="#021751" stroke-width="1" stroke-dasharray="6,4" opacity="0.3"/>
+                    <circle cx="449" cy="100" r="6" fill="#00C600"/>
+                    <text x="55" y="105" font-size="18" fill="#021751" font-weight="600" text-anchor="end">$7</text>
+                    <text x="449" y="370" font-size="18" fill="#021751" font-weight="600" text-anchor="middle">8</text>
+
+                    <!-- Label -->
+                    <text x="220" y="260" font-size="18" fill="#021751" text-anchor="middle" font-weight="500">caro → producción ↑</text>
+                    <text x="315" y="290" font-size="18" fill="#021751" text-anchor="middle" opacity="0.7">A mayor precio, mayor cantidad ofrecida</text>
+                </svg>
+            </div>
+        </div>
+
+        <!-- ============================================ -->
+        <!-- SECTION 4: EQUILIBRIO (8 slides)             -->
+        <!-- ============================================ -->
+
+        <!-- SLIDE 19: EQUILIBRIO TITLE -->
+        <div class="slide bg-impulso portada">
+            <h1>Equilibrio</h1>
+        </div>
+
+        <!-- SLIDE 20: EQUILIBRIUM GRAPH -->
+        <div class="slide bg-blanco">
+            <h2>Precio de equilibrio</h2>
+            <p>La cantidad que desean comprar los consumidores es igual a la que desean vender los oferentes</p>
+            <div class="graph-container">
+                <svg viewBox="0 0 600 400" width="600" style="font-family: 'Albert Sans', sans-serif;">
+                    <!-- Grid lines -->
+                    <line x1="80" y1="100" x2="550" y2="100" stroke="#021751" stroke-width="0.5" opacity="0.1"/>
+                    <line x1="80" y1="200" x2="550" y2="200" stroke="#021751" stroke-width="0.5" opacity="0.1"/>
+                    <line x1="80" y1="300" x2="550" y2="300" stroke="#021751" stroke-width="0.5" opacity="0.1"/>
+                    <!-- Axes -->
+                    <line x1="80" y1="350" x2="550" y2="350" stroke="#021751" stroke-width="2"/>
+                    <line x1="80" y1="30" x2="80" y2="350" stroke="#021751" stroke-width="2"/>
+                    <text x="550" y="390" font-size="20" fill="#021751" text-anchor="end">Q (cantidad)</text>
+                    <text x="20" y="30" font-size="20" fill="#021751">P ($)</text>
+
+                    <!-- Demand curve D: (130,70) to (490,330) -->
+                    <line x1="130" y1="70" x2="490" y2="330" stroke="#3B82F6" stroke-width="3"/>
+                    <text x="500" y="340" font-size="20" fill="#3B82F6" font-weight="600">D</text>
+
+                    <!-- Supply curve S: (130,330) to (490,70) -->
+                    <line x1="130" y1="330" x2="490" y2="70" stroke="#00C600" stroke-width="3"/>
+                    <text x="500" y="65" font-size="20" fill="#00C600" font-weight="600">S</text>
+
+                    <!-- Equilibrium point at intersection: (310,200) -->
+                    <line x1="310" y1="200" x2="310" y2="350" stroke="#021751" stroke-width="1.5" stroke-dasharray="6,4" opacity="0.4"/>
+                    <line x1="80" y1="200" x2="310" y2="200" stroke="#021751" stroke-width="1.5" stroke-dasharray="6,4" opacity="0.4"/>
+                    <circle cx="310" cy="200" r="7" fill="#00C600" stroke="#021751" stroke-width="2"/>
+
+                    <!-- Labels P* and Q* -->
+                    <text x="55" y="205" font-size="20" fill="#021751" font-weight="700" text-anchor="end">P*</text>
+                    <text x="310" y="375" font-size="20" fill="#021751" font-weight="700" text-anchor="middle">Q*</text>
+
+                    <!-- Subtitle -->
+                    <text x="420" y="270" font-size="18" fill="#021751" opacity="0.6" text-anchor="middle">Ejemplo: mercado de pescado</text>
+                </svg>
+            </div>
+        </div>
+
+        <!-- SLIDE 21: DEMAND INCREASE SHIFT -->
+        <div class="slide bg-blanco">
+            <h2>Cambios en la demanda</h2>
+            <p>Ante cambios en las curvas se alcanza un nuevo punto de equilibrio</p>
+            <div class="graph-container">
+                <svg viewBox="0 0 600 400" width="600" style="font-family: 'Albert Sans', sans-serif;">
+                    <!-- Axes -->
+                    <line x1="80" y1="350" x2="550" y2="350" stroke="#021751" stroke-width="2"/>
+                    <line x1="80" y1="30" x2="80" y2="350" stroke="#021751" stroke-width="2"/>
+                    <text x="550" y="390" font-size="20" fill="#021751" text-anchor="end">Q (cantidad)</text>
+                    <text x="20" y="30" font-size="20" fill="#021751">P ($)</text>
+
+                    <!-- Supply curve S: (130,330) to (490,70) -->
+                    <line x1="130" y1="330" x2="490" y2="70" stroke="#00C600" stroke-width="3"/>
+                    <text x="500" y="65" font-size="20" fill="#00C600" font-weight="600">S</text>
+
+                    <!-- Original D (faded): (130,70) to (490,330) -->
+                    <line x1="130" y1="70" x2="490" y2="330" stroke="#3B82F6" stroke-width="3" opacity="0.4"/>
+                    <text x="500" y="340" font-size="18" fill="#3B82F6" font-weight="600" opacity="0.5">D</text>
+
+                    <!-- New D' shifted right by 80px (dashed): (210,70) to (570,330) -->
+                    <line x1="210" y1="70" x2="570" y2="330" stroke="#3B82F6" stroke-width="3" stroke-dasharray="8,4"/>
+                    <text x="545" y="310" font-size="20" fill="#3B82F6" font-weight="600">D'</text>
+
+                    <!-- Old equilibrium: D∩S = (310,200) -->
+                    <line x1="80" y1="200" x2="310" y2="200" stroke="#021751" stroke-width="1" stroke-dasharray="5,3" opacity="0.3"/>
+                    <line x1="310" y1="200" x2="310" y2="350" stroke="#021751" stroke-width="1" stroke-dasharray="5,3" opacity="0.3"/>
+                    <circle cx="310" cy="200" r="5" fill="#3B82F6" opacity="0.4"/>
+                    <text x="55" y="205" font-size="18" fill="#021751" opacity="0.5" text-anchor="end">P₁</text>
+                    <text x="310" y="370" font-size="18" fill="#021751" opacity="0.5" text-anchor="middle">Q₁</text>
+
+                    <!-- New equilibrium: D'∩S = (350,171) -->
+                    <line x1="80" y1="171" x2="350" y2="171" stroke="#021751" stroke-width="1.5" stroke-dasharray="5,3" opacity="0.4"/>
+                    <line x1="350" y1="171" x2="350" y2="350" stroke="#021751" stroke-width="1.5" stroke-dasharray="5,3" opacity="0.4"/>
+                    <circle cx="350" cy="171" r="7" fill="#00C600" stroke="#021751" stroke-width="2"/>
+                    <text x="55" y="176" font-size="18" fill="#021751" font-weight="600" text-anchor="end">P₂</text>
+                    <text x="350" y="375" font-size="18" fill="#021751" font-weight="600" text-anchor="middle">Q₂</text>
+
+                    <!-- Arrow from old to new equilibrium -->
+                    <path d="M 318 193 Q 334 172 342 174" fill="none" stroke="#DC2626" stroke-width="2" marker-end="url(#arrowRed2)"/>
+                    <defs>
+                        <marker id="arrowRed2" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
+                            <polygon points="0 0, 8 3, 0 6" fill="#DC2626"/>
+                        </marker>
+                    </defs>
+
+                    <!-- Label -->
+                    <text x="440" y="250" font-size="19" fill="#1036E2" font-weight="600" text-anchor="middle">Aumento de la demanda</text>
+                </svg>
+            </div>
+        </div>
+
+        <!-- SLIDE 22: SUPPLY INCREASE SHIFT -->
+        <div class="slide bg-blanco">
+            <h2>Cambios en la oferta</h2>
+            <p>Ante cambios en las curvas se alcanza un nuevo punto de equilibrio</p>
+            <div class="graph-container">
+                <svg viewBox="0 0 600 400" width="600" style="font-family: 'Albert Sans', sans-serif;">
+                    <!-- Axes -->
+                    <line x1="80" y1="350" x2="550" y2="350" stroke="#021751" stroke-width="2"/>
+                    <line x1="80" y1="30" x2="80" y2="350" stroke="#021751" stroke-width="2"/>
+                    <text x="550" y="390" font-size="20" fill="#021751" text-anchor="end">Q (cantidad)</text>
+                    <text x="20" y="30" font-size="20" fill="#021751">P ($)</text>
+
+                    <!-- Demand curve D: (130,70) to (490,330) -->
+                    <line x1="130" y1="70" x2="490" y2="330" stroke="#3B82F6" stroke-width="3"/>
+                    <text x="500" y="340" font-size="20" fill="#3B82F6" font-weight="600">D</text>
+
+                    <!-- Original S (faded): (130,330) to (490,70) -->
+                    <line x1="130" y1="330" x2="490" y2="70" stroke="#00C600" stroke-width="3" opacity="0.4"/>
+                    <text x="500" y="65" font-size="18" fill="#00C600" font-weight="600" opacity="0.5">S</text>
+
+                    <!-- New S' shifted right by 80px (dashed): (210,330) to (570,70) -->
+                    <line x1="210" y1="330" x2="570" y2="70" stroke="#00C600" stroke-width="3" stroke-dasharray="8,4"/>
+                    <text x="548" y="85" font-size="20" fill="#00C600" font-weight="600">S'</text>
+
+                    <!-- Old equilibrium: D∩S = (310,200) -->
+                    <line x1="80" y1="200" x2="310" y2="200" stroke="#021751" stroke-width="1" stroke-dasharray="5,3" opacity="0.3"/>
+                    <line x1="310" y1="200" x2="310" y2="350" stroke="#021751" stroke-width="1" stroke-dasharray="5,3" opacity="0.3"/>
+                    <circle cx="310" cy="200" r="5" fill="#00C600" opacity="0.4"/>
+                    <text x="55" y="205" font-size="18" fill="#021751" opacity="0.5" text-anchor="end">P₁</text>
+                    <text x="310" y="370" font-size="18" fill="#021751" opacity="0.5" text-anchor="middle">Q₁</text>
+
+                    <!-- New equilibrium: D∩S' = (350,229) -->
+                    <line x1="80" y1="229" x2="350" y2="229" stroke="#021751" stroke-width="1.5" stroke-dasharray="5,3" opacity="0.4"/>
+                    <line x1="350" y1="229" x2="350" y2="350" stroke="#021751" stroke-width="1.5" stroke-dasharray="5,3" opacity="0.4"/>
+                    <circle cx="350" cy="229" r="7" fill="#00C600" stroke="#021751" stroke-width="2"/>
+                    <text x="55" y="234" font-size="18" fill="#021751" font-weight="600" text-anchor="end">P₂</text>
+                    <text x="350" y="375" font-size="18" fill="#021751" font-weight="600" text-anchor="middle">Q₂</text>
+
+                    <!-- Arrow from old to new equilibrium -->
+                    <path d="M 318 207 Q 334 228 342 226" fill="none" stroke="#DC2626" stroke-width="2" marker-end="url(#arrowRed3)"/>
+                    <defs>
+                        <marker id="arrowRed3" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
+                            <polygon points="0 0, 8 3, 0 6" fill="#DC2626"/>
+                        </marker>
+                    </defs>
+
+                    <!-- Label -->
+                    <text x="440" y="290" font-size="19" fill="#00C600" font-weight="600" text-anchor="middle">Aumento de la oferta</text>
+                </svg>
+            </div>
+        </div>
+
+        <!-- SLIDE 23: EXCESS SUPPLY SETUP -->
+        <div class="slide bg-respaldo">
+            <h2>Exceso de oferta</h2>
+            <div class="graph-container">
+                <svg viewBox="0 0 600 400" width="600" style="font-family: 'Albert Sans', sans-serif;">
+                    <!-- Axes (white on dark) -->
+                    <line x1="80" y1="350" x2="550" y2="350" stroke="white" stroke-width="2"/>
+                    <line x1="80" y1="30" x2="80" y2="350" stroke="white" stroke-width="2"/>
+                    <text x="550" y="390" font-size="20" fill="white" text-anchor="end">Q (cantidad)</text>
+                    <text x="20" y="30" font-size="20" fill="white">P ($)</text>
+
+                    <!-- Demand curve D: (130,70) to (490,330) -->
+                    <line x1="130" y1="70" x2="490" y2="330" stroke="#3B82F6" stroke-width="3"/>
+                    <text x="500" y="340" font-size="20" fill="#3B82F6" font-weight="600">D</text>
+
+                    <!-- Supply curve S: (130,330) to (490,70) -->
+                    <line x1="130" y1="330" x2="490" y2="70" stroke="#00C600" stroke-width="3"/>
+                    <text x="500" y="65" font-size="20" fill="#00C600" font-weight="600">S</text>
+
+                    <!-- Equilibrium (faint) at (310,200) -->
+                    <circle cx="310" cy="200" r="4" fill="white" opacity="0.3"/>
+
+                    <!-- Price line ABOVE equilibrium: P at y=140 -->
+                    <line x1="80" y1="140" x2="500" y2="140" stroke="#F59E0B" stroke-width="2" stroke-dasharray="8,4"/>
+                    <text x="55" y="145" font-size="19" fill="#F59E0B" font-weight="700" text-anchor="end">P</text>
+
+                    <!-- Qd (demand at y=140): x=227 -->
+                    <line x1="227" y1="140" x2="227" y2="350" stroke="white" stroke-width="1" stroke-dasharray="5,3" opacity="0.4"/>
+                    <text x="227" y="375" font-size="19" fill="white" font-weight="600" text-anchor="middle">Qd</text>
+
+                    <!-- Qs (supply at y=140): x=393 -->
+                    <line x1="393" y1="140" x2="393" y2="350" stroke="white" stroke-width="1" stroke-dasharray="5,3" opacity="0.4"/>
+                    <text x="393" y="375" font-size="19" fill="white" font-weight="600" text-anchor="middle">Qs</text>
+
+                    <!-- Bracket showing excess supply -->
+                    <line x1="237" y1="155" x2="383" y2="155" stroke="#DC2626" stroke-width="2"/>
+                    <line x1="237" y1="150" x2="237" y2="160" stroke="#DC2626" stroke-width="2"/>
+                    <line x1="383" y1="150" x2="383" y2="160" stroke="#DC2626" stroke-width="2"/>
+                    <text x="310" y="178" font-size="19" fill="#DC2626" font-weight="600" text-anchor="middle">Exceso de oferta</text>
+                </svg>
+            </div>
+        </div>
+
+        <!-- SLIDE 24: EXCESS SUPPLY RESOLUTION -->
+        <div class="slide bg-respaldo">
+            <h2>Exceso de oferta</h2>
+            <p>Si el precio es <strong>superior</strong> al de equilibrio, los vendedores tienen incentivos a <strong>bajar el precio</strong></p>
+            <div class="graph-container">
+                <svg viewBox="0 0 600 400" width="600" style="font-family: 'Albert Sans', sans-serif;">
+                    <!-- Axes -->
+                    <line x1="80" y1="350" x2="550" y2="350" stroke="white" stroke-width="2"/>
+                    <line x1="80" y1="30" x2="80" y2="350" stroke="white" stroke-width="2"/>
+                    <text x="550" y="390" font-size="20" fill="white" text-anchor="end">Q (cantidad)</text>
+                    <text x="20" y="30" font-size="20" fill="white">P ($)</text>
+
+                    <!-- D: (130,70) to (490,330) -->
+                    <line x1="130" y1="70" x2="490" y2="330" stroke="#3B82F6" stroke-width="3"/>
+                    <text x="500" y="340" font-size="20" fill="#3B82F6" font-weight="600">D</text>
+
+                    <!-- S: (130,330) to (490,70) -->
+                    <line x1="130" y1="330" x2="490" y2="70" stroke="#00C600" stroke-width="3"/>
+                    <text x="500" y="65" font-size="20" fill="#00C600" font-weight="600">S</text>
+
+                    <!-- Equilibrium at (310,200) -->
+                    <line x1="80" y1="200" x2="310" y2="200" stroke="white" stroke-width="1" stroke-dasharray="5,3" opacity="0.3"/>
+                    <circle cx="310" cy="200" r="6" fill="#00C600" stroke="white" stroke-width="2"/>
+                    <text x="55" y="205" font-size="18" fill="#00C600" font-weight="700" text-anchor="end">P*</text>
+
+                    <!-- Price line above equilibrium at y=140 -->
+                    <line x1="80" y1="140" x2="500" y2="140" stroke="#F59E0B" stroke-width="2" stroke-dasharray="8,4"/>
+                    <text x="55" y="145" font-size="19" fill="#F59E0B" font-weight="700" text-anchor="end">P</text>
+
+                    <!-- Qd at y=140: x=227 -->
+                    <line x1="227" y1="140" x2="227" y2="350" stroke="white" stroke-width="1" stroke-dasharray="5,3" opacity="0.3"/>
+                    <text x="227" y="375" font-size="18" fill="white" font-weight="600" text-anchor="middle">Qd</text>
+                    <!-- Qs at y=140: x=393 -->
+                    <line x1="393" y1="140" x2="393" y2="350" stroke="white" stroke-width="1" stroke-dasharray="5,3" opacity="0.3"/>
+                    <text x="393" y="375" font-size="18" fill="white" font-weight="600" text-anchor="middle">Qs</text>
+
+                    <!-- Bracket -->
+                    <line x1="237" y1="155" x2="383" y2="155" stroke="#DC2626" stroke-width="2"/>
+                    <line x1="237" y1="150" x2="237" y2="160" stroke="#DC2626" stroke-width="2"/>
+                    <line x1="383" y1="150" x2="383" y2="160" stroke="#DC2626" stroke-width="2"/>
+                    <text x="310" y="178" font-size="18" fill="#DC2626" font-weight="600" text-anchor="middle">Exceso de oferta</text>
+
+                    <!-- Downward arrow from P toward P* -->
+                    <line x1="505" y1="145" x2="505" y2="195" stroke="#00C600" stroke-width="3" marker-end="url(#arrowDown)"/>
+                    <defs>
+                        <marker id="arrowDown" markerWidth="10" markerHeight="7" refX="5" refY="7" orient="auto">
+                            <polygon points="0 0, 10 0, 5 7" fill="#00C600"/>
+                        </marker>
+                    </defs>
+                    <text x="530" y="175" font-size="18" fill="#00C600" font-weight="600">↓ P</text>
+                </svg>
+            </div>
+        </div>
+
+        <!-- SLIDE 25: EXCESS DEMAND SETUP -->
+        <div class="slide bg-blanco">
+            <h2>Exceso de demanda</h2>
+            <div class="graph-container">
+                <svg viewBox="0 0 600 400" width="600" style="font-family: 'Albert Sans', sans-serif;">
+                    <!-- Axes -->
+                    <line x1="80" y1="350" x2="550" y2="350" stroke="#021751" stroke-width="2"/>
+                    <line x1="80" y1="30" x2="80" y2="350" stroke="#021751" stroke-width="2"/>
+                    <text x="550" y="390" font-size="20" fill="#021751" text-anchor="end">Q (cantidad)</text>
+                    <text x="20" y="30" font-size="20" fill="#021751">P ($)</text>
+
+                    <!-- D: (130,70) to (490,330) -->
+                    <line x1="130" y1="70" x2="490" y2="330" stroke="#3B82F6" stroke-width="3"/>
+                    <text x="500" y="340" font-size="20" fill="#3B82F6" font-weight="600">D</text>
+
+                    <!-- S: (130,330) to (490,70) -->
+                    <line x1="130" y1="330" x2="490" y2="70" stroke="#00C600" stroke-width="3"/>
+                    <text x="500" y="65" font-size="20" fill="#00C600" font-weight="600">S</text>
+
+                    <!-- Equilibrium (faint) at (310,200) -->
+                    <circle cx="310" cy="200" r="4" fill="#021751" opacity="0.3"/>
+
+                    <!-- Price line BELOW equilibrium: y=260 -->
+                    <line x1="80" y1="260" x2="500" y2="260" stroke="#F59E0B" stroke-width="2" stroke-dasharray="8,4"/>
+                    <text x="55" y="265" font-size="19" fill="#F59E0B" font-weight="700" text-anchor="end">P</text>
+
+                    <!-- Qs (supply at y=260): x=227 -->
+                    <line x1="227" y1="260" x2="227" y2="350" stroke="#021751" stroke-width="1" stroke-dasharray="5,3" opacity="0.4"/>
+                    <text x="227" y="375" font-size="19" fill="#021751" font-weight="600" text-anchor="middle">Qs</text>
+
+                    <!-- Qd (demand at y=260): x=393 -->
+                    <line x1="393" y1="260" x2="393" y2="350" stroke="#021751" stroke-width="1" stroke-dasharray="5,3" opacity="0.4"/>
+                    <text x="393" y="375" font-size="19" fill="#021751" font-weight="600" text-anchor="middle">Qd</text>
+
+                    <!-- Bracket showing excess demand -->
+                    <line x1="237" y1="275" x2="383" y2="275" stroke="#DC2626" stroke-width="2"/>
+                    <line x1="237" y1="270" x2="237" y2="280" stroke="#DC2626" stroke-width="2"/>
+                    <line x1="383" y1="270" x2="383" y2="280" stroke="#DC2626" stroke-width="2"/>
+                    <text x="310" y="298" font-size="19" fill="#DC2626" font-weight="600" text-anchor="middle">Exceso de demanda</text>
+                </svg>
+            </div>
+        </div>
+
+        <!-- SLIDE 26: EXCESS DEMAND RESOLUTION -->
+        <div class="slide bg-blanco">
+            <h2>Exceso de demanda</h2>
+            <p>Si el precio es <strong>inferior</strong> al de equilibrio, los vendedores tienen incentivos a <strong>subir el precio</strong></p>
+            <div class="graph-container">
+                <svg viewBox="0 0 600 400" width="600" style="font-family: 'Albert Sans', sans-serif;">
+                    <!-- Axes -->
+                    <line x1="80" y1="350" x2="550" y2="350" stroke="#021751" stroke-width="2"/>
+                    <line x1="80" y1="30" x2="80" y2="350" stroke="#021751" stroke-width="2"/>
+                    <text x="550" y="390" font-size="20" fill="#021751" text-anchor="end">Q (cantidad)</text>
+                    <text x="20" y="30" font-size="20" fill="#021751">P ($)</text>
+
+                    <!-- D: (130,70) to (490,330) -->
+                    <line x1="130" y1="70" x2="490" y2="330" stroke="#3B82F6" stroke-width="3"/>
+                    <text x="500" y="340" font-size="20" fill="#3B82F6" font-weight="600">D</text>
+
+                    <!-- S: (130,330) to (490,70) -->
+                    <line x1="130" y1="330" x2="490" y2="70" stroke="#00C600" stroke-width="3"/>
+                    <text x="500" y="65" font-size="20" fill="#00C600" font-weight="600">S</text>
+
+                    <!-- Equilibrium at (310,200) -->
+                    <line x1="80" y1="200" x2="310" y2="200" stroke="#021751" stroke-width="1" stroke-dasharray="5,3" opacity="0.3"/>
+                    <circle cx="310" cy="200" r="6" fill="#00C600" stroke="#021751" stroke-width="2"/>
+                    <text x="55" y="205" font-size="18" fill="#00C600" font-weight="700" text-anchor="end">P*</text>
+
+                    <!-- Price line below equilibrium at y=260 -->
+                    <line x1="80" y1="260" x2="500" y2="260" stroke="#F59E0B" stroke-width="2" stroke-dasharray="8,4"/>
+                    <text x="55" y="265" font-size="19" fill="#F59E0B" font-weight="700" text-anchor="end">P</text>
+
+                    <!-- Qs at y=260: x=227 -->
+                    <line x1="227" y1="260" x2="227" y2="350" stroke="#021751" stroke-width="1" stroke-dasharray="5,3" opacity="0.3"/>
+                    <text x="227" y="375" font-size="18" fill="#021751" font-weight="600" text-anchor="middle">Qs</text>
+                    <!-- Qd at y=260: x=393 -->
+                    <line x1="393" y1="260" x2="393" y2="350" stroke="#021751" stroke-width="1" stroke-dasharray="5,3" opacity="0.3"/>
+                    <text x="393" y="375" font-size="18" fill="#021751" font-weight="600" text-anchor="middle">Qd</text>
+
+                    <!-- Bracket -->
+                    <line x1="237" y1="275" x2="383" y2="275" stroke="#DC2626" stroke-width="2"/>
+                    <line x1="237" y1="270" x2="237" y2="280" stroke="#DC2626" stroke-width="2"/>
+                    <line x1="383" y1="270" x2="383" y2="280" stroke="#DC2626" stroke-width="2"/>
+                    <text x="310" y="298" font-size="18" fill="#DC2626" font-weight="600" text-anchor="middle">Exceso de demanda</text>
+
+                    <!-- Upward arrow from P toward P* -->
+                    <line x1="505" y1="255" x2="505" y2="205" stroke="#00C600" stroke-width="3" marker-end="url(#arrowUp)"/>
+                    <defs>
+                        <marker id="arrowUp" markerWidth="10" markerHeight="7" refX="5" refY="0" orient="auto">
+                            <polygon points="0 7, 10 7, 5 0" fill="#00C600"/>
+                        </marker>
+                    </defs>
+                    <text x="535" y="235" font-size="18" fill="#00C600" font-weight="600">↑ P</text>
+                </svg>
+            </div>
+        </div>
+
+        <!-- ============================================ -->
+        <!-- SECTION 5: ELASTICIDADES (12 slides)         -->
+        <!-- ============================================ -->
+
+        <!-- SLIDE 27: ELASTICIDADES TITLE -->
+        <div class="slide bg-verde portada">
+            <h1>Elasticidades</h1>
+        </div>
+
+        <!-- SLIDE 28: MOTIVATING QUESTION -->
+        <div class="slide bg-respaldo">
+            <h2>¿Siempre la demanda actúa igual ante un cambio del precio?</h2>
+            <ul>
+                <li><strong>No todos los productos</strong> responden igual</li>
+                <li><strong>Agua:</strong> sube el precio, la demanda casi no baja</li>
+                <li><strong>Crucero:</strong> sube el precio, la demanda cae mucho</li>
+            </ul>
+        </div>
+
+        <!-- SLIDE 29: TYPES OF ELASTICITY -->
+        <div class="slide bg-blanco">
+            <h2>Tipos de elasticidad</h2>
+            <div class="falla-grid">
+                <div class="falla-card">
+                    <h4>Elasticidad Precio-Demanda</h4>
+                    <p>¿Cuánto cambia Q demandada ante cambio en P?</p>
+                </div>
+                <div class="falla-card">
+                    <h4>Elasticidad Ingreso-Demanda</h4>
+                    <p>¿Cuánto cambia Q demandada ante cambio en ingreso?</p>
+                </div>
+                <div class="falla-card">
+                    <h4>Elasticidad Precio Cruzado</h4>
+                    <p>¿Cuánto cambia Q de un bien ante cambio en P de otro?</p>
+                </div>
+                <div class="falla-card">
+                    <h4>Elasticidad Precio-Oferta</h4>
+                    <p>¿Cuánto cambia Q ofrecida ante cambio en P?</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE 30: INCOME ELASTICITY GRAPH -->
+        <div class="slide bg-blanco">
+            <h2>Elasticidad Ingreso-Demanda</h2>
+            <p>Aumentan los ingresos en $100:</p>
+            <div class="dual-graph">
+                <div class="mini-graph">
+                    <svg viewBox="0 0 280 220" width="280" style="font-family: 'Albert Sans', sans-serif;">
+                        <!-- Axes -->
+                        <line x1="40" y1="190" x2="260" y2="190" stroke="#021751" stroke-width="2"/>
+                        <line x1="40" y1="20" x2="40" y2="190" stroke="#021751" stroke-width="2"/>
+                        <text x="260" y="210" font-size="14" fill="#021751" text-anchor="end">Q</text>
+                        <text x="15" y="22" font-size="14" fill="#021751">P</text>
+                        <!-- Original D: (60,35) to (180,175) -->
+                        <line x1="60" y1="35" x2="180" y2="175" stroke="#3B82F6" stroke-width="2.5"/>
+                        <text x="185" y="180" font-size="16" fill="#3B82F6" font-weight="600">D</text>
+                        <!-- D' slight shift right 30px: (90,35) to (210,175) -->
+                        <line x1="90" y1="35" x2="210" y2="175" stroke="#3B82F6" stroke-width="2.5" stroke-dasharray="6,3"/>
+                        <text x="215" y="180" font-size="16" fill="#3B82F6" font-weight="600">D'</text>
+                        <!-- At y=105: on D x=120, on D' x=150 -->
+                        <line x1="40" y1="105" x2="155" y2="105" stroke="#021751" stroke-width="1" stroke-dasharray="4,3" opacity="0.2"/>
+                        <line x1="120" y1="105" x2="120" y2="190" stroke="#021751" stroke-width="1" stroke-dasharray="4,3" opacity="0.3"/>
+                        <circle cx="120" cy="105" r="3.5" fill="#3B82F6"/>
+                        <text x="120" y="205" font-size="14" fill="#021751" text-anchor="middle">5</text>
+                        <line x1="150" y1="105" x2="150" y2="190" stroke="#021751" stroke-width="1" stroke-dasharray="4,3" opacity="0.3"/>
+                        <circle cx="150" cy="105" r="3.5" fill="#3B82F6"/>
+                        <text x="150" y="205" font-size="14" fill="#021751" text-anchor="middle">7</text>
+                        <!-- Arrow -->
+                        <line x1="125" y1="140" x2="145" y2="140" stroke="#00C600" stroke-width="2" marker-end="url(#miniArr1)"/>
+                        <defs>
+                            <marker id="miniArr1" markerWidth="6" markerHeight="5" refX="5" refY="2.5" orient="auto">
+                                <polygon points="0 0, 6 2.5, 0 5" fill="#00C600"/>
+                            </marker>
+                        </defs>
+                    </svg>
+                    <p style="color: var(--azul-impulso);">Bien poco elástico al ingreso</p>
+                </div>
+                <div class="mini-graph">
+                    <svg viewBox="0 0 280 220" width="280" style="font-family: 'Albert Sans', sans-serif;">
+                        <!-- Axes -->
+                        <line x1="40" y1="190" x2="260" y2="190" stroke="#021751" stroke-width="2"/>
+                        <line x1="40" y1="20" x2="40" y2="190" stroke="#021751" stroke-width="2"/>
+                        <text x="260" y="210" font-size="14" fill="#021751" text-anchor="end">Q</text>
+                        <text x="15" y="22" font-size="14" fill="#021751">P</text>
+                        <!-- Original D: (55,35) to (155,175) -->
+                        <line x1="55" y1="35" x2="155" y2="175" stroke="#3B82F6" stroke-width="2.5"/>
+                        <text x="160" y="180" font-size="16" fill="#3B82F6" font-weight="600">D</text>
+                        <!-- D' big shift right 80px: (135,35) to (235,175) -->
+                        <line x1="135" y1="35" x2="235" y2="175" stroke="#3B82F6" stroke-width="2.5" stroke-dasharray="6,3"/>
+                        <text x="240" y="180" font-size="16" fill="#3B82F6" font-weight="600">D'</text>
+                        <!-- At y=105: on D x=105, on D' x=185 -->
+                        <line x1="40" y1="105" x2="190" y2="105" stroke="#021751" stroke-width="1" stroke-dasharray="4,3" opacity="0.2"/>
+                        <line x1="105" y1="105" x2="105" y2="190" stroke="#021751" stroke-width="1" stroke-dasharray="4,3" opacity="0.3"/>
+                        <circle cx="105" cy="105" r="3.5" fill="#3B82F6"/>
+                        <text x="105" y="205" font-size="14" fill="#021751" text-anchor="middle">5</text>
+                        <line x1="185" y1="105" x2="185" y2="190" stroke="#021751" stroke-width="1" stroke-dasharray="4,3" opacity="0.3"/>
+                        <circle cx="185" cy="105" r="3.5" fill="#3B82F6"/>
+                        <text x="185" y="205" font-size="14" fill="#021751" text-anchor="middle">10</text>
+                        <!-- Arrow -->
+                        <line x1="113" y1="140" x2="178" y2="140" stroke="#00C600" stroke-width="2" marker-end="url(#miniArr2)"/>
+                        <defs>
+                            <marker id="miniArr2" markerWidth="6" markerHeight="5" refX="5" refY="2.5" orient="auto">
+                                <polygon points="0 0, 6 2.5, 0 5" fill="#00C600"/>
+                            </marker>
+                        </defs>
+                    </svg>
+                    <p style="color: var(--azul-impulso);">Bien muy elástico al ingreso</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE 31: PRICE ELASTICITY CONCEPT -->
+        <div class="slide bg-respaldo">
+            <h2>Elasticidad Precio-Demanda</h2>
+            <p>Ante un cambio porcentual en el precio, ¿cuánto cambia porcentualmente la cantidad demandada?</p>
+            <div class="graph-container">
+                <svg viewBox="0 0 600 400" width="600" style="font-family: 'Albert Sans', sans-serif;">
+                    <!-- Axes -->
+                    <line x1="80" y1="350" x2="550" y2="350" stroke="white" stroke-width="2"/>
+                    <line x1="80" y1="30" x2="80" y2="350" stroke="white" stroke-width="2"/>
+                    <text x="550" y="390" font-size="20" fill="white" text-anchor="end">Q (cantidad)</text>
+                    <text x="20" y="30" font-size="20" fill="white">P ($)</text>
+
+                    <!-- Steep demand (inelastic): (290,70) to (330,330) -->
+                    <line x1="290" y1="70" x2="330" y2="330" stroke="#3B82F6" stroke-width="3"/>
+                    <text x="340" y="340" font-size="19" fill="#3B82F6" font-weight="600">D inelástica</text>
+
+                    <!-- Flat demand (elastic): (130,180) to (490,220) -->
+                    <line x1="130" y1="180" x2="490" y2="220" stroke="#F59E0B" stroke-width="3"/>
+                    <text x="430" y="245" font-size="19" fill="#F59E0B" font-weight="600">D elástica</text>
+
+                    <!-- Common intersection point at (310,200) -->
+                    <circle cx="310" cy="200" r="6" fill="white"/>
+                </svg>
+            </div>
+        </div>
+
+        <!-- SLIDE 32: DEMANDA ELÁSTICA -->
+        <div class="slide bg-blanco">
+            <h2>Demanda elástica</h2>
+            <div class="concepto-box">
+                <h4>La cantidad cambia más que el precio</h4>
+                <p>Demanda <strong>sensible</strong> al precio</p>
+                <p style="opacity: 0.8;">Ejemplos: viajes, ropa de marca, cena en restaurante</p>
+            </div>
+        </div>
+
+        <!-- SLIDE 32b: DEMANDA INELÁSTICA -->
+        <div class="slide bg-blanco">
+            <h2>Demanda inelástica</h2>
+            <div class="concepto-box">
+                <h4>La cantidad no cambia sustancialmente</h4>
+                <p>Demanda <strong>no sensible</strong> al precio</p>
+                <p style="opacity: 0.8;">Ejemplos: medicamentos, nafta, agua</p>
+            </div>
+        </div>
+
+        <!-- SLIDE 33: TAXES INTRO -->
+        <div class="slide bg-impulso">
+            <span class="section-badge">Elasticidades en la práctica</span>
+            <h2>Impuestos</h2>
+            <ul>
+                <li>Si el Estado busca <strong>recaudar sin distorsionar</strong> demasiado...</li>
+            </ul>
+            <p style="font-size: 2.5rem; font-weight: 600; text-align: center; margin-top: 20px;">¿A qué productos debería gravar con impuestos más altos?</p>
+        </div>
+
+        <!-- SLIDE 34: TAXES ANSWER -->
+        <div class="slide bg-blanco">
+            <h2>Impuestos e inelasticidad</h2>
+            <ul>
+                <li>Lo más eficiente: impuestos altos a productos muy <span class="highlight">INELÁSTICOS</span></li>
+                <li><strong>Sube el precio</strong> pero no cae la demanda → recaudación se maximiza</li>
+            </ul>
+            <div class="concepto-box">
+                <h4>Ejemplo</h4>
+                <p><strong>Cigarrillos, nafta, alcohol</strong> — demanda inelástica. Por eso los gobiernos los gravan fuerte.</p>
+            </div>
+        </div>
+
+        <!-- SLIDE 35: WHO PAYS THE TAX? -->
+        <div class="slide bg-respaldo">
+            <h2>¿Quién paga el impuesto?</h2>
+            <ul>
+                <li>¿Cambia si el impuesto se pone a <strong>productores o consumidores</strong>?</li>
+                <li>¿En qué situación el productor puede <strong>incorporar el impuesto</strong> al precio de venta?</li>
+            </ul>
+            <p style="margin-top: 20px;"><span class="highlight">Respuesta: depende de la elasticidad. Cuando la demanda es inelástica, el productor puede trasladar el impuesto al consumidor.</span></p>
+        </div>
+
+        <!-- SLIDE 36: TAX INCIDENCE GRAPHS -->
+        <div class="slide bg-blanco">
+            <h2>Impuestos y elasticidad</h2>
+            <div class="dual-graph">
+                <div class="mini-graph">
+                    <svg viewBox="0 0 280 240" width="280" style="font-family: 'Albert Sans', sans-serif;">
+                        <!-- Axes -->
+                        <line x1="40" y1="200" x2="260" y2="200" stroke="#021751" stroke-width="2"/>
+                        <line x1="40" y1="15" x2="40" y2="200" stroke="#021751" stroke-width="2"/>
+                        <text x="260" y="218" font-size="14" fill="#021751" text-anchor="end">Q</text>
+                        <text x="18" y="18" font-size="14" fill="#021751">P</text>
+
+                        <!-- Steep D (inelastic): (120,30) to (170,190) -->
+                        <line x1="120" y1="30" x2="170" y2="190" stroke="#3B82F6" stroke-width="2.5"/>
+                        <text x="175" y="195" font-size="14" fill="#3B82F6" font-weight="600">D</text>
+
+                        <!-- S original: (60,180) to (240,50) -->
+                        <line x1="60" y1="180" x2="240" y2="50" stroke="#00C600" stroke-width="2.5"/>
+                        <text x="245" y="50" font-size="14" fill="#00C600" font-weight="600">S</text>
+
+                        <!-- S' with tax (shifted up 30): (60,150) to (240,20) -->
+                        <line x1="60" y1="150" x2="240" y2="20" stroke="#00C600" stroke-width="2" stroke-dasharray="5,3"/>
+                        <text x="245" y="22" font-size="14" fill="#00C600" font-weight="600">S'</text>
+
+                        <!-- Old equilibrium -->
+                        <circle cx="147" cy="117" r="4" fill="#021751" opacity="0.3"/>
+                        <!-- New equilibrium -->
+                        <circle cx="140" cy="92" r="4" fill="#00C600"/>
+
+                        <!-- Price rise bracket -->
+                        <line x1="35" y1="117" x2="35" y2="92" stroke="#DC2626" stroke-width="2"/>
+                        <text x="22" y="107" font-size="13" fill="#DC2626" font-weight="600" text-anchor="end" transform="rotate(-90, 22, 107)">↑P</text>
+
+                        <!-- Tax bracket on right -->
+                        <rect x="175" y="78" width="70" height="50" rx="5" fill="#DC2626" opacity="0.1" stroke="#DC2626" stroke-width="1"/>
+                        <text x="210" y="98" font-size="13" fill="#DC2626" font-weight="600" text-anchor="middle">Consumidor</text>
+                        <text x="210" y="112" font-size="13" fill="#DC2626" font-weight="600" text-anchor="middle">paga más</text>
+                    </svg>
+                    <p style="color: var(--azul-impulso);">Demanda inelástica</p>
+                </div>
+                <div class="mini-graph">
+                    <svg viewBox="0 0 280 240" width="280" style="font-family: 'Albert Sans', sans-serif;">
+                        <!-- Axes -->
+                        <line x1="40" y1="200" x2="260" y2="200" stroke="#021751" stroke-width="2"/>
+                        <line x1="40" y1="15" x2="40" y2="200" stroke="#021751" stroke-width="2"/>
+                        <text x="260" y="218" font-size="14" fill="#021751" text-anchor="end">Q</text>
+                        <text x="18" y="18" font-size="14" fill="#021751">P</text>
+
+                        <!-- Flat D (elastic): (55,95) to (250,140) -->
+                        <line x1="55" y1="95" x2="250" y2="140" stroke="#3B82F6" stroke-width="2.5"/>
+                        <text x="250" y="155" font-size="14" fill="#3B82F6" font-weight="600">D</text>
+
+                        <!-- S original: (60,180) to (240,50) -->
+                        <line x1="60" y1="180" x2="240" y2="50" stroke="#00C600" stroke-width="2.5"/>
+                        <text x="245" y="50" font-size="14" fill="#00C600" font-weight="600">S</text>
+
+                        <!-- S' with tax (shifted up 30): (60,150) to (240,20) -->
+                        <line x1="60" y1="150" x2="240" y2="20" stroke="#00C600" stroke-width="2" stroke-dasharray="5,3"/>
+                        <text x="245" y="22" font-size="14" fill="#00C600" font-weight="600">S'</text>
+
+                        <!-- Old equilibrium -->
+                        <circle cx="148" cy="117" r="4" fill="#021751" opacity="0.3"/>
+                        <!-- New equilibrium -->
+                        <circle cx="117" cy="109" r="4" fill="#00C600"/>
+
+                        <!-- Small price rise bracket -->
+                        <line x1="35" y1="117" x2="35" y2="109" stroke="#DC2626" stroke-width="2"/>
+
+                        <!-- Label -->
+                        <rect x="170" y="50" width="70" height="50" rx="5" fill="#1036E2" opacity="0.1" stroke="#1036E2" stroke-width="1"/>
+                        <text x="205" y="70" font-size="13" fill="#1036E2" font-weight="600" text-anchor="middle">Productor</text>
+                        <text x="205" y="84" font-size="13" fill="#1036E2" font-weight="600" text-anchor="middle">absorbe más</text>
+                    </svg>
+                    <p style="color: var(--azul-impulso);">Demanda elástica</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE 37: EXPORT TAXES -->
+        <div class="slide bg-respaldo">
+            <h2>Impuestos a la exportación</h2>
+            <ul>
+                <li>El gobierno coloca un <strong>impuesto a la exportación de carne</strong></li>
+                <li>Por cada tonelada exportada, el exportador debe tributar</li>
+            </ul>
+            <div class="concepto-box">
+                <h4>La respuesta depende de la elasticidad</h4>
+                <p>Si Argentina es un <strong>oferente pequeño</strong> en el mercado mundial (precio dado), el exportador <strong>no puede trasladar</strong> el impuesto → lo absorbe él</p>
+            </div>
+        </div>
+
+        <!-- SLIDE 38: EJERCICIOS TITLE -->
+        <div class="slide bg-impulso portada">
+            <h1>Ejercicios</h1>
+            <p class="subtitle">Aplicación de oferta y demanda</p>
+        </div>
+
+        <!-- ============================================ -->
+        <!-- SECTION 6: EJERCICIOS (4 slides)             -->
+        <!-- ============================================ -->
+
+        <!-- SLIDE 39: EXERCISE 1 -->
+        <div class="slide bg-blanco">
+            <span class="section-badge">Ejercicio 1</span>
+            <h2>Mercado de pollo</h2>
+            <ul>
+                <li>Aumenta el <strong>precio de la carne vacuna</strong></li>
+                <li>¿Qué tipo de bien es el <strong>pollo</strong> respecto de la carne?</li>
+                <li>¿Qué pasa con la <strong>demanda</strong> de pollo?</li>
+                <li>¿Qué pasa con el <strong>precio de equilibrio</strong>?</li>
+            </ul>
+        </div>
+
+        <!-- SLIDE 40: EXERCISE 2 -->
+        <div class="slide bg-respaldo">
+            <span class="section-badge">Ejercicio 2</span>
+            <h2>Transporte público</h2>
+            <ul>
+                <li>Suben los <strong>ingresos</strong> de la población</li>
+                <li>¿Qué tipo de bien es el <strong>transporte público</strong>?</li>
+                <li>¿Qué pasa con la <strong>demanda</strong>?</li>
+                <li>¿Qué pasa con <strong>precio y cantidad</strong> de equilibrio?</li>
+            </ul>
+        </div>
+
+        <!-- SLIDE 41: EXERCISE 3 -->
+        <div class="slide bg-blanco">
+            <span class="section-badge">Ejercicio 3</span>
+            <h2>Mercado de dólares</h2>
+            <ul>
+                <li>Expectativa de <strong>suba del dólar</strong></li>
+                <li>¿Qué pasa con la <strong>demanda</strong> de dólares?</li>
+                <li>¿Qué pasa con el <strong>precio de equilibrio</strong> (tipo de cambio)?</li>
+            </ul>
+        </div>
+
+        <!-- SLIDE 42: CIERRE -->
+        <div class="slide bg-respaldo portada">
+            <h2 style="font-size: 3.5rem; margin-bottom: 15px;">Felipe Venancio</h2>
+            <p class="subtitle">Aspectos Económicos del Diseño — FADU</p>
+        </div>
+
+    </div>
+
+    <!-- Navegación -->
+    <div class="slide-counter"><span id="current">1</span> / <span id="total">46</span></div>
+    <div class="nav-hint">← → para navegar | F para pantalla completa</div>
+
+    <script>
+        const slides = document.querySelectorAll('.slide');
+        let currentSlide = 0;
+        const total = slides.length;
+        document.getElementById('total').textContent = total;
+
+        function showSlide(n) {
+            slides[currentSlide].classList.remove('active');
+            currentSlide = (n + total) % total;
+            slides[currentSlide].classList.add('active');
+            document.getElementById('current').textContent = currentSlide + 1;
+        }
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowRight' || e.key === ' ' || e.key === 'Enter') {
+                showSlide(currentSlide + 1);
+            } else if (e.key === 'ArrowLeft') {
+                showSlide(currentSlide - 1);
+            } else if (e.key === 'Home') {
+                showSlide(0);
+            } else if (e.key === 'End') {
+                showSlide(total - 1);
+            } else if (e.key === 'f' || e.key === 'F') {
+                if (!document.fullscreenElement) {
+                    document.documentElement.requestFullscreen();
+                } else {
+                    document.exitFullscreen();
+                }
+            }
+        });
+
+        let touchStartX = 0;
+        document.addEventListener('touchstart', (e) => {
+            touchStartX = e.touches[0].clientX;
+        });
+        document.addEventListener('touchend', (e) => {
+            const touchEndX = e.changedTouches[0].clientX;
+            const diff = touchStartX - touchEndX;
+            if (Math.abs(diff) > 50) {
+                if (diff > 0) showSlide(currentSlide + 1);
+                else showSlide(currentSlide - 1);
+            }
+        });
+
+        document.addEventListener('click', (e) => {
+            if (e.target.tagName === 'A' || e.target.tagName === 'BUTTON') return;
+            if (e.clientX > window.innerWidth / 2) {
+                showSlide(currentSlide + 1);
+            } else {
+                showSlide(currentSlide - 1);
+            }
+        });
+    </script>
+</body>
+</html>
