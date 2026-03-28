@@ -1,0 +1,1460 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Introducción a la Economía (FADU) - Felipe Venancio</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Albert+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --azul-impulso: #1036E2;
+            --verde-activo: #00C600;
+            --azul-respaldo: #021751;
+            --blanco: #FFFFFF;
+            --negro: #000000;
+            --rojo-alerta: #DC2626;
+            --amarillo: #F59E0B;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Albert Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--azul-respaldo);
+            color: var(--blanco);
+            overflow: hidden;
+        }
+
+        .slide-container {
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .slide {
+            display: none;
+            width: 100%;
+            height: 100%;
+            padding: 60px 80px;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .slide.active {
+            display: flex;
+        }
+
+        /* Fondos */
+        .bg-respaldo { background: var(--azul-respaldo); color: var(--blanco); }
+        .bg-impulso { background: var(--azul-impulso); color: var(--blanco); }
+        .bg-verde { background: var(--verde-activo); color: var(--blanco); }
+        .bg-blanco { background: var(--blanco); color: var(--azul-respaldo); }
+
+        /* Tipografía */
+        h1 {
+            font-size: 3.8rem;
+            font-weight: 700;
+            line-height: 1.1;
+            margin-bottom: 30px;
+        }
+
+        h2 {
+            font-size: 2.6rem;
+            font-weight: 600;
+            margin-bottom: 25px;
+        }
+
+        h3 {
+            font-size: 1.8rem;
+            font-weight: 500;
+            margin-bottom: 20px;
+            opacity: 0.9;
+        }
+
+        p, li {
+            font-size: 1.5rem;
+            line-height: 1.6;
+            margin-bottom: 15px;
+        }
+
+        .subtitle {
+            font-size: 1.6rem;
+            opacity: 0.8;
+            font-weight: 400;
+        }
+
+        .highlight {
+            color: var(--verde-activo);
+        }
+
+        .bg-blanco .highlight {
+            color: var(--azul-impulso);
+        }
+
+        .highlight-red {
+            color: var(--rojo-alerta);
+        }
+
+        .highlight-yellow {
+            color: var(--amarillo);
+        }
+
+        blockquote {
+            font-size: 1.6rem;
+            font-style: italic;
+            border-left: 4px solid var(--verde-activo);
+            padding-left: 30px;
+            margin: 25px 0;
+            opacity: 0.95;
+        }
+
+        blockquote cite {
+            display: block;
+            font-size: 1.1rem;
+            margin-top: 12px;
+            font-style: normal;
+            opacity: 0.7;
+        }
+
+        /* Citas académicas */
+        .cita-paper {
+            background: rgba(255,255,255,0.08);
+            padding: 25px 30px;
+            border-radius: 10px;
+            margin: 20px 0;
+            border-left: 4px solid var(--verde-activo);
+        }
+
+        .bg-blanco .cita-paper {
+            background: rgba(16, 54, 226, 0.06);
+            border-left-color: var(--azul-impulso);
+        }
+
+        .cita-paper .titulo {
+            font-weight: 600;
+            font-size: 1.2rem;
+            margin-bottom: 8px;
+        }
+
+        .cita-paper .autores {
+            font-size: 1rem;
+            opacity: 0.7;
+            margin-bottom: 12px;
+        }
+
+        .cita-paper .contenido {
+            font-size: 1.25rem;
+            line-height: 1.5;
+        }
+
+        ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        ul li {
+            padding-left: 35px;
+            position: relative;
+            margin-bottom: 18px;
+        }
+
+        ul li::before {
+            content: "▸";
+            position: absolute;
+            left: 0;
+            color: var(--verde-activo);
+            font-size: 1.4rem;
+        }
+
+        .bg-verde ul li::before,
+        .bg-impulso ul li::before {
+            color: var(--blanco);
+        }
+
+        /* Tablas */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 25px 0;
+            font-size: 1.3rem;
+        }
+
+        th, td {
+            padding: 18px 22px;
+            text-align: left;
+            border-bottom: 1px solid rgba(255,255,255,0.2);
+        }
+
+        .bg-blanco th,
+        .bg-blanco td {
+            border-bottom: 1px solid rgba(0,0,0,0.1);
+        }
+
+        th {
+            font-weight: 600;
+            opacity: 0.7;
+            font-size: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* Diagrama flujo */
+        .flow-diagram {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+            margin: 35px 0;
+            flex-wrap: wrap;
+        }
+
+        .flow-box {
+            background: rgba(255,255,255,0.1);
+            padding: 20px 28px;
+            border-radius: 10px;
+            font-size: 1.2rem;
+            font-weight: 500;
+            text-align: center;
+        }
+
+        .bg-blanco .flow-box {
+            background: rgba(16, 54, 226, 0.1);
+        }
+
+        .flow-arrow {
+            font-size: 1.8rem;
+            color: var(--verde-activo);
+        }
+
+        /* Dos columnas */
+        .two-cols {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 50px;
+            margin-top: 25px;
+        }
+
+        .three-cols {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 30px;
+            margin-top: 25px;
+        }
+
+        /* Navegación */
+        .nav-hint {
+            position: fixed;
+            bottom: 30px;
+            right: 40px;
+            font-size: 0.9rem;
+            opacity: 0.5;
+        }
+
+        .slide-counter {
+            position: fixed;
+            bottom: 30px;
+            left: 40px;
+            font-size: 0.9rem;
+            opacity: 0.5;
+        }
+
+        /* Portada especial */
+        .portada {
+            text-align: center;
+        }
+
+        .portada h1 {
+            font-size: 4rem;
+            margin-bottom: 20px;
+        }
+
+        /* Número grande */
+        .big-number {
+            font-size: 7rem;
+            font-weight: 800;
+            color: var(--verde-activo);
+            line-height: 1;
+        }
+
+        .bg-blanco .big-number {
+            color: var(--azul-impulso);
+        }
+
+        /* Fórmula/Ecuación */
+        .formula {
+            font-size: 2rem;
+            text-align: center;
+            padding: 30px;
+            background: rgba(255,255,255,0.08);
+            border-radius: 12px;
+            margin: 25px 0;
+            font-weight: 500;
+            letter-spacing: 2px;
+        }
+
+        .bg-blanco .formula {
+            background: rgba(16, 54, 226, 0.06);
+        }
+
+        /* Stats */
+        .stat-box {
+            text-align: center;
+            padding: 25px;
+        }
+
+        .stat-numero {
+            font-size: 4.5rem;
+            font-weight: 800;
+            color: var(--verde-activo);
+            line-height: 1;
+        }
+
+        .bg-blanco .stat-numero {
+            color: var(--azul-impulso);
+        }
+
+        .stat-label {
+            font-size: 1.2rem;
+            opacity: 0.8;
+            margin-top: 10px;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 35px;
+            margin-top: 35px;
+        }
+
+        /* Conceptos teóricos */
+        .concepto-box {
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.15);
+            padding: 25px;
+            border-radius: 12px;
+            margin: 15px 0;
+        }
+
+        .bg-blanco .concepto-box {
+            background: rgba(16, 54, 226, 0.03);
+            border-color: rgba(16, 54, 226, 0.15);
+        }
+
+        .concepto-box h4 {
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-bottom: 12px;
+            color: var(--verde-activo);
+        }
+
+        .bg-blanco .concepto-box h4 {
+            color: var(--azul-impulso);
+        }
+
+        /* Versus */
+        .versus {
+            display: grid;
+            grid-template-columns: 1fr auto 1fr;
+            gap: 30px;
+            align-items: start;
+            margin: 30px 0;
+        }
+
+        .versus-center {
+            font-size: 2.5rem;
+            font-weight: 700;
+            text-align: center;
+            opacity: 0.3;
+            padding-top: 40px;
+        }
+
+        /* Frase final */
+        .frase-final {
+            font-size: 2rem;
+            line-height: 1.5;
+            text-align: center;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .frase-final em {
+            color: var(--verde-activo);
+            font-style: normal;
+        }
+
+        /* Nota al pie académica */
+        .nota-academica {
+            font-size: 0.95rem;
+            opacity: 0.5;
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        /* Anexo badge */
+        .anexo-badge {
+            background: var(--amarillo);
+            color: #000;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            display: inline-block;
+            margin-bottom: 20px;
+        }
+
+        /* Graph container */
+        .graph-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 20px 0;
+        }
+
+        .graph-container svg {
+            max-width: 100%;
+            height: auto;
+        }
+
+        /* Círculo virtuoso */
+        .circulo {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 12px;
+            margin: 25px 0;
+        }
+
+        .circulo-item {
+            background: rgba(255,255,255,0.1);
+            padding: 16px 35px;
+            border-radius: 50px;
+            font-size: 1.1rem;
+        }
+
+        .bg-blanco .circulo-item {
+            background: rgba(16, 54, 226, 0.08);
+        }
+
+        .circulo-arrow {
+            font-size: 1.3rem;
+            color: var(--verde-activo);
+        }
+
+        /* Badges */
+        .section-badge {
+            display: inline-block;
+            background: var(--verde-activo);
+            color: white;
+            font-size: 0.85rem;
+            font-weight: 700;
+            padding: 6px 16px;
+            border-radius: 20px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 20px;
+        }
+
+        .bg-blanco .section-badge {
+            background: var(--azul-impulso);
+        }
+
+        .bg-verde .section-badge,
+        .bg-impulso .section-badge {
+            background: rgba(255,255,255,0.25);
+        }
+
+        /* Cita grande */
+        .cita-grande {
+            font-size: 2.2rem;
+            font-style: italic;
+            line-height: 1.4;
+            text-align: center;
+            max-width: 850px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .cita-grande .autor {
+            display: block;
+            font-size: 1.2rem;
+            font-style: normal;
+            margin-top: 25px;
+            opacity: 0.6;
+            font-weight: 500;
+        }
+
+        /* Falla card */
+        .falla-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .falla-card {
+            background: rgba(255,255,255,0.08);
+            padding: 22px 25px;
+            border-radius: 10px;
+            border-left: 3px solid var(--verde-activo);
+        }
+
+        .bg-blanco .falla-card {
+            background: rgba(16, 54, 226, 0.05);
+            border-left-color: var(--azul-impulso);
+        }
+
+        .falla-card h4 {
+            font-size: 1.15rem;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: var(--verde-activo);
+        }
+
+        .bg-blanco .falla-card h4 {
+            color: var(--azul-impulso);
+        }
+
+        .falla-card p {
+            font-size: 1.1rem;
+            margin-bottom: 0;
+            opacity: 0.85;
+        }
+
+        .falla-card.roja {
+            border-left-color: var(--rojo-alerta);
+        }
+
+        .falla-card.roja h4 {
+            color: var(--rojo-alerta);
+        }
+
+        /* Solución cards */
+        .solucion-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+            margin-top: 20px;
+        }
+
+        .solucion-card {
+            background: rgba(255,255,255,0.08);
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+        }
+
+        .bg-blanco .solucion-card {
+            background: rgba(16, 54, 226, 0.05);
+        }
+
+        .solucion-card .numero {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--verde-activo);
+            margin-bottom: 8px;
+        }
+
+        .bg-blanco .solucion-card .numero {
+            color: var(--azul-impulso);
+        }
+
+        .solucion-card h4 {
+            font-size: 1.15rem;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        .solucion-card p {
+            font-size: 1rem;
+            opacity: 0.8;
+            margin-bottom: 0;
+        }
+
+        /* Mapa del curso */
+        .curso-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 14px;
+            margin-top: 20px;
+        }
+
+        .curso-item {
+            background: rgba(255,255,255,0.06);
+            border: 1px solid rgba(255,255,255,0.12);
+            padding: 16px 20px;
+            border-radius: 8px;
+            font-size: 1.15rem;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .curso-item .num {
+            font-size: 1rem;
+            font-weight: 700;
+            color: var(--verde-activo);
+            min-width: 28px;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .slide {
+                padding: 40px 20px;
+            }
+
+            h1 {
+                font-size: 2.2rem;
+            }
+
+            .portada h1 {
+                font-size: 2.4rem;
+            }
+
+            h2 {
+                font-size: 1.8rem;
+            }
+
+            h3 {
+                font-size: 1.4rem;
+            }
+
+            p, li {
+                font-size: 1.2rem;
+            }
+
+            .two-cols,
+            .three-cols,
+            .falla-grid,
+            .solucion-grid,
+            .curso-grid {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+
+            .versus {
+                grid-template-columns: 1fr;
+                gap: 15px;
+            }
+
+            .versus-center {
+                padding-top: 0;
+            }
+
+            .stats-grid {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+
+            .stat-numero {
+                font-size: 3rem;
+            }
+
+            .big-number {
+                font-size: 4rem;
+            }
+
+            .flow-diagram {
+                flex-direction: column;
+                gap: 10px;
+            }
+
+            .frase-final {
+                font-size: 1.5rem;
+            }
+
+            .cita-grande {
+                font-size: 1.6rem;
+            }
+
+            blockquote {
+                font-size: 1.3rem;
+            }
+
+            .cita-paper .contenido {
+                font-size: 1.1rem;
+            }
+
+            table {
+                font-size: 1.05rem;
+            }
+
+            th, td {
+                padding: 12px 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="slide-container">
+
+        <!-- SLIDE 1: PORTADA -->
+        <div class="slide active bg-respaldo portada">
+            <h1>Introducción a la <br><span class="highlight">Economía</span></h1>
+            <p class="subtitle">Aspectos Económicos del Diseño — FADU</p>
+            <p style="margin-top: 40px; font-size: 1.2rem; opacity: 0.6;">Felipe Venancio</p>
+        </div>
+
+        <!-- SLIDE 2: ¿QUÉ ESTUDIA LA ECONOMÍA? -->
+        <div class="slide bg-blanco">
+            <h2>¿Qué estudia la Economía?</h2>
+            <div class="flow-diagram" style="margin: 30px 0;">
+                <div class="flow-box" style="border: 2px solid var(--rojo-alerta);">
+                    <strong>Recursos</strong><br><span style="font-size: 0.95rem;">Limitados</span>
+                </div>
+                <div class="flow-arrow">+</div>
+                <div class="flow-box" style="border: 2px solid var(--azul-impulso);">
+                    <strong>Necesidades</strong><br><span style="font-size: 0.95rem;">Ilimitadas</span>
+                </div>
+                <div class="flow-arrow">=</div>
+                <div class="flow-box" style="border: 2px solid var(--verde-activo); color: var(--verde-activo);">
+                    <strong>Escasez</strong><br><span style="font-size: 0.95rem;">→ Decisión</span>
+                </div>
+            </div>
+            <p style="font-size: 1.6rem; text-align: center; margin-top: 30px;">Toda sociedad tiene que responder <strong>tres preguntas</strong>:</p>
+            <div class="three-cols" style="margin-top: 30px;">
+                <div class="concepto-box" style="text-align: center;">
+                    <h4>¿Qué producir?</h4>
+                    <p style="margin-bottom: 0;">¿Sillas o mesas? ¿Packaging o señalética? ¿Autos o bicicletas?</p>
+                </div>
+                <div class="concepto-box" style="text-align: center;">
+                    <h4>¿Cómo producir?</h4>
+                    <p style="margin-bottom: 0;">¿Madera o plástico inyectado? ¿Impresión offset o digital? ¿Artesanal o industrial?</p>
+                </div>
+                <div class="concepto-box" style="text-align: center;">
+                    <h4>¿Para quién?</h4>
+                    <p style="margin-bottom: 0;">¿Mercado masivo o premium? ¿Buenos Aires o el interior? ¿Exportación o consumo local?</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE 3: UN CUENTO PARA PENSAR -->
+        <div class="slide bg-respaldo">
+            <h2>Un cuento para pensar</h2>
+            <p style="font-size: 1.6rem; margin-top: 15px;">Imaginemos una economía simple donde se producen <span class="highlight">papel</span> y <span class="highlight">cartón</span>.</p>
+            <p style="font-size: 1.6rem;">Un día, una crisis en la industria de la celulosa destruye <strong class="highlight-red">la mitad de la producción de papel</strong>.</p>
+            <div class="three-cols" style="margin-top: 25px;">
+                <div class="concepto-box" style="text-align: center;">
+                    <h4>¿Qué?</h4>
+                    <p style="margin-bottom: 0;">¿Hay que producir más papel? ¿Se reconvierte la industria gráfica hacia digital?</p>
+                </div>
+                <div class="concepto-box" style="text-align: center;">
+                    <h4>¿Cómo?</h4>
+                    <p style="margin-bottom: 0;">¿Se busca celulosa reciclada? ¿Se importa papel? ¿De dónde salen los recursos?</p>
+                </div>
+                <div class="concepto-box" style="text-align: center;">
+                    <h4>¿Para quién?</h4>
+                    <p style="margin-bottom: 0;">Ahora hay menos papel. ¿Quién se queda sin packaging? ¿Quién sin libros?</p>
+                </div>
+            </div>
+            <p style="text-align: center; margin-top: 30px; font-size: 1.8rem; font-weight: 600;">¿Cómo resolvemos esto?</p>
+        </div>
+
+        <!-- SLIDE 4: EL DICTADOR BENEVOLENTE -->
+        <div class="slide bg-blanco">
+            <h2>Opción A: el dictador benevolente</h2>
+            <p>Supongamos que hay un gobernante omnisciente, honesto, que solo quiere el bien común. ¿Qué haría?</p>
+            <ul>
+                <li>Relevar cuánto papel se perdió, en qué regiones, qué industrias lo usan</li>
+                <li>Calcular cuántas imprentas, editoriales y estudios de diseño necesitan papel</li>
+                <li>Ordenar a algunos productores de cartón que reconviertan su producción a papel</li>
+                <li>Decidir a qué precio se vende y a quién le toca</li>
+                <li>Redistribuir la pérdida de alguna forma "justa"</li>
+            </ul>
+            <p>Suena razonable. Pero necesita <strong class="highlight">información perfecta</strong>, <strong class="highlight">honestidad total</strong> y <strong class="highlight">capacidad infinita de gestión</strong>.</p>
+            <p>En la práctica, ¿cuántos dictadores benevolentes conocemos?</p>
+        </div>
+
+        <!-- SLIDE 5: EL MERCADO RESPONDE -->
+        <div class="slide bg-impulso">
+            <h2>Opción B: dejamos que el mercado responda</h2>
+            <p>Nadie da ninguna orden. ¿Qué pasa?</p>
+            <div class="circulo">
+                <div class="circulo-item">Hay menos papel → el precio del papel sube</div>
+                <div class="circulo-arrow">↓</div>
+                <div class="circulo-item">Los estudios de diseño buscan alternativas: cartón reciclado, digital, materiales no convencionales</div>
+                <div class="circulo-arrow">↓</div>
+                <div class="circulo-item">La demanda de cartón sube (alternativa) → su precio sube también</div>
+                <div class="circulo-arrow">↓</div>
+                <div class="circulo-item" style="border: 2px solid var(--verde-activo);">Los productores ven que el papel es más rentable → invierten en producirlo</div>
+            </div>
+            <p>El diseñador no se pasó a digital por convicción ecológica, sino porque el papel se puso caro. El resultado es casi idéntico al del dictador benevolente.</p>
+        </div>
+
+        <!-- SLIDE 6: EL PROBLEMA DE LA DISTRIBUCIÓN -->
+        <div class="slide bg-respaldo portada">
+            <h2>El problema de la distribución</h2>
+            <div style="margin: 40px 0; text-align: center;">
+                <svg width="600" height="180" viewBox="0 0 600 180" style="max-width: 100%;">
+                    <!-- Papel (pocos) -->
+                    <text x="60" y="30" font-size="40" text-anchor="middle">📄</text>
+                    <text x="120" y="30" font-size="40" text-anchor="middle">📄</text>
+                    <text x="90" y="80" font-size="40" text-anchor="middle">📄</text>
+                    <!-- Signo de pregunta -->
+                    <text x="300" y="100" font-size="80" fill="#00C600" text-anchor="middle" font-weight="800">?</text>
+                    <!-- Personas (muchas) -->
+                    <text x="450" y="30" font-size="40" text-anchor="middle">👤</text>
+                    <text x="510" y="30" font-size="40" text-anchor="middle">👤</text>
+                    <text x="540" y="80" font-size="40" text-anchor="middle">👤</text>
+                    <text x="480" y="80" font-size="40" text-anchor="middle">👤</text>
+                    <text x="450" y="130" font-size="40" text-anchor="middle">👤</text>
+                    <text x="510" y="130" font-size="40" text-anchor="middle">👤</text>
+                    <text x="540" y="170" font-size="40" text-anchor="middle">👤</text>
+                </svg>
+            </div>
+            <p style="text-align: center; font-size: 1.8rem;">No alcanza para todos. ¿Cómo los repartimos?</p>
+        </div>
+
+        <!-- SLIDE 7: FORMAS DE RESOLVER LA ESCASEZ -->
+        <div class="slide bg-blanco">
+            <h2>¿Para quién? Formas de resolver la escasez</h2>
+            <p>Tenemos papel limitado y muchos que lo necesitan. ¿Cómo lo repartimos?</p>
+            <div class="falla-grid">
+                <div class="falla-card">
+                    <h4>Por sorteo</h4>
+                    <p>"Democrático" pero arbitrario. La editorial que más lo necesita puede quedarse afuera.</p>
+                </div>
+                <div class="falla-card">
+                    <h4>El que llega primero</h4>
+                    <p>Premia la velocidad. Genera colas en las papeleras y acaparamiento.</p>
+                </div>
+                <div class="falla-card">
+                    <h4>Por la fuerza</h4>
+                    <p>El más poderoso se queda con todo. No hay incentivo a producir más.</p>
+                </div>
+                <div class="falla-card">
+                    <h4>Por el precio</h4>
+                    <p>Se lo lleva el que más paga. Eficiente, pero... ¿y la escuela pública que necesita cuadernos?</p>
+                </div>
+            </div>
+            <p style="margin-top: 20px;">Ningún sistema es perfecto. Cada uno resuelve un problema y crea otro. Esa tensión es la esencia de la economía.</p>
+        </div>
+
+        <!-- SLIDE 8: DISPOSICIÓN A PAGAR -->
+        <div class="slide bg-respaldo">
+            <h2>¿Qué hay detrás de "el que más paga"?</h2>
+            <p>La disposición a pagar combina dos cosas:</p>
+            <div class="two-cols">
+                <div class="concepto-box">
+                    <h4>Cuánto lo deseás</h4>
+                    <p style="margin-bottom: 0;">Tu valoración subjetiva del bien.</p>
+                </div>
+                <div class="concepto-box">
+                    <h4>Cuánta plata tenés</h4>
+                    <p style="margin-bottom: 0;">Tu capacidad económica. Tu "voto" en el mercado.</p>
+                </div>
+            </div>
+            <p style="margin-top: 25px;">Un estudio de diseño en Recoleta cobra 10x lo que uno en Lanús por el mismo logo. ¿Es porque el diseño es 10x mejor, o porque el cliente puede pagar 10x más?</p>
+            <div class="concepto-box">
+                <h4>El dato que incomoda</h4>
+                <p style="margin-bottom: 0;">Uno de los mayores predictores del resultado económico de una persona es la familia en la que le tocó nacer.</p>
+            </div>
+        </div>
+
+        <!-- SLIDE 9: ¿QUIÉN DECIDE? -->
+        <div class="slide bg-respaldo">
+            <h2>¿Quién decide?</h2>
+            <p>Pensá un segundo en todo lo que pasó para que un póster llegue a la pared de un bar.</p>
+            <ul>
+                <li>Un diseñador eligió la tipografía y la composición</li>
+                <li>Una imprenta eligió las tintas y el gramaje del papel</li>
+                <li>Un distribuidor eligió la ruta de reparto</li>
+                <li>El dueño del bar eligió colgarlo en esa pared</li>
+                <li>Un proveedor en Brasil decidió exportar esa tinta y no otra</li>
+            </ul>
+            <p>Nadie coordinó nada. No hubo un plan central. Y sin embargo... funcionó.</p>
+        </div>
+
+        <!-- SLIDE 10: ADAM SMITH -->
+        <div class="slide bg-respaldo">
+            <h2>Adam Smith y el interés propio</h2>
+            <div class="cita-grande">
+                "No es por la benevolencia del carnicero, del cervecero o del panadero que podemos contar con nuestra cena, sino por su propio interés."
+                <span class="autor">Adam Smith — La Riqueza de las Naciones (1776)</span>
+            </div>
+            <div class="formula" style="margin-top: 35px;">
+                Racionalidad egoísta + Competencia = Resultado social deseable
+            </div>
+            <p style="text-align: center; margin-top: 20px;">Cada uno buscando lo suyo genera, sin proponérselo, un orden que beneficia al conjunto.</p>
+        </div>
+
+        <!-- SLIDE 11: EL MERCADO COMO MECANISMO -->
+        <div class="slide bg-blanco">
+            <h2>El mercado como mecanismo</h2>
+            <div class="concepto-box" style="text-align: center; margin: 30px 0;">
+                <p style="font-size: 1.6rem; margin-bottom: 0; font-weight: 500;">El mercado es el mecanismo a través del cual compradores y vendedores interactúan para determinar precios e intercambiar bienes y servicios.</p>
+            </div>
+            <p>Pero el mercado no es solo un lugar donde se compra y se vende. Es un <strong class="highlight">sistema de procesamiento de información</strong>.</p>
+            <p>Y la pieza central de ese sistema es el <strong class="highlight">precio</strong>.</p>
+        </div>
+
+        <!-- SLIDE 12: HAYEK -->
+        <div class="slide bg-respaldo">
+            <span class="section-badge">Idea central</span>
+            <h2>Hayek: el conocimiento disperso</h2>
+            <div class="cita-paper">
+                <div class="titulo">"The Use of Knowledge in Society" (1945)</div>
+                <div class="autores">Friedrich Hayek — Nobel de Economía 1974 — American Economic Review, 35(4)</div>
+                <div class="contenido">"El conocimiento relevante para la toma de decisiones económicas no está concentrado en ninguna mente individual. Está disperso entre millones de personas."</div>
+            </div>
+            <p>El diseñador industrial que conoce las limitaciones de su taller sabe algo que ningún planificador central puede saber. Hayek diría que ese conocimiento local es irremplazable.</p>
+            <p>Si el conocimiento está disperso, ¿cómo hacemos para usarlo? <span class="highlight">El sistema de precios.</span></p>
+        </div>
+
+        <!-- SLIDE 13: SISTEMA DE PRECIOS -->
+        <div class="slide bg-blanco">
+            <h2>El sistema de precios como sistema de información</h2>
+            <p>Un precio es un mensaje comprimido. Condensa la información de miles de decisiones en un solo número.</p>
+            <div class="two-cols">
+                <div class="concepto-box">
+                    <h4>Cuando un precio sube...</h4>
+                    <p style="margin-bottom: 0;">Te está diciendo: "esto es más escaso o más deseado". No necesitás saber por qué. Solo reaccionás.</p>
+                </div>
+                <div class="concepto-box">
+                    <h4>Cuando un precio baja...</h4>
+                    <p style="margin-bottom: 0;">Te está diciendo: "hay abundancia o menos demanda". Los productores redirigen recursos.</p>
+                </div>
+            </div>
+            <blockquote style="margin-top: 30px;">
+                "The marvel is that in a case like that of a scarcity of one raw material, without an order being issued, without more than perhaps a handful of people knowing the cause, tens of thousands of people [...] are made to use the material or its products more sparingly."
+                <cite>Friedrich Hayek — "The Use of Knowledge in Society" (1945)</cite>
+            </blockquote>
+            <p style="opacity: 0.6; font-size: 1.1rem;">"Lo maravilloso es que, en un caso como el de la escasez de una materia prima, sin que se emita ninguna orden, sin que quizás más que un puñado de personas conozca la causa, decenas de miles son llevadas a usar ese material o sus productos con mayor moderación."</p>
+        </div>
+
+        <!-- SLIDE 14: EJEMPLO PRECIO COMO SEÑAL -->
+        <div class="slide bg-respaldo">
+            <h2>Ejemplo: el precio como señal</h2>
+            <p>Imaginá que el aluminio reciclado se pone de moda para packaging premium.</p>
+            <div class="flow-diagram">
+                <div class="flow-box">Nuevo uso del aluminio reciclado</div>
+                <div class="flow-arrow">→</div>
+                <div class="flow-box">↑ Demanda</div>
+                <div class="flow-arrow">→</div>
+                <div class="flow-box" style="border: 2px solid var(--verde-activo);">↑ Precio</div>
+            </div>
+            <div class="three-cols" style="margin-top: 25px;">
+                <div class="concepto-box" style="text-align: center;">
+                    <h4>Productores</h4>
+                    <p style="margin-bottom: 0;">Invierten más en reciclaje y recolección. Más aluminio reciclado al mercado.</p>
+                </div>
+                <div class="concepto-box" style="text-align: center;">
+                    <h4>Diseñadores</h4>
+                    <p style="margin-bottom: 0;">Buscan materiales alternativos: papel kraft, bioplásticos, cartón con acabados.</p>
+                </div>
+                <div class="concepto-box" style="text-align: center;">
+                    <h4>Innovadores</h4>
+                    <p style="margin-bottom: 0;">Desarrollan procesos más eficientes de reciclaje, nuevos materiales.</p>
+                </div>
+            </div>
+            <p style="text-align: center; margin-top: 25px;">Nadie dio una orden. Nadie diseñó un plan. El precio coordinó todo.</p>
+        </div>
+
+        <!-- SLIDE 15: FRIEDMAN: EL LÁPIZ -->
+        <div class="slide bg-blanco">
+            <h2>Milton Friedman: la historia del lápiz</h2>
+            <p>Nadie en el mundo sabe hacer un lápiz.</p>
+            <div class="flow-diagram">
+                <div class="flow-box">Madera de cedro<br><span style="font-size: 0.9rem; opacity: 0.7;">(Oregon, EE.UU.)</span></div>
+                <div class="flow-arrow">+</div>
+                <div class="flow-box">Grafito<br><span style="font-size: 0.9rem; opacity: 0.7;">(Sri Lanka)</span></div>
+                <div class="flow-arrow">+</div>
+                <div class="flow-box">Goma<br><span style="font-size: 0.9rem; opacity: 0.7;">(Malasia)</span></div>
+                <div class="flow-arrow">+</div>
+                <div class="flow-box">Pintura amarilla<br><span style="font-size: 0.9rem; opacity: 0.7;">(Alemania)</span></div>
+                <div class="flow-arrow">=</div>
+                <div class="flow-box" style="border: 2px solid var(--verde-activo);">Un lápiz<br><span style="font-size: 0.9rem;">($0,10 USD)</span></div>
+            </div>
+            <p style="margin-top: 25px;">Pensá en cualquier producto que hayas diseñado. ¿Cuántas personas participaron en la cadena que hizo posible que ese objeto exista? Materiales, transporte, herramientas, software, energía...</p>
+            <blockquote>
+                "The price system works so well, so effortlessly, that we are not aware of it most of the time."
+                <cite>Milton Friedman — Free to Choose (1980)</cite>
+            </blockquote>
+            <p style="opacity: 0.6; font-size: 1.1rem;">"El sistema de precios funciona tan bien, tan sin esfuerzo, que la mayor parte del tiempo ni siquiera somos conscientes de él."</p>
+        </div>
+
+        <!-- SLIDE 16: TRES CRITERIOS -->
+        <div class="slide bg-verde">
+            <h2>¿Qué le pedimos al sistema económico?</h2>
+            <p>Tres criterios para evaluar si funciona bien:</p>
+            <div class="three-cols" style="margin-top: 25px;">
+                <div class="concepto-box" style="text-align: center; background: rgba(255,255,255,0.15); border-color: rgba(255,255,255,0.3);">
+                    <h4 style="color: var(--blanco);">Eficiencia</h4>
+                    <p style="margin-bottom: 0;">¿Los recursos se usan de la mejor manera posible?</p>
+                </div>
+                <div class="concepto-box" style="text-align: center; background: rgba(255,255,255,0.15); border-color: rgba(255,255,255,0.3);">
+                    <h4 style="color: var(--blanco);">Equidad</h4>
+                    <p style="margin-bottom: 0;">¿La distribución del producto es justa?</p>
+                </div>
+                <div class="concepto-box" style="text-align: center; background: rgba(255,255,255,0.15); border-color: rgba(255,255,255,0.3);">
+                    <h4 style="color: var(--blanco);">Estabilidad</h4>
+                    <p style="margin-bottom: 0;">¿El sistema es predecible y sostenible en el tiempo?</p>
+                </div>
+            </div>
+            <p style="margin-top: 30px;">El mercado cumple razonablemente bien con el primero. Con los otros dos... la cosa se complica.</p>
+        </div>
+
+        <!-- SLIDE 17: EFICIENCIA -->
+        <div class="slide bg-blanco">
+            <h2>Eficiencia: cuando el mercado funciona</h2>
+            <p>En competencia perfecta, el mercado asigna recursos de manera eficiente:</p>
+            <ul>
+                <li>Sobreviven los productores que mejor combinan calidad y costo</li>
+                <li>Los recursos fluyen hacia donde generan mayor valor</li>
+                <li>El consumidor obtiene el mejor precio posible</li>
+                <li>Se alcanza un óptimo de Pareto: nadie puede mejorar sin empeorar a otro</li>
+            </ul>
+            <div class="concepto-box">
+                <h4>La mano invisible</h4>
+                <p style="margin-bottom: 0;">La competencia disciplina el interés propio. Si cobrás de más, otro te saca el cliente. Si producís mal, el mercado te expulsa. El egoísmo, canalizado por la competencia, genera eficiencia.</p>
+            </div>
+            <p>Pero... ¿siempre se dan estas condiciones?</p>
+        </div>
+
+        <!-- SLIDE 18: FALLAS DE MERCADO -->
+        <div class="slide bg-respaldo">
+            <h2>Pero el mercado no siempre funciona</h2>
+            <p>Los economistas identifican situaciones donde el mercado falla:</p>
+            <div class="falla-grid">
+                <div class="falla-card">
+                    <h4>Competencia imperfecta</h4>
+                    <p>Adobe tiene cuasi-monopolio en software de diseño. Puede cobrar lo que quiera porque no hay alternativa real a escala.</p>
+                </div>
+                <div class="falla-card">
+                    <h4>Externalidades</h4>
+                    <p>El packaging plástico que diseñás genera contaminación que no se refleja en el precio. La señalética accesible genera inclusión que nadie te paga.</p>
+                </div>
+                <div class="falla-card">
+                    <h4>Bienes públicos</h4>
+                    <p>La señalética urbana, las tipografías open source — nadie tiene incentivo a pagarlas porque cualquiera las usa gratis.</p>
+                </div>
+                <div class="falla-card">
+                    <h4>Información asimétrica</h4>
+                    <p>Tu cliente no sabe si el diseño vale lo que le cobrás. Vos no sabés si te va a pagar. Stiglitz ganó el Nobel por esto.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE 19: EXTERNALIDADES: FAST FASHION -->
+        <div class="slide bg-blanco">
+            <h2>Externalidades: el caso del fast fashion</h2>
+            <p>La industria del fast fashion es un caso extremo de externalidad negativa del diseño.</p>
+            <div class="solucion-grid">
+                <div class="solucion-card">
+                    <div class="numero">1</div>
+                    <h4>Impuestos ambientales</h4>
+                    <p>Un impuesto por prenda que refleje el costo ambiental real. Internaliza la externalidad.</p>
+                </div>
+                <div class="solucion-card">
+                    <div class="numero">2</div>
+                    <h4>Regulación de materiales</h4>
+                    <p>Prohibir ciertos textiles contaminantes. Más rígido, menos eficiente.</p>
+                </div>
+                <div class="solucion-card">
+                    <div class="numero">3</div>
+                    <h4>Etiquetado obligatorio</h4>
+                    <p>Que el consumidor sepa el impacto ambiental. Usa la información como herramienta.</p>
+                </div>
+                <div class="solucion-card">
+                    <div class="numero">4</div>
+                    <h4>Economía circular</h4>
+                    <p>Incentivos para diseñar productos reciclables. Usa el mercado para resolver la falla.</p>
+                </div>
+            </div>
+            <p style="margin-top: 20px;">De menor a mayor intervención. El diseñador que entiende esto diseña mejor.</p>
+        </div>
+
+        <!-- SLIDE 20: TRANSICIÓN -->
+        <div class="slide bg-verde portada">
+            <h1 style="font-size: 3.2rem;">Si el mercado falla,<br>¿el Estado es la solución?</h1>
+            <p style="font-size: 1.6rem; margin-top: 20px;">Dos economistas. Dos respuestas opuestas.</p>
+        </div>
+
+        <!-- SLIDE 21: STIGLITZ -->
+        <div class="slide bg-blanco">
+            <span class="section-badge">El caso para intervenir</span>
+            <h2>Joseph Stiglitz</h2>
+            <h3>Premio Nobel de Economía 2001</h3>
+            <div class="cita-paper">
+                <div class="titulo">"The Role of Government in a Contemporary Economy"</div>
+                <div class="autores">Joseph Stiglitz — Nobel Lecture, 2001</div>
+                <div class="contenido">"La asimetría de información no es la excepción sino la regla. Los mercados, por sí solos, no producen resultados eficientes cuando la información es imperfecta — y la información es siempre imperfecta."</div>
+            </div>
+            <ul>
+                <li>Asimetrías de información en casi todos los mercados</li>
+                <li>Mercados incompletos: no existen mercados para muchos bienes necesarios</li>
+                <li>Poder de mercado: la competencia perfecta es un ideal, no la realidad</li>
+            </ul>
+            <p>Pensá en el mercado de trabajo del diseñador freelance: info asimétrica total. El cliente no sabe si el diseño vale lo que le cobran. El diseñador no sabe si el cliente le va a pagar.</p>
+            <p>Conclusión de Stiglitz: el Estado tiene un rol fundamental que no puede delegarse al mercado.</p>
+        </div>
+
+        <!-- SLIDE 22: KRUEGER -->
+        <div class="slide bg-respaldo">
+            <span class="section-badge">Las fallas del Estado</span>
+            <h2>Anne Krueger</h2>
+            <h3>Economista jefe del Banco Mundial, Subdirectora del FMI</h3>
+            <div class="cita-grande" style="margin: 30px auto;">
+                "Asumimos que el sector privado es egoísta y actúa por interés propio, pero cuando analizamos al sector público asumimos que está motivado por la justicia social. ¿Por qué?"
+                <span class="autor">Anne Krueger</span>
+            </div>
+            <ul style="margin-top: 25px;">
+                <li><strong>Rent-seeking:</strong> los grupos de interés capturan al Estado y lo usan para su beneficio</li>
+                <li><strong>Información:</strong> el Estado tampoco tiene información perfecta</li>
+                <li><strong>Incentivos:</strong> los funcionarios también responden a incentivos propios, no solo al "bien común"</li>
+            </ul>
+        </div>
+
+        <!-- SLIDE 23: DEBATE CENTRAL -->
+        <div class="slide bg-blanco">
+            <h2>El debate central</h2>
+            <div class="versus">
+                <div class="concepto-box">
+                    <h4>Stiglitz</h4>
+                    <p style="margin-bottom: 8px;">El mercado falla sistemáticamente</p>
+                    <p style="margin-bottom: 8px;">La información asimétrica es la regla</p>
+                    <p style="margin-bottom: 8px;">El Estado debe corregir y complementar</p>
+                    <p style="margin-bottom: 0;">Sin intervención, hay exclusión e ineficiencia</p>
+                </div>
+                <div class="versus-center">VS</div>
+                <div class="concepto-box">
+                    <h4>Krueger</h4>
+                    <p style="margin-bottom: 8px;">El Estado también falla</p>
+                    <p style="margin-bottom: 8px;">Los funcionarios tienen sus propios intereses</p>
+                    <p style="margin-bottom: 8px;">La intervención puede empeorar las cosas</p>
+                    <p style="margin-bottom: 0;">Rent-seeking distorsiona las políticas</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE 24: LA CONCLUSIÓN CLAVE -->
+        <div class="slide bg-respaldo">
+            <div class="cita-grande" style="margin-bottom: 40px;">
+                "No alcanza con justificar que el mercado tiene problemas para resolver alguna cuestión. Además me tenés que convencer de que el Estado puede proponer una solución superadora, y esto no es siempre así."
+            </div>
+            <div class="flow-diagram">
+                <div class="flow-box" style="border: 2px solid var(--rojo-alerta);">Falla de mercado</div>
+                <div class="flow-arrow" style="color: var(--rojo-alerta);">↛</div>
+                <div class="flow-box" style="border: 2px solid var(--verde-activo);">Intervención exitosa</div>
+            </div>
+        </div>
+
+        <!-- SLIDE 25: REAGAN -->
+        <div class="slide bg-impulso">
+            <div class="cita-grande">
+                "The nine most terrifying words in the English language are: I'm from the Government, and I'm here to help."
+                <span class="autor">Ronald Reagan (1986)</span>
+            </div>
+            <p style="text-align: center; margin-top: 30px; opacity: 0.7; font-size: 1.2rem;">"Las nueve palabras más aterradoras en inglés son: soy del Gobierno y vengo a ayudar."</p>
+            <p style="text-align: center; margin-top: 25px;">Reagan exageraba, pero capturaba una intuición real: la intervención estatal no es gratis. Tiene costos, distorsiones y riesgos propios.</p>
+        </div>
+
+        <!-- SLIDE 26: CHURCHILL -->
+        <div class="slide bg-blanco">
+            <div class="cita-grande">
+                "Democracy is the worst form of government, except for all the others."
+                <span class="autor">Winston Churchill (1947)</span>
+            </div>
+            <p style="text-align: center; margin-top: 30px; opacity: 0.7; font-size: 1.2rem;">"La democracia es la peor forma de gobierno, excepto por todas las demás."</p>
+            <p style="text-align: center; margin-top: 25px;">Lo mismo aplica para el mercado: es imperfecto, injusto a veces, inestable a veces. Pero las alternativas históricas fueron peores.</p>
+        </div>
+
+        <!-- SLIDE 27: EL EQUILIBRIO PRAGMÁTICO -->
+        <div class="slide bg-respaldo">
+            <h2>El equilibrio pragmático</h2>
+            <div class="two-cols">
+                <div class="concepto-box">
+                    <h4>El Estado debería intervenir cuando...</h4>
+                    <p style="margin-bottom: 8px;">▸ Hay bienes públicos que el mercado no provee</p>
+                    <p style="margin-bottom: 8px;">▸ Hay externalidades no internalizadas</p>
+                    <p style="margin-bottom: 8px;">▸ Hay poder de mercado abusivo</p>
+                    <p style="margin-bottom: 0;">▸ La distribución del ingreso es inaceptable</p>
+                </div>
+                <div class="concepto-box">
+                    <h4>El Estado debería abstenerse cuando...</h4>
+                    <p style="margin-bottom: 8px;">▸ No tiene mejor información que el mercado</p>
+                    <p style="margin-bottom: 8px;">▸ La intervención genera más distorsiones que las que corrige</p>
+                    <p style="margin-bottom: 8px;">▸ Los costos de implementación superan los beneficios</p>
+                    <p style="margin-bottom: 0;">▸ El rent-seeking captura la política</p>
+                </div>
+            </div>
+            <blockquote style="margin-top: 30px;">
+                "The curious task of economics is to demonstrate to men how little they really know about what they imagine they can <strong>design</strong>."
+                <cite>Friedrich Hayek — The Fatal Conceit (1988)</cite>
+            </blockquote>
+            <p style="opacity: 0.7; font-size: 1.1rem;">"La curiosa tarea de la economía es demostrarle a los hombres cuán poco saben realmente sobre lo que imaginan que pueden <em>diseñar</em>."</p>
+            <p style="font-size: 1.1rem; opacity: 0.9; text-align: center; margin-top: 10px;">Hayek, sin saberlo, hablándole a diseñadores.</p>
+        </div>
+
+        <!-- SLIDE 28: EQUIDAD -->
+        <div class="slide bg-blanco">
+            <h2>Equidad: ¿para quién produce el mercado?</h2>
+            <p>El mercado responde a la <strong class="highlight">demanda solvente</strong>.</p>
+            <div class="two-cols">
+                <div class="concepto-box">
+                    <h4>La pregunta distributiva</h4>
+                    <p style="margin-bottom: 0;">¿Para quién diseña el mercado? El diseño accesible — rampas, señalética para no videntes, packaging fácil de abrir — no siempre es rentable. ¿Quién lo financia?</p>
+                </div>
+                <div class="concepto-box">
+                    <h4>Herramientas de redistribución</h4>
+                    <p style="margin-bottom: 0;">Impuestos progresivos, transferencias, provisión pública de educación y salud.</p>
+                </div>
+            </div>
+            <blockquote style="margin-top: 30px;">
+                "Development consists of the removal of various types of unfreedoms that leave people with little choice and little opportunity of exercising their reasoned agency."
+                <cite>Amartya Sen — Development as Freedom (1999)</cite>
+            </blockquote>
+            <p style="opacity: 0.6; font-size: 1.1rem;">"El desarrollo consiste en la eliminación de diversos tipos de privaciones de libertad que dejan a las personas con poca elección y poca oportunidad de ejercer su agencia razonada."</p>
+        </div>
+
+        <!-- SLIDE 29: EFICIENCIA Y EQUIDAD -->
+        <div class="slide bg-impulso">
+            <h2>¿Eficiencia y equidad son separables?</h2>
+            <p>Tradicionalmente se piensa que hay un trade-off: más equidad = menos eficiencia. Pero pensalo al revés:</p>
+            <ul>
+                <li>Un chico desnutrido es capital humano desperdiciado — ineficiencia</li>
+                <li>Si no tenés acceso al crédito para montar tu taller, recursos productivos quedan ociosos — ineficiencia</li>
+                <li>Desigualdad extrema genera inestabilidad social, y la inestabilidad destruye inversión — ineficiencia</li>
+            </ul>
+            <div class="concepto-box" style="background: rgba(255,255,255,0.15); border-color: rgba(255,255,255,0.3); text-align: center;">
+                <h4 style="color: var(--blanco);">La idea de Sen</h4>
+                <p style="margin-bottom: 0;">La pobreza no es solo un problema de justicia. También es un problema de eficiencia. Cuando excluís gente del sistema, desperdiciás su potencial productivo.</p>
+            </div>
+        </div>
+
+        <!-- SLIDE 30: ESTABILIDAD -->
+        <div class="slide bg-blanco">
+            <h2>Estabilidad macroeconómica</h2>
+            <p>El tercer criterio. Y para Argentina, quizás el más esquivo.</p>
+            <div class="falla-grid">
+                <div class="falla-card">
+                    <h4>Decisiones bajo incertidumbre</h4>
+                    <p>Si sos diseñador industrial y cotizaste un proyecto en pesos, y entre la cotización y la entrega el dólar subió 30%, tus materiales importados te destrozan el margen. Eso es inestabilidad macro.</p>
+                </div>
+                <div class="falla-card">
+                    <h4>El rol de las expectativas</h4>
+                    <p>Si esperan devaluación, se dolarizan. Si esperan inflación, remarcan. Las expectativas se autocumplen.</p>
+                </div>
+                <div class="falla-card">
+                    <h4>Poco consenso en crecimiento</h4>
+                    <p>Los economistas coinciden bastante en micro pero mucho menos en macro.</p>
+                </div>
+                <div class="falla-card">
+                    <h4>La tentación cortoplacista</h4>
+                    <p>El ciclo electoral conspira contra la estabilidad.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE 31: INCENTIVOS -->
+        <div class="slide bg-verde">
+            <h2>La palabra clave: incentivos</h2>
+            <div class="cita-grande" style="margin: 30px auto;">
+                "An incentive is a bullet, a lever, a key: an often tiny object with astonishing power to change a situation."
+                <span class="autor">Steven Levitt — Freakonomics (2005)</span>
+            </div>
+            <p style="text-align: center; margin-top: 15px; opacity: 0.8; font-size: 1.2rem;">"Un incentivo es una bala, una palanca, una llave: un objeto a menudo pequeño con un poder asombroso para cambiar una situación."</p>
+            <div class="flow-diagram" style="margin-top: 30px;">
+                <div class="flow-box" style="background: rgba(255,255,255,0.2);">¿Cómo reaccionan las personas?</div>
+                <div class="flow-arrow" style="color: var(--blanco);">→</div>
+                <div class="flow-box" style="background: rgba(255,255,255,0.2);">Depende de los incentivos</div>
+                <div class="flow-arrow" style="color: var(--blanco);">→</div>
+                <div class="flow-box" style="background: rgba(255,255,255,0.2);">¿Quién los diseña mejor?<br>¿Mercado o Estado?</div>
+            </div>
+        </div>
+
+        <!-- SLIDE 32: LEY JUSTINA INTRO -->
+        <div class="slide bg-blanco">
+            <span class="section-badge">Incentivos en acción</span>
+            <h2>Un ejemplo: la donación de órganos</h2>
+            <p>Antes de 2018, Argentina tenía un sistema de donación de órganos <strong class="highlight">opt-in</strong>: por defecto, no eras donante. Para serlo, tenías que hacer un trámite.</p>
+            <div class="stats-grid" style="grid-template-columns: 1fr 1fr;">
+                <div class="stat-box">
+                    <div class="stat-numero">593</div>
+                    <div class="stat-label">donantes en 2017</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-numero">14,8</div>
+                    <div class="stat-label">donantes por millón de habitantes</div>
+                </div>
+            </div>
+            <p style="margin-top: 25px;">Miles en lista de espera. No porque la gente no quisiera donar, sino porque nunca hacía el trámite.</p>
+        </div>
+
+        <!-- SLIDE 33: LEY JUSTINA: DEFAULT -->
+        <div class="slide bg-respaldo">
+            <h2>El poder del default</h2>
+            <p>La economía del comportamiento descubrió que las personas rara vez cambian la opción por defecto. El default tiene un poder enorme.</p>
+            <div class="two-cols">
+                <div class="concepto-box">
+                    <h4>Antes (opt-in)</h4>
+                    <p style="margin-bottom: 0;">Default = no donante. Para donar tenías que hacer un trámite.</p>
+                </div>
+                <div class="concepto-box" style="border-color: var(--verde-activo);">
+                    <h4>Después (opt-out)</h4>
+                    <p style="margin-bottom: 0;">Default = donante. Para NO donar tenés que hacer un trámite.</p>
+                </div>
+            </div>
+            <p style="text-align: center; margin-top: 30px; font-size: 1.6rem;">El 4 de julio de 2018, la <span class="highlight">Ley Justina</span> cambió el default.</p>
+        </div>
+
+        <!-- SLIDE 34: LEY JUSTINA: RESULTADOS -->
+        <div class="slide bg-blanco">
+            <h2>El resultado: un cambio enorme a costo casi cero</h2>
+            <div class="stats-grid">
+                <div class="stat-box">
+                    <div class="stat-numero">593 → 883</div>
+                    <div class="stat-label">donantes</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-numero">+49%</div>
+                    <div class="stat-label">aumento</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-numero">2.349</div>
+                    <div class="stat-label">trasplantes en 2019 (récord)</div>
+                </div>
+            </div>
+            <div class="concepto-box" style="margin-top: 30px; text-align: center;">
+                <h4>¿Qué cambió?</h4>
+                <p style="margin-bottom: 0;">No hubo campaña millonaria. No se construyó ningún hospital. Solo se cambió el default.</p>
+            </div>
+            <p class="nota-academica">Fuente: INCUCAI — Instituto Nacional Central Único Coordinador de Ablación e Implante</p>
+        </div>
+
+        <!-- SLIDE 35: LEY JUSTINA: LECCIÓN -->
+        <div class="slide bg-impulso">
+            <h2>La lección</h2>
+            <p>Esto es diseño. No de un objeto, sino de un sistema. El diseñador de esta ley entendió cómo se comporta la gente y cambió la arquitectura de la decisión.</p>
+            <ul>
+                <li>Entendió el sesgo de status quo (la gente no cambia el default)</li>
+                <li>Diseñó un incentivo que aprovecha ese sesgo en vez de luchar contra él</li>
+                <li>Logró un impacto enorme con un costo casi nulo</li>
+                <li>Respetó la libertad individual (siempre podés decir que no)</li>
+            </ul>
+            <p style="margin-top: 20px; font-size: 1.6rem;">Eso es pensar en incentivos. Y eso es lo que vamos a hacer en todo este curso.</p>
+        </div>
+
+        <!-- SLIDE 36: ANEXO TRANSICIÓN -->
+        <div class="slide bg-verde portada">
+            <span class="anexo-badge">ANEXO</span>
+            <h1>Papers en profundidad</h1>
+            <p class="subtitle">Hayek · Krueger · Stiglitz</p>
+        </div>
+
+        <!-- SLIDE 37: ANEXO HAYEK -->
+        <div class="slide bg-blanco">
+            <span class="section-badge">Anexo</span>
+            <h2>Friedrich Hayek</h2>
+            <div class="cita-paper">
+                <div class="titulo">"The Use of Knowledge in Society" (1945)</div>
+                <div class="autores">Friedrich A. Hayek — American Economic Review, Vol. 35, No. 4, pp. 519-530</div>
+                <div class="contenido">
+                    <p><strong>Argumento central:</strong> El conocimiento relevante para la coordinación económica no existe de forma concentrada sino dispersa entre millones de individuos. Ningún planificador central puede reunir toda esa información. El sistema de precios es el mecanismo que permite usar ese conocimiento sin necesidad de centralizarlo.</p>
+                    <p style="margin-bottom: 0;"><strong>Implicancia para el diseño:</strong> Cada diseñador industrial conoce las limitaciones de su taller, las preferencias de sus clientes, los materiales disponibles en su zona. Esa información local, multiplicada por millones, es lo que el sistema de precios coordina. Un planificador central no puede reemplazar eso.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE 38: ANEXO KRUEGER -->
+        <div class="slide bg-respaldo">
+            <span class="section-badge">Anexo</span>
+            <h2>Anne Krueger</h2>
+            <div class="cita-paper">
+                <div class="titulo">"The Political Economy of the Rent-Seeking Society" (1974)</div>
+                <div class="autores">Anne O. Krueger — American Economic Review, Vol. 64, No. 3, pp. 291-303</div>
+                <div class="contenido">
+                    <p><strong>Argumento central:</strong> Cuando el Estado interviene en la economía (cuotas de importación, licencias, regulaciones), genera rentas artificiales. Los agentes económicos invierten recursos productivos no en producir, sino en capturar esas rentas — haciendo lobby, sobornando funcionarios, buscando conexiones políticas. Esto es un desperdicio neto de recursos.</p>
+                    <p style="margin-bottom: 0;"><strong>Implicancia para el diseño:</strong> Cuando el Estado regula mercados (por ejemplo, limitando importaciones de insumos gráficos), las empresas desvían recursos de innovar y producir hacia "conseguir permisos". El costo no es solo la regulación en sí, sino todo lo que se gasta en influenciarla.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE 39: ANEXO STIGLITZ -->
+        <div class="slide bg-blanco">
+            <span class="section-badge">Anexo</span>
+            <h2>Joseph Stiglitz</h2>
+            <div class="cita-paper">
+                <div class="titulo">"Information and the Change in the Paradigm in Economics" (2002)</div>
+                <div class="autores">Joseph E. Stiglitz — Nobel Lecture, 8 de diciembre de 2001 — American Economic Review, Vol. 92, No. 3</div>
+                <div class="contenido">
+                    <p><strong>Argumento central:</strong> Los modelos económicos clásicos asumen información perfecta, pero en la realidad la información es siempre asimétrica e incompleta. Esto cambia radicalmente las conclusiones sobre eficiencia del mercado. Los mercados con información imperfecta no son eficientes en el sentido de Pareto, lo que justifica la intervención estatal en muchos casos.</p>
+                    <p style="margin-bottom: 0;"><strong>Implicancia para el diseño:</strong> El mercado del diseño es un caso extremo de asimetría de información. El cliente no puede evaluar la calidad del diseño antes de recibirlo (ni muchas veces después). El diseñador no puede verificar la capacidad de pago del cliente. Esto genera mercados disfuncionales donde la calidad no siempre es recompensada.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE 40: CIERRE -->
+        <div class="slide bg-respaldo portada">
+            <h2 style="font-size: 3rem; margin-bottom: 15px;">Felipe Venancio</h2>
+            <p class="subtitle">Aspectos Económicos del Diseño — FADU</p>
+        </div>
+
+    </div>
+
+    <!-- Navegación -->
+    <div class="slide-counter"><span id="current">1</span> / <span id="total">40</span></div>
+    <div class="nav-hint">← → para navegar | F para pantalla completa</div>
+
+    <script>
+        const slides = document.querySelectorAll('.slide');
+        let currentSlide = 0;
+        const total = slides.length;
+        document.getElementById('total').textContent = total;
+
+        function showSlide(n) {
+            slides[currentSlide].classList.remove('active');
+            currentSlide = (n + total) % total;
+            slides[currentSlide].classList.add('active');
+            document.getElementById('current').textContent = currentSlide + 1;
+        }
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowRight' || e.key === ' ' || e.key === 'Enter') {
+                showSlide(currentSlide + 1);
+            } else if (e.key === 'ArrowLeft') {
+                showSlide(currentSlide - 1);
+            } else if (e.key === 'Home') {
+                showSlide(0);
+            } else if (e.key === 'End') {
+                showSlide(total - 1);
+            } else if (e.key === 'f' || e.key === 'F') {
+                if (!document.fullscreenElement) {
+                    document.documentElement.requestFullscreen();
+                } else {
+                    document.exitFullscreen();
+                }
+            }
+        });
+
+        let touchStartX = 0;
+        document.addEventListener('touchstart', (e) => {
+            touchStartX = e.touches[0].clientX;
+        });
+        document.addEventListener('touchend', (e) => {
+            const touchEndX = e.changedTouches[0].clientX;
+            const diff = touchStartX - touchEndX;
+            if (Math.abs(diff) > 50) {
+                if (diff > 0) showSlide(currentSlide + 1);
+                else showSlide(currentSlide - 1);
+            }
+        });
+
+        document.addEventListener('click', (e) => {
+            if (e.target.tagName === 'A' || e.target.tagName === 'BUTTON') return;
+            if (e.clientX > window.innerWidth / 2) {
+                showSlide(currentSlide + 1);
+            } else {
+                showSlide(currentSlide - 1);
+            }
+        });
+    </script>
+</body>
+</html>
