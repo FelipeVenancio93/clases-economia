@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fundación Gutenberg (Minimal) — El mercado de capitales como palanca de competitividad | VetaCap</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Albert+Sans:wght@200;300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #04123a;
+            --accent: #00C600;
+            --accent2: #5b86ff;
+            --rojo: #FF5A5F;
+            --text: #FFFFFF;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Albert Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            overflow: hidden;
+        }
+
+        .slide-container { width: 100vw; height: 100vh; }
+
+        .slide {
+            display: none;
+            width: 100%; height: 100%;
+            padding: 90px 120px;
+            flex-direction: column;
+            justify-content: center;
+            position: relative;
+        }
+        .slide.active { display: flex; }
+
+        .highlight { color: var(--accent); font-weight: 600; }
+
+        h1 { font-size: 4.4rem; font-weight: 300; line-height: 1.15; letter-spacing: -1px; margin-bottom: 28px; }
+        h2 { font-size: 3rem; font-weight: 300; line-height: 1.2; margin-bottom: 26px; }
+        p  { font-size: 1.8rem; font-weight: 300; line-height: 1.55; opacity: 0.82; max-width: 1050px; }
+
+        /* Eyebrow + rule */
+        .eyebrow {
+            font-size: 1.05rem; font-weight: 600; letter-spacing: 4px;
+            text-transform: uppercase; color: var(--accent);
+            margin-bottom: 26px;
+        }
+        .rule { width: 60px; height: 3px; background: var(--accent); margin-bottom: 34px; }
+
+        /* Logo */
+        .logo-img { height: 42px; width: auto; object-fit: contain; }
+        .logo-img.grande { height: 90px; max-width: 340px; }
+        .logo-container { position: absolute; top: 48px; left: 120px; opacity: 0.9; }
+
+        /* Nav chrome */
+        .nav-hint { position: fixed; bottom: 34px; right: 44px; font-size: 0.8rem; opacity: 0.3; letter-spacing: 1px; }
+        .slide-counter { position: fixed; bottom: 34px; left: 44px; font-size: 0.8rem; opacity: 0.3; letter-spacing: 1px; }
+
+        /* Portada */
+        .portada { text-align: left; }
+        .portada h1 { font-size: 5.2rem; font-weight: 200; max-width: 1200px; }
+        .portada .autor { font-size: 1.4rem; font-weight: 300; opacity: 0.7; margin-top: 40px; }
+
+        /* Statement */
+        .m-statement { font-size: 4rem; font-weight: 300; line-height: 1.2; max-width: 1250px; letter-spacing: -0.5px; }
+        .m-statement-sub { font-size: 1.7rem; font-weight: 300; opacity: 0.65; margin-top: 36px; max-width: 1000px; }
+
+        /* Quote */
+        .m-quote {
+            font-size: 2.6rem; font-weight: 300; line-height: 1.38; max-width: 1150px;
+            font-style: italic; border-left: 3px solid var(--accent); padding-left: 40px;
+        }
+        .m-quote .cite { display: block; font-size: 1.3rem; font-style: normal; opacity: 0.55; margin-top: 26px; font-weight: 400; }
+
+        /* Tres palancas */
+        .m-palancas { margin-top: 30px; max-width: 1150px; }
+        .m-palanca { display: flex; align-items: baseline; gap: 34px; padding: 26px 0; border-bottom: 1px solid rgba(255,255,255,0.1); }
+        .m-palanca:last-child { border-bottom: none; }
+        .m-palanca .n { font-size: 2.2rem; font-weight: 200; color: var(--accent); width: 60px; flex-shrink: 0; }
+        .m-palanca .q { font-size: 2.4rem; font-weight: 300; }
+
+        /* Two columns */
+        .m-cols { display: grid; grid-template-columns: 1fr 1fr; gap: 90px; margin-top: 44px; max-width: 1200px; }
+        .m-col h4 { font-size: 2rem; font-weight: 600; color: var(--accent); margin-bottom: 16px; }
+        .m-col .role { font-size: 1rem; letter-spacing: 2px; text-transform: uppercase; opacity: 0.5; margin-bottom: 8px; }
+        .m-col p { font-size: 1.55rem; opacity: 0.8; }
+
+        /* Stats */
+        .m-stats { display: flex; gap: 90px; margin-top: 54px; flex-wrap: wrap; }
+        .m-stat .num { font-size: 6.5rem; font-weight: 200; color: var(--accent); line-height: 1; }
+        .m-stat .lbl { font-size: 1.35rem; font-weight: 300; opacity: 0.72; margin-top: 18px; max-width: 290px; }
+
+        /* Compare (dos números) */
+        .m-compare { display: flex; gap: 100px; margin-top: 40px; align-items: flex-end; }
+        .m-compare .item .num { font-size: 5.4rem; font-weight: 200; line-height: 1; }
+        .m-compare .malo .num { color: rgba(255,255,255,0.6); }
+        .m-compare .bueno .num { color: var(--accent); }
+        .m-compare .item .lbl { font-size: 1.3rem; font-weight: 300; opacity: 0.7; margin-top: 14px; }
+        .m-compare .arrow { font-size: 1.4rem; opacity: 0.6; padding-bottom: 30px; }
+        .m-compare .arrow strong { color: var(--accent); }
+
+        /* Ejemplo line */
+        .m-ejemplo { font-size: 2rem; font-weight: 300; margin-top: 26px; }
+        .m-ejemplo strong { color: var(--accent); font-weight: 600; }
+        .m-ejemplo .nota { display: block; font-size: 1.2rem; opacity: 0.5; margin-top: 12px; font-weight: 300; }
+
+        /* Bars */
+        .m-bars { max-width: 1050px; margin-top: 36px; }
+        .m-bar { display: grid; grid-template-columns: 240px 1fr 150px; align-items: center; gap: 26px; padding: 15px 0; border-bottom: 1px solid rgba(255,255,255,0.07); }
+        .m-bar:last-child { border-bottom: none; }
+        .m-bar .l { font-size: 1.5rem; font-weight: 300; opacity: 0.85; }
+        .m-bar .track { height: 6px; background: rgba(255,255,255,0.09); border-radius: 3px; overflow: hidden; }
+        .m-bar .fill { height: 100%; background: var(--accent); border-radius: 3px; }
+        .m-bar.alt .fill { background: var(--rojo); }
+        .m-bar .v { font-size: 1.5rem; font-weight: 400; text-align: right; color: var(--accent); }
+        .m-bar.alt .v { color: var(--rojo); }
+
+        .nota-fuente { font-size: 1.2rem; font-weight: 300; opacity: 0.45; margin-top: 30px; max-width: 1050px; }
+
+        /* Semáforo */
+        .sem-title { margin-bottom: 30px; }
+        .semaforo-grid { display: grid; grid-template-columns: repeat(10, 1fr); gap: 14px; max-width: 1000px; }
+        .semaforo-cell { aspect-ratio: 1; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 500; font-size: 0.85rem; color: rgba(0,0,0,0.55); }
+        .sem-r { background: #FF5A5F; color: rgba(255,255,255,0.9); }
+        .sem-y { background: #FFD60A; }
+        .sem-g { background: #34C759; color: rgba(255,255,255,0.9); }
+        .semaforo-legend { display: flex; gap: 34px; margin-top: 34px; font-size: 1.2rem; font-weight: 300; opacity: 0.8; }
+        .semaforo-legend span { display: inline-flex; align-items: center; gap: 10px; }
+        .semaforo-legend i { width: 14px; height: 14px; border-radius: 50%; display: inline-block; }
+
+        /* IMdC chart */
+        .imdc-legend { display: flex; gap: 40px; margin: 24px 0 6px; font-size: 1.25rem; font-weight: 300; }
+        .imdc-legend span { display: inline-flex; align-items: center; gap: 12px; opacity: 0.85; }
+        .imdc-legend i { width: 24px; height: 3px; display: inline-block; }
+        .imdc-deltas { display: flex; gap: 70px; margin-top: 26px; }
+        .imdc-delta .num { font-size: 3rem; font-weight: 200; color: var(--accent); }
+        .imdc-delta .lbl { font-size: 1.15rem; font-weight: 300; opacity: 0.6; margin-top: 4px; }
+
+        /* Gracias */
+        .gracias { text-align: center; align-items: center; }
+        .gracias h2 { font-weight: 300; }
+        .gracias p { text-align: center; opacity: 0.7; }
+
+        @media (max-width: 1200px) {
+            .slide { padding: 60px 60px; }
+            h1, .portada h1 { font-size: 3.4rem; }
+            .m-statement, .m-quote { font-size: 2.6rem; }
+            .m-stat .num, .m-compare .item .num { font-size: 4.4rem; }
+            .m-cols { gap: 50px; }
+            .logo-container { left: 60px; }
+        }
+        @media (max-width: 768px) {
+            .slide { padding: 30px 24px; }
+            h1, .portada h1 { font-size: 2.1rem; }
+            h2 { font-size: 1.6rem; }
+            p { font-size: 1.1rem; }
+            .eyebrow { font-size: 0.8rem; letter-spacing: 2px; margin-bottom: 16px; }
+            .rule { margin-bottom: 20px; }
+            .m-statement { font-size: 1.7rem; }
+            .m-statement-sub { font-size: 1.1rem; margin-top: 18px; }
+            .m-quote { font-size: 1.4rem; padding-left: 20px; }
+            .m-quote .cite { font-size: 0.95rem; }
+            .m-palanca { gap: 16px; padding: 16px 0; }
+            .m-palanca .n { font-size: 1.4rem; width: 36px; }
+            .m-palanca .q { font-size: 1.4rem; }
+            .m-cols { grid-template-columns: 1fr; gap: 24px; margin-top: 24px; }
+            .m-col h4 { font-size: 1.4rem; }
+            .m-col p { font-size: 1.1rem; }
+            .m-stats { gap: 28px; margin-top: 26px; }
+            .m-stat .num { font-size: 3rem; }
+            .m-stat .lbl { font-size: 1rem; margin-top: 8px; }
+            .m-compare { gap: 36px; margin-top: 24px; }
+            .m-compare .item .num { font-size: 2.8rem; }
+            .m-compare .arrow { display: none; }
+            .m-ejemplo { font-size: 1.3rem; }
+            .m-bar { grid-template-columns: 110px 1fr 70px; gap: 12px; }
+            .m-bar .l, .m-bar .v { font-size: 1rem; }
+            .logo-container { top: 20px; left: 24px; }
+            .logo-img { height: 30px; }
+            .logo-img.grande { height: 54px; }
+            .semaforo-grid { gap: 6px; }
+            .semaforo-cell { font-size: 0.5rem; }
+            .semaforo-legend { gap: 12px; font-size: 0.8rem; flex-wrap: wrap; }
+            .imdc-legend { gap: 16px; font-size: 0.85rem; flex-wrap: wrap; }
+            .imdc-deltas { gap: 30px; }
+            .imdc-delta .num { font-size: 1.8rem; }
+            .nota-fuente { font-size: 0.85rem; }
+            .nav-hint, .slide-counter { font-size: 0.65rem; bottom: 14px; }
+            .nav-hint { right: 16px; } .slide-counter { left: 16px; }
+        }
+    </style>
+</head>
+<body>
+    <script>if(sessionStorage.getItem('clases_auth')!=='true')window.location.replace('index.html');</script>
+    <div class="slide-container">
+
+        <!-- 1 · PORTADA -->
+        <div class="slide portada active">
+            <div class="logo-container">
+                <img src="https://vetacap.com.ar/wp-content/uploads/2024/11/cropped-Vetacap-logo-ok-1.png" alt="VetaCap" class="logo-img">
+            </div>
+            <p class="eyebrow">VetaCap · Fundación Gutenberg · Junio 2026</p>
+            <h1>El mercado de capitales como <span class="highlight">palanca de competitividad</span> de las PyMEs</h1>
+            <p class="autor">Felipe Venancio — Socio y CEO de VetaCap</p>
+        </div>
+
+        <!-- 2 · SEMÁFORO -->
+        <div class="slide">
+            <p class="eyebrow">50 años de economía argentina</p>
+            <h2 class="sem-title">Cada círculo, un año.</h2>
+            <div class="semaforo-grid">
+                <div class="semaforo-cell sem-r">'76</div><div class="semaforo-cell sem-y">'77</div><div class="semaforo-cell sem-g">'78</div><div class="semaforo-cell sem-g">'79</div><div class="semaforo-cell sem-g">'80</div><div class="semaforo-cell sem-y">'81</div><div class="semaforo-cell sem-y">'82</div><div class="semaforo-cell sem-y">'83</div><div class="semaforo-cell sem-g">'84</div><div class="semaforo-cell sem-g">'85</div>
+                <div class="semaforo-cell sem-y">'86</div><div class="semaforo-cell sem-g">'87</div><div class="semaforo-cell sem-g">'88</div><div class="semaforo-cell sem-r">'89</div><div class="semaforo-cell sem-r">'90</div><div class="semaforo-cell sem-y">'91</div><div class="semaforo-cell sem-g">'92</div><div class="semaforo-cell sem-g">'93</div><div class="semaforo-cell sem-g">'94</div><div class="semaforo-cell sem-r">'95</div>
+                <div class="semaforo-cell sem-y">'96</div><div class="semaforo-cell sem-g">'97</div><div class="semaforo-cell sem-g">'98</div><div class="semaforo-cell sem-g">'99</div><div class="semaforo-cell sem-y">'00</div><div class="semaforo-cell sem-y">'01</div><div class="semaforo-cell sem-r">'02</div><div class="semaforo-cell sem-r">'03</div><div class="semaforo-cell sem-g">'04</div><div class="semaforo-cell sem-g">'05</div>
+                <div class="semaforo-cell sem-g">'06</div><div class="semaforo-cell sem-g">'07</div><div class="semaforo-cell sem-g">'08</div><div class="semaforo-cell sem-g">'09</div><div class="semaforo-cell sem-r">'10</div><div class="semaforo-cell sem-g">'11</div><div class="semaforo-cell sem-g">'12</div><div class="semaforo-cell sem-g">'13</div><div class="semaforo-cell sem-g">'14</div><div class="semaforo-cell sem-y">'15</div>
+                <div class="semaforo-cell sem-r">'16</div><div class="semaforo-cell sem-y">'17</div><div class="semaforo-cell sem-g">'18</div><div class="semaforo-cell sem-y">'19</div><div class="semaforo-cell sem-y">'20</div><div class="semaforo-cell sem-r">'21</div><div class="semaforo-cell sem-g">'22</div><div class="semaforo-cell sem-g">'23</div><div class="semaforo-cell sem-r">'24</div><div class="semaforo-cell sem-y">'25</div>
+            </div>
+            <div class="semaforo-legend">
+                <span><i style="background:#FF5A5F"></i>Crisis</span>
+                <span><i style="background:#FFD60A"></i>Inestabilidad</span>
+                <span><i style="background:#34C759"></i>Estabilidad</span>
+            </div>
+        </div>
+
+        <!-- 3 · MAESTRÍA -->
+        <div class="slide">
+            <div class="rule"></div>
+            <p class="m-statement">Y sin embargo, una PyME gráfica que todavía produce y da trabajo tiene una <span class="highlight">maestría en supervivencia financiera</span>.</p>
+            <p class="m-statement-sub">No se enseña en ninguna escuela de negocios.</p>
+        </div>
+
+        <!-- 4 · CRÉDITO CHICO -->
+        <div class="slide">
+            <p class="eyebrow">La oportunidad de la economía real</p>
+            <h2>El crédito argentino es <span class="highlight">muy chico</span></h2>
+            <div class="m-bars">
+                <div class="m-bar alt"><div class="l">Argentina</div><div class="track"><div class="fill" style="width:6%"></div></div><div class="v">~12%</div></div>
+                <div class="m-bar"><div class="l">Brasil</div><div class="track"><div class="fill" style="width:37%"></div></div><div class="v">~70%</div></div>
+                <div class="m-bar"><div class="l">Chile</div><div class="track"><div class="fill" style="width:45%"></div></div><div class="v">~85%</div></div>
+                <div class="m-bar"><div class="l">OCDE</div><div class="track"><div class="fill" style="width:79%"></div></div><div class="v">~150%</div></div>
+                <div class="m-bar"><div class="l">Estados Unidos</div><div class="track"><div class="fill" style="width:100%"></div></div><div class="v">~190%</div></div>
+            </div>
+            <p class="nota-fuente">Crédito al sector privado / PBI. Fuente: Banco Mundial / FMI. Donde el crédito es más profundo, las PyMEs crecen más rápido (Rajan &amp; Zingales, 1998).</p>
+        </div>
+
+        <!-- 5 · ESTABILIDAD -->
+        <div class="slide">
+            <div class="rule"></div>
+            <h2>¿Qué cambia con la <span class="highlight">estabilidad</span>?</h2>
+            <div class="m-cols">
+                <div class="m-col">
+                    <h4>Tasas</h4>
+                    <p>Caen y aparece el plazo. La deuda de mediano y largo plazo: la que hace falta para comprar una máquina.</p>
+                </div>
+                <div class="m-col">
+                    <h4>Márgenes</h4>
+                    <p>Más finos, pero más predecibles. Por primera vez se puede planificar una inversión a varios años.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- 6 · IMdC -->
+        <div class="slide">
+            <p class="eyebrow">Señales que ya se ven</p>
+            <h2>Las tasas <span class="highlight">ya están cediendo</span></h2>
+            <div class="imdc-legend">
+                <span><i style="background:#5b86ff"></i>IMdC general (PyME del MAV)</span>
+                <span><i style="background:#00C600"></i>Subíndice Avalado (con SGR)</span>
+            </div>
+            <svg viewBox="0 0 1000 320" style="width:100%; max-width:1000px; height:auto;" xmlns="http://www.w3.org/2000/svg">
+                <line x1="80" y1="30" x2="980" y2="30" stroke="#ffffff" stroke-opacity="0.07" stroke-width="1"/>
+                <line x1="80" y1="90" x2="980" y2="90" stroke="#ffffff" stroke-opacity="0.07" stroke-width="1"/>
+                <line x1="80" y1="150" x2="980" y2="150" stroke="#ffffff" stroke-opacity="0.07" stroke-width="1"/>
+                <line x1="80" y1="210" x2="980" y2="210" stroke="#ffffff" stroke-opacity="0.07" stroke-width="1"/>
+                <line x1="80" y1="270" x2="980" y2="270" stroke="#ffffff" stroke-opacity="0.07" stroke-width="1"/>
+                <text x="70" y="35" text-anchor="end" font-size="14" fill="#ffffff" opacity="0.45">45%</text>
+                <text x="70" y="155" text-anchor="end" font-size="14" fill="#ffffff" opacity="0.45">35%</text>
+                <text x="70" y="275" text-anchor="end" font-size="14" fill="#ffffff" opacity="0.45">25%</text>
+
+                <polyline fill="none" stroke="#5b86ff" stroke-width="3.5" stroke-linejoin="round"
+                    points="140,91 280,81 420,90 560,108 700,113 840,146 980,168"/>
+                <circle cx="140" cy="91" r="5" fill="#5b86ff"/><circle cx="980" cy="168" r="5" fill="#5b86ff"/>
+                <text x="140" y="78" text-anchor="middle" font-size="13" fill="#5b86ff" font-weight="600">39,8</text>
+                <text x="980" y="156" text-anchor="middle" font-size="13" fill="#5b86ff" font-weight="600">33,5</text>
+
+                <polyline fill="none" stroke="#00C600" stroke-width="3.5" stroke-linejoin="round"
+                    points="140,207 280,201 420,204 560,208 700,221 840,261 980,256"/>
+                <circle cx="140" cy="207" r="5" fill="#00C600"/><circle cx="980" cy="256" r="5" fill="#00C600"/>
+                <text x="140" y="196" text-anchor="middle" font-size="13" fill="#00C600" font-weight="600">30,2</text>
+                <text x="980" y="244" text-anchor="middle" font-size="13" fill="#00C600" font-weight="600">26,1</text>
+
+                <text x="140" y="300" text-anchor="middle" font-size="12" fill="#ffffff" opacity="0.5">Ene</text>
+                <text x="560" y="300" text-anchor="middle" font-size="12" fill="#ffffff" opacity="0.5">Feb–Mar</text>
+                <text x="980" y="300" text-anchor="middle" font-size="12" fill="#ffffff" opacity="0.5">Abr</text>
+            </svg>
+            <div class="imdc-deltas">
+                <div class="imdc-delta"><div class="num">−6,3 pp</div><div class="lbl">IMdC general · 3 meses</div></div>
+                <div class="imdc-delta"><div class="num">−4,1 pp</div><div class="lbl">Avalado · 3 meses</div></div>
+            </div>
+            <p class="nota-fuente">IMdC VetaCap — TNA ponderada del segmento PyME del MAV. Datos a abril 2026 (gráfico a actualizar a junio).</p>
+        </div>
+
+        <!-- 7 · TRES PALANCAS -->
+        <div class="slide">
+            <div class="rule"></div>
+            <h2>Tres preguntas, <span class="highlight">tres palancas</span></h2>
+            <div class="m-palancas">
+                <div class="m-palanca"><span class="n">01</span><span class="q">¿Cómo <span class="highlight">financiarse</span> mejor?</span></div>
+                <div class="m-palanca"><span class="n">02</span><span class="q">¿Cómo <span class="highlight">cobrar y pagar</span> mejor?</span></div>
+                <div class="m-palanca"><span class="n">03</span><span class="q">¿Cómo manejar los <span class="highlight">excedentes</span> mejor?</span></div>
+            </div>
+        </div>
+
+        <!-- 8 · FINANCIARSE 1 -->
+        <div class="slide">
+            <p class="eyebrow">Cómo financiarse mejor · 01</p>
+            <p class="m-quote">
+                El problema no es el riesgo: es la <span class="highlight">información</span>. Cuando el mercado no distingue al buen pagador del malo, le pone a todos la misma tasa. El bueno paga por el malo.
+                <span class="cite">Stiglitz &amp; Weiss (1981), <em>Credit Rationing in Markets with Imperfect Information</em>. Stiglitz, Nobel 2001.</span>
+            </p>
+        </div>
+
+        <!-- 9 · FINANCIARSE 2 -->
+        <div class="slide">
+            <p class="eyebrow">Cómo financiarse mejor · 02</p>
+            <h2>La solución ya tiene <span class="highlight">nombre en Argentina</span></h2>
+            <div class="m-cols">
+                <div class="m-col">
+                    <div class="role">Quien te conoce</div>
+                    <h4>SGR</h4>
+                    <p>Conoce tu flujo, tu historia, tu cadena. Te avala frente al mercado y te baja la tasa. Si se equivoca, paga.</p>
+                </div>
+                <div class="m-col">
+                    <div class="role">Quien te lleva al mercado</div>
+                    <h4>ALyC PyME</h4>
+                    <p>Te conecta con el ahorro y estructura a la medida de tu flujo. No busca la tasa: busca el negocio detrás.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- 10 · FINANCIARSE 3 -->
+        <div class="slide">
+            <div class="rule"></div>
+            <p class="m-statement"><span class="highlight">No es solo para grandes.</span></p>
+            <p class="m-statement-sub">Tu imprenta ya tiene lo único que hace falta: flujo real, clientes que pagan, una historia que se cuenta con números.</p>
+        </div>
+
+        <!-- 11 · COBRAR/PAGAR 1 -->
+        <div class="slide">
+            <p class="eyebrow">Cómo cobrar y pagar mejor · 01</p>
+            <h2>Los mismos cheques, <span class="highlight">otro canal</span></h2>
+            <div class="m-stats">
+                <div class="m-stat"><div class="num">0,6%</div><div class="lbl">Impuesto al cheque que evitás en cada cobro</div></div>
+                <div class="m-stat"><div class="num">0,6%</div><div class="lbl">Y en cada pago vía e-cheq</div></div>
+                <div class="m-stat"><div class="num">1,5–3%</div><div class="lbl">Retenciones de IIBB que no te practican</div></div>
+            </div>
+            <p class="nota-fuente">Gestionando el circuito por la cuenta comitente del ALyC, no por el banco. Sin cambiar la operatoria, solo el canal. Estimación: Simulador de Tesorería VetaCap.</p>
+        </div>
+
+        <!-- 12 · COBRAR/PAGAR 2 -->
+        <div class="slide">
+            <p class="eyebrow">Cómo cobrar y pagar mejor · 02</p>
+            <h2>Descontá el cheque, <span class="highlight">cobrá hoy</span></h2>
+            <p class="m-ejemplo">
+                Cheque de <strong>$10.000.000</strong> a 90 días → recibís hoy <strong>≈ $9.080.000</strong>
+                <span class="nota">Ejemplo orientativo. El interés del CPD está exento de IVA.</span>
+            </p>
+            <div class="m-compare">
+                <div class="item malo"><div class="num">~33%</div><div class="lbl">Cheque sin garantía</div></div>
+                <div class="arrow">— el aval de la SGR baja <strong>~7 puntos</strong> →</div>
+                <div class="item bueno"><div class="num">~26%</div><div class="lbl">Avalado por SGR</div></div>
+            </div>
+            <p class="nota-fuente">Tasas de referencia: IMdC VetaCap (general vs. Avalado). El aval es la información, puesta a trabajar en tu tasa. Lo mismo vale para tus facturas, vía factoring.</p>
+        </div>
+
+        <!-- 13 · EXCEDENTES 1 -->
+        <div class="slide">
+            <p class="eyebrow">Cómo manejar los excedentes mejor · 01</p>
+            <h2>Escaloná los plazos, <span class="highlight">capturá mejor tasa</span></h2>
+            <div class="m-bars">
+                <div class="m-bar"><div class="l">A la vista (FCI)</div><div class="track"><div class="fill" style="width:32%"></div></div><div class="v">menor</div></div>
+                <div class="m-bar"><div class="l">Caución 30 días</div><div class="track"><div class="fill" style="width:58%"></div></div><div class="v">↑</div></div>
+                <div class="m-bar"><div class="l">Cheques 90 días</div><div class="track"><div class="fill" style="width:80%"></div></div><div class="v">↑↑</div></div>
+                <div class="m-bar"><div class="l">Plazo 180 días</div><div class="track"><div class="fill" style="width:100%"></div></div><div class="v">mayor</div></div>
+            </div>
+            <p class="nota-fuente">La curva premia el plazo. Todo a la vista es regalar tasa; todo a 180 días es quedarte sin caja. La gracia es el calce con tu calendario de pagos.</p>
+        </div>
+
+        <!-- 14 · EXCEDENTES 2 -->
+        <div class="slide">
+            <div class="rule"></div>
+            <p class="m-statement">No cubrirse es <span class="highlight">timbear el capital de trabajo</span>.</p>
+            <p class="m-statement-sub">Comprás insumos y máquinas en dólares; tu excedente está en pesos. Esa diferencia es una posición abierta: cubrirla no es una apuesta, es el seguro de tu margen.</p>
+        </div>
+
+        <!-- 15 · SÍNTESIS -->
+        <div class="slide">
+            <div class="rule"></div>
+            <p class="m-statement">Financiarte, cobrar, rendir mejor.<br>Tres palancas de una sola cosa: <span class="highlight">competir</span>.</p>
+            <p class="m-statement-sub">El puente entre el mercado de capitales y la economía real es el desafío — y la oportunidad — de la próxima década.</p>
+        </div>
+
+        <!-- 16 · GRACIAS -->
+        <div class="slide gracias">
+            <img src="https://vetacap.com.ar/wp-content/uploads/2024/11/cropped-Vetacap-logo-ok-1.png" alt="VetaCap" class="logo-img grande" style="margin-bottom: 40px;">
+            <h2>Conectamos finanzas con economía real</h2>
+            <p style="margin-top: 24px;">www.vetacap.com.ar · Felipe Venancio — Socio y CEO</p>
+        </div>
+
+    </div>
+
+    <div class="slide-counter"><span id="current">1</span> / <span id="total">16</span></div>
+    <div class="nav-hint">← → para navegar · F pantalla completa</div>
+
+    <script>
+        const slides = document.querySelectorAll('.slide');
+        let currentSlide = 0;
+        const total = slides.length;
+        document.getElementById('total').textContent = total;
+
+        function showSlide(n) {
+            slides[currentSlide].classList.remove('active');
+            currentSlide = (n + total) % total;
+            slides[currentSlide].classList.add('active');
+            document.getElementById('current').textContent = currentSlide + 1;
+        }
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowRight' || e.key === ' ' || e.key === 'Enter') showSlide(currentSlide + 1);
+            else if (e.key === 'ArrowLeft') showSlide(currentSlide - 1);
+            else if (e.key === 'Home') showSlide(0);
+            else if (e.key === 'End') showSlide(total - 1);
+            else if (e.key === 'f' || e.key === 'F') {
+                if (document.fullscreenElement) document.exitFullscreen();
+                else document.documentElement.requestFullscreen();
+            }
+        });
+
+        let touchStartX = 0;
+        document.addEventListener('touchstart', (e) => { touchStartX = e.touches[0].clientX; });
+        document.addEventListener('touchend', (e) => {
+            const diff = touchStartX - e.changedTouches[0].clientX;
+            if (Math.abs(diff) > 50) showSlide(currentSlide + (diff > 0 ? 1 : -1));
+        });
+
+        document.querySelector('.slide-container').addEventListener('click', (e) => {
+            if (e.clientX > window.innerWidth / 2) showSlide(currentSlide + 1);
+            else showSlide(currentSlide - 1);
+        });
+    </script>
+</body>
+</html>
