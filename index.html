@@ -583,13 +583,22 @@
                 <p class="card-description">Instituciones y desarrollo (Acemoglu), ciclo político (Nordhaus), votante mediano (Meltzer-Richard), acción colectiva (Olson), dominancia fiscal (Sargent-Wallace) y duración de mandatos (Barro). Para estudiantes de Ciencia Política.</p>
             </a>
 
-            <a href="#" class="presentation-card wip" id="crecimientoCard" onclick="event.preventDefault(); document.getElementById('classAuthOverlay').classList.remove('hidden'); document.getElementById('classAuthInput').focus();">
+            <a href="#" class="presentation-card wip" id="crecimientoCard" onclick="event.preventDefault(); window.classAuthTarget='presentacion_crecimiento_desarrollo.html'; document.getElementById('classAuthOverlay').classList.remove('hidden'); document.getElementById('classAuthInput').focus();">
                 <div class="card-header">
                     <div class="card-icon">🌍</div>
                     <span class="card-title">Crecimiento y Desarrollo Económico</span>
                     <span class="card-badge wip">En proceso</span>
                 </div>
                 <p class="card-description">¿Por qué algunos países son ricos y otros pobres? Solow, Lucas, Romer, Acemoglu. Trampas de pobreza, enfermedad holandesa, desigualdad y el gran misterio argentino. Anexo con 8 papers.</p>
+            </a>
+
+            <a href="#" class="presentation-card" onclick="event.preventDefault(); window.classAuthTarget='presentacion_crecimiento_desarrollo_divulgacion.html'; document.getElementById('classAuthOverlay').classList.remove('hidden'); document.getElementById('classAuthInput').focus();">
+                <div class="card-header">
+                    <div class="card-icon">🌍</div>
+                    <span class="card-title">Crecimiento y Desarrollo — Divulgación</span>
+                    <span class="card-badge">Nuevo</span>
+                </div>
+                <p class="card-description">Versión accesible y minimalista, sin fórmulas: la Gran Divergencia, instituciones vs. recursos (Corea de noche), el motor de las ideas y el misterio argentino. Con analogías de cine y ejemplos cotidianos. 24 slides.</p>
             </a>
 
             <a href="presentacion_mercado_trabajo.html" class="presentation-card">
@@ -660,7 +669,7 @@
                     cOverlay.classList.add('hidden');
                     cInput.value = '';
                     cError.textContent = '';
-                    window.location.href = 'presentacion_crecimiento_desarrollo.html';
+                    window.location.href = window.classAuthTarget || 'presentacion_crecimiento_desarrollo.html';
                 } else {
                     cInput.classList.add('error');
                     cError.textContent = 'Contrase\u00f1a incorrecta';

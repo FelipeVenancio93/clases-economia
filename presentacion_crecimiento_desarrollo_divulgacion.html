@@ -1,0 +1,511 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crecimiento y Desarrollo — Divulgación</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Albert+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --azul-impulso: #1036E2;
+            --verde-activo: #00C600;
+            --azul-respaldo: #021751;
+            --blanco: #FFFFFF;
+            --negro: #000000;
+            --rojo-alerta: #DC2626;
+            --amarillo: #F59E0B;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Albert Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--azul-respaldo);
+            color: var(--blanco);
+            overflow: hidden;
+        }
+        .slide-container { width: 100vw; height: 100vh; display: flex; align-items: center; justify-content: center; }
+        /* MINIMALISTA: aire generoso, foco en una idea */
+        .slide { display: none; width: 100%; height: 100%; padding: 80px 120px; flex-direction: column; justify-content: center; overflow-y: auto; }
+        .slide.active { display: flex; }
+
+        .bg-respaldo { background: var(--azul-respaldo); color: var(--blanco); }
+        .bg-impulso { background: var(--azul-impulso); color: var(--blanco); }
+        .bg-verde { background: var(--verde-activo); color: var(--blanco); }
+        .bg-blanco { background: var(--blanco); color: var(--azul-respaldo); }
+        .bg-oscuro { background: #0a0a0a; color: var(--blanco); }
+
+        h1 { font-size: 4.6rem; font-weight: 700; line-height: 1.05; margin-bottom: 32px; letter-spacing: -1.5px; }
+        h2 { font-size: 3rem; font-weight: 600; line-height: 1.12; margin-bottom: 36px; letter-spacing: -0.5px; }
+        h3 { font-size: 1.5rem; font-weight: 500; margin-bottom: 22px; opacity: 0.9; }
+        p, li { font-size: 1.8rem; line-height: 1.6; margin-bottom: 22px; font-weight: 300; }
+        strong { font-weight: 700; }
+        .subtitle { font-size: 2rem; opacity: 0.8; font-weight: 300; }
+        .lead { font-size: 2.3rem; line-height: 1.5; font-weight: 300; }
+        .highlight { color: var(--verde-activo); font-weight: 600; }
+        .bg-blanco .highlight { color: var(--azul-impulso); }
+        .bg-verde .highlight { color: var(--azul-respaldo); }
+        .highlight-red { color: var(--rojo-alerta); font-weight: 600; }
+        .highlight-yellow { color: var(--amarillo); font-weight: 600; }
+
+        /* Eyebrow / etiqueta minimalista */
+        .eyebrow { text-transform: uppercase; letter-spacing: 5px; font-size: 1.2rem; opacity: 0.55; font-weight: 600; margin-bottom: 28px; }
+
+        blockquote { font-size: 2.6rem; font-weight: 400; font-style: italic; line-height: 1.35; border-left: 4px solid var(--verde-activo); padding-left: 42px; margin: 30px 0; opacity: 0.97; }
+        .bg-blanco blockquote { border-left-color: var(--azul-impulso); }
+        .bg-impulso blockquote, .bg-verde blockquote { border-left-color: white; }
+        blockquote cite { display: block; font-size: 1.4rem; margin-top: 24px; font-style: normal; opacity: 0.65; font-weight: 400; }
+        .traduccion { font-size: 1.3rem; opacity: 0.55; font-style: normal; display: block; margin-top: 14px; font-weight: 300; }
+
+        ul { list-style: none; padding-left: 0; }
+        ul li { padding-left: 44px; position: relative; margin-bottom: 26px; font-size: 1.85rem; line-height: 1.45; }
+        ul li::before { content: "\2014"; position: absolute; left: 0; color: var(--verde-activo); font-weight: 600; }
+        .bg-blanco ul li::before { color: var(--azul-impulso); }
+        .bg-verde ul li::before, .bg-impulso ul li::before { color: white; }
+
+        /* Dato grande minimalista */
+        .big-number { font-size: 9rem; font-weight: 800; line-height: 0.95; letter-spacing: -3px; }
+        .big-caption { font-size: 1.7rem; opacity: 0.75; font-weight: 300; margin-top: 10px; }
+
+        .stats-row { display: flex; gap: 70px; justify-content: center; margin: 30px 0; flex-wrap: wrap; }
+        .stat { text-align: center; }
+        .stat .num { font-size: 5.5rem; font-weight: 800; line-height: 1; color: var(--verde-activo); letter-spacing: -2px; }
+        .bg-blanco .stat .num { color: var(--azul-impulso); }
+        .stat .num.rojo { color: var(--rojo-alerta); }
+        .stat .lbl { font-size: 1.4rem; opacity: 0.7; margin-top: 14px; font-weight: 300; }
+
+        /* Tarjetas conceptuales: livianas, aireadas */
+        .cards { display: grid; gap: 34px; margin-top: 20px; }
+        .cards.c2 { grid-template-columns: 1fr 1fr; }
+        .cards.c3 { grid-template-columns: repeat(3, 1fr); }
+        .card { background: rgba(255,255,255,0.05); padding: 40px 34px; border-radius: 18px; }
+        .bg-blanco .card { background: rgba(16,54,226,0.045); }
+        .bg-impulso .card, .bg-verde .card { background: rgba(255,255,255,0.12); }
+        .card h4 { font-size: 1.7rem; font-weight: 700; margin-bottom: 16px; color: var(--verde-activo); }
+        .bg-blanco .card h4 { color: var(--azul-impulso); }
+        .bg-verde .card h4, .bg-impulso .card h4 { color: white; }
+        .card p { font-size: 1.5rem; margin-bottom: 0; line-height: 1.45; }
+
+        /* Caja "analogía" — la marca de la casa */
+        .analogia { border-left: 4px solid var(--amarillo); padding: 8px 0 8px 34px; margin: 30px 0; }
+        .analogia .tag { text-transform: uppercase; letter-spacing: 3px; font-size: 1.1rem; color: var(--amarillo); font-weight: 700; display: block; margin-bottom: 14px; }
+        .analogia p { font-size: 1.9rem; line-height: 1.45; margin: 0; font-weight: 300; }
+
+        /* Versus minimalista */
+        .versus { display: grid; grid-template-columns: 1fr auto 1fr; gap: 40px; align-items: center; margin: 30px 0; }
+        .versus-center { font-size: 2.4rem; font-weight: 800; opacity: 0.25; }
+
+        /* Timeline limpio */
+        .timeline { display: flex; flex-direction: column; gap: 22px; margin: 20px 0; }
+        .timeline-item { display: flex; gap: 32px; align-items: baseline; }
+        .timeline-year { font-weight: 700; font-size: 1.5rem; color: var(--verde-activo); min-width: 130px; flex-shrink: 0; }
+        .bg-blanco .timeline-year { color: var(--azul-impulso); }
+        .timeline-item span.txt { font-size: 1.6rem; font-weight: 300; line-height: 1.4; }
+
+        /* Corea de noche */
+        .korea { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; margin: 30px 0; }
+        .korea-panel { border-radius: 18px; height: 300px; position: relative; overflow: hidden; display: flex; align-items: flex-end; padding: 26px; }
+        .korea-norte { background: #060a14; border: 1px solid rgba(255,255,255,0.1); }
+        .korea-sur { background: #0a1226; border: 1px solid rgba(0,198,0,0.25); }
+        .korea-label { font-size: 1.6rem; font-weight: 700; z-index: 2; position: relative; }
+        .light { position: absolute; width: 4px; height: 4px; border-radius: 50%; background: #FFE9A8; box-shadow: 0 0 6px 2px rgba(255,210,100,0.8); }
+
+        /* Portada / secciones */
+        .portada { text-align: center; }
+        .portada h1 { font-size: 5.2rem; }
+        .seccion { text-align: center; }
+        .seccion h1 { font-size: 4.4rem; }
+
+        /* Charts SVG */
+        .chart { width: 100%; max-width: 760px; margin: 18px auto; display: block; }
+
+        .fuente { font-size: 1.25rem; opacity: 0.45; margin-top: 28px; font-weight: 300; }
+
+        .nav-hint { position: fixed; bottom: 32px; right: 44px; font-size: 1rem; opacity: 0.4; }
+        .slide-counter { position: fixed; bottom: 32px; left: 44px; font-size: 1rem; opacity: 0.4; }
+
+        @media (max-width: 1200px) {
+            .slide { padding: 55px 60px; }
+            h1 { font-size: 3.4rem; }
+            h2 { font-size: 2.3rem; }
+            p, li { font-size: 1.5rem; }
+            .cards.c2, .cards.c3, .korea { grid-template-columns: 1fr; }
+            .big-number { font-size: 6rem; }
+        }
+        @media (max-width: 768px) {
+            .slide { padding: 32px 26px; }
+            h1 { font-size: 2.3rem; }
+            h2 { font-size: 1.7rem; margin-bottom: 22px; }
+            p, li { font-size: 1.2rem; margin-bottom: 16px; }
+            ul li { font-size: 1.25rem; padding-left: 30px; margin-bottom: 16px; }
+            .lead { font-size: 1.4rem; }
+            .subtitle { font-size: 1.2rem; }
+            .portada h1, .seccion h1 { font-size: 2.4rem; }
+            blockquote { font-size: 1.5rem; padding-left: 22px; }
+            blockquote cite { font-size: 1rem; }
+            .big-number { font-size: 4.2rem; }
+            .stats-row { gap: 30px; }
+            .stat .num { font-size: 3.2rem; }
+            .versus { grid-template-columns: 1fr; gap: 14px; }
+            .versus-center { font-size: 1.6rem; }
+            .analogia p { font-size: 1.4rem; }
+            .card h4 { font-size: 1.3rem; }
+            .card p { font-size: 1.2rem; }
+            .timeline-year { min-width: 90px; font-size: 1.2rem; }
+            .timeline-item span.txt { font-size: 1.2rem; }
+            .korea-panel { height: 200px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="slide-container">
+
+        <!-- 1. PORTADA -->
+        <div class="slide bg-respaldo portada active">
+            <p class="eyebrow">Felipe Venancio</p>
+            <h1>Crecimiento y<br>Desarrollo</h1>
+            <p class="subtitle">¿Por qu&eacute; algunos pa&iacute;ses son ricos<br>y otros pobres?</p>
+        </div>
+
+        <!-- 2. LA PREGUNTA -->
+        <div class="slide bg-oscuro">
+            <h2>La pregunta que desvela<br>a los economistas</h2>
+            <p class="lead">Un noruego promedio gana <span class="highlight">80 veces</span> m&aacute;s que un habitante de Chad.</p>
+            <p style="margin-top: 30px; opacity: 0.85;">¿Suerte? ¿Recursos? ¿Cultura? ¿Las reglas del juego?</p>
+            <p class="fuente">La diferencia de ingresos entre el pa&iacute;s m&aacute;s rico y el m&aacute;s pobre es la mayor de la historia humana.</p>
+        </div>
+
+        <!-- 3. INTERÉS COMPUESTO -->
+        <div class="slide bg-respaldo">
+            <h2>El secreto no es crecer mucho<br>un a&ntilde;o. Es crecer un poco<br><span class="highlight">todos los a&ntilde;os</span>.</h2>
+            <svg viewBox="0 0 700 320" class="chart">
+                <line x1="80" y1="280" x2="660" y2="280" stroke="rgba(255,255,255,0.4)" stroke-width="2"/>
+                <line x1="80" y1="280" x2="80" y2="30" stroke="rgba(255,255,255,0.4)" stroke-width="2"/>
+                <line x1="80" y1="180" x2="660" y2="180" stroke="rgba(255,255,255,0.08)" stroke-width="1"/>
+                <line x1="80" y1="90" x2="660" y2="90" stroke="rgba(255,255,255,0.08)" stroke-width="1"/>
+                <path d="M80,265 Q250,255 370,235 Q500,205 580,175 L660,150" fill="none" stroke="var(--amarillo)" stroke-width="3.5"/>
+                <text x="600" y="140" fill="var(--amarillo)" font-size="16" font-weight="600">2% al a&ntilde;o</text>
+                <path d="M80,265 Q200,255 320,215 Q430,145 530,75 L600,45" fill="none" stroke="var(--verde-activo)" stroke-width="3.5"/>
+                <text x="520" y="40" fill="var(--verde-activo)" font-size="16" font-weight="600">5% al a&ntilde;o</text>
+                <text x="80" y="305" fill="rgba(255,255,255,0.6)" font-size="14">Hoy</text>
+                <text x="370" y="305" fill="rgba(255,255,255,0.6)" font-size="14" text-anchor="middle">En 25 a&ntilde;os</text>
+                <text x="660" y="305" fill="rgba(255,255,255,0.6)" font-size="14" text-anchor="end">En 50 a&ntilde;os</text>
+                <circle cx="80" cy="265" r="6" fill="white"/>
+            </svg>
+            <p style="text-align: center;">En 50 a&ntilde;os, al 2% tu ingreso se <span class="highlight-yellow">triplica</span>. Al 5%, se <span class="highlight">multiplica por 11</span>. Esa pequeña diferencia es un mundo distinto.</p>
+        </div>
+
+        <!-- 4. LA GRAN DIVERGENCIA -->
+        <div class="slide bg-blanco">
+            <h2>La Gran Divergencia</h2>
+            <p>Durante casi toda la historia, <strong>todos fuimos igual de pobres</strong>. Hasta que, alrededor de 1800, algo se rompi&oacute;.</p>
+            <svg viewBox="0 0 700 300" class="chart">
+                <line x1="80" y1="260" x2="660" y2="260" stroke="rgba(0,0,0,0.3)" stroke-width="2"/>
+                <line x1="80" y1="260" x2="80" y2="20" stroke="rgba(0,0,0,0.3)" stroke-width="2"/>
+                <path d="M90,242 L250,240 L320,232 L380,205 L440,158 L500,102 L560,56 L620,38" fill="none" stroke="var(--azul-impulso)" stroke-width="3.5"/>
+                <text x="625" y="36" fill="var(--azul-impulso)" font-size="15" font-weight="600">Occidente</text>
+                <path d="M90,244 L250,242 L320,240 L380,237 L440,230 L500,212 L560,184 L620,166" fill="none" stroke="var(--rojo-alerta)" stroke-width="3"/>
+                <text x="625" y="164" fill="var(--rojo-alerta)" font-size="15" font-weight="600">Resto</text>
+                <line x1="380" y1="260" x2="380" y2="25" stroke="rgba(0,0,0,0.18)" stroke-width="1.5" stroke-dasharray="5,5"/>
+                <text x="388" y="22" fill="rgba(0,0,0,0.45)" font-size="13">Revoluci&oacute;n Industrial</text>
+                <text x="90" y="282" fill="rgba(0,0,0,0.5)" font-size="13">A&ntilde;o 1000</text>
+                <text x="380" y="282" fill="rgba(0,0,0,0.5)" font-size="13" text-anchor="middle">1800</text>
+                <text x="620" y="282" fill="rgba(0,0,0,0.5)" font-size="13" text-anchor="end">2020</text>
+            </svg>
+            <p style="text-align: center;">La pregunta del desarrollo es, en el fondo: <strong class="highlight">¿qu&eacute; pas&oacute; en 1800?</strong></p>
+            <p class="fuente">Inspirado en los datos hist&oacute;ricos de Angus Maddison.</p>
+        </div>
+
+        <!-- 5. CRECIMIENTO ≠ DESARROLLO -->
+        <div class="slide bg-impulso">
+            <h2>Crecer no es lo mismo<br>que desarrollarse</h2>
+            <div class="versus">
+                <div class="card">
+                    <h4>Crecimiento</h4>
+                    <p>M&aacute;s producci&oacute;n, m&aacute;s ingreso. Es <strong>cu&aacute;nto</strong>.</p>
+                </div>
+                <div class="versus-center">≠</div>
+                <div class="card">
+                    <h4>Desarrollo</h4>
+                    <p>Salud, educaci&oacute;n, libertades, vivir mejor. Es <strong>c&oacute;mo</strong>.</p>
+                </div>
+            </div>
+            <blockquote>
+                "El desarrollo es la expansi&oacute;n de las libertades reales que disfruta la gente."
+                <cite>— Amartya Sen, Nobel de Econom&iacute;a</cite>
+            </blockquote>
+        </div>
+
+        <!-- 6. SECCIÓN: QUÉ HACE CRECER -->
+        <div class="slide bg-verde seccion">
+            <p class="eyebrow" style="opacity:0.7;">Parte 1</p>
+            <h1>¿Qu&eacute; hace crecer<br>a un pa&iacute;s?</h1>
+            <p class="subtitle" style="margin-top: 20px;">Dos motores: el que se gasta y el que no</p>
+        </div>
+
+        <!-- 7. EL MOTOR QUE SE GASTA -->
+        <div class="slide bg-respaldo">
+            <p class="eyebrow">Motor 1 · Capital y trabajo</p>
+            <h2>El motor que <span class="highlight-red">se gasta</span></h2>
+            <p>Poner m&aacute;s m&aacute;quinas y m&aacute;s gente hace crecer a un pa&iacute;s pobre... pero cada vez un poco menos. Es la idea central del modelo de Solow.</p>
+            <div class="analogia">
+                <span class="tag">La analog&iacute;a</span>
+                <p>Un cavador con una pala rinde mucho. Dale una segunda pala y rinde algo m&aacute;s. Pero la quinta pala, en las mismas manos, ya no suma nada. As&iacute; es acumular capital: <strong>rendimientos decrecientes</strong>.</p>
+            </div>
+            <p style="text-align: center;">Por eso ning&uacute;n pa&iacute;s se hizo rico para siempre solo apilando f&aacute;bricas.</p>
+        </div>
+
+        <!-- 8. EL MOTOR QUE NO SE GASTA -->
+        <div class="slide bg-blanco">
+            <p class="eyebrow">Motor 2 · Ideas y conocimiento</p>
+            <h2>El motor que <span class="highlight">no se gasta</span></h2>
+            <p>El crecimiento sostenido viene de las <strong>ideas</strong> y del <strong>capital humano</strong>: tecnolog&iacute;a, conocimiento, educaci&oacute;n. Eso s&iacute; se acumula sin techo.</p>
+            <div class="analogia">
+                <span class="tag">La analog&iacute;a</span>
+                <p>Si te presto mi auto, me quedo sin auto. Pero si te paso la receta de la pizza, <strong>los dos tenemos la receta</strong>. Las ideas no se gastan al compartirlas: por eso una sola puede enriquecer al mundo entero.</p>
+            </div>
+            <p style="text-align: center;">Romer y Lucas lo demostraron: invertir en ciencia y educaci&oacute;n <strong class="highlight">no es gasto, es el motor</strong>.</p>
+        </div>
+
+        <!-- 9. SECCIÓN: LA CAUSA PROFUNDA -->
+        <div class="slide bg-oscuro seccion">
+            <p class="eyebrow" style="opacity:0.7;">Parte 2</p>
+            <h1>La causa profunda</h1>
+            <p class="subtitle" style="margin-top: 20px;">¿Por qu&eacute; unos acumulan ideas y otros no?</p>
+        </div>
+
+        <!-- 10. LAS REGLAS DEL JUEGO -->
+        <div class="slide bg-blanco">
+            <h2>Todo depende de las<br>reglas del juego</h2>
+            <p>Acemoglu, Johnson y Robinson (Nobel 2024) lo resumieron en una idea: lo que define a un pa&iacute;s son sus <strong>instituciones</strong>.</p>
+            <div class="versus">
+                <div class="card" style="background: rgba(0,198,0,0.1);">
+                    <h4 style="color: var(--verde-activo);">Inclusivas</h4>
+                    <p>Reglas estables, propiedad protegida, mercados abiertos. <strong>Conviene invertir e innovar.</strong></p>
+                </div>
+                <div class="versus-center">vs</div>
+                <div class="card" style="background: rgba(220,38,38,0.08);">
+                    <h4 style="color: var(--rojo-alerta);">Extractivas</h4>
+                    <p>Poder concentrado, reglas que cambian, una elite que se queda con todo. <strong>Conviene robar, no producir.</strong></p>
+                </div>
+            </div>
+        </div>
+
+        <!-- 11. COREA DE NOCHE -->
+        <div class="slide bg-respaldo">
+            <h2>La foto que lo explica todo</h2>
+            <p>Corea de noche, desde el espacio. Misma pen&iacute;nsula, misma gente, misma cultura hasta 1945. Lo &uacute;nico distinto: <strong class="highlight">las reglas del juego</strong>.</p>
+            <div class="korea">
+                <div class="korea-panel korea-norte">
+                    <span class="light" style="left:48%; top:55%;"></span>
+                    <span class="korea-label" style="opacity:0.6;">Corea del Norte<br><span style="font-weight:300; font-size:1.2rem;">a oscuras</span></span>
+                </div>
+                <div class="korea-panel korea-sur" id="korea-sur">
+                    <span class="korea-label">Corea del Sur<br><span style="font-weight:300; font-size:1.2rem;">encendida</span></span>
+                </div>
+            </div>
+            <p style="text-align: center;">Lo mismo pasa en <strong>Nogales</strong>: la misma ciudad partida por una frontera. De un lado EE.UU., del otro M&eacute;xico. La geograf&iacute;a no cambia. Las instituciones, s&iacute;.</p>
+        </div>
+
+        <!-- 12. LA SÍNTESIS: EL FÚTBOL -->
+        <div class="slide bg-impulso">
+            <h2>Causas pr&oacute;ximas<br>y causas profundas</h2>
+            <div class="analogia" style="border-left-color: white;">
+                <span class="tag" style="color: white;">La analog&iacute;a</span>
+                <p>En un partido, los goles los meten los <strong>jugadores</strong> (capital y trabajo: las causas pr&oacute;ximas). Pero qui&eacute;nes juegan, c&oacute;mo y con qu&eacute; reglas lo deciden el <strong>director t&eacute;cnico, la cancha y el reglamento</strong>: las instituciones, la causa profunda.</p>
+            </div>
+            <p style="text-align: center; font-size: 2.1rem;">Cambiar de jugadores sin cambiar el sistema rara vez alcanza.</p>
+        </div>
+
+        <!-- 13. SECCIÓN: TRAMPAS -->
+        <div class="slide bg-verde seccion">
+            <p class="eyebrow" style="opacity:0.7;">Parte 3</p>
+            <h1>Las trampas</h1>
+            <p class="subtitle" style="margin-top: 20px;">Por qu&eacute; tener mucho puede jugar en contra</p>
+        </div>
+
+        <!-- 14. LA MALDICIÓN DE LOS RECURSOS -->
+        <div class="slide bg-blanco">
+            <h2>La maldici&oacute;n de los recursos</h2>
+            <p>Suena raro, pero los pa&iacute;ses con <strong>m&aacute;s</strong> petr&oacute;leo, oro o diamantes muchas veces crecen <strong class="highlight-red">menos</strong> que los que no tienen nada.</p>
+            <div class="analogia">
+                <span class="tag">La analog&iacute;a</span>
+                <p>Es como ganar la loter&iacute;a. Mucha plata de golpe, sin haber aprendido a manejarla, suele terminar en peleas, despilfarro y bancarrota. A los pa&iacute;ses les pasa igual.</p>
+            </div>
+            <p style="text-align: center;">Noruega y Venezuela tienen petr&oacute;leo. Botswana y Sierra Leona, diamantes. La diferencia no es el recurso: son <strong class="highlight">las instituciones</strong>.</p>
+        </div>
+
+        <!-- 15. ENFERMEDAD HOLANDESA -->
+        <div class="slide bg-respaldo">
+            <h2>La "enfermedad holandesa"</h2>
+            <p>A veces un boom exportador <strong class="highlight-red">enferma</strong> al resto de la economía:</p>
+            <ul style="margin-top: 10px;">
+                <li>Llega un boom (petr&oacute;leo, soja, gas) y entran muchos d&oacute;lares</li>
+                <li>La moneda local se vuelve "cara"</li>
+                <li>La industria y los servicios dejan de poder competir</li>
+            </ul>
+            <p style="margin-top: 10px;">Le pas&oacute; a Holanda con el gas en los 60 (de ah&iacute; el nombre) y a la Argentina con el <strong>boom sojero</strong> de los 2000.</p>
+        </div>
+
+        <!-- 16. SECCIÓN: ARGENTINA -->
+        <div class="slide bg-oscuro seccion">
+            <p class="eyebrow" style="opacity:0.7;">Parte 4</p>
+            <h1>Argentina:<br>el gran misterio</h1>
+            <p class="subtitle" style="margin-top: 20px;">De potencia mundial a caso de estudio</p>
+        </div>
+
+        <!-- 17. EL PAÍS QUE SE SUBDESARROLLÓ -->
+        <div class="slide bg-respaldo">
+            <h2>El pa&iacute;s que se<br>subdesarroll&oacute;</h2>
+            <p>En 1900, un argentino viv&iacute;a casi tan bien como un franc&eacute;s, y mejor que un italiano.</p>
+            <svg viewBox="0 0 700 270" class="chart">
+                <line x1="80" y1="230" x2="660" y2="230" stroke="rgba(255,255,255,0.4)" stroke-width="2"/>
+                <line x1="80" y1="230" x2="80" y2="20" stroke="rgba(255,255,255,0.4)" stroke-width="2"/>
+                <path d="M90,175 L270,150 L450,90 L630,42" fill="none" stroke="var(--verde-activo)" stroke-width="3"/>
+                <text x="600" y="34" fill="var(--verde-activo)" font-size="15" font-weight="600">EE.UU.</text>
+                <path d="M90,185 L270,165 L450,120 L630,80" fill="none" stroke="var(--azul-impulso)" stroke-width="2.5"/>
+                <text x="555" y="76" fill="var(--azul-impulso)" font-size="15" font-weight="600">Australia</text>
+                <path d="M90,180 L270,160 L450,155 L630,168" fill="none" stroke="var(--rojo-alerta)" stroke-width="3.5"/>
+                <text x="555" y="186" fill="var(--rojo-alerta)" font-size="15" font-weight="600">Argentina</text>
+                <text x="90" y="252" fill="rgba(255,255,255,0.5)" font-size="13">1900</text>
+                <text x="370" y="252" fill="rgba(255,255,255,0.5)" font-size="13" text-anchor="middle">1960</text>
+                <text x="630" y="252" fill="rgba(255,255,255,0.5)" font-size="13" text-anchor="end">2020</text>
+            </svg>
+            <div class="analogia" style="margin-top: 10px;">
+                <span class="tag">La analog&iacute;a</span>
+                <p>Como Benjamin Button, que nace viejo y rejuvenece: Argentina hizo el camino al rev&eacute;s. Empez&oacute; el siglo siendo rica y lo termin&oacute; m&aacute;s pobre, en t&eacute;rminos relativos.</p>
+            </div>
+        </div>
+
+        <!-- 18. EL DÍA DE LA MARMOTA -->
+        <div class="slide bg-blanco">
+            <h2>El d&iacute;a de la marmota argentino</h2>
+            <p>Hay un ciclo que el pa&iacute;s repite hace 80 a&ntilde;os, una y otra vez:</p>
+            <div class="cards c3" style="margin-top: 10px;">
+                <div class="card"><h4>1 · La fiesta</h4><p>Se gasta de m&aacute;s, sube el salario, crece todo. "Esta vez es distinto."</p></div>
+                <div class="card"><h4>2 · La resaca</h4><p>Sube la inflaci&oacute;n, se van los d&oacute;lares, aparecen los controles.</p></div>
+                <div class="card"><h4>3 · El ajuste</h4><p>Crisis, devaluaci&oacute;n y un ajuste m&aacute;s duro que si nunca hubiera empezado.</p></div>
+            </div>
+            <div class="analogia" style="margin-top: 24px;">
+                <span class="tag">La analog&iacute;a</span>
+                <p>Como en "El d&iacute;a de la marmota", nos despertamos siempre en la misma escena. Dornbusch y Edwards la describieron con precisi&oacute;n quir&uacute;rgica.</p>
+            </div>
+        </div>
+
+        <!-- 19. QUÉ FALLÓ -->
+        <div class="slide bg-respaldo">
+            <h2>¿Qu&eacute; fall&oacute;?</h2>
+            <div class="cards c3">
+                <div class="card"><h4>Reglas inestables</h4><p>Cambian con cada gobierno. Nadie invierte a 20 a&ntilde;os si no sabe qu&eacute; pasa en 2.</p></div>
+                <div class="card"><h4>Econom&iacute;a cerrada</h4><p>Comerciamos poco. Poca competencia significa poca presi&oacute;n para mejorar.</p></div>
+                <div class="card"><h4>Sin consensos</h4><p>No hay acuerdo b&aacute;sico sobre el rumbo. El p&eacute;ndulo va y viene sin parar.</p></div>
+            </div>
+            <p style="text-align: center; margin-top: 36px;">Tenemos los recursos. Nos faltan <strong class="highlight">las instituciones y los acuerdos</strong>.</p>
+        </div>
+
+        <!-- 20. ¿HAY SALIDA? -->
+        <div class="slide bg-blanco">
+            <h2>¿Hay salida?</h2>
+            <p>No hay receta m&aacute;gica. Pero <strong>todos</strong> los pa&iacute;ses que salieron de la trampa hicieron estas cuatro cosas:</p>
+            <div class="cards c2" style="margin-top: 10px;">
+                <div class="card"><h4>1 · Estabilidad</h4><p>Inflaci&oacute;n baja y cuentas ordenadas. Sin sorpresas.</p></div>
+                <div class="card"><h4>2 · Apertura</h4><p>Integrarse al mundo. Competir para mejorar.</p></div>
+                <div class="card"><h4>3 · Instituciones</h4><p>Reglas estables y justicia que funcione.</p></div>
+                <div class="card"><h4>4 · Educaci&oacute;n</h4><p>De calidad, orientada a resultados.</p></div>
+            </div>
+        </div>
+
+        <!-- 21. SECCIÓN: CIERRE -->
+        <div class="slide bg-verde seccion">
+            <p class="eyebrow" style="opacity:0.7;">Cierre</p>
+            <h1>Tres ideas<br>para llevarse</h1>
+        </div>
+
+        <!-- 22. TRES IDEAS -->
+        <div class="slide bg-respaldo">
+            <div class="cards c3" style="margin-top: 10px;">
+                <div class="card">
+                    <h4>1 · Importan las reglas, no los recursos</h4>
+                    <p>Noruega y Venezuela tienen petr&oacute;leo. La diferencia son las instituciones.</p>
+                </div>
+                <div class="card">
+                    <h4>2 · El motor real son las ideas</h4>
+                    <p>Apilar f&aacute;bricas tiene techo. La tecnolog&iacute;a y la educaci&oacute;n, no.</p>
+                </div>
+                <div class="card">
+                    <h4>3 · No hay atajos</h4>
+                    <p>Ning&uacute;n boom ni plan m&aacute;gico reemplaza estabilidad, apertura y educaci&oacute;n.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- 23. CITA FINAL -->
+        <div class="slide bg-oscuro">
+            <blockquote style="border-left: none; padding-left: 0; font-size: 2.8rem;">
+                "Una vez que empez&aacute;s a pensar en por qu&eacute; unos pa&iacute;ses crecen y otros no, es dif&iacute;cil pensar en otra cosa."
+                <cite>— Robert Lucas, Nobel de Econom&iacute;a</cite>
+            </blockquote>
+            <p style="margin-top: 40px; opacity: 0.5;">Lucas ten&iacute;a raz&oacute;n.</p>
+        </div>
+
+        <!-- 24. GRACIAS -->
+        <div class="slide bg-respaldo portada">
+            <h1>Gracias</h1>
+            <p class="subtitle" style="margin-top: 20px;">¿Preguntas?</p>
+            <p class="fuente" style="margin-top: 50px;">Crecimiento y Desarrollo — Felipe Venancio</p>
+        </div>
+
+    </div>
+
+    <div class="slide-counter"><span id="current">1</span> / <span id="total">0</span></div>
+    <div class="nav-hint">← → para navegar | F para pantalla completa</div>
+
+    <script>
+        // Genera las luces de Corea del Sur (encendida)
+        (function() {
+            var sur = document.getElementById('korea-sur');
+            if (sur) {
+                var html = '';
+                var pts = [[15,30],[28,22],[40,38],[22,55],[35,62],[50,28],[60,45],[48,70],[68,60],[33,42],[55,55],[70,35],[25,68],[44,50],[62,72],[18,45],[52,40],[38,75],[72,50],[30,35],[58,65],[46,25],[66,25],[20,72]];
+                for (var i = 0; i < pts.length; i++) {
+                    html += '<span class="light" style="left:' + pts[i][0] + '%; top:' + pts[i][1] + '%;"></span>';
+                }
+                sur.insertAdjacentHTML('afterbegin', html);
+            }
+        })();
+
+        const slides = document.querySelectorAll('.slide');
+        let currentSlide = 0;
+        const total = slides.length;
+        document.getElementById('total').textContent = total;
+
+        function showSlide(n) {
+            slides[currentSlide].classList.remove('active');
+            currentSlide = (n + total) % total;
+            slides[currentSlide].classList.add('active');
+            document.getElementById('current').textContent = currentSlide + 1;
+        }
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowRight' || e.key === ' ' || e.key === 'Enter') { showSlide(currentSlide + 1); }
+            else if (e.key === 'ArrowLeft') { showSlide(currentSlide - 1); }
+            else if (e.key === 'Home') { showSlide(0); }
+            else if (e.key === 'End') { showSlide(total - 1); }
+            else if (e.key === 'f' || e.key === 'F') {
+                if (document.fullscreenElement) { document.exitFullscreen(); }
+                else { document.documentElement.requestFullscreen(); }
+            }
+        });
+
+        let touchStartX = 0;
+        document.addEventListener('touchstart', (e) => { touchStartX = e.touches[0].clientX; });
+        document.addEventListener('touchend', (e) => {
+            const diff = touchStartX - e.changedTouches[0].clientX;
+            if (Math.abs(diff) > 50) { diff > 0 ? showSlide(currentSlide + 1) : showSlide(currentSlide - 1); }
+        });
+        document.querySelector('.slide-container').addEventListener('click', (e) => {
+            e.clientX > window.innerWidth / 2 ? showSlide(currentSlide + 1) : showSlide(currentSlide - 1);
+        });
+    </script>
+</body>
+</html>
