@@ -1,0 +1,1068 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Comercio Internacional — PARA PROYECTAR</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Albert+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --azul-impulso: #1036E2;
+            --verde-activo: #00C600;
+            --azul-respaldo: #021751;
+            --blanco: #FFFFFF;
+            --negro: #000000;
+            --rojo-alerta: #DC2626;
+            --amarillo: #F59E0B;
+            --magenta: #E91E90;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Albert Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--azul-respaldo);
+            color: var(--blanco);
+            overflow: hidden;
+        }
+        .slide-container { width: 100vw; height: 100vh; display: flex; align-items: center; justify-content: center; }
+        /* MINIMALISTA: mucho aire, padding generoso */
+        .slide { display: none; width: 100%; height: 100%; padding: 70px 120px; flex-direction: column; justify-content: center; overflow-y: auto; }
+        .slide.active { display: flex; }
+        .bg-respaldo { background: var(--azul-respaldo); color: var(--blanco); }
+        .bg-impulso { background: var(--azul-impulso); color: var(--blanco); }
+        .bg-verde { background: var(--verde-activo); color: var(--blanco); }
+        .bg-blanco { background: var(--blanco); color: var(--azul-respaldo); }
+        .bg-oscuro { background: #0a0a0a; color: var(--blanco); }
+        .bg-magenta { background: var(--magenta); color: var(--blanco); }
+
+        /* MINIMALISTA + PARA PROYECTAR: tipografía grande */
+        h1 { font-size: 5rem; font-weight: 700; line-height: 1.08; margin-bottom: 35px; letter-spacing: -1px; }
+        h2 { font-size: 3.4rem; font-weight: 600; line-height: 1.12; margin-bottom: 40px; letter-spacing: -0.5px; }
+        h3 { font-size: 2.2rem; font-weight: 500; margin-bottom: 25px; opacity: 0.9; }
+        p, li { font-size: 1.9rem; line-height: 1.55; margin-bottom: 22px; }
+        .subtitle { font-size: 2.1rem; opacity: 0.8; font-weight: 400; }
+        .lead { font-size: 2.2rem; line-height: 1.5; }
+        .highlight { color: var(--verde-activo); }
+        .bg-blanco .highlight { color: var(--azul-impulso); }
+        .highlight-red { color: var(--rojo-alerta); }
+        .highlight-yellow { color: var(--amarillo); }
+        .highlight-magenta { color: var(--magenta); }
+        strong { font-weight: 700; }
+
+        blockquote { font-size: 2.6rem; font-weight: 500; font-style: italic; line-height: 1.35; border-left: 5px solid var(--verde-activo); padding-left: 40px; margin: 30px 0; opacity: 0.97; }
+        .bg-blanco blockquote { border-left-color: var(--azul-impulso); }
+        blockquote cite { display: block; font-size: 1.5rem; margin-top: 22px; font-style: normal; opacity: 0.7; font-weight: 400; }
+
+        ul { list-style: none; padding-left: 0; }
+        ul li { padding-left: 48px; position: relative; margin-bottom: 28px; font-size: 2rem; line-height: 1.45; }
+        ul li::before { content: "▸"; position: absolute; left: 0; color: var(--verde-activo); font-size: 1.9rem; top: 0; }
+        .bg-blanco ul li::before { color: var(--azul-impulso); }
+        .bg-verde ul li::before, .bg-impulso ul li::before, .bg-magenta ul li::before { color: var(--blanco); }
+
+        table { width: 100%; border-collapse: collapse; margin: 30px 0; font-size: 1.9rem; }
+        th, td { padding: 22px 26px; text-align: left; border-bottom: 1px solid rgba(255,255,255,0.2); }
+        .bg-blanco th, .bg-blanco td { border-bottom: 1px solid rgba(0,0,0,0.12); }
+        th { font-weight: 600; opacity: 0.65; font-size: 1.4rem; text-transform: uppercase; letter-spacing: 1px; }
+
+        .formula { font-size: 2.8rem; text-align: center; padding: 40px; background: rgba(255,255,255,0.07); border-radius: 16px; margin: 35px 0; font-weight: 500; letter-spacing: 1px; }
+        .bg-blanco .formula { background: rgba(16, 54, 226, 0.05); }
+        .formula-grande { font-size: 3.6rem; padding: 55px; }
+
+        .flow-diagram { display: flex; align-items: center; justify-content: center; gap: 22px; margin: 45px 0; flex-wrap: wrap; }
+        .flow-box { background: rgba(255,255,255,0.1); padding: 28px 34px; border-radius: 14px; font-size: 1.6rem; font-weight: 500; text-align: center; }
+        .bg-blanco .flow-box { background: rgba(16, 54, 226, 0.08); }
+        .flow-arrow { font-size: 2.4rem; color: var(--verde-activo); }
+        .bg-blanco .flow-arrow { color: var(--azul-impulso); }
+
+        .two-cols { display: grid; grid-template-columns: 1fr 1fr; gap: 55px; margin-top: 30px; }
+        .three-cols { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 38px; margin-top: 35px; }
+
+        .concepto-box { background: rgba(255,255,255,0.06); padding: 38px 34px; border-radius: 16px; text-align: center; }
+        .bg-blanco .concepto-box { background: rgba(16, 54, 226, 0.05); }
+        .concepto-box h4 { font-size: 1.7rem; font-weight: 700; margin-bottom: 18px; color: var(--verde-activo); }
+        .bg-blanco .concepto-box h4 { color: var(--azul-impulso); }
+        .bg-verde .concepto-box h4 { color: var(--azul-respaldo); }
+        .bg-verde .highlight { color: var(--azul-respaldo); }
+        .concepto-box p { font-size: 1.5rem; margin-bottom: 0; line-height: 1.4; }
+
+        .stat-box { text-align: center; padding: 30px; }
+        .stat-numero { font-size: 6rem; font-weight: 800; color: var(--verde-activo); line-height: 1; }
+        .bg-blanco .stat-numero { color: var(--azul-impulso); }
+        .stat-numero.rojo { color: var(--rojo-alerta); }
+        .stat-numero.magenta { color: var(--magenta); }
+        .stat-label { font-size: 1.5rem; opacity: 0.8; margin-top: 18px; line-height: 1.3; }
+        .stats-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 40px; margin-top: 40px; }
+        .stats-grid-4 { grid-template-columns: repeat(4, 1fr); }
+
+        .big-number { font-size: 9rem; font-weight: 800; line-height: 1; color: var(--verde-activo); text-align: center; }
+        .bg-blanco .big-number { color: var(--azul-impulso); }
+
+        .versus { display: grid; grid-template-columns: 1fr auto 1fr; gap: 35px; align-items: center; margin: 35px 0; }
+        .versus-center { font-size: 3rem; font-weight: 800; opacity: 0.3; }
+
+        .problema-box { background: rgba(220, 38, 38, 0.14); border-left: 5px solid var(--rojo-alerta); padding: 28px 34px; border-radius: 0 14px 14px 0; margin: 18px 0; }
+        .solucion-box { background: rgba(0, 198, 0, 0.14); border-left: 5px solid var(--verde-activo); padding: 28px 34px; border-radius: 0 14px 14px 0; margin: 18px 0; }
+        .bg-blanco .problema-box { background: rgba(220, 38, 38, 0.07); }
+        .bg-blanco .solucion-box { background: rgba(0, 198, 0, 0.07); }
+        .problema-box h4, .solucion-box h4 { font-size: 1.7rem; margin-bottom: 14px; }
+        .problema-box h4 { color: var(--rojo-alerta); }
+        .solucion-box h4 { color: var(--verde-activo); }
+        .problema-box p, .solucion-box p { font-size: 1.6rem; margin: 0; line-height: 1.4; }
+
+        /* Referencia mínima (reemplaza nota-academica diminuta) */
+        .fuente { font-size: 1.4rem; opacity: 0.55; margin-top: 30px; }
+
+        .portada { text-align: center; }
+        .portada h1 { font-size: 5.8rem; margin-bottom: 28px; }
+        .leyenda-proyectar { font-size: 1.5rem; letter-spacing: 4px; text-transform: uppercase; opacity: 0.55; margin-top: 40px; font-weight: 600; }
+
+        .seccion-titulo { text-align: center; }
+        .seccion-titulo h3 { text-transform: uppercase; letter-spacing: 5px; font-size: 1.6rem; opacity: 0.7; margin-bottom: 25px; }
+
+        .timeline { display: flex; flex-direction: column; gap: 26px; margin: 30px 0; }
+        .timeline-item { display: flex; gap: 32px; align-items: flex-start; }
+        .timeline-year { font-weight: 700; font-size: 1.5rem; color: var(--verde-activo); min-width: 150px; flex-shrink: 0; }
+        .bg-blanco .timeline-year { color: var(--azul-impulso); }
+        .timeline-item p { font-size: 1.7rem; margin: 0; }
+
+        /* Bar charts */
+        .bar-chart { margin: 30px 0; }
+        .bar-row { display: flex; align-items: center; margin-bottom: 18px; }
+        .bar-label { width: 230px; font-size: 1.5rem; font-weight: 500; flex-shrink: 0; }
+        .bar-container { flex: 1; height: 48px; background: rgba(255,255,255,0.1); border-radius: 7px; overflow: hidden; margin: 0 18px; position: relative; }
+        .bg-blanco .bar-container { background: rgba(0,0,0,0.05); }
+        .bar { height: 100%; background: var(--verde-activo); border-radius: 7px; display: flex; align-items: center; justify-content: flex-end; padding-right: 16px; font-weight: 700; font-size: 1.4rem; color: white; }
+        .bar.rojo { background: var(--rojo-alerta); }
+        .bar.azul { background: var(--azul-impulso); }
+        .bar.amarillo { background: var(--amarillo); color: #000; }
+        .bar.magenta { background: var(--magenta); }
+        .bar-value-outside { font-weight: 700; font-size: 1.4rem; margin-left: 14px; white-space: nowrap; }
+
+        /* Donut */
+        .donut-container { display: flex; align-items: center; justify-content: center; gap: 60px; margin: 25px 0; flex-wrap: wrap; }
+        .donut-chart { position: relative; width: 340px; height: 340px; }
+        .donut-chart svg { transform: rotate(-90deg); }
+        .donut-segment { fill: none; stroke-width: 50; }
+        .donut-legend { display: flex; flex-direction: column; gap: 18px; }
+        .legend-item { display: flex; align-items: center; gap: 16px; font-size: 1.6rem; }
+        .legend-color { width: 26px; height: 26px; border-radius: 6px; flex-shrink: 0; display: inline-block; }
+
+        /* SVG charts */
+        .chart-container { margin: 20px auto; max-width: 900px; }
+        .chart-container svg { width: 100%; height: auto; }
+        .chart-container.chart-full { max-width: 100%; }
+        .chart-container.chart-full svg { width: 100%; min-height: 52vh; }
+        .chart-line { fill: none; stroke-width: 3.5; stroke-linecap: round; stroke-linejoin: round; }
+        .chart-label { font-family: 'Albert Sans', sans-serif; font-size: 14px; fill: #555; }
+        .chart-value { font-family: 'Albert Sans', sans-serif; font-size: 13px; fill: #222; font-weight: 700; }
+        .chart-grid { stroke: #e0e0e0; stroke-width: 0.5; }
+        .chart-axis { stroke: #999; stroke-width: 1; }
+
+        /* Interactive trade buttons */
+        .trade-btn { padding: 18px 38px; border: 3px solid var(--azul-impulso); background: white; color: var(--azul-impulso); font-size: 1.6rem; font-weight: 700; border-radius: 12px; cursor: pointer; transition: all 0.3s; font-family: inherit; }
+        .trade-btn:hover { background: rgba(16,54,226,0.05); }
+        .trade-btn.active { background: var(--azul-impulso); color: white; }
+        .trade-result { min-height: 220px; display: flex; align-items: center; justify-content: center; transition: all 0.4s ease; }
+        .production-grid { display: flex; gap: 60px; justify-content: center; align-items: flex-end; flex-wrap: wrap; }
+        .production-item { text-align: center; }
+        .production-icons { font-size: 2.6rem; line-height: 1.3; min-height: 90px; display: flex; flex-wrap: wrap; justify-content: center; gap: 6px; max-width: 280px; }
+        .production-label { font-size: 1.7rem; font-weight: 700; margin-top: 12px; }
+        .production-sublabel { font-size: 1.3rem; opacity: 0.6; }
+        .total-box { background: rgba(16,54,226,0.07); padding: 22px 32px; border-radius: 14px; text-align: center; margin-top: 22px; font-size: 1.8rem; font-weight: 700; }
+
+        /* Image backgrounds */
+        .bg-western { background: linear-gradient(135deg, rgba(139,105,20,0.7), rgba(107,58,31,0.75)), url('good_bad_ugly_poster.jpg') center/cover no-repeat; color: var(--blanco); }
+        .bg-baltimore { background: linear-gradient(180deg, rgba(13,17,23,0.78), rgba(26,31,46,0.72), rgba(45,27,61,0.78)), url('michael_k_williams.jpg') center top/cover no-repeat; color: var(--blanco); }
+        .bg-sarmiento { background: linear-gradient(135deg, rgba(2,23,81,0.82), rgba(2,23,81,0.78)), url('sarmiento.jpg') center/cover no-repeat; color: var(--blanco); }
+        .bg-liberation { background: linear-gradient(135deg, rgba(26,26,62,0.72), rgba(45,21,51,0.68), rgba(61,21,21,0.72)), url('trump_liberation_day.jpg.webp') center/cover no-repeat; color: var(--blanco); }
+
+        /* Deal comparison bars */
+        .deal-row { display: flex; align-items: center; margin-bottom: 18px; gap: 16px; }
+        .deal-label { width: 180px; font-size: 1.5rem; font-weight: 600; flex-shrink: 0; }
+        .deal-bars { flex: 1; display: flex; flex-direction: column; gap: 6px; }
+        .deal-bar-container { height: 30px; background: rgba(0,0,0,0.05); border-radius: 5px; overflow: visible; display: flex; align-items: center; }
+        .deal-bar { height: 100%; border-radius: 5px; display: flex; align-items: center; padding-right: 12px; justify-content: flex-end; font-size: 1.2rem; font-weight: 700; color: white; min-width: 50px; }
+        .deal-bar.threatened { background: var(--rojo-alerta); opacity: 0.6; }
+        .deal-bar.final { background: var(--verde-activo); }
+        .deal-bar.final.argentina { background: var(--azul-impulso); box-shadow: 0 0 12px rgba(16,54,226,0.4); }
+        .deal-legend-mini { display: flex; gap: 36px; font-size: 1.4rem; margin-bottom: 25px; }
+        .deal-legend-mini span { display: flex; align-items: center; gap: 10px; }
+        .deal-legend-mini .dot { width: 18px; height: 18px; border-radius: 4px; }
+
+        .nav-hint { position: fixed; bottom: 32px; right: 44px; font-size: 1.1rem; opacity: 0.4; }
+        .slide-counter { position: fixed; bottom: 32px; left: 44px; font-size: 1.1rem; opacity: 0.4; }
+
+        /* Responsive */
+        @media (max-width: 1200px) {
+            .slide { padding: 50px 60px; }
+            h1 { font-size: 3.4rem; }
+            h2 { font-size: 2.4rem; }
+            p, li { font-size: 1.5rem; }
+            .two-cols, .three-cols { grid-template-columns: 1fr; gap: 25px; }
+            .stats-grid, .stats-grid-4 { grid-template-columns: repeat(2, 1fr); }
+        }
+        @media (max-width: 768px) {
+            .slide { padding: 30px 24px; }
+            h1 { font-size: 2.3rem; }
+            h2 { font-size: 1.7rem; margin-bottom: 20px; }
+            h3 { font-size: 1.3rem; }
+            p, li { font-size: 1.15rem; line-height: 1.5; margin-bottom: 14px; }
+            ul li { font-size: 1.2rem; padding-left: 30px; margin-bottom: 16px; }
+            .subtitle, .lead { font-size: 1.2rem; }
+            blockquote { font-size: 1.5rem; padding-left: 22px; }
+            blockquote cite { font-size: 1rem; }
+            .portada h1 { font-size: 2.5rem; }
+            .formula { font-size: 1.6rem; padding: 22px; }
+            .formula-grande { font-size: 2rem; padding: 28px; }
+            .two-cols, .three-cols { grid-template-columns: 1fr; gap: 16px; }
+            .stats-grid, .stats-grid-4 { grid-template-columns: repeat(2, 1fr); gap: 18px; }
+            .stat-numero { font-size: 3.4rem; }
+            .big-number { font-size: 5rem; }
+            .concepto-box { padding: 22px; }
+            .concepto-box h4 { font-size: 1.3rem; }
+            .concepto-box p { font-size: 1.15rem; }
+            table { font-size: 1.2rem; }
+            th, td { padding: 12px 14px; }
+            .flow-box { padding: 16px 20px; font-size: 1.1rem; }
+            .bar-label { width: 120px; font-size: 1.1rem; }
+            .bar-container { height: 34px; }
+            .bar { font-size: 1rem; }
+            .donut-chart { width: 220px; height: 220px; }
+            .donut-segment { stroke-width: 42; }
+            .legend-item { font-size: 1.2rem; }
+            .timeline-year { min-width: 95px; font-size: 1.2rem; }
+            .timeline-item p { font-size: 1.2rem; }
+            .deal-label { width: 100px; font-size: 1.1rem; }
+        }
+    </style>
+</head>
+<body>
+    <script>if(sessionStorage.getItem('clases_auth')!=='true')window.location.replace('index.html');</script>
+    <div class="slide-container">
+
+        <!-- 1. PORTADA -->
+        <div class="slide bg-respaldo portada active">
+            <h1>Comercio Internacional</h1>
+            <p class="subtitle">Por qu&eacute; los pa&iacute;ses comercian, qu&eacute; ganan y qu&eacute; arriesgan</p>
+            <p class="leyenda-proyectar">Para proyectar</p>
+        </div>
+
+        <!-- 2. CONEXIÓN CON CLASE ANTERIOR -->
+        <div class="slide bg-impulso">
+            <h2>En la clase anterior...</h2>
+            <p class="lead" style="margin-bottom: 35px;">El cepo no es solo un problema cambiario. Es un problema <strong>comercial</strong>.</p>
+            <ul>
+                <li>Cadenas globales de valor y restricciones cambiarias</li>
+                <li>El <strong>sesgo anti-exportador</strong> estructural argentino</li>
+                <li>Importar para exportar... sin acceso a d&oacute;lares</li>
+                <li>Argentina vs. los pa&iacute;ses que s&iacute; se integraron</li>
+            </ul>
+        </div>
+
+        <!-- 3. CITA FRANKLIN -->
+        <div class="slide bg-oscuro">
+            <blockquote style="border-left-color: var(--magenta);">
+                "No hay ninguna naci&oacute;n que haya arruinado su comercio con otros pa&iacute;ses sin arruinarse a s&iacute; misma."
+                <cite>— Benjamin Franklin</cite>
+            </blockquote>
+        </div>
+
+        <!-- 4. IDENTIDAD PBI -->
+        <div class="slide bg-blanco">
+            <h2>El comercio en el PBI</h2>
+            <div class="formula formula-grande">
+                PBI = C + I + G + <strong class="highlight-magenta">(X − M)</strong>
+            </div>
+            <p style="text-align: center; font-size: 2.2rem; margin-top: 30px;">X &gt; M &rarr; <strong class="highlight">super&aacute;vit</strong>&nbsp;&nbsp;|&nbsp;&nbsp; M &gt; X &rarr; <strong class="highlight-red">d&eacute;ficit</strong></p>
+        </div>
+
+        <!-- 5. BALANZA COMERCIAL -->
+        <div class="slide bg-blanco">
+            <h2>La balanza comercial</h2>
+            <p class="lead">Exportaciones menos importaciones. La entrada o salida <strong>neta de divisas</strong>.</p>
+            <div class="two-cols" style="margin-top: 40px;">
+                <div class="solucion-box">
+                    <h4>Super&aacute;vit</h4>
+                    <p>X &gt; M. Entran m&aacute;s divisas de las que salen.</p>
+                </div>
+                <div class="problema-box">
+                    <h4>D&eacute;ficit</h4>
+                    <p>M &gt; X. Salen m&aacute;s divisas. Hay que financiarse.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- 6. SECCIÓN: 3 HECHOS -->
+        <div class="slide bg-magenta seccion-titulo">
+            <h3>Antes de la teor&iacute;a</h3>
+            <h1>3 hechos del comercio<br>internacional</h1>
+            <p class="subtitle" style="margin-top: 20px;">Lo que dicen los datos</p>
+        </div>
+
+        <!-- 7. HECHO 1 -->
+        <div class="slide bg-blanco">
+            <h2>1. Comerciamos <strong class="highlight">cada vez m&aacute;s</strong></h2>
+            <div class="chart-container chart-full">
+                <svg viewBox="0 0 620 280">
+                    <line x1="50" y1="20" x2="50" y2="240" class="chart-axis"/>
+                    <line x1="50" y1="240" x2="600" y2="240" class="chart-axis"/>
+                    <line x1="50" y1="196" x2="600" y2="196" class="chart-grid" stroke-dasharray="4"/>
+                    <line x1="50" y1="152" x2="600" y2="152" class="chart-grid" stroke-dasharray="4"/>
+                    <line x1="50" y1="108" x2="600" y2="108" class="chart-grid" stroke-dasharray="4"/>
+                    <line x1="50" y1="64" x2="600" y2="64" class="chart-grid" stroke-dasharray="4"/>
+                    <line x1="50" y1="20" x2="600" y2="20" class="chart-grid" stroke-dasharray="4"/>
+                    <text x="45" y="244" text-anchor="end" class="chart-label">20%</text>
+                    <text x="45" y="200" text-anchor="end" class="chart-label">30%</text>
+                    <text x="45" y="156" text-anchor="end" class="chart-label">40%</text>
+                    <text x="45" y="112" text-anchor="end" class="chart-label">50%</text>
+                    <text x="45" y="68" text-anchor="end" class="chart-label">60%</text>
+                    <text x="50" y="258" text-anchor="middle" class="chart-label">1970</text>
+                    <text x="155" y="258" text-anchor="middle" class="chart-label">1980</text>
+                    <text x="260" y="258" text-anchor="middle" class="chart-label">1990</text>
+                    <text x="365" y="258" text-anchor="middle" class="chart-label">2000</text>
+                    <text x="470" y="258" text-anchor="middle" class="chart-label">2010</text>
+                    <text x="580" y="258" text-anchor="middle" class="chart-label">2022</text>
+                    <polygon points="50,215 103,190 155,168 208,173 260,169 313,139 365,107 418,76 440,48 451,71 506,75 558,96 580,28 580,240 50,240" fill="rgba(16,54,226,0.08)" />
+                    <polyline class="chart-line" stroke="#1036E2"
+                        points="50,215 103,190 155,168 208,173 260,169 313,139 365,107 418,76 440,48 451,71 506,75 558,96 580,28"/>
+                    <circle cx="50" cy="215" r="5" fill="#1036E2"/><text x="50" y="230" class="chart-value" text-anchor="middle">25,8%</text>
+                    <circle cx="365" cy="107" r="5" fill="#1036E2"/><text x="365" y="100" class="chart-value" text-anchor="middle">50,3%</text>
+                    <circle cx="440" cy="48" r="6" fill="#E91E90"/><text x="455" y="42" class="chart-value" fill="#E91E90" text-anchor="start">60,6% (2008)</text>
+                    <circle cx="580" cy="28" r="6" fill="#00C600"/><text x="575" y="22" class="chart-value" fill="#00C600" text-anchor="end">62,4%</text>
+                </svg>
+            </div>
+            <p style="text-align: center; font-size: 2.1rem;">El comercio mundial se <strong class="highlight">m&aacute;s que duplic&oacute;</strong> como % del PBI en 50 a&ntilde;os.</p>
+            <p class="fuente">Banco Mundial, World Development Indicators.</p>
+        </div>
+
+        <!-- 8. ARGENTINA ATRASADA -->
+        <div class="slide bg-blanco">
+            <h2>Argentina viene <strong class="highlight-red">atrasada</strong></h2>
+            <p>Comercio (X+M) como % del PBI, 2018:</p>
+            <div class="bar-chart">
+                <div class="bar-row"><span class="bar-label">Eslovaquia</span><div class="bar-container"><div class="bar" style="width: 96%;">192%</div></div></div>
+                <div class="bar-row"><span class="bar-label">Malasia</span><div class="bar-container"><div class="bar" style="width: 66%;">131%</div></div></div>
+                <div class="bar-row"><span class="bar-label">M&eacute;xico</span><div class="bar-container"><div class="bar azul" style="width: 40%;">80%</div></div></div>
+                <div class="bar-row"><span class="bar-label">Chile</span><div class="bar-container"><div class="bar azul" style="width: 29%;">57%</div></div></div>
+                <div class="bar-row"><span class="bar-label"><strong>Brasil</strong></span><div class="bar-container"><div class="bar rojo" style="width: 15%;">29%</div></div></div>
+                <div class="bar-row"><span class="bar-label"><strong>Argentina</strong></span><div class="bar-container"><div class="bar rojo" style="width: 16%;">31%</div></div></div>
+            </div>
+            <p style="text-align: center; font-size: 2rem;">Las economías m&aacute;s <strong class="highlight-red">cerradas</strong> de la muestra. Es un fen&oacute;meno <strong>Mercosur</strong>.</p>
+        </div>
+
+        <!-- 9. HECHO 2 -->
+        <div class="slide bg-blanco">
+            <h2>2. Con aranceles <strong class="highlight">cada vez menores</strong></h2>
+            <div class="chart-container chart-full">
+                <svg viewBox="0 0 620 280">
+                    <line x1="50" y1="20" x2="50" y2="240" class="chart-axis"/>
+                    <line x1="50" y1="240" x2="600" y2="240" class="chart-axis"/>
+                    <line x1="50" y1="196" x2="600" y2="196" class="chart-grid" stroke-dasharray="4"/>
+                    <line x1="50" y1="152" x2="600" y2="152" class="chart-grid" stroke-dasharray="4"/>
+                    <line x1="50" y1="108" x2="600" y2="108" class="chart-grid" stroke-dasharray="4"/>
+                    <line x1="50" y1="64" x2="600" y2="64" class="chart-grid" stroke-dasharray="4"/>
+                    <text x="45" y="244" text-anchor="end" class="chart-label">0%</text>
+                    <text x="45" y="200" text-anchor="end" class="chart-label">3%</text>
+                    <text x="45" y="156" text-anchor="end" class="chart-label">6%</text>
+                    <text x="45" y="112" text-anchor="end" class="chart-label">9%</text>
+                    <text x="45" y="68" text-anchor="end" class="chart-label">12%</text>
+                    <text x="45" y="24" text-anchor="end" class="chart-label">15%</text>
+                    <text x="50" y="258" text-anchor="middle" class="chart-label">1990</text>
+                    <text x="222" y="258" text-anchor="middle" class="chart-label">2000</text>
+                    <text x="394" y="258" text-anchor="middle" class="chart-label">2010</text>
+                    <text x="580" y="258" text-anchor="middle" class="chart-label">2022</text>
+                    <polygon points="50,47 136,90 222,133 308,157 394,175 480,183 566,196 580,197 580,240 50,240" fill="rgba(233,30,144,0.06)"/>
+                    <polyline class="chart-line" stroke="#E91E90"
+                        points="50,47 136,90 222,133 308,157 394,175 480,183 566,196 580,197"/>
+                    <circle cx="50" cy="47" r="6" fill="#E91E90"/><text x="65" y="42" class="chart-value" fill="#E91E90">13,2%</text>
+                    <circle cx="394" cy="175" r="5" fill="#E91E90"/><text x="409" y="170" class="chart-value" fill="#E91E90">5,0%</text>
+                    <circle cx="580" cy="197" r="6" fill="#E91E90"/><text x="565" y="212" class="chart-value" fill="#E91E90" text-anchor="end">3,7%</text>
+                </svg>
+            </div>
+            <p style="text-align: center; font-size: 2.1rem;">El <strong>GATT</strong> (1947) y la <strong>OMC</strong> (1995): los motores de la apertura.</p>
+            <p class="fuente">OMC, Tariff and Trade Data. Aranceles promedio ponderados NMF.</p>
+        </div>
+
+        <!-- 10. PARÉNTESIS TRUMP -->
+        <div class="slide bg-oscuro">
+            <h2>...al menos <strong class="highlight-red">por ahora</strong></h2>
+            <div class="stats-grid" style="margin-top: 20px;">
+                <div class="stat-box"><div class="stat-numero" style="color: var(--verde-activo);">~2,5%</div><div class="stat-label">Arancel efectivo EE.UU.<br>Enero 2025</div></div>
+                <div class="stat-box"><div class="stat-numero rojo">~27%</div><div class="stat-label">Pico abril 2025<br>(Liberation Day)</div></div>
+                <div class="stat-box"><div class="stat-numero" style="color: var(--amarillo);">10-17%</div><div class="stat-label">Tasa efectiva actual<br>(tras negociaciones)</div></div>
+            </div>
+            <p style="text-align: center; font-size: 2.1rem; margin-top: 40px;">El nivel m&aacute;s alto desde la d&eacute;cada de <strong class="highlight-red">1940</strong>.</p>
+            <p class="fuente">Tax Foundation, Yale Budget Lab, Penn Wharton. Datos a feb. 2026.</p>
+        </div>
+
+        <!-- 11. HECHO 3 -->
+        <div class="slide bg-blanco">
+            <h2>3. <strong class="highlight">Casi nada</strong> se hace en un solo lugar</h2>
+            <p style="text-align: center; font-size: 2.1rem;">Un iPhone: componentes de m&aacute;s de <strong>40 pa&iacute;ses</strong>.</p>
+            <div class="three-cols" style="margin-top: 30px;">
+                <div class="concepto-box"><h4>Dise&ntilde;o</h4><p>California</p></div>
+                <div class="concepto-box"><h4>Chips</h4><p>Taiw&aacute;n (TSMC)</p></div>
+                <div class="concepto-box"><h4>Pantallas</h4><p>Corea (Samsung)</p></div>
+                <div class="concepto-box"><h4>Ensamblaje</h4><p>China (Foxconn)</p></div>
+                <div class="concepto-box"><h4>Litio</h4><p>Chile / Australia</p></div>
+                <div class="concepto-box"><h4>Software</h4><p>India / EE.UU.</p></div>
+            </div>
+            <p class="fuente">UNCTAD, World Investment Report 2023. Las CGV son la mitad del comercio mundial.</p>
+        </div>
+
+        <!-- 12. SECCIÓN PARTE 1 -->
+        <div class="slide bg-respaldo seccion-titulo">
+            <h3>Parte 1</h3>
+            <h1>Historia del pensamiento<br>sobre el <span class="highlight">comercio</span></h1>
+            <p class="subtitle" style="margin-top: 20px;">De los mercantilistas a las cadenas globales</p>
+        </div>
+
+        <!-- 13. MERCANTILISMO -->
+        <div class="slide bg-blanco">
+            <h2>Mercantilismo <span style="opacity:0.5; font-weight:400;">(s. XVI-XVIII)</span></h2>
+            <ul>
+                <li>La riqueza = <strong class="highlight">acumular metales preciosos</strong></li>
+                <li>Maximizar exportaciones, minimizar importaciones</li>
+                <li>El comercio como juego de <strong>suma cero</strong></li>
+            </ul>
+            <blockquote style="font-size: 2.2rem; margin-top: 25px;">
+                "La idea de que el comercio es guerra es tan vieja como el mercantilismo, y tan equivocada hoy como entonces."
+                <cite>— Paul Krugman, Nobel 2008</cite>
+            </blockquote>
+        </div>
+
+        <!-- 14. ADAM SMITH INTERACTIVO -->
+        <div class="slide bg-blanco" id="slide-smith">
+            <h2>Smith: ventajas absolutas</h2>
+            <p>Si cada pa&iacute;s hace lo que produce mejor, <strong class="highlight">todos ganan</strong>.</p>
+            <table style="margin: 15px 0; font-size: 1.7rem;">
+                <tr><th>Producci&oacute;n / mes</th><th style="text-align:center">🚂 Trenes</th><th style="text-align:center">🌾 Trigo</th></tr>
+                <tr><td><strong>Inglaterra</strong></td><td style="text-align:center">4</td><td style="text-align:center">1</td></tr>
+                <tr><td><strong>Argentina</strong></td><td style="text-align:center">1</td><td style="text-align:center">2</td></tr>
+            </table>
+            <div style="display: flex; gap: 20px; justify-content: center; margin: 18px 0;">
+                <button class="trade-btn active" onclick="showSmith('sin')">Sin especializaci&oacute;n</button>
+                <button class="trade-btn" onclick="showSmith('con')">Con especializaci&oacute;n</button>
+            </div>
+            <div class="trade-result" id="smith-result">
+                <div>
+                    <div class="production-grid">
+                        <div class="production-item"><div class="production-icons">🚂🚂🚂🚂 🚂</div><div class="production-label">5 trenes</div><div class="production-sublabel">ING: 4 + ARG: 1</div></div>
+                        <div class="production-item"><div class="production-icons">🌾🌾🌾</div><div class="production-label">3 trigos</div><div class="production-sublabel">ING: 1 + ARG: 2</div></div>
+                    </div>
+                    <div class="total-box">Total mundial: <strong>5 trenes + 3 trigos</strong></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 15. CITA SMITH -->
+        <div class="slide bg-oscuro">
+            <blockquote>
+                "Si un pa&iacute;s extranjero puede proveernos una mercanc&iacute;a m&aacute;s barata de lo que podemos fabricarla, es mejor compr&aacute;rsela."
+                <cite>— Adam Smith, "La Riqueza de las Naciones" (1776)</cite>
+            </blockquote>
+        </div>
+
+        <!-- 16. RICARDO INTERACTIVO -->
+        <div class="slide bg-blanco" id="slide-ricardo">
+            <h2>Ricardo: ventajas comparativas</h2>
+            <p><strong class="highlight">Aun siendo peor en todo</strong>, conviene especializarse en lo <em>relativamente</em> menos malo.</p>
+            <table style="margin: 15px 0; font-size: 1.7rem;">
+                <tr><th>Producci&oacute;n / mes</th><th style="text-align:center">🚂 Trenes</th><th style="text-align:center">🌾 Trigo</th></tr>
+                <tr><td><strong>Inglaterra</strong></td><td style="text-align:center">4</td><td style="text-align:center">3</td></tr>
+                <tr><td><strong>Argentina</strong></td><td style="text-align:center">1</td><td style="text-align:center">2</td></tr>
+            </table>
+            <div style="display: flex; gap: 20px; justify-content: center; margin: 18px 0;">
+                <button class="trade-btn active" onclick="showRicardo('sin')">Sin especializaci&oacute;n</button>
+                <button class="trade-btn" onclick="showRicardo('con')">Con especializaci&oacute;n</button>
+            </div>
+            <div class="trade-result" id="ricardo-result">
+                <div>
+                    <div class="production-grid">
+                        <div class="production-item"><div class="production-icons">🚂🚂🚂🚂 🚂🚂</div><div class="production-label">6 trenes</div><div class="production-sublabel">ING: 4 + ARG: 2</div></div>
+                        <div class="production-item"><div class="production-icons">🌾🌾🌾🌾🌾</div><div class="production-label">5 trigos</div><div class="production-sublabel">ING: 3 + ARG: 2</div></div>
+                    </div>
+                    <div class="total-box">Total mundial: <strong>6 trenes + 5 trigos</strong></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 17. CITA SAMUELSON -->
+        <div class="slide bg-impulso">
+            <blockquote style="border-left-color: white;">
+                "La ventaja comparativa es el mejor ejemplo que conozco de un principio econ&oacute;mico que es verdadero sin ser obvio."
+                <cite>— Paul Samuelson, Nobel 1970</cite>
+            </blockquote>
+        </div>
+
+        <!-- 18. COSTO DE OPORTUNIDAD -->
+        <div class="slide bg-blanco">
+            <h2>La clave: el costo de oportunidad</h2>
+            <p class="lead">No es qui&eacute;n produce m&aacute;s, sino <strong class="highlight">a qu&eacute; renuncia cada uno</strong>.</p>
+            <table style="margin-top: 30px;">
+                <tr><th>Costo de oportunidad</th><th>1 Tren cuesta...</th><th>1 Trigo cuesta...</th></tr>
+                <tr><td><strong>Inglaterra</strong></td><td>3/4 tn de trigo</td><td>4/3 de tren</td></tr>
+                <tr><td><strong>Argentina</strong></td><td>2 tn de trigo</td><td>1/2 tren</td></tr>
+            </table>
+            <p style="margin-top: 30px; text-align: center; font-size: 2rem;">Argentina: <strong>ventaja comparativa en trigo</strong>.</p>
+        </div>
+
+        <!-- 19. EL BUENO EL MALO Y EL FEO -->
+        <div class="slide bg-western" style="position: relative;">
+            <div style="position: absolute; top: 30px; right: 40px; font-size: 6rem; opacity: 0.2;">🤠</div>
+            <blockquote style="border-left-color: #D4A847; max-width: 85%;">
+                "Hay dos tipos de personas: los que tienen un rev&oacute;lver cargado y los que cavan."
+                <cite>— Tuco, "El Bueno, el Malo y el Feo" (1966)</cite>
+            </blockquote>
+            <p style="margin-top: 35px; font-size: 2.1rem;">Hasta el que "cava" tiene un rol productivo. <strong>Nadie est&aacute; condenado a quedarse afuera.</strong></p>
+        </div>
+
+        <!-- 20. EN QUÉ TE ESPECIALIZÁS IMPORTA -->
+        <div class="slide bg-blanco">
+            <h2>Pero <strong class="highlight-magenta">en qu&eacute; te especializ&aacute;s importa</strong></h2>
+            <p>No es campo vs. industria. El campo puede ser tan sofisticado como una f&aacute;brica.</p>
+            <div class="three-cols" style="margin-top: 25px;">
+                <div class="concepto-box" style="border: 2px solid var(--azul-impulso);"><h4>Lo que importa</h4><p>Tecnolog&iacute;a<br>Diferenciaci&oacute;n<br>Valor agregado</p></div>
+                <div class="concepto-box"><h4>Agro sofisticado</h4><p>Semillas editadas, agricultura de precisi&oacute;n, vino premium</p></div>
+                <div class="concepto-box"><h4>Industria b&aacute;sica</h4><p>Ensamblaje simple, maquila sin dise&ntilde;o propio, sin I+D</p></div>
+            </div>
+            <p style="text-align: center; margin-top: 30px; font-size: 2rem;">La clave: <strong class="highlight">subir en la escalera de valor</strong>.</p>
+            <p class="fuente">Hausmann &amp; Hidalgo (2011), "The Atlas of Economic Complexity".</p>
+        </div>
+
+        <!-- 21. CRÍTICA ESTRUCTURALISTA -->
+        <div class="slide bg-blanco">
+            <h2>La cr&iacute;tica estructuralista</h2>
+            <p class="lead">CEPAL (Prebisch, 1950): <strong class="highlight-red">¿la especializaci&oacute;n es neutral?</strong></p>
+            <ul style="margin-top: 30px;">
+                <li><strong>Deterioro</strong> de los t&eacute;rminos de intercambio</li>
+                <li>Propuesta: <strong>Industrializaci&oacute;n por Sustituci&oacute;n de Importaciones</strong> (ISI)</li>
+                <li>Matiz emp&iacute;rico: m&aacute;s que deterioro, mayor <strong>volatilidad</strong></li>
+            </ul>
+        </div>
+
+        <!-- 22. NUEVO COMERCIO KRUGMAN -->
+        <div class="slide bg-blanco">
+            <h2>El Nuevo Comercio Internacional</h2>
+            <p class="lead">Krugman (1979): <strong class="highlight">econom&iacute;as de escala</strong> + competencia imperfecta.</p>
+            <ul style="margin-top: 30px;">
+                <li>Los pa&iacute;ses comercian para <strong>explotar escala</strong>, no solo por ser distintos</li>
+                <li>Las ventajas comparativas <strong>se construyen</strong> (learning by doing)</li>
+                <li>Pero la protecci&oacute;n genera inercia y <strong class="highlight-red">rent-seeking</strong></li>
+            </ul>
+        </div>
+
+        <!-- 23. CGV -->
+        <div class="slide bg-blanco">
+            <h2>Cadenas Globales de Valor</h2>
+            <p style="text-align: center; font-size: 2.2rem;"><strong class="highlight">Ya ning&uacute;n pa&iacute;s hace nada solo.</strong></p>
+            <div class="flow-diagram">
+                <div class="flow-box">Dise&ntilde;o</div>
+                <span class="flow-arrow">→</span>
+                <div class="flow-box">Componentes</div>
+                <span class="flow-arrow">→</span>
+                <div class="flow-box">Ensamblaje</div>
+                <span class="flow-arrow">→</span>
+                <div class="flow-box">Distribuci&oacute;n</div>
+            </div>
+            <p style="text-align: center; font-size: 2rem; margin-top: 20px;">Hoy importa <strong class="highlight">insertarse</strong>. Condici&oacute;n: <strong>reglas claras y estables</strong>.</p>
+        </div>
+
+        <!-- 24. SECCIÓN PARTE 2 -->
+        <div class="slide bg-respaldo seccion-titulo">
+            <h3>Parte 2</h3>
+            <h1>Proteccionismo vs.<br><span class="highlight">Librecambio</span></h1>
+            <p class="subtitle" style="margin-top: 20px;">El debate que nunca termina</p>
+        </div>
+
+        <!-- 25. CITA LINCOLN -->
+        <div class="slide bg-oscuro">
+            <blockquote style="font-size: 2.3rem;">
+                "Cuando compramos productos en el extranjero, obtenemos los bienes y el extranjero el dinero. Cuando los compramos en casa, obtenemos los bienes Y el dinero."
+                <cite>— Atribuida a Abraham Lincoln (pensamiento proteccionista del s. XIX)</cite>
+            </blockquote>
+        </div>
+
+        <!-- 26. EFECTOS DE UN ARANCEL -->
+        <div class="slide bg-blanco">
+            <h2>Efectos de un arancel</h2>
+            <div class="two-cols" style="align-items: center;">
+                <div>
+                    <svg viewBox="0 0 380 320" style="width: 100%; max-width: 480px;">
+                        <line x1="50" y1="10" x2="50" y2="280" stroke="#333" stroke-width="2"/>
+                        <line x1="50" y1="280" x2="370" y2="280" stroke="#333" stroke-width="2"/>
+                        <text x="25" y="150" font-size="15" fill="#333" font-weight="700" transform="rotate(-90 25 150)" text-anchor="middle" font-family="Albert Sans">Precio</text>
+                        <text x="210" y="305" font-size="15" fill="#333" font-weight="700" text-anchor="middle" font-family="Albert Sans">Cantidad</text>
+                        <line x1="60" y1="30" x2="350" y2="270" stroke="#DC2626" stroke-width="2.5"/>
+                        <text x="355" y="270" font-size="13" fill="#DC2626" font-weight="600" font-family="Albert Sans">D</text>
+                        <line x1="60" y1="260" x2="300" y2="40" stroke="#00C600" stroke-width="2.5"/>
+                        <text x="305" y="40" font-size="13" fill="#00C600" font-weight="600" font-family="Albert Sans">S</text>
+                        <line x1="50" y1="200" x2="350" y2="200" stroke="#1036E2" stroke-width="2" stroke-dasharray="8,4"/>
+                        <text x="355" y="204" font-size="13" fill="#1036E2" font-weight="700" font-family="Albert Sans">P*</text>
+                        <line x1="50" y1="160" x2="350" y2="160" stroke="#E91E90" stroke-width="2" stroke-dasharray="8,4"/>
+                        <text x="355" y="164" font-size="13" fill="#E91E90" font-weight="700" font-family="Albert Sans">P*+t</text>
+                        <polygon points="50,200 125,200 169,160 50,160" fill="rgba(0,198,0,0.15)" stroke="#00C600" stroke-width="1"/>
+                        <polygon points="125,200 169,160 169,200" fill="rgba(220,38,38,0.25)" stroke="#DC2626" stroke-width="1"/>
+                        <rect x="169" y="160" width="48" height="40" fill="rgba(245,158,11,0.2)" stroke="#F59E0B" stroke-width="1"/>
+                        <polygon points="217,200 217,160 265,200" fill="rgba(220,38,38,0.25)" stroke="#DC2626" stroke-width="1"/>
+                        <text x="147" y="216" font-size="11" fill="#DC2626" text-anchor="middle" font-family="Albert Sans">DWL</text>
+                        <text x="193" y="185" font-size="11" fill="#F59E0B" text-anchor="middle" font-family="Albert Sans">Recaud.</text>
+                        <text x="241" y="216" font-size="11" fill="#DC2626" text-anchor="middle" font-family="Albert Sans">DWL</text>
+                    </svg>
+                </div>
+                <div>
+                    <div class="problema-box"><p>Sube el precio al consumidor</p></div>
+                    <div class="problema-box"><p>Cae el excedente del consumidor</p></div>
+                    <div class="solucion-box"><p>Sube la producci&oacute;n nacional</p></div>
+                    <p style="margin-top: 22px; font-size: 1.9rem;"><strong class="highlight-red">Neto:</strong> p&eacute;rdida de eficiencia (DWL).</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- 27. PROTECCIÓN EFECTIVA -->
+        <div class="slide bg-blanco">
+            <h2>Proteger a uno es <strong class="highlight-red">desproteger</strong> al resto</h2>
+            <div class="two-cols" style="margin-top: 25px;">
+                <div class="concepto-box" style="border: 2px solid var(--rojo-alerta);">
+                    <h4 style="color: var(--rojo-alerta);">Pa&iacute;s A (protege el acero)</h4>
+                    <p style="font-size: 1.7rem;">Acero: $1.000 + <strong style="color: var(--rojo-alerta);">$250</strong><br><strong>Costo final: $2.250</strong></p>
+                </div>
+                <div class="concepto-box" style="border: 2px solid var(--verde-activo);">
+                    <h4>Pa&iacute;s B (no protege)</h4>
+                    <p style="font-size: 1.7rem;">Acero: $1.000<br><strong>Costo final: $2.000</strong></p>
+                </div>
+            </div>
+            <p style="text-align: center; margin-top: 30px; font-size: 2rem;">Argentina: arancel a insumos del <strong class="highlight-red">10,2%</strong>. El 87% de los pa&iacute;ses tiene menos.</p>
+        </div>
+
+        <!-- 28. INDUSTRIA NACIENTE -->
+        <div class="slide bg-blanco">
+            <h2>El argumento de la industria naciente</h2>
+            <p class="lead"><strong class="highlight">Proteger temporalmente</strong> hasta ser competitivos.</p>
+            <div class="two-cols" style="margin-top: 30px;">
+                <div class="problema-box"><h4>Problema 1: Escala</h4><p>No cierro el gap si practico con 100 autos mientras el resto hace 1.000.000.</p></div>
+                <div class="problema-box"><h4>Problema 2: Inercia</h4><p>Lo "temporal" se vuelve permanente. Lobby para mantener privilegios.</p></div>
+            </div>
+            <blockquote style="font-size: 2.1rem; margin-top: 25px;">
+                "No hay nada m&aacute;s permanente que un programa de gobierno temporal."
+                <cite>— Milton Friedman, Nobel 1976</cite>
+            </blockquote>
+        </div>
+
+        <!-- 29. THE WIRE -->
+        <div class="slide bg-baltimore" style="position: relative;">
+            <div style="position: absolute; inset: 0; background: linear-gradient(90deg, rgba(13,17,23,0.95) 0%, rgba(13,17,23,0.7) 50%, rgba(45,27,61,0.8) 100%); z-index: 0;"></div>
+            <div style="position: relative; z-index: 1;">
+                <p style="font-size: 1.4rem; opacity: 0.5; text-transform: uppercase; letter-spacing: 3px; margin-bottom: 25px;">The Wire — HBO</p>
+                <blockquote style="border-left-color: #8B5CF6;">
+                    "The game is the game. Always."
+                    <cite>— Omar Little</cite>
+                </blockquote>
+                <p style="margin-top: 35px; font-size: 2rem;">Una vez que proteg&eacute;s un sector, es muy dif&iacute;cil dar marcha atr&aacute;s. Los beneficiarios har&aacute;n lo que sea por mantenerlo.</p>
+            </div>
+        </div>
+
+        <!-- 30. ALIANZAS COMERCIALES -->
+        <div class="slide bg-blanco">
+            <h2>Alianzas comerciales</h2>
+            <p class="lead"><strong class="highlight">Apertura hacia dentro, protecci&oacute;n hacia fuera.</strong></p>
+            <div class="three-cols" style="margin-top: 30px;">
+                <div class="concepto-box"><h4>M&aacute;s escala</h4><p>M&aacute;s mercado achica el gap de aprendizaje</p></div>
+                <div class="concepto-box"><h4>Menores costos</h4><p>Insumos m&aacute;s baratos = m&aacute;s competitividad</p></div>
+                <div class="concepto-box"><h4>M&aacute;s inversi&oacute;n</h4><p>Sin barreras internas, llegan las CGV</p></div>
+            </div>
+            <p style="text-align: center; margin-top: 30px; font-size: 1.9rem;">UE · USMCA · Mercosur · RCEP</p>
+        </div>
+
+        <!-- 31. COMERCIO BASADO EN REGLAS -->
+        <div class="slide bg-blanco">
+            <h2>El comercio basado en reglas</h2>
+            <div class="timeline">
+                <div class="timeline-item"><span class="timeline-year">1947</span><p><strong>GATT</strong> — 23 pa&iacute;ses fundadores.</p></div>
+                <div class="timeline-item"><span class="timeline-year">1986-94</span><p><strong>Ronda Uruguay</strong> — servicios, propiedad intelectual, agro.</p></div>
+                <div class="timeline-item"><span class="timeline-year">1995</span><p><strong>OMC</strong> — 164 miembros, resoluci&oacute;n de disputas.</p></div>
+                <div class="timeline-item"><span class="timeline-year">2001</span><p><strong>China ingresa</strong> — el mayor shock al sistema global.</p></div>
+            </div>
+        </div>
+
+        <!-- 32. CITA MACAULAY -->
+        <div class="slide bg-verde">
+            <blockquote style="border-left-color: white;">
+                "El libre comercio, una de las mayores bendiciones que un gobierno puede conceder, es impopular en casi todos los pa&iacute;ses."
+                <cite>— Lord Macaulay (1824)</cite>
+            </blockquote>
+            <p style="margin-top: 35px; text-align: center; font-size: 2rem;">200 a&ntilde;os despu&eacute;s, la tensi&oacute;n <strong>sigue sin resolverse</strong>.</p>
+        </div>
+
+        <!-- 33. SECCIÓN PARTE 3 -->
+        <div class="slide bg-respaldo seccion-titulo">
+            <h3>Parte 3</h3>
+            <h1>La guerra comercial de <span class="highlight-red">Trump</span></h1>
+            <p class="subtitle" style="margin-top: 20px;">El retorno del proteccionismo a la mayor econom&iacute;a del mundo</p>
+        </div>
+
+        <!-- 34. TRUMP CONTEXTO -->
+        <div class="slide bg-liberation" style="position: relative;">
+            <div style="position: relative; z-index: 1;">
+                <h2>¿Qu&eacute; pas&oacute;?</h2>
+                <p class="lead">2 de abril de 2025: aranceles "rec&iacute;procos" masivos. El <strong class="highlight-red">"Liberation Day"</strong>.</p>
+                <ul style="margin-top: 25px;">
+                    <li>Arancel base del <strong>10%</strong> a casi todos los pa&iacute;ses</li>
+                    <li>Hasta <strong>46%</strong> (Vietnam), <strong>34%</strong> (China), <strong>20%</strong> (UE)</li>
+                    <li>Arancel efectivo a China: <strong>145%</strong> acumulado</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- 35. TRUMP LÓGICA MERCANTILISTA -->
+        <div class="slide bg-blanco">
+            <h2>Una l&oacute;gica mercantilista en el s. XXI</h2>
+            <div class="formula">
+                Arancel = (Importaciones − Exportaciones) / Importaciones
+            </div>
+            <p style="text-align: center; font-size: 2.1rem;"><strong class="highlight-red">El d&eacute;ficit bilateral, no los aranceles reales del otro pa&iacute;s.</strong></p>
+            <p style="text-align: center; font-size: 2rem; margin-top: 20px;">Economistas de todo el espectro la criticaron como <strong>sin fundamento te&oacute;rico</strong>.</p>
+        </div>
+
+        <!-- 36. TRUMP EFECTOS -->
+        <div class="slide bg-blanco">
+            <h2>Efectos de la guerra comercial</h2>
+            <div class="three-cols" style="margin-top: 20px;">
+                <div class="concepto-box"><h4 style="color: var(--rojo-alerta);">Precios</h4><p>Impuesto al consumo. ~USD 1.300 extra por hogar/a&ntilde;o.</p></div>
+                <div class="concepto-box"><h4 style="color: var(--rojo-alerta);">Incertidumbre</h4><p>Nadie invierte si las reglas cambian por tweet.</p></div>
+                <div class="concepto-box"><h4 style="color: var(--rojo-alerta);">Cadenas de valor</h4><p>Las CGV no se reconfiguran en 90 d&iacute;as.</p></div>
+            </div>
+            <p style="text-align: center; font-size: 2rem; margin-top: 35px;">El <strong class="highlight-red">94%</strong> del costo lo absorbieron consumidores y empresas de EE.UU.</p>
+            <p class="fuente">Federal Reserve Bank of New York (feb. 2026).</p>
+        </div>
+
+        <!-- 37. SMOOT-HAWLEY -->
+        <div class="slide bg-blanco">
+            <h2>La lecci&oacute;n hist&oacute;rica: Smoot-Hawley</h2>
+            <p class="lead">1930: EE.UU. sube aranceles a +20.000 productos. Represalias globales.</p>
+            <div style="text-align: center; margin: 30px 0;">
+                <span class="big-number" style="color: var(--rojo-alerta);">−65%</span>
+                <p style="font-size: 1.8rem; opacity: 0.75;">cay&oacute; el comercio mundial entre 1929 y 1934</p>
+            </div>
+            <blockquote style="font-size: 2.1rem;">
+                "Smoot-Hawley fue un desastre autoinfligido."
+                <cite>— Douglas Irwin, "Peddling Protectionism" (2011)</cite>
+            </blockquote>
+        </div>
+
+        <!-- 38. CITA SARMIENTO -->
+        <div class="slide bg-sarmiento" style="text-align: center;">
+            <blockquote style="border-left-color: var(--verde-activo); text-align: left; max-width: 80%; margin: 0 auto;">
+                "Un pueblo que se a&iacute;sla del movimiento comercial del mundo, se condena a la barbarie."
+                <cite>— Domingo F. Sarmiento, presidente argentino (1868-1874)</cite>
+            </blockquote>
+        </div>
+
+        <!-- 39. SECCIÓN PARTE 4 -->
+        <div class="slide bg-magenta seccion-titulo">
+            <h3>Parte 4</h3>
+            <h1>Radiograf&iacute;a del comercio<br>exterior argentino</h1>
+            <p class="subtitle" style="margin-top: 20px;">Qu&eacute; exportamos, a qui&eacute;n, y por qu&eacute; importa</p>
+        </div>
+
+        <!-- 40. ARGENTINA CERRADA -->
+        <div class="slide bg-blanco">
+            <h2>Argentina: economía <strong class="highlight-red">cerrada</strong></h2>
+            <div style="text-align: center; margin: 20px 0;">
+                <span class="big-number" style="color: var(--rojo-alerta);">27%</span>
+                <p style="font-size: 1.9rem; opacity: 0.75;">ratio comercio/PBI (2023). El 7mo m&aacute;s bajo del mundo. Promedio global: 63%.</p>
+            </div>
+            <div class="two-cols" style="margin-top: 15px;">
+                <div class="problema-box"><h4>Aranceles elevados</h4><p>10,2% promedio (Mercosur). El 87% de los pa&iacute;ses tiene menos.</p></div>
+                <div class="problema-box"><h4>Barreras no arancelarias</h4><p>Licencias, cepo cambiario, regulaciones que funcionan como barreras.</p></div>
+            </div>
+        </div>
+
+        <!-- 41. QUÉ EXPORTAMOS -->
+        <div class="slide bg-blanco">
+            <h2>¿Qu&eacute; exporta Argentina?</h2>
+            <p>Top 10 = <strong class="highlight">55,8%</strong> del total (abril 2025):</p>
+            <div class="bar-chart">
+                <div class="bar-row"><span class="bar-label">Ma&iacute;z</span><div class="bar-container"><div class="bar amarillo" style="width: 100%;">12,2%</div></div></div>
+                <div class="bar-row"><span class="bar-label">Harina de soja</span><div class="bar-container"><div class="bar amarillo" style="width: 87%;">10,6%</div></div></div>
+                <div class="bar-row"><span class="bar-label">Aceite de soja</span><div class="bar-container"><div class="bar amarillo" style="width: 72%;">8,8%</div></div></div>
+                <div class="bar-row"><span class="bar-label">Petr&oacute;leo crudo</span><div class="bar-container"><div class="bar magenta" style="width: 62%;">7,6%</div></div></div>
+                <div class="bar-row"><span class="bar-label">Veh&iacute;culos</span><div class="bar-container"><div class="bar azul" style="width: 42%;">5,1%</div></div></div>
+            </div>
+            <p style="text-align: center; font-size: 2rem;"><strong class="highlight">Alta concentraci&oacute;n</strong> en primarios y agroindustria.</p>
+        </div>
+
+        <!-- 42. SOCIOS COMERCIALES -->
+        <div class="slide bg-blanco">
+            <h2>Principales socios comerciales</h2>
+            <table>
+                <tr><th>Socio</th><th>Expo</th><th>Impo</th><th>Saldo</th></tr>
+                <tr><td><strong>Brasil</strong></td><td>3.772</td><td>5.857</td><td style="font-weight:700; color: var(--rojo-alerta);">−2.085</td></tr>
+                <tr><td><strong>China</strong></td><td>1.359</td><td>5.760</td><td style="font-weight:700; color: var(--rojo-alerta);">−4.401</td></tr>
+                <tr><td><strong>EE.UU.</strong></td><td>2.212</td><td>2.082</td><td style="font-weight:700; color: var(--verde-activo);">+130</td></tr>
+            </table>
+            <p style="margin-top: 25px; text-align: center; font-size: 2rem;"><strong class="highlight-red">Con China importamos casi 4x lo que exportamos.</strong></p>
+            <p class="fuente">INDEC, ICA. Acumulado ene-abr 2025. Millones de USD.</p>
+        </div>
+
+        <!-- 43. EXPORTACIONES POR REGIÓN -->
+        <div class="slide bg-blanco">
+            <h2>Exportaciones por regi&oacute;n</h2>
+            <div class="donut-container">
+                <div class="donut-chart">
+                    <svg viewBox="0 0 200 200" width="320" height="320">
+                        <circle class="donut-segment" cx="100" cy="100" r="70" stroke="#1036E2" stroke-dasharray="314.0 439.8" stroke-dashoffset="0"/>
+                        <circle class="donut-segment" cx="100" cy="100" r="70" stroke="#E91E90" stroke-dasharray="58.5 439.8" stroke-dashoffset="-314.0"/>
+                        <circle class="donut-segment" cx="100" cy="100" r="70" stroke="#F59E0B" stroke-dasharray="28.6 439.8" stroke-dashoffset="-372.5"/>
+                        <circle class="donut-segment" cx="100" cy="100" r="70" stroke="#00C600" stroke-dasharray="22.9 439.8" stroke-dashoffset="-401.1"/>
+                        <circle class="donut-segment" cx="100" cy="100" r="70" stroke="#8B5CF6" stroke-dasharray="15.8 439.8" stroke-dashoffset="-424.0"/>
+                    </svg>
+                </div>
+                <div class="donut-legend">
+                    <div class="legend-item"><span class="legend-color" style="background: #1036E2;"></span><span><strong>Pampeana:</strong> 71,4%</span></div>
+                    <div class="legend-item"><span class="legend-color" style="background: #E91E90;"></span><span><strong>Patagonia:</strong> 13,3%</span></div>
+                    <div class="legend-item"><span class="legend-color" style="background: #F59E0B;"></span><span><strong>Noroeste:</strong> 6,5%</span></div>
+                    <div class="legend-item"><span class="legend-color" style="background: #00C600;"></span><span><strong>Cuyo:</strong> 5,2%</span></div>
+                    <div class="legend-item"><span class="legend-color" style="background: #8B5CF6;"></span><span><strong>Noreste y otros:</strong> 3,6%</span></div>
+                </div>
+            </div>
+            <p style="text-align: center; font-size: 1.9rem;">Complejo agroindustrial + energ&iacute;a patag&oacute;nica (<strong class="highlight-magenta">Vaca Muerta</strong>).</p>
+        </div>
+
+        <!-- 44. PREGUNTA CIERRE -->
+        <div class="slide bg-magenta seccion-titulo">
+            <h1>¿Proteccionismo o<br>librecambio?</h1>
+            <p class="subtitle" style="margin-top: 30px;">La respuesta no es binaria. Depende del contexto, la estrategia<br>y la capacidad institucional.</p>
+        </div>
+
+        <!-- 45. IDEAS PARA LLEVAR (1) -->
+        <div class="slide bg-blanco">
+            <h2>Ideas para llevar <span style="opacity:0.4; font-weight:400;">(1/2)</span></h2>
+            <ul>
+                <li>El comercio <strong>no es suma cero</strong>: la especializaci&oacute;n genera ganancias</li>
+                <li>Lo que importa es la <strong class="highlight">complejidad</strong> de tu canasta exportadora, no campo vs. industria</li>
+                <li>Los aranceles protegen a un sector <strong class="highlight-red">a costa de consumidores</strong> y otros sectores</li>
+            </ul>
+        </div>
+
+        <!-- 46. IDEAS PARA LLEVAR (2) -->
+        <div class="slide bg-blanco">
+            <h2>Ideas para llevar <span style="opacity:0.4; font-weight:400;">(2/2)</span></h2>
+            <ul>
+                <li>Las CGV cambiaron el juego: hoy importa <strong>integrarse</strong>, no aislarse</li>
+                <li>Argentina es <strong class="highlight-red">una de las econom&iacute;as m&aacute;s cerradas</strong> del mundo para su tama&ntilde;o</li>
+                <li>La <strong class="highlight">previsibilidad</strong> es condici&oacute;n necesaria para atraer inversi&oacute;n y comercio</li>
+            </ul>
+            <blockquote style="font-size: 2rem; margin-top: 25px;">
+                "Free trade stops wars. One world, one peace."
+                <cite>— Toby Ziegler, "The West Wing"</cite>
+            </blockquote>
+        </div>
+
+        <!-- 47. GRACIAS -->
+        <div class="slide bg-respaldo portada">
+            <h1>Gracias</h1>
+            <p class="subtitle" style="margin-top: 20px;">Felipe Venancio</p>
+        </div>
+
+        <!-- ========== ANEXO ESTADÍSTICO ========== -->
+
+        <!-- 48. SECCIÓN ANEXO -->
+        <div class="slide bg-respaldo seccion-titulo">
+            <h3>Anexo</h3>
+            <h1>Informaci&oacute;n <span class="highlight">estad&iacute;stica</span></h1>
+            <p class="subtitle" style="margin-top: 20px;">Datos oficiales del mundo y de Argentina</p>
+        </div>
+
+        <!-- 49. COMERCIO MUNDIAL -->
+        <div class="slide bg-blanco">
+            <h2>Comercio mundial de bienes (2024)</h2>
+            <div class="stats-grid stats-grid-4">
+                <div class="stat-box"><div class="stat-numero">25,3</div><div class="stat-label">Billones USD<br>Expo mundiales</div></div>
+                <div class="stat-box"><div class="stat-numero">25,6</div><div class="stat-label">Billones USD<br>Impo mundiales</div></div>
+                <div class="stat-box"><div class="stat-numero">7,6</div><div class="stat-label">Billones USD<br>Expo servicios</div></div>
+                <div class="stat-box"><div class="stat-numero">164</div><div class="stat-label">Miembros<br>de la OMC</div></div>
+            </div>
+            <p class="fuente">OMC, World Trade Statistical Review 2025.</p>
+        </div>
+
+        <!-- 50. TOP EXPORTADORES -->
+        <div class="slide bg-blanco">
+            <h2>Principales exportadores del mundo</h2>
+            <div class="bar-chart">
+                <div class="bar-row"><span class="bar-label">China</span><div class="bar-container"><div class="bar rojo" style="width: 100%;">USD 3,6 bill.</div></div></div>
+                <div class="bar-row"><span class="bar-label">EE.UU.</span><div class="bar-container"><div class="bar azul" style="width: 58%;">USD 2,1 bill.</div></div></div>
+                <div class="bar-row"><span class="bar-label">Alemania</span><div class="bar-container"><div class="bar azul" style="width: 47%;">USD 1,7 bill.</div></div></div>
+                <div class="bar-row"><span class="bar-label">Jap&oacute;n</span><div class="bar-container"><div class="bar" style="width: 22%;">USD 0,8 bill.</div></div></div>
+                <div class="bar-row"><span class="bar-label"><strong>Argentina (#45)</strong></span><div class="bar-container"><div class="bar amarillo" style="width: 3%;"></div></div><span class="bar-value-outside" style="color: var(--azul-impulso);">USD 80 mil M (~0,3%)</span></div>
+            </div>
+            <p class="fuente">OMC / Banco Mundial. Datos 2024.</p>
+        </div>
+
+        <!-- 51. COMPOSICIÓN EXPO ARG -->
+        <div class="slide bg-blanco">
+            <h2>Composici&oacute;n de exportaciones (2024)</h2>
+            <div class="donut-container">
+                <div class="donut-chart">
+                    <svg viewBox="0 0 200 200" width="320" height="320">
+                        <circle class="donut-segment" cx="100" cy="100" r="70" stroke="#F59E0B" stroke-dasharray="163.7 439.8" stroke-dashoffset="0"/>
+                        <circle class="donut-segment" cx="100" cy="100" r="70" stroke="#1036E2" stroke-dasharray="121.8 439.8" stroke-dashoffset="-163.7"/>
+                        <circle class="donut-segment" cx="100" cy="100" r="70" stroke="#00C600" stroke-dasharray="100.7 439.8" stroke-dashoffset="-285.5"/>
+                        <circle class="donut-segment" cx="100" cy="100" r="70" stroke="#E91E90" stroke-dasharray="53.6 439.8" stroke-dashoffset="-386.2"/>
+                    </svg>
+                </div>
+                <div class="donut-legend">
+                    <div class="legend-item"><span class="legend-color" style="background: #F59E0B;"></span><span><strong>MOA:</strong> 37,2%</span></div>
+                    <div class="legend-item"><span class="legend-color" style="background: #1036E2;"></span><span><strong>MOI:</strong> 27,7%</span></div>
+                    <div class="legend-item"><span class="legend-color" style="background: #00C600;"></span><span><strong>Primarios:</strong> 22,9%</span></div>
+                    <div class="legend-item"><span class="legend-color" style="background: #E91E90;"></span><span><strong>Combustibles:</strong> 12,2%</span></div>
+                </div>
+            </div>
+            <p style="text-align: center; font-size: 1.9rem;"><strong class="highlight">60%</strong> de base agropecuaria. <strong class="highlight-magenta">Vaca Muerta</strong> empuja energ&iacute;a (+22,7%).</p>
+        </div>
+
+        <!-- 52. BALANZA 1990-2023 -->
+        <div class="slide bg-blanco">
+            <h2>Balanza comercial argentina (1990-2023)</h2>
+            <div class="timeline">
+                <div class="timeline-item"><span class="timeline-year">1995-2001</span><p><strong style="color: var(--rojo-alerta);">D&eacute;ficits.</strong> Convertibilidad aprecia el peso. Colapso 2001.</p></div>
+                <div class="timeline-item"><span class="timeline-year">2002-2008</span><p><strong style="color: var(--verde-activo);">Super&aacute;vits.</strong> Devaluaci&oacute;n + superciclo de commodities.</p></div>
+                <div class="timeline-item"><span class="timeline-year">2015-2017</span><p><strong style="color: var(--rojo-alerta);">D&eacute;ficits.</strong> Apertura con tipo de cambio apreciado.</p></div>
+                <div class="timeline-item"><span class="timeline-year">2018-2023</span><p>Cepo comprime impo. <strong style="color: var(--rojo-alerta);">Sequ&iacute;a 2023:</strong> d&eacute;ficit USD 6.900 M.</p></div>
+            </div>
+            <p class="fuente">INDEC, ICA.</p>
+        </div>
+
+        <!-- 53. 2024 RÉCORD -->
+        <div class="slide bg-blanco">
+            <h2>2024: super&aacute;vit comercial <strong class="highlight">r&eacute;cord</strong></h2>
+            <div class="stats-grid">
+                <div class="stat-box"><div class="stat-numero">79,7</div><div class="stat-label">Mil M USD<br>Expo (+19,4%)</div></div>
+                <div class="stat-box"><div class="stat-numero rojo">60,8</div><div class="stat-label">Mil M USD<br>Impo (−17,5%)</div></div>
+                <div class="stat-box"><div class="stat-numero" style="color: var(--verde-activo);">18,9</div><div class="stat-label">Mil M USD<br><strong>Super&aacute;vit r&eacute;cord</strong></div></div>
+            </div>
+            <div class="three-cols" style="margin-top: 25px;">
+                <div class="solucion-box"><h4>Vaca Muerta</h4><p>Exportador neto de energ&iacute;a. Super&aacute;vit USD 5.700 M.</p></div>
+                <div class="solucion-box"><h4>Recuperaci&oacute;n agr&iacute;cola</h4><p>Tras la sequía. Soja +147%.</p></div>
+                <div class="problema-box"><h4>Ca&iacute;da de impo</h4><p>Recesi&oacute;n (−2,1% PBI) y ajuste.</p></div>
+            </div>
+        </div>
+
+        <!-- 54. ARANCELES COMPARADOS -->
+        <div class="slide bg-blanco">
+            <h2>Aranceles promedio comparados</h2>
+            <div class="bar-chart">
+                <div class="bar-row"><span class="bar-label"><strong>Argentina</strong></span><div class="bar-container"><div class="bar rojo" style="width: 100%;">10,2%</div></div></div>
+                <div class="bar-row"><span class="bar-label">Brasil</span><div class="bar-container"><div class="bar rojo" style="width: 78%;">8,0%</div></div></div>
+                <div class="bar-row"><span class="bar-label">India</span><div class="bar-container"><div class="bar amarillo" style="width: 64%;">6,5%</div></div></div>
+                <div class="bar-row"><span class="bar-label">M&eacute;xico</span><div class="bar-container"><div class="bar azul" style="width: 44%;">4,5%</div></div></div>
+                <div class="bar-row"><span class="bar-label">China</span><div class="bar-container"><div class="bar azul" style="width: 37%;">3,8%</div></div></div>
+                <div class="bar-row"><span class="bar-label">UE</span><div class="bar-container"><div class="bar" style="width: 18%;">1,8%</div></div></div>
+            </div>
+            <p class="fuente">Banco Mundial, WITS. Datos pre-aranceles Trump 2025.</p>
+        </div>
+
+        <!-- 55. MEJORES ACUERDOS CON EE.UU. -->
+        <div class="slide bg-blanco">
+            <h2>¿Qui&eacute;n logr&oacute; los <strong class="highlight">mejores acuerdos</strong> con EE.UU.?</h2>
+            <div class="deal-legend-mini">
+                <span><span class="dot" style="background: var(--rojo-alerta); opacity:0.6;"></span> Amenazado (abr 2025)</span>
+                <span><span class="dot" style="background: var(--verde-activo);"></span> Vigente (post negociaci&oacute;n)</span>
+            </div>
+            <div>
+                <div class="deal-row"><span class="deal-label">China</span><div class="deal-bars"><div class="deal-bar-container"><div class="deal-bar threatened" style="width: 97%;">145%</div></div><div class="deal-bar-container"><div class="deal-bar final" style="width: 13%;">20%</div></div></div></div>
+                <div class="deal-row"><span class="deal-label">Vietnam</span><div class="deal-bars"><div class="deal-bar-container"><div class="deal-bar threatened" style="width: 31%;">46%</div></div><div class="deal-bar-container"><div class="deal-bar final" style="width: 13%;">20%</div></div></div></div>
+                <div class="deal-row"><span class="deal-label">UE</span><div class="deal-bars"><div class="deal-bar-container"><div class="deal-bar threatened" style="width: 13%;">20%</div></div><div class="deal-bar-container"><div class="deal-bar final" style="width: 10%;">15%</div></div></div></div>
+                <div class="deal-row" style="background: rgba(16,54,226,0.06); border-radius: 8px; padding: 8px;">
+                    <span class="deal-label" style="color: var(--azul-impulso);"><strong>Argentina</strong></span>
+                    <div class="deal-bars">
+                        <div class="deal-bar-container"><div class="deal-bar threatened" style="width: 7%;">10%</div></div>
+                        <div class="deal-bar-container"><div class="deal-bar final argentina" style="width: 7%;">10%</div></div>
+                    </div>
+                </div>
+            </div>
+            <p style="margin-top: 25px; font-size: 1.9rem;"><strong class="highlight">Argentina qued&oacute; con la tasa m&aacute;s baja (10%)</strong> + acuerdo marco sobre 1.675 productos.</p>
+            <p class="fuente">CFR Tracker, Tax Foundation, USTR. Datos a feb. 2026.</p>
+        </div>
+
+        <!-- 56. VACA MUERTA -->
+        <div class="slide bg-blanco">
+            <h2>El efecto Vaca Muerta</h2>
+            <div class="stats-grid">
+                <div class="stat-box"><div class="stat-numero magenta">9.705</div><div class="stat-label">Mill. USD<br>Expo combustibles 2024</div></div>
+                <div class="stat-box"><div class="stat-numero">+22,7%</div><div class="stat-label">Crecimiento<br>interanual</div></div>
+                <div class="stat-box"><div class="stat-numero">12,2%</div><div class="stat-label">De las expo<br>totales</div></div>
+            </div>
+            <p style="margin-top: 35px; text-align: center; font-size: 2rem;">Argentina pas&oacute; de importador a <strong class="highlight">exportador neto de energ&iacute;a</strong> en 2023.</p>
+            <p class="fuente">INDEC, Secretar&iacute;a de Energ&iacute;a. 2024.</p>
+        </div>
+
+    </div>
+
+    <div class="slide-counter"><span id="current">1</span> / <span id="total"></span></div>
+    <div class="nav-hint">← → para navegar | F para pantalla completa</div>
+
+    <script>
+        const slides = document.querySelectorAll('.slide');
+        let currentSlide = 0;
+        const total = slides.length;
+        document.getElementById('total').textContent = total;
+
+        function showSlide(n) {
+            slides[currentSlide].classList.remove('active');
+            currentSlide = (n + total) % total;
+            slides[currentSlide].classList.add('active');
+            document.getElementById('current').textContent = currentSlide + 1;
+        }
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowRight' || e.key === ' ' || e.key === 'Enter') { showSlide(currentSlide + 1); }
+            else if (e.key === 'ArrowLeft') { showSlide(currentSlide - 1); }
+            else if (e.key === 'Home') { showSlide(0); }
+            else if (e.key === 'End') { showSlide(total - 1); }
+            else if (e.key === 'f' || e.key === 'F') {
+                if (document.fullscreenElement) { document.exitFullscreen(); }
+                else { document.documentElement.requestFullscreen(); }
+            }
+        });
+
+        let touchStartX = 0;
+        document.addEventListener('touchstart', (e) => { touchStartX = e.touches[0].clientX; });
+        document.addEventListener('touchend', (e) => {
+            const diff = touchStartX - e.changedTouches[0].clientX;
+            if (Math.abs(diff) > 50) { diff > 0 ? showSlide(currentSlide + 1) : showSlide(currentSlide - 1); }
+        });
+        document.querySelector('.slide-container').addEventListener('click', (e) => {
+            if (e.target.closest('button')) return;
+            e.clientX > window.innerWidth / 2 ? showSlide(currentSlide + 1) : showSlide(currentSlide - 1);
+        });
+
+        // Interactive Smith slide
+        function showSmith(mode) {
+            const btns = document.querySelectorAll('#slide-smith .trade-btn');
+            btns.forEach(b => b.classList.remove('active'));
+            event.target.classList.add('active');
+            const r = document.getElementById('smith-result');
+            if (mode === 'sin') {
+                r.innerHTML = '<div><div class="production-grid"><div class="production-item"><div class="production-icons">🚂🚂🚂🚂 🚂</div><div class="production-label">5 trenes</div><div class="production-sublabel">ING: 4 + ARG: 1</div></div><div class="production-item"><div class="production-icons">🌾🌾🌾</div><div class="production-label">3 trigos</div><div class="production-sublabel">ING: 1 + ARG: 2</div></div></div><div class="total-box">Total mundial: <strong>5 trenes + 3 trigos</strong></div></div>';
+            } else {
+                r.innerHTML = '<div><div class="production-grid"><div class="production-item"><div class="production-icons">🚂🚂🚂🚂🚂🚂🚂🚂</div><div class="production-label" style="color: var(--azul-impulso);">8 trenes</div><div class="production-sublabel">ING: 8 (solo trenes)</div></div><div class="production-item"><div class="production-icons">🌾🌾🌾🌾</div><div class="production-label" style="color: var(--verde-activo);">4 trigos</div><div class="production-sublabel">ARG: 4 (solo trigo)</div></div></div><div class="total-box" style="background: rgba(0,198,0,0.12); border: 2px solid var(--verde-activo);">Total mundial: <strong>8 trenes + 4 trigos</strong> — <span style="color: var(--verde-activo);">+3 trenes y +1 trigo!</span></div></div>';
+            }
+        }
+
+        // Interactive Ricardo slide
+        function showRicardo(mode) {
+            const btns = document.querySelectorAll('#slide-ricardo .trade-btn');
+            btns.forEach(b => b.classList.remove('active'));
+            event.target.classList.add('active');
+            const r = document.getElementById('ricardo-result');
+            if (mode === 'sin') {
+                r.innerHTML = '<div><div class="production-grid"><div class="production-item"><div class="production-icons">🚂🚂🚂🚂 🚂🚂</div><div class="production-label">6 trenes</div><div class="production-sublabel">ING: 4 + ARG: 2</div></div><div class="production-item"><div class="production-icons">🌾🌾🌾🌾🌾</div><div class="production-label">5 trigos</div><div class="production-sublabel">ING: 3 + ARG: 2</div></div></div><div class="total-box">Total mundial: <strong>6 trenes + 5 trigos</strong></div></div>';
+            } else {
+                r.innerHTML = '<div><div class="production-grid"><div class="production-item"><div class="production-icons">🚂🚂🚂🚂🚂🚂🚂🚂</div><div class="production-label" style="color: var(--azul-impulso);">8 trenes</div><div class="production-sublabel">ING: 8 (solo trenes)</div></div><div class="production-item"><div class="production-icons">🌾🌾🌾🌾🌾🌾</div><div class="production-label" style="color: var(--verde-activo);">6 trigos</div><div class="production-sublabel">ARG: 6 (solo trigo)</div></div></div><div class="total-box" style="background: rgba(0,198,0,0.12); border: 2px solid var(--verde-activo);">Total mundial: <strong>8 trenes + 6 trigos</strong> — <span style="color: var(--verde-activo);">+2 trenes y +1 trigo!</span></div></div>';
+            }
+        }
+    </script>
+</body>
+</html>
