@@ -1,0 +1,1186 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Siete preguntas para empezar — PARA PROYECTAR — Economía (FSOC-UBA)</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Albert+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --azul-impulso: #1036E2;
+            --verde-activo: #00C600;
+            --azul-respaldo: #021751;
+            --blanco: #FFFFFF;
+            --negro: #000000;
+            --rojo-alerta: #DC2626;
+            --amarillo: #F59E0B;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Albert Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--azul-respaldo);
+            color: var(--blanco);
+            overflow: hidden;
+        }
+
+        .slide-container {
+            width: 100vw; height: 100vh;
+            display: flex; align-items: center; justify-content: center;
+        }
+
+        .slide {
+            display: none; width: 100%; height: 100%;
+            padding: 60px 100px; flex-direction: column; justify-content: center;
+        }
+        .slide.active { display: flex; }
+
+        .bg-respaldo { background: var(--azul-respaldo); color: var(--blanco); }
+        .bg-impulso { background: var(--azul-impulso); color: var(--blanco); }
+        .bg-verde { background: var(--verde-activo); color: var(--blanco); }
+        .bg-blanco { background: var(--blanco); color: var(--azul-respaldo); }
+
+        .bg-imagen { background-size: cover; background-position: center; position: relative; color: var(--blanco); }
+        .bg-imagen::before {
+            content: ""; position: absolute; inset: 0;
+            background: linear-gradient(100deg, rgba(2,23,81,0.97) 0%, rgba(2,23,81,0.94) 55%, rgba(2,23,81,0.5) 100%);
+        }
+        .bg-imagen > * { position: relative; z-index: 1; }
+
+        h1 { font-size: 5rem; font-weight: 700; line-height: 1.08; margin-bottom: 35px; }
+        h2 { font-size: 3.5rem; font-weight: 600; margin-bottom: 35px; line-height: 1.12; }
+        h3 { font-size: 2.2rem; font-weight: 500; margin-bottom: 25px; opacity: 0.9; }
+        p, li { font-size: 1.8rem; line-height: 1.5; margin-bottom: 20px; }
+        .subtitle { font-size: 2rem; opacity: 0.85; font-weight: 400; }
+        .highlight { color: var(--verde-activo); }
+        .bg-blanco .highlight { color: var(--azul-impulso); }
+        .highlight-red { color: var(--rojo-alerta); }
+        .bg-verde .highlight, .bg-impulso .highlight { color: var(--blanco); font-weight: 700; }
+
+        blockquote {
+            font-size: 2rem; font-style: italic;
+            border-left: 6px solid var(--verde-activo);
+            padding-left: 38px; margin: 28px 0;
+        }
+        .bg-verde blockquote, .bg-impulso blockquote { border-left-color: var(--blanco); }
+        .bg-blanco blockquote { border-left-color: var(--azul-impulso); }
+        blockquote cite { display: block; font-size: 1.4rem; margin-top: 18px; font-style: normal; opacity: 0.7; }
+
+        ul { list-style: none; padding-left: 0; }
+        ul li { padding-left: 45px; position: relative; margin-bottom: 24px; }
+        ul li::before { content: "▸"; position: absolute; left: 0; color: var(--verde-activo); font-size: 1.8rem; }
+        .bg-blanco ul li::before { color: var(--azul-impulso); }
+        .bg-verde ul li::before, .bg-impulso ul li::before { color: var(--blanco); }
+
+        .two-cols { display: grid; grid-template-columns: 1fr 1fr; gap: 45px; margin-top: 25px; }
+        .three-cols { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 32px; margin-top: 25px; }
+        .four-cols { display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; margin-top: 25px; }
+
+        .portada { text-align: center; }
+        .portada h1 { font-size: 5.5rem; margin-bottom: 28px; }
+
+        .proyectar-tag {
+            position: fixed; top: 26px; right: 34px;
+            font-size: 1.3rem; font-weight: 700; letter-spacing: 3px;
+            opacity: 0.28; text-transform: uppercase;
+        }
+
+        .big-number { font-size: 9rem; font-weight: 800; color: var(--verde-activo); line-height: 1; }
+        .bg-blanco .big-number { color: var(--azul-impulso); }
+
+        .stat-box { text-align: center; padding: 22px 15px; }
+        .stat-numero { font-size: 6rem; font-weight: 800; color: var(--verde-activo); line-height: 1; }
+        .bg-blanco .stat-numero { color: var(--azul-impulso); }
+        .bg-verde .stat-numero, .bg-impulso .stat-numero { color: var(--blanco); }
+        .stat-label { font-size: 1.5rem; opacity: 0.85; margin-top: 16px; line-height: 1.35; }
+        .stats-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 35px; margin-top: 30px; }
+
+        .concepto-box {
+            background: rgba(255,255,255,0.07); border: 1px solid rgba(255,255,255,0.18);
+            padding: 30px; border-radius: 14px; margin: 14px 0;
+        }
+        .bg-blanco .concepto-box { background: rgba(16,54,226,0.04); border-color: rgba(16,54,226,0.18); }
+        .bg-verde .concepto-box, .bg-impulso .concepto-box { background: rgba(255,255,255,0.14); border-color: rgba(255,255,255,0.28); }
+        .concepto-box h4 { font-size: 1.5rem; font-weight: 700; margin-bottom: 14px; color: var(--verde-activo); }
+        .bg-blanco .concepto-box h4 { color: var(--azul-impulso); }
+        .bg-verde .concepto-box h4, .bg-impulso .concepto-box h4 { color: var(--blanco); }
+        .concepto-box p { font-size: 1.5rem; margin-bottom: 0; line-height: 1.4; }
+
+        .flow-diagram { display: flex; align-items: center; justify-content: center; gap: 18px; margin: 35px 0; flex-wrap: wrap; }
+        .flow-box { background: rgba(255,255,255,0.12); padding: 25px 35px; border-radius: 12px; font-size: 1.5rem; font-weight: 600; text-align: center; line-height: 1.3; }
+        .bg-blanco .flow-box { background: rgba(16,54,226,0.1); }
+        .bg-verde .flow-box, .bg-impulso .flow-box { background: rgba(255,255,255,0.2); }
+        .flow-arrow { font-size: 2.2rem; color: var(--verde-activo); }
+        .bg-verde .flow-arrow, .bg-impulso .flow-arrow { color: var(--blanco); }
+        .bg-blanco .flow-arrow { color: var(--azul-impulso); }
+
+        .bar-chart { margin: 35px 0; }
+        .bar-row { display: flex; align-items: center; margin-bottom: 24px; }
+        .bar-label { width: 230px; font-size: 1.7rem; font-weight: 600; }
+        .bar-container { flex: 1; height: 54px; background: rgba(255,255,255,0.1); border-radius: 7px; overflow: hidden; margin: 0 24px; }
+        .bg-blanco .bar-container { background: rgba(0,0,0,0.05); }
+        .bar { height: 100%; background: var(--verde-activo); border-radius: 7px; display: flex; align-items: center; justify-content: flex-end; padding-right: 20px; font-weight: 700; font-size: 1.5rem; color: white; white-space: nowrap; }
+        .bar.azul { background: var(--azul-impulso); }
+        .bar.rojo { background: var(--rojo-alerta); }
+
+        .frase-final { font-size: 2.6rem; line-height: 1.4; text-align: center; max-width: 1150px; margin: 0 auto; }
+        .frase-final em { color: var(--verde-activo); font-style: normal; }
+        .bg-verde .frase-final em, .bg-impulso .frase-final em { color: var(--blanco); font-weight: 700; }
+        .bg-blanco .frase-final em { color: var(--azul-impulso); }
+
+        .cita-grande { font-size: 2.8rem; font-style: italic; line-height: 1.35; text-align: center; max-width: 1100px; margin: 0 auto; }
+        .cita-grande .autor { display: block; font-size: 1.6rem; font-style: normal; margin-top: 30px; opacity: 0.7; font-weight: 500; }
+
+        .fuente { font-size: 1.4rem; opacity: 0.5; margin-top: 22px; }
+
+        .disc-badge {
+            display: inline-block; padding: 11px 26px; border-radius: 30px;
+            font-size: 1.3rem; font-weight: 700; text-transform: uppercase;
+            letter-spacing: 3px; margin-bottom: 26px; align-self: flex-start;
+        }
+        .b1 { background: #3B82F6; }
+        .b2 { background: #8B5CF6; }
+        .b3 { background: #EF4444; }
+        .b4 { background: #F59E0B; color: #000; }
+        .b5 { background: #EC4899; }
+        .b6 { background: #14B8A6; }
+        .b7 { background: #A3E635; color: #000; }
+
+        .preview-box {
+            background: rgba(255,255,255,0.1); border: 2px solid rgba(255,255,255,0.25);
+            padding: 26px 34px; border-radius: 12px; margin-top: 30px; text-align: center;
+        }
+        .bg-blanco .preview-box { background: rgba(16,54,226,0.05); border-color: rgba(16,54,226,0.22); }
+        .bg-verde .preview-box, .bg-impulso .preview-box { background: rgba(255,255,255,0.18); border-color: rgba(255,255,255,0.35); }
+        .preview-box .preview-label {
+            font-size: 1.15rem; font-weight: 700; text-transform: uppercase;
+            letter-spacing: 2px; opacity: 0.6; margin-bottom: 12px;
+        }
+        .preview-box p { font-size: 1.6rem; margin-bottom: 0; line-height: 1.4; }
+
+        .versus { display: grid; grid-template-columns: 1fr auto 1fr; gap: 32px; align-items: center; margin-top: 28px; }
+        .versus-lado {
+            background: rgba(255,255,255,0.07); border: 1px solid rgba(255,255,255,0.18);
+            padding: 32px; border-radius: 14px; height: 100%;
+        }
+        .bg-blanco .versus-lado { background: rgba(16,54,226,0.04); border-color: rgba(16,54,226,0.18); }
+        .versus-lado h4 { font-size: 1.9rem; font-weight: 700; margin-bottom: 18px; color: var(--verde-activo); }
+        .bg-blanco .versus-lado h4 { color: var(--azul-impulso); }
+        .versus-lado p { font-size: 1.6rem; line-height: 1.4; margin-bottom: 14px; }
+        .versus-lado p:last-child { margin-bottom: 0; }
+        .versus-center { font-size: 2.4rem; font-weight: 800; opacity: 0.45; }
+
+        .problema-box, .solucion-box { padding: 30px 34px; border-radius: 14px; }
+        .problema-box { background: rgba(220,38,38,0.14); border-left: 7px solid var(--rojo-alerta); }
+        .solucion-box { background: rgba(0,198,0,0.14); border-left: 7px solid var(--verde-activo); }
+        .problema-box h4, .solucion-box h4 { font-size: 1.6rem; font-weight: 700; margin-bottom: 14px; }
+        .problema-box h4 { color: var(--rojo-alerta); }
+        .solucion-box h4 { color: var(--verde-activo); }
+        .problema-box p, .solucion-box p { font-size: 1.6rem; margin-bottom: 0; line-height: 1.4; }
+
+        .timeline { margin-top: 30px; }
+        .timeline-item {
+            display: grid; grid-template-columns: 210px 1fr; gap: 35px;
+            padding: 26px 0; border-top: 2px solid rgba(255,255,255,0.18); align-items: baseline;
+        }
+        .bg-blanco .timeline-item { border-top-color: rgba(16,54,226,0.18); }
+        .timeline-item:last-child { border-bottom: 2px solid rgba(255,255,255,0.18); }
+        .bg-blanco .timeline-item:last-child { border-bottom-color: rgba(16,54,226,0.18); }
+        .timeline-year { font-size: 2.2rem; font-weight: 800; color: var(--verde-activo); }
+        .bg-blanco .timeline-year { color: var(--azul-impulso); }
+        .timeline-item p { font-size: 1.7rem; margin-bottom: 0; line-height: 1.4; }
+
+        .mapa-item {
+            display: flex; align-items: center; gap: 20px;
+            background: rgba(255,255,255,0.07); border: 1px solid rgba(255,255,255,0.15);
+            padding: 18px 26px; border-radius: 10px; margin-bottom: 13px;
+        }
+        .bg-blanco .mapa-item { background: rgba(16,54,226,0.04); border-color: rgba(16,54,226,0.14); }
+        .bg-verde .mapa-item, .bg-impulso .mapa-item { background: rgba(255,255,255,0.15); border-color: rgba(255,255,255,0.28); }
+        .mapa-item .disc-dot { width: 18px; height: 18px; border-radius: 50%; flex-shrink: 0; }
+        .mapa-item span { font-size: 1.6rem; }
+        .mapa-item .unidad { margin-left: auto; font-size: 1.3rem; font-weight: 700; opacity: 0.55; text-transform: uppercase; letter-spacing: 1px; white-space: nowrap; }
+
+        .afirmacion {
+            background: rgba(16,54,226,0.05); border: 3px solid rgba(16,54,226,0.22);
+            padding: 30px 38px; border-radius: 14px; margin-bottom: 24px;
+            font-size: 2.1rem; font-weight: 500; display: flex; gap: 28px; align-items: center;
+        }
+        .afirmacion .num { font-size: 2.6rem; font-weight: 800; color: var(--azul-impulso); flex-shrink: 0; width: 55px; }
+        .vf { margin-left: auto; font-size: 1.5rem; font-weight: 700; opacity: 0.32; letter-spacing: 4px; flex-shrink: 0; }
+
+        .nav-hint { position: fixed; bottom: 26px; right: 40px; font-size: 1.3rem; opacity: 0.4; }
+        .slide-counter { position: fixed; bottom: 26px; left: 40px; font-size: 1.3rem; opacity: 0.4; }
+
+        /* Proyectores 720p: escala proporcional, nada por debajo de 1,3rem */
+        @media (max-height: 780px) and (min-width: 769px) {
+            .slide { padding: 40px 70px; }
+            h1 { font-size: 4rem; margin-bottom: 26px; } .portada h1 { font-size: 4.2rem; }
+            h2 { font-size: 2.8rem; margin-bottom: 24px; }
+            p, li { font-size: 1.55rem; margin-bottom: 15px; }
+            .subtitle { font-size: 1.7rem; }
+            ul li { margin-bottom: 18px; }
+            .mapa-item { padding: 13px 20px; margin-bottom: 9px; }
+            .mapa-item span { font-size: 1.35rem; }
+            .stat-numero { font-size: 4.8rem; } .stat-label { font-size: 1.3rem; }
+            .frase-final { font-size: 2.1rem; }
+            .cita-grande { font-size: 2.3rem; }
+            .timeline-item { padding: 20px 0; } .timeline-item p { font-size: 1.5rem; }
+            .timeline-year { font-size: 1.9rem; }
+            .concepto-box { padding: 22px; } .concepto-box p { font-size: 1.35rem; }
+            .concepto-box h4 { font-size: 1.35rem; }
+            .versus-lado { padding: 25px; } .versus-lado p { font-size: 1.4rem; }
+            .versus-lado h4 { font-size: 1.6rem; }
+            .problema-box, .solucion-box { padding: 24px 26px; }
+            .problema-box p, .solucion-box p { font-size: 1.4rem; }
+            .afirmacion { font-size: 1.8rem; padding: 24px 30px; margin-bottom: 18px; }
+            .flow-box { font-size: 1.3rem; padding: 20px 26px; }
+            .preview-box { padding: 20px 26px; margin-top: 24px; }
+            .preview-box p { font-size: 1.4rem; }
+            blockquote { font-size: 1.75rem; }
+            .bar-label { font-size: 1.5rem; } .bar-container { height: 46px; }
+        }
+
+        @media (max-width: 768px) {
+            .slide { padding: 35px 20px; }
+            h1 { font-size: 2.3rem; } .portada h1 { font-size: 2.4rem; }
+            h2 { font-size: 1.8rem; } h3 { font-size: 1.4rem; }
+            p, li { font-size: 1.2rem; }
+            .subtitle { font-size: 1.3rem; }
+            .two-cols, .three-cols, .four-cols { grid-template-columns: 1fr; gap: 16px; }
+            .stats-grid { grid-template-columns: 1fr; gap: 18px; }
+            .stat-numero { font-size: 3.2rem; } .stat-label { font-size: 1.05rem; }
+            .big-number { font-size: 4rem; }
+            .flow-diagram { flex-direction: column; gap: 12px; }
+            .flow-arrow { transform: rotate(90deg); font-size: 1.5rem; }
+            .flow-box { font-size: 1.1rem; padding: 16px 20px; }
+            .frase-final { font-size: 1.5rem; } .cita-grande { font-size: 1.5rem; }
+            .bar-label { width: 110px; font-size: 1.05rem; }
+            .bar-container { margin: 0 10px; height: 34px; }
+            .bar { font-size: 0.95rem; padding-right: 10px; }
+            blockquote { font-size: 1.25rem; padding-left: 20px; }
+            .versus { grid-template-columns: 1fr; gap: 15px; }
+            .versus-lado h4 { font-size: 1.3rem; } .versus-lado p { font-size: 1.1rem; }
+            .versus-center { text-align: center; font-size: 1.3rem; }
+            .timeline-item { grid-template-columns: 100px 1fr; gap: 15px; padding: 16px 0; }
+            .timeline-year { font-size: 1.2rem; } .timeline-item p { font-size: 1.05rem; }
+            .afirmacion { font-size: 1.1rem; padding: 16px 18px; gap: 14px; }
+            .afirmacion .num { font-size: 1.5rem; width: 30px; }
+            .vf { display: none; }
+            .mapa-item span { font-size: 1rem; } .mapa-item .unidad { display: none; }
+            .concepto-box h4 { font-size: 1.15rem; } .concepto-box p { font-size: 1.05rem; }
+            .problema-box p, .solucion-box p { font-size: 1.05rem; }
+            .preview-box p { font-size: 1.05rem; }
+            .disc-badge { font-size: 0.85rem; padding: 6px 15px; letter-spacing: 2px; }
+            .proyectar-tag { display: none; }
+        }
+    </style>
+</head>
+<body>
+    <div class="slide-container">
+
+        <!-- ============ APERTURA ============ -->
+
+        <!-- 1 PORTADA -->
+        <div class="slide active bg-respaldo portada">
+            <h1>Siete preguntas<br>para empezar a pensar<br><span class="highlight">Economía</span></h1>
+            <p class="subtitle">Ciencia Política · FSOC-UBA · 2° cuatrimestre 2026</p>
+            <p style="margin-top: 45px; font-size: 1.7rem; opacity: 0.6;">Felipe Venancio</p>
+        </div>
+
+        <!-- 2 TRES AFIRMACIONES -->
+        <div class="slide bg-blanco">
+            <h2>¿Verdadero o falso?</h2>
+            <div class="afirmacion"><span class="num">1</span><span>Bajar la inflación reduce la pobreza.</span><span class="vf">V / F</span></div>
+            <div class="afirmacion"><span class="num">2</span><span>Las retenciones las pagan los exportadores.</span><span class="vf">V / F</span></div>
+            <div class="afirmacion"><span class="num">3</span><span>Importar más de lo que se exporta empobrece.</span><span class="vf">V / F</span></div>
+        </div>
+
+        <!-- 3 LAS TRES SON DEPENDE -->
+        <div class="slide bg-impulso">
+            <div class="frase-final">
+                Las tres respuestas son <em>"depende"</em>.
+                <p style="font-size: 2.1rem; margin-top: 45px;">Y este curso es sobre<br><strong>de qué depende</strong>.</p>
+            </div>
+        </div>
+
+        <!-- 4 PARA QUÉ LE SIRVE -->
+        <div class="slide bg-respaldo">
+            <h2>¿Para qué le sirve la economía<br>a un politólogo?</h2>
+            <div class="three-cols">
+                <div class="concepto-box">
+                    <h4>Sin traductor</h4>
+                    <p>Que nadie cierre una discusión política diciendo "esto es técnico".</p>
+                </div>
+                <div class="concepto-box">
+                    <h4>Evaluar alternativas</h4>
+                    <p>Comparar políticas con un método, no con una intuición.</p>
+                </div>
+                <div class="concepto-box">
+                    <h4>Detectar el truco</h4>
+                    <p>Saber cuándo un número está bien construido y cuándo está armado.</p>
+                </div>
+            </div>
+            <p style="text-align: center; margin-top: 40px; font-size: 2rem;">No vengo a convencerlos de nada.<br><strong class="highlight">Vengo a darles el aparato con el que se discute.</strong></p>
+        </div>
+
+        <!-- 5 EL MAPA -->
+        <div class="slide bg-blanco">
+            <h2>Siete preguntas, seis unidades</h2>
+            <div>
+                <div class="mapa-item"><div class="disc-dot" style="background: #3B82F6;"></div><span><strong>1.</strong> ¿Sirve un modelo que sabemos que está mal?</span><span class="unidad">U1</span></div>
+                <div class="mapa-item"><div class="disc-dot" style="background: #8B5CF6;"></div><span><strong>2.</strong> Bajó la inflación. ¿Por qué no baja la pobreza?</span><span class="unidad">U2</span></div>
+                <div class="mapa-item"><div class="disc-dot" style="background: #EF4444;"></div><span><strong>3.</strong> ¿Quién paga un impuesto? ¿Y quién paga la IA?</span><span class="unidad">U3</span></div>
+                <div class="mapa-item"><div class="disc-dot" style="background: #F59E0B;"></div><span><strong>4.</strong> ¿Por qué no hay hipotecas a 30 años?</span><span class="unidad">U4</span></div>
+                <div class="mapa-item"><div class="disc-dot" style="background: #EC4899;"></div><span><strong>5.</strong> ¿Cuánto decide un ministro de Economía?</span><span class="unidad">U5</span></div>
+                <div class="mapa-item"><div class="disc-dot" style="background: #14B8A6;"></div><span><strong>6.</strong> ¿El dólar está caro o barato?</span><span class="unidad">U6</span></div>
+                <div class="mapa-item"><div class="disc-dot" style="background: #A3E635;"></div><span><strong>7.</strong> ¿Por qué unos países son ricos y otros pobres?</span><span class="unidad">Todo</span></div>
+            </div>
+        </div>
+
+        <!-- ============ BLOQUE 1 ============ -->
+
+        <!-- 6 PREGUNTA 1 -->
+        <div class="slide bg-impulso">
+            <span class="disc-badge b1" style="background: rgba(255,255,255,0.22);">Pregunta 1</span>
+            <h1>¿Sirve un modelo que sabemos que está mal?</h1>
+            <p style="font-size: 2rem;">Todos los modelos son falsos.<br><strong>La pregunta es para qué sirven igual.</strong></p>
+        </div>
+
+        <!-- 7 BORGES -->
+        <div class="slide bg-respaldo">
+            <span class="disc-badge b1">Pregunta 1</span>
+            <h2>El mapa del tamaño del Imperio</h2>
+            <blockquote>
+                "Los Colegios de Cartógrafos levantaron un Mapa del Imperio que tenía el tamaño del Imperio y coincidía puntualmente con él."
+                <cite>Jorge Luis Borges — <em>Del rigor en la ciencia</em> (1946)</cite>
+            </blockquote>
+            <p style="font-size: 2.1rem; margin-top: 35px;">Un mapa 1:1 es perfecto y <strong class="highlight">completamente inútil</strong>.</p>
+            <p style="font-size: 2.1rem;">Un modelo sirve <strong>porque</strong> deja cosas afuera.</p>
+        </div>
+
+        <!-- 8 VOCABULARIO -->
+        <div class="slide bg-blanco">
+            <span class="disc-badge b1">Pregunta 1</span>
+            <h2>Vocabulario de todo el cuatrimestre</h2>
+            <ul style="margin-top: 20px;">
+                <li><strong>Endógeno</strong> — lo que el modelo explica</li>
+                <li><strong>Exógeno</strong> — lo que el modelo toma como dado</li>
+                <li><strong>Equilibrio</strong> — estable o inestable</li>
+                <li><strong>Estática comparada</strong> — muevo una cosa, ¿qué pasa con el resto?</li>
+            </ul>
+        </div>
+
+        <!-- 9 CASO ALQUILERES -->
+        <div class="slide bg-respaldo">
+            <span class="disc-badge b1">Pregunta 1</span>
+            <h2>Un caso incómodo: alquileres</h2>
+            <p style="font-size: 1.9rem;">Diciembre 2023: se deroga la Ley de Alquileres.</p>
+            <div class="two-cols" style="margin-top: 20px;">
+                <div class="problema-box">
+                    <h4>Lo que decía el debate público</h4>
+                    <p>Sin regulación, los precios se disparan.</p>
+                </div>
+                <div class="solucion-box">
+                    <h4>Lo que predecía el modelo</h4>
+                    <p>Una regla rígida <strong>reduce la oferta</strong>. Al levantarla, entra oferta y cae el precio real.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- 10 LOS DATOS -->
+        <div class="slide bg-blanco">
+            <span class="disc-badge b1">Pregunta 1</span>
+            <h2>Los datos</h2>
+            <div class="stats-grid" style="grid-template-columns: 1fr 1fr;">
+                <div class="stat-box">
+                    <div class="stat-numero">+190%</div>
+                    <div class="stat-label">Oferta de alquileres en CABA<br>desde diciembre 2023</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-numero">64%</div>
+                    <div class="stat-label">Subieron los alquileres en 2024<br>vs. 119% de inflación<br><strong>→ caída real de ~25%</strong></div>
+                </div>
+            </div>
+            <p class="fuente" style="text-align: center;">Colegio Inmobiliario de CABA · INDEC</p>
+        </div>
+
+        <!-- 11 QUÉ HACE Y QUÉ NO HACE -->
+        <div class="slide bg-verde">
+            <span class="disc-badge b1" style="background: rgba(0,0,0,0.2);">Pregunta 1</span>
+            <h2>El punto que quiero que se lleven</h2>
+            <div class="two-cols">
+                <div class="concepto-box">
+                    <h4>El modelo sí hace</h4>
+                    <p>Predecir la <strong>dirección</strong> del efecto. Se verifica o se refuta.</p>
+                </div>
+                <div class="concepto-box">
+                    <h4>El modelo no hace</h4>
+                    <p>Decir si la política <strong>estuvo bien</strong>. Eso es una decisión política.</p>
+                </div>
+            </div>
+            <p class="frase-final" style="margin-top: 40px;">El modelo no reemplaza el juicio de valor.<br><em>Lo obliga a hacerse explícito.</em></p>
+        </div>
+
+        <!-- 12 TEST DE DOS PREGUNTAS -->
+        <div class="slide bg-blanco">
+            <span class="disc-badge b1">Pregunta 1</span>
+            <h2>El mercado falla. ¿Y entonces?</h2>
+            <div class="two-cols">
+                <div class="concepto-box" style="border-left: 8px solid var(--azul-impulso);">
+                    <h4>A — la pregunta que sí se hace</h4>
+                    <p>¿Hay una <strong>falla de mercado</strong>? Monopolio, externalidad, bien público, información asimétrica.</p>
+                </div>
+                <div class="concepto-box" style="border-left: 8px solid var(--rojo-alerta);">
+                    <h4>B — la que se saltea</h4>
+                    <p>¿Hay evidencia de que el <strong>Estado lo resuelve mejor</strong>? Capacidad, información, incentivos.</p>
+                </div>
+            </div>
+            <p style="text-align: center; margin-top: 35px; font-size: 1.9rem;">Probemos el test: <strong>tarifas de energía</strong> y <strong>precios de medicamentos</strong>.</p>
+        </div>
+
+        <!-- 13 STIGLITZ VS KRUEGER -->
+        <div class="slide bg-respaldo">
+            <span class="disc-badge b1">Pregunta 1</span>
+            <h2>Dos economistas, dos respuestas</h2>
+            <div class="versus">
+                <div class="versus-lado">
+                    <h4>Joseph Stiglitz</h4>
+                    <p>Con información imperfecta —o sea, siempre— el mercado no llega al óptimo solo.</p>
+                    <p><strong>La regulación es parte del diseño.</strong></p>
+                </div>
+                <div class="versus-center">VS</div>
+                <div class="versus-lado">
+                    <h4>Anne Krueger</h4>
+                    <p>¿Por qué el mismo humano sería egoísta en el mercado y altruista en el Estado?</p>
+                    <p><strong>El Estado también falla, y en forma sistemática.</strong></p>
+                </div>
+            </div>
+            <p style="text-align: center; margin-top: 35px; font-size: 1.9rem;"><strong class="highlight">Ninguno gana por knock-out.</strong></p>
+        </div>
+
+        <!-- 14 → UNIDAD 1 -->
+        <div class="slide bg-impulso">
+            <span class="disc-badge b1" style="background: rgba(255,255,255,0.22);">Pregunta 1</span>
+            <h2>Unidad 1</h2>
+            <ul>
+                <li>Modelos, supuestos y método</li>
+                <li>Oferta, demanda, equilibrio, <strong>estática comparada</strong></li>
+                <li>Fallas de mercado <strong>y fallas del Estado</strong></li>
+                <li>Bienes públicos y externalidades</li>
+            </ul>
+            <div class="preview-box">
+                <div class="preview-label">Bibliografía</div>
+                <p>Samuelson y Nordhaus 1-4 · Mankiw 1-5 · Stiglitz (2010) · Krueger (2012)</p>
+            </div>
+        </div>
+
+        <!-- ============ BLOQUE 2 ============ -->
+
+        <!-- 15 PREGUNTA 2 -->
+        <div class="slide bg-blanco">
+            <span class="disc-badge b2">Pregunta 2</span>
+            <h1 style="color: var(--azul-respaldo);">La inflación bajó de 25% a 2% mensual.<br>¿Por qué la pobreza dejó de bajar?</h1>
+        </div>
+
+        <!-- 16 LOS DATOS -->
+        <div class="slide bg-respaldo">
+            <span class="disc-badge b2">Pregunta 2</span>
+            <h2>Los datos de esta semana</h2>
+            <div class="stats-grid">
+                <div class="stat-box">
+                    <div class="stat-numero">1,9%</div>
+                    <div class="stat-label">IPC mensual<br>junio 2026</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-numero">33,5%</div>
+                    <div class="stat-label">IPC interanual<br>junio 2026</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-numero" style="color: var(--amarillo);">~30%</div>
+                    <div class="stat-label">Pobreza estimada<br>1er trimestre 2026</div>
+                </div>
+            </div>
+            <p class="fuente" style="text-align: center;">INDEC · ODSA-UCA</p>
+        </div>
+
+        <!-- 17 POR QUÉ NO ALCANZA -->
+        <div class="slide bg-blanco">
+            <span class="disc-badge b2">Pregunta 2</span>
+            <h2>Por qué la desinflación no alcanza</h2>
+            <div class="two-cols">
+                <div class="concepto-box">
+                    <h4>La comida corre más rápido</h4>
+                    <p>1er trimestre 2026:<br>canasta alimentaria <strong>+11,6%</strong><br>salarios <strong>+8,6%</strong></p>
+                </div>
+                <div class="concepto-box">
+                    <h4>Y casi la mitad no tiene fórmula</h4>
+                    <p><strong>44,2%</strong> de los ocupados son informales. Ningún convenio los ajusta.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- 18 THE WIRE -->
+        <div class="slide bg-imagen" style="background-image: url('michael_k_williams.jpg');">
+            <span class="disc-badge b2">Pregunta 2</span>
+            <h2 style="max-width: 68%;">"Juking the stats"</h2>
+            <div style="max-width: 68%;">
+                <p style="font-size: 1.9rem;">En <em>The Wire</em>, la policía no baja el delito: <strong>reclasifica delitos</strong>.</p>
+                <p style="font-size: 1.9rem;"><strong class="highlight">Ley de Campbell:</strong> cuando un indicador se vuelve la meta, deja de medir.</p>
+                <p style="font-size: 1.9rem;">Alguien decide qué se mide y quién lo mide.<br><strong>Eso no es estadística. Es poder.</strong></p>
+            </div>
+        </div>
+
+        <!-- 19 LÍNEA DE POBREZA -->
+        <div class="slide bg-blanco">
+            <span class="disc-badge b2">Pregunta 2</span>
+            <h2>¿Quién es pobre?</h2>
+            <div class="flow-diagram">
+                <div class="flow-box">Canasta<br>alimentaria</div>
+                <div class="flow-arrow">→</div>
+                <div class="flow-box">Por un<br>coeficiente</div>
+                <div class="flow-arrow">→</div>
+                <div class="flow-box">Línea de<br>pobreza</div>
+                <div class="flow-arrow">→</div>
+                <div class="flow-box" style="border: 3px solid var(--azul-impulso);">Contra el ingreso<br>del hogar</div>
+            </div>
+            <p style="font-size: 1.9rem;">Cada paso es una <strong>decisión discutible</strong>: qué se incluye, con qué coeficiente, ingreso o consumo.</p>
+            <p style="font-size: 1.9rem;"><strong class="highlight">No hay medición neutral.</strong> Hay mediciones explícitas y mediciones tramposas.</p>
+        </div>
+
+        <!-- 20 SEN -->
+        <div class="slide bg-respaldo">
+            <span class="disc-badge b2">Pregunta 2</span>
+            <h2>Sen: contar pobres no es medir pobreza</h2>
+            <div class="two-cols">
+                <div class="concepto-box">
+                    <h4>Ciega a la intensidad</h4>
+                    <p>Alguien al 1% de la línea y alguien al 60% <strong>cuentan igual</strong>.</p>
+                </div>
+                <div class="concepto-box">
+                    <h4>Ciega a la distribución</h4>
+                    <p>La desigualdad <em>entre</em> los pobres desaparece del indicador.</p>
+                </div>
+            </div>
+            <p style="margin-top: 35px; font-size: 1.9rem;">Igual con el <strong class="highlight">Gini</strong>: un número que resume toda una distribución. Útil y opaco.</p>
+            <p class="fuente">Sen (1976), <em>Econometrica</em> 44(2)</p>
+        </div>
+
+        <!-- 21 SOLOW → U2 -->
+        <div class="slide bg-impulso">
+            <span class="disc-badge b2" style="background: rgba(255,255,255,0.22);">Pregunta 2</span>
+            <h2>¿Y de dónde sale el crecimiento?</h2>
+            <p style="font-size: 2rem;">Solow (1957) descompone el crecimiento: capital, trabajo… y un <strong>residuo</strong>.</p>
+            <p style="font-size: 2rem;">Ese residuo —la <strong>productividad</strong>— explica la mayor parte.</p>
+            <p style="font-size: 2rem;">Un país no se enriquece por acumular máquinas.<br><strong class="highlight">Se enriquece por usarlas mejor.</strong></p>
+            <div class="preview-box">
+                <div class="preview-label">Unidad 2 — Crecimiento, desigualdad y pobreza</div>
+                <p>Función de producción · rendimientos decrecientes · contabilidad del crecimiento · PBI e índices de precios · Gini</p>
+            </div>
+        </div>
+
+        <!-- ============ BLOQUE 3 ============ -->
+
+        <!-- 22 PREGUNTA 3 -->
+        <div class="slide bg-blanco">
+            <span class="disc-badge b3">Pregunta 3</span>
+            <h1 style="color: var(--azul-respaldo);">¿Quién paga realmente un impuesto?</h1>
+            <p style="font-size: 2rem;">Casi nunca el que lo firma.<br><strong>Y se demuestra con dos rectas.</strong></p>
+        </div>
+
+        <!-- 23 INCIDENCIA SVG -->
+        <div class="slide bg-respaldo">
+            <span class="disc-badge b3">Pregunta 3</span>
+            <h2>El impuesto se reparte solo</h2>
+            <div style="display: flex; align-items: center; gap: 45px;">
+                <svg viewBox="0 0 700 360" style="width: 55%; height: auto;">
+                    <line x1="70" y1="330" x2="660" y2="330" stroke="rgba(255,255,255,0.5)" stroke-width="3"/>
+                    <line x1="70" y1="30" x2="70" y2="330" stroke="rgba(255,255,255,0.5)" stroke-width="3"/>
+                    <text x="638" y="358" fill="rgba(255,255,255,0.7)" font-size="26" font-family="Albert Sans">Q</text>
+                    <text x="40" y="42" fill="rgba(255,255,255,0.7)" font-size="26" font-family="Albert Sans">P</text>
+
+                    <line x1="100" y1="70" x2="600" y2="300" stroke="#3B82F6" stroke-width="5"/>
+                    <text x="610" y="308" fill="#3B82F6" font-size="28" font-weight="700" font-family="Albert Sans">D</text>
+
+                    <line x1="100" y1="300" x2="600" y2="70" stroke="#00C600" stroke-width="5"/>
+                    <text x="610" y="76" fill="#00C600" font-size="28" font-weight="700" font-family="Albert Sans">O</text>
+
+                    <line x1="100" y1="250" x2="530" y2="52" stroke="#F59E0B" stroke-width="5" stroke-dasharray="11,7"/>
+                    <text x="540" y="48" fill="#F59E0B" font-size="28" font-weight="700" font-family="Albert Sans">O+t</text>
+
+                    <circle cx="350" cy="185" r="8" fill="rgba(255,255,255,0.9)"/>
+                    <line x1="70" y1="185" x2="350" y2="185" stroke="rgba(255,255,255,0.3)" stroke-width="2" stroke-dasharray="6,6"/>
+                    <text x="14" y="193" fill="rgba(255,255,255,0.8)" font-size="25" font-family="Albert Sans">P*</text>
+
+                    <circle cx="296" cy="160" r="8" fill="#F59E0B"/>
+                    <circle cx="296" cy="210" r="8" fill="#00C600"/>
+                    <line x1="70" y1="160" x2="296" y2="160" stroke="rgba(245,158,11,0.65)" stroke-width="2" stroke-dasharray="6,6"/>
+                    <line x1="70" y1="210" x2="296" y2="210" stroke="rgba(0,198,0,0.65)" stroke-width="2" stroke-dasharray="6,6"/>
+                    <text x="6" y="152" fill="#F59E0B" font-size="25" font-family="Albert Sans">Pc</text>
+                    <text x="6" y="232" fill="#00C600" font-size="25" font-family="Albert Sans">Pv</text>
+
+                    <line x1="296" y1="160" x2="296" y2="210" stroke="rgba(255,255,255,0.95)" stroke-width="12" stroke-linecap="round"/>
+                    <text x="316" y="194" fill="#FFFFFF" font-size="26" font-weight="700" font-family="Albert Sans">t</text>
+
+                    <line x1="296" y1="210" x2="296" y2="330" stroke="rgba(255,255,255,0.3)" stroke-width="2" stroke-dasharray="6,6"/>
+                    <line x1="350" y1="185" x2="350" y2="330" stroke="rgba(255,255,255,0.3)" stroke-width="2" stroke-dasharray="6,6"/>
+                    <text x="266" y="358" fill="rgba(255,255,255,0.8)" font-size="25" font-family="Albert Sans">Q'</text>
+                    <text x="356" y="358" fill="rgba(255,255,255,0.8)" font-size="25" font-family="Albert Sans">Q*</text>
+                </svg>
+                <div style="width: 45%;">
+                    <p style="font-size: 1.7rem;">El impuesto se le cobra <strong>al vendedor</strong>:</p>
+                    <ul>
+                        <li style="font-size: 1.65rem; margin-bottom: 18px;">El comprador paga <strong style="color:#F59E0B;">más</strong></li>
+                        <li style="font-size: 1.65rem; margin-bottom: 18px;">El vendedor recibe <strong class="highlight">menos</strong></li>
+                        <li style="font-size: 1.65rem; margin-bottom: 18px;">Se comercia <strong>menos</strong></li>
+                    </ul>
+                    <p style="font-size: 1.65rem; margin-bottom: 0;">Nadie decidió ese reparto.<br><strong>Lo decidieron las pendientes.</strong></p>
+                </div>
+            </div>
+        </div>
+
+        <!-- 24 LA REGLA -->
+        <div class="slide bg-verde">
+            <span class="disc-badge b3" style="background: rgba(0,0,0,0.2);">Pregunta 3</span>
+            <h2>Paga el que no puede irse</h2>
+            <div class="two-cols">
+                <div class="concepto-box">
+                    <h4>Oferta inelástica → paga el vendedor</h4>
+                    <p>La tierra pampeana no se muda a Uruguay.</p>
+                </div>
+                <div class="concepto-box">
+                    <h4>Demanda inelástica → paga el comprador</h4>
+                    <p>Combustible, cigarrillos, medicamentos crónicos.</p>
+                </div>
+            </div>
+            <p class="frase-final" style="margin-top: 40px;">La <em>elasticidad</em> es, en el fondo,<br>una medida de poder.</p>
+        </div>
+
+        <!-- 25 CARD & KRUEGER -->
+        <div class="slide bg-blanco">
+            <span class="disc-badge b3">Pregunta 3</span>
+            <h2>Salario mínimo: la teoría no alcanza</h2>
+            <div class="flow-diagram">
+                <div class="flow-box">Nueva Jersey<br><strong>sube</strong> el mínimo</div>
+                <div class="flow-arrow">vs.</div>
+                <div class="flow-box">Pensilvania<br><strong>no lo sube</strong></div>
+                <div class="flow-arrow">→</div>
+                <div class="flow-box" style="border: 3px solid var(--azul-impulso);">Comparar el empleo<br>de los dos lados</div>
+            </div>
+            <p style="font-size: 1.9rem;">Card y Krueger (1994) <strong>no encontraron</strong> la caída de empleo que predecía el modelo.</p>
+            <p style="font-size: 1.9rem;">Se discute hasta hoy. Y por ese <strong class="highlight">método</strong>, Nobel a Card en 2021.</p>
+        </div>
+
+        <!-- 26 MONEYBALL -->
+        <div class="slide bg-respaldo">
+            <span class="disc-badge b3">Pregunta 3</span>
+            <div class="frase-final">
+                Es el <em>Moneyball</em> de la economía:
+                <p style="font-size: 2.1rem; margin-top: 40px;">dejar de discutir con intuiciones<br>y empezar a discutir con <strong>datos y un diseño</strong>.</p>
+                <p style="font-size: 1.8rem; margin-top: 35px; opacity: 0.8;">Buena parte de la economía de los últimos 30 años es esto.</p>
+            </div>
+        </div>
+
+        <!-- 27 IA: LA PREGUNTA -->
+        <div class="slide bg-impulso">
+            <span class="disc-badge b3" style="background: rgba(255,255,255,0.22);">Pregunta 3 · bis</span>
+            <h1>¿Y la inteligencia artificial?<br>¿Quién paga eso?</h1>
+            <p style="font-size: 2rem;"><strong>No lo sé, y nadie lo sabe.</strong></p>
+            <p style="font-size: 2rem;">Pero ya nos hicimos esta pregunta cuatro veces.</p>
+        </div>
+
+        <!-- 28 TIMELINE 1 -->
+        <div class="slide bg-respaldo">
+            <span class="disc-badge b3">Pregunta 3 · bis</span>
+            <h2>Ya pasó (1 de 2)</h2>
+            <div class="timeline">
+                <div class="timeline-item">
+                    <span class="timeline-year">1811</span>
+                    <p><strong>Los luditas.</strong> Rompen telares; el Parlamento lo vuelve delito capital. Tenían razón <em>sobre ellos mismos</em>: su oficio desapareció. Se equivocaban sobre el total: el empleo agregado creció.</p>
+                </div>
+                <div class="timeline-item">
+                    <span class="timeline-year">1920-70</span>
+                    <p><strong>Las telefonistas.</strong> La conmutación automática borró la ocupación entera. No hubo desempleo masivo permanente, pero <em>esas</em> trabajadoras no se reconvirtieron gratis.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- 29 TIMELINE 2 -->
+        <div class="slide bg-blanco">
+            <span class="disc-badge b3">Pregunta 3 · bis</span>
+            <h2>Ya pasó (2 de 2)</h2>
+            <div class="timeline">
+                <div class="timeline-item">
+                    <span class="timeline-year">1970-2010</span>
+                    <p><strong>El cajero automático.</strong> Se instalaron cientos de miles de ATMs y la cantidad de <em>cajeros humanos</em> siguió creciendo por décadas. La sucursal se abarató, se abrieron más, y el empleado pasó de contar billetes a vender.</p>
+                </div>
+                <div class="timeline-item">
+                    <span class="timeline-year">1995-2020</span>
+                    <p><strong>Internet.</strong> Se llevó videoclubes, agencias de viaje y disquerías. Y creó empleos que en 1995 no existían ni como palabra.</p>
+                </div>
+            </div>
+            <p class="fuente" style="text-align: center;">Sobre los cajeros: Bessen (2015), Autor (2015)</p>
+        </div>
+
+        <!-- 30 TRES LECCIONES -->
+        <div class="slide bg-respaldo">
+            <span class="disc-badge b3">Pregunta 3 · bis</span>
+            <h2>Tres lecciones</h2>
+            <div class="three-cols">
+                <div class="concepto-box">
+                    <h4>1. La tarea no es el empleo</h4>
+                    <p>Se automatizan <strong>tareas</strong>. El puesto se reorganiza… salvo que <em>todas</em> sus tareas sean automatizables.</p>
+                </div>
+                <div class="concepto-box">
+                    <h4>2. El agregado no es la persona</h4>
+                    <p>"El empleo total no cayó" no consuela al tejedor de 1815.</p>
+                </div>
+                <div class="concepto-box">
+                    <h4>3. Nunca fue automático</h4>
+                    <p>Educación, sindicatos, seguro de desempleo. Eso no lo trajo la tecnología: <strong>lo trajo la política</strong>.</p>
+                </div>
+            </div>
+            <p style="text-align: center; margin-top: 35px; font-size: 1.9rem;">La historia no dice "no te preocupes".<br><strong class="highlight">Dice "depende de lo que se haga".</strong></p>
+        </div>
+
+        <!-- 31 CUATRO ESCENARIOS -->
+        <div class="slide bg-blanco">
+            <span class="disc-badge b3">Pregunta 3 · bis</span>
+            <h2>Cuatro escenarios (no un pronóstico)</h2>
+            <div class="four-cols">
+                <div class="concepto-box">
+                    <h4>A · Complementa</h4>
+                    <p>Sube la productividad, la demanda de trabajo y los salarios.</p>
+                </div>
+                <div class="concepto-box">
+                    <h4>B · Carrera de tareas</h4>
+                    <p>Se automatizan tareas y nacen tareas. <strong>Gana la más rápida.</strong></p>
+                </div>
+                <div class="concepto-box">
+                    <h4>C · Polarización</h4>
+                    <p>Crece arriba y abajo, se vacía el medio. Más empleo y más desigualdad.</p>
+                </div>
+                <div class="concepto-box">
+                    <h4>D · Mediocre</h4>
+                    <p>Sustituye sin ganar productividad. Lo peor de los dos mundos.</p>
+                </div>
+            </div>
+            <p style="text-align: center; margin-top: 30px; font-size: 1.8rem;">Los cuatro son <strong class="highlight">compatibles con la misma teoría</strong>.</p>
+            <p class="fuente" style="text-align: center;">Acemoglu y Restrepo (2019) · Autor (2015)</p>
+        </div>
+
+        <!-- 32 ACÁ ENTRAN USTEDES -->
+        <div class="slide bg-verde">
+            <span class="disc-badge b3" style="background: rgba(0,0,0,0.2);">Pregunta 3 · bis</span>
+            <h2>Y acá entran ustedes</h2>
+            <p class="frase-final" style="font-size: 2.9rem; margin-bottom: 40px;">¿Quién se queda con la ganancia<br>y quién paga la transición?</p>
+            <ul style="max-width: 1100px; margin: 0 auto;">
+                <li>¿Se grava el capital que sustituye trabajo o se subsidia la capacitación?</li>
+                <li>¿El seguro protege al <strong>puesto</strong> o a la <strong>persona</strong>?</li>
+                <li>¿Quién es dueño de los datos con los que se entrenó el modelo?</li>
+            </ul>
+            <p style="text-align: center; margin-top: 35px; font-size: 1.9rem;"><strong>Ninguna se resuelve con una ecuación.</strong></p>
+        </div>
+
+        <!-- 33 GASPARINI → U3 -->
+        <div class="slide bg-respaldo">
+            <span class="disc-badge b3">Pregunta 3</span>
+            <h2>Por qué los economistas se pelean</h2>
+            <p style="font-size: 2rem;">Gasparini (1995): en <strong>teoría</strong> del comercio hay consenso casi total. En <strong>política</strong> concreta, guerra.</p>
+            <p style="font-size: 2rem;">Pasar de la teoría a la recomendación exige agregar lo que la teoría no trae: velocidad de reasignación, compensación, capacidad estatal.</p>
+            <div class="preview-box">
+                <div class="preview-label">Unidad 3 — Aplicaciones microeconómicas</div>
+                <p>Mercado de trabajo · controles de precios · elasticidades e incidencia · ganancias del comercio · ventajas absolutas, comparativas y dinámicas</p>
+            </div>
+        </div>
+
+        <!-- ============ BLOQUE 4 ============ -->
+
+        <!-- 34 PREGUNTA 4 -->
+        <div class="slide bg-impulso">
+            <span class="disc-badge b4" style="background: rgba(255,255,255,0.22); color: #fff;">Pregunta 4</span>
+            <h1>¿Por qué acá no existe el crédito hipotecario a 30 años?</h1>
+            <p style="font-size: 2rem;">En Chile el mismo empleado compra a 25 años.<br><strong>No es porque el banco sea malo.</strong></p>
+        </div>
+
+        <!-- 35 CRÉDITO / PBI -->
+        <div class="slide bg-respaldo">
+            <span class="disc-badge b4">Pregunta 4</span>
+            <h2>Crédito al sector privado / PBI</h2>
+            <div class="bar-chart">
+                <div class="bar-row">
+                    <span class="bar-label">Chile</span>
+                    <div class="bar-container"><div class="bar" style="width: 96%;">~103%</div></div>
+                </div>
+                <div class="bar-row">
+                    <span class="bar-label">Brasil</span>
+                    <div class="bar-container"><div class="bar" style="width: 70%;">~75%</div></div>
+                </div>
+                <div class="bar-row">
+                    <span class="bar-label"><strong>Argentina</strong></span>
+                    <div class="bar-container"><div class="bar rojo" style="width: 13%;">12,7%</div></div>
+                </div>
+            </div>
+            <p style="font-size: 1.9rem;">Y ese 12,7% es el <strong class="highlight">máximo en ocho años</strong>.</p>
+            <p style="font-size: 1.9rem;">Sin crédito largo no hay hipoteca ni inversión a plazo.<br><strong>El crédito es un tema de desarrollo.</strong></p>
+        </div>
+
+        <!-- 36 STIGLITZ-WEISS -->
+        <div class="slide bg-blanco">
+            <span class="disc-badge b4">Pregunta 4</span>
+            <h2>El mercado que no se vacía con el precio</h2>
+            <div class="flow-diagram">
+                <div class="flow-box">El banco<br><strong>sube la tasa</strong></div>
+                <div class="flow-arrow">→</div>
+                <div class="flow-box">Se van los<br>proyectos<br><strong>seguros</strong></div>
+                <div class="flow-arrow">→</div>
+                <div class="flow-box">Quedan los<br><strong>riesgosos</strong></div>
+                <div class="flow-arrow">→</div>
+                <div class="flow-box" style="border: 3px solid var(--rojo-alerta);">La cartera<br><strong>empeora</strong></div>
+            </div>
+            <p style="font-size: 1.9rem;">Entonces el banco no sube más la tasa: <strong class="highlight">raciona por cantidad</strong>. Dice "no".</p>
+            <p class="fuente">Stiglitz y Weiss (1981) — selección adversa y riesgo moral</p>
+        </div>
+
+        <!-- 37 RIESGO PAÍS + PECADO ORIGINAL -->
+        <div class="slide bg-respaldo">
+            <span class="disc-badge b4">Pregunta 4</span>
+            <h2>Dos números que explican el resto</h2>
+            <div class="two-cols">
+                <div class="concepto-box">
+                    <h4>Riesgo país: ~415 pb</h4>
+                    <p>Mínimo en 8 años. El Estado paga <strong>4,15 puntos más</strong> que el Tesoro de EE.UU. Es el <strong>piso</strong> de toda la curva de tasas del país.</p>
+                </div>
+                <div class="concepto-box">
+                    <h4>Pecado original</h4>
+                    <p>Si no podés endeudarte largo en tu moneda, te endeudás en dólares. Y la devaluación te <strong>infla la deuda</strong>.</p>
+                </div>
+            </div>
+            <p style="text-align: center; margin-top: 35px; font-size: 1.9rem;">La tasa no es un número técnico:<br><strong class="highlight">es el precio de nuestras instituciones.</strong></p>
+        </div>
+
+        <!-- 38 → UNIDAD 4 -->
+        <div class="slide bg-impulso">
+            <span class="disc-badge b4" style="background: rgba(255,255,255,0.22); color: #fff;">Pregunta 4</span>
+            <h2>Unidad 4</h2>
+            <ul>
+                <li>Modelo de <strong>ahorro e inversión</strong></li>
+                <li>Tasa de interés y producto marginal del capital</li>
+                <li>Consumo intertemporal</li>
+                <li><strong>Riesgo e incertidumbre</strong></li>
+                <li>Mercado de capitales en Argentina</li>
+            </ul>
+            <div class="preview-box">
+                <div class="preview-label">Bibliografía</div>
+                <p>Mankiw 26 y 27 · IAMC, <em>Manual para no especialistas</em></p>
+            </div>
+        </div>
+
+        <!-- ============ BLOQUE 5 ============ -->
+
+        <!-- 39 PREGUNTA 5 -->
+        <div class="slide bg-blanco">
+            <span class="disc-badge b5">Pregunta 5</span>
+            <h1 style="color: var(--azul-respaldo);">¿Cuánto puede decidir realmente un ministro de Economía?</h1>
+            <p style="font-size: 2rem;">Los nombro ministros mañana, con mayoría en las dos cámaras.<br><strong>¿Sobre qué parte del gasto deciden?</strong></p>
+        </div>
+
+        <!-- 40 OPC -->
+        <div class="slide bg-respaldo">
+            <span class="disc-badge b5">Pregunta 5</span>
+            <h2>La respuesta de la Oficina de Presupuesto del Congreso</h2>
+            <div class="stats-grid" style="grid-template-columns: 1fr 1fr;">
+                <div class="stat-box">
+                    <div class="stat-numero">90%</div>
+                    <div class="stat-label">del gasto estaba <strong>rígido</strong> en 2021<br>(83% en 2010)</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-numero" style="color: var(--rojo-alerta);">10%</div>
+                    <div class="stat-label">es el margen<br><strong>recortable o reasignable</strong></div>
+                </div>
+            </div>
+            <p class="fuente" style="text-align: center;">OPC (2021), Estudio de rigideces presupuestarias 2010-2021</p>
+        </div>
+
+        <!-- 41 QUÉ SIGNIFICA RÍGIDO -->
+        <div class="slide bg-blanco">
+            <span class="disc-badge b5">Pregunta 5</span>
+            <h2>¿Qué significa "rígido"?</h2>
+            <ul>
+                <li>Jubilaciones atadas a una <strong>fórmula por ley</strong></li>
+                <li>Salarios de personal</li>
+                <li><strong>Intereses de deuda</strong></li>
+                <li>Asignaciones familiares</li>
+                <li>Transferencias automáticas a provincias</li>
+            </ul>
+            <p style="font-size: 1.9rem; margin-top: 30px;">Nada de eso se cambia por decisión administrativa.<br><strong class="highlight">Se cambia con otra ley.</strong></p>
+        </div>
+
+        <!-- 42 ALESINA -->
+        <div class="slide bg-respaldo">
+            <span class="disc-badge b5">Pregunta 5</span>
+            <h2>Y el <em>cómo</em> importa más que el cuánto</h2>
+            <div class="two-cols">
+                <div class="concepto-box">
+                    <h4>Ajuste por gasto</h4>
+                    <p>En promedio: menor costo recesivo, más duradero.</p>
+                </div>
+                <div class="concepto-box">
+                    <h4>Ajuste por impuestos</h4>
+                    <p>En promedio: mayor costo recesivo, más fracasos.</p>
+                </div>
+            </div>
+            <p style="margin-top: 35px; font-size: 1.9rem;">Ojo con el "en promedio": depende de <strong>qué</strong> gasto y <strong>qué</strong> impuesto.</p>
+            <p style="font-size: 1.9rem;"><strong class="highlight">Un promedio bien estimado sigue siendo un promedio.</strong></p>
+            <p class="fuente">Alesina, Favero y Giavazzi (2019), <em>Austerity</em></p>
+        </div>
+
+        <!-- 43 LA LEY MÁS POLÍTICA → U5 -->
+        <div class="slide bg-verde">
+            <span class="disc-badge b5" style="background: rgba(0,0,0,0.2);">Pregunta 5</span>
+            <h2>El presupuesto es la ley más política del año</h2>
+            <p style="font-size: 2rem;">Es el único texto donde todas las prioridades se escriben en la <strong>misma unidad de medida</strong>.</p>
+            <p style="font-size: 2rem;">Por eso <strong>quién produce los números</strong> es una disputa de poder: en junio de 2026 el control de la propia OPC se volvió un conflicto abierto.</p>
+            <div class="preview-box">
+                <div class="preview-label">Unidad 5 — Oferta y demanda agregada · Fiscal · Monetaria</div>
+                <p>Restricción presupuestaria · multiplicador · función de consumo · estabilizadores automáticos · Banco Central · curva de Phillips</p>
+            </div>
+        </div>
+
+        <!-- ============ BLOQUE 6 ============ -->
+
+        <!-- 44 PREGUNTA 6 -->
+        <div class="slide bg-blanco">
+            <span class="disc-badge b6">Pregunta 6</span>
+            <h1 style="color: var(--azul-respaldo);">El dólar a $1.500:<br>¿está caro o barato?</h1>
+            <p style="font-size: 2rem;">La pregunta está mal formulada.<br><strong>Falta la mitad: ¿comparado con qué?</strong></p>
+        </div>
+
+        <!-- 45 NOMINAL VS REAL -->
+        <div class="slide bg-respaldo">
+            <span class="disc-badge b6">Pregunta 6</span>
+            <h2>Nominal y real</h2>
+            <div class="versus">
+                <div class="versus-lado">
+                    <h4>Tipo de cambio nominal</h4>
+                    <p>Cuántos pesos por dólar. <strong>$1.500.</strong></p>
+                    <p>Es un precio. Solo, no dice casi nada.</p>
+                </div>
+                <div class="versus-center">≠</div>
+                <div class="versus-lado">
+                    <h4>Tipo de cambio real</h4>
+                    <p>Cuántos <strong>bienes argentinos</strong> por un bien extranjero.</p>
+                    <p>Define si conviene exportar, importar o irse a Brasil.</p>
+                </div>
+            </div>
+            <p style="margin-top: 35px; font-size: 1.9rem;">"El dólar está atrasado" es una afirmación sobre el <strong class="highlight">tipo de cambio real</strong>. Discutible, y exige decir <strong>contra qué referencia</strong>.</p>
+        </div>
+
+        <!-- 46 ROGOFF -->
+        <div class="slide bg-blanco">
+            <span class="disc-badge b6">Pregunta 6</span>
+            <h2>Rogoff: el enigma de la PPP</h2>
+            <div class="two-cols">
+                <div class="solucion-box">
+                    <h4>La buena noticia</h4>
+                    <p>La convergencia existe. Los desvíos <strong>se corrigen</strong>.</p>
+                </div>
+                <div class="problema-box">
+                    <h4>La mala noticia</h4>
+                    <p>Tardan <strong>años</strong>: vida media de 3 a 5.</p>
+                </div>
+            </div>
+            <p style="margin-top: 35px; font-size: 1.9rem;">"Está desalineado" puede ser cierto y <strong class="highlight">no decir nada sobre el mes que viene</strong>.</p>
+            <p style="font-size: 1.9rem;">Una afirmación de largo plazo no es un pronóstico de corto.</p>
+        </div>
+
+        <!-- 47 FEAR OF FLOATING -->
+        <div class="slide bg-respaldo">
+            <span class="disc-badge b6">Pregunta 6</span>
+            <h2>"Fear of Floating"</h2>
+            <p style="font-size: 2rem;">Calvo y Reinhart (2002) compararon el régimen que los países <strong>declaran</strong> con el que <strong>practican</strong>.</p>
+            <p style="font-size: 2rem;">Muchos "flotantes" tienen tipo de cambio <strong class="highlight">poco volátil</strong> y reservas y tasas <strong class="highlight">muy volátiles</strong>. Dicen que flotan: intervienen.</p>
+            <p style="font-size: 2rem;"><strong>El miedo a flotar es miedo al costo político de flotar.</strong></p>
+        </div>
+
+        <!-- 48 FOTO AGOSTO 2026 -->
+        <div class="slide bg-impulso">
+            <span class="disc-badge b6" style="background: rgba(255,255,255,0.22);">Pregunta 6</span>
+            <h2>La foto de agosto 2026</h2>
+            <div class="stats-grid">
+                <div class="stat-box">
+                    <div class="stat-numero" style="font-size: 4.6rem;">~$1.500</div>
+                    <div class="stat-label">Tipo de cambio nominal</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-numero" style="font-size: 4.6rem;">+US$10.000M</div>
+                    <div class="stat-label">Compras del BCRA en 2026</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-numero" style="font-size: 4.6rem;">Positiva</div>
+                    <div class="stat-label">Cuenta corriente</div>
+                </div>
+            </div>
+            <p style="margin-top: 35px; font-size: 1.9rem; text-align: center;">Unos leen "el esquema funciona".<br>Otros leen "el atraso se está financiando".<br><strong>Mismos datos.</strong></p>
+        </div>
+
+        <!-- 49 → UNIDAD 6 -->
+        <div class="slide bg-blanco">
+            <span class="disc-badge b6">Pregunta 6</span>
+            <h2>Unidad 6</h2>
+            <ul>
+                <li><strong>Balanza de pagos:</strong> cuenta corriente y capital</li>
+                <li>Tipo de cambio <strong>nominal y real</strong></li>
+                <li>Regímenes: fijo, flotante y toda la escala de grises</li>
+                <li><strong>Paridad de poder de compra</strong> y sus límites</li>
+                <li>Mercado de divisas y sistema monetario internacional</li>
+            </ul>
+        </div>
+
+        <!-- ============ BLOQUE 7 ============ -->
+
+        <!-- 50 PREGUNTA 7 -->
+        <div class="slide bg-respaldo">
+            <span class="disc-badge b7">Pregunta 7</span>
+            <h1>¿Por qué unos países son ricos<br>y otros pobres?</h1>
+            <p style="font-size: 2rem;">La más importante. La única donde<br><strong class="highlight">la ciencia política tiene más para decir que la economía.</strong></p>
+        </div>
+
+        <!-- 51 NOGALES -->
+        <div class="slide bg-blanco">
+            <span class="disc-badge b7">Pregunta 7</span>
+            <h2>Nogales, Arizona y Nogales, Sonora</h2>
+            <div class="versus">
+                <div class="versus-lado">
+                    <h4>Nogales, Arizona</h4>
+                    <p>Ingreso varias veces mayor. Más escolaridad, más expectativa de vida, servicios que funcionan.</p>
+                </div>
+                <div class="versus-center">|</div>
+                <div class="versus-lado">
+                    <h4>Nogales, Sonora</h4>
+                    <p>Ingreso mucho menor, informalidad alta, servicios deficientes. <strong>A cien metros.</strong></p>
+                </div>
+            </div>
+            <p style="margin-top: 35px; font-size: 1.95rem; text-align: center;">Mismo desierto, mismo clima, muchas veces la misma familia.<br><strong class="highlight">Lo único que cambia son las instituciones.</strong></p>
+            <p class="fuente" style="text-align: center;">Acemoglu y Robinson (2012), <em>Why Nations Fail</em>, cap. 1</p>
+        </div>
+
+        <!-- 52 INCLUSIVAS VS EXTRACTIVAS -->
+        <div class="slide bg-respaldo">
+            <span class="disc-badge b7">Pregunta 7</span>
+            <h2>Instituciones inclusivas y extractivas</h2>
+            <div class="versus">
+                <div class="versus-lado">
+                    <h4>Inclusivas</h4>
+                    <p>Propiedad amplia, competencia, educación, poder distribuido y limitado.</p>
+                    <p><strong>A muchos les conviene innovar.</strong></p>
+                </div>
+                <div class="versus-center">VS</div>
+                <div class="versus-lado">
+                    <h4>Extractivas</h4>
+                    <p>Rentas concentradas, barreras de entrada, poder sin control.</p>
+                    <p><strong>La elite bloquea lo que la amenaza.</strong></p>
+                </div>
+            </div>
+            <p style="margin-top: 35px; font-size: 1.95rem; text-align: center;"><strong class="highlight">Nobel de Economía 2024</strong> a Acemoglu, Johnson y Robinson.<br>El premio más importante de la economía, a tres autores que estudian instituciones políticas.</p>
+        </div>
+
+        <!-- 53 ATRAVIESA TODO -->
+        <div class="slide bg-verde">
+            <span class="disc-badge b7" style="background: rgba(0,0,0,0.2);">Pregunta 7</span>
+            <h2>Atraviesa todo el curso</h2>
+            <div>
+                <div class="mapa-item"><span><strong>U1</strong> — Que el Estado corrija una falla depende de su capacidad</span></div>
+                <div class="mapa-item"><span><strong>U2</strong> — El residuo de Solow es, en parte, institucional</span></div>
+                <div class="mapa-item"><span><strong>U3</strong> — Quién gana con una reforma depende de quién está organizado</span></div>
+                <div class="mapa-item"><span><strong>U4</strong> — El riesgo país es un precio puesto a las instituciones</span></div>
+                <div class="mapa-item"><span><strong>U5</strong> — Las rigideces son instituciones en forma de leyes</span></div>
+                <div class="mapa-item"><span><strong>U6</strong> — El miedo a flotar es un costo político</span></div>
+            </div>
+            <p style="text-align: center; margin-top: 30px; font-size: 2rem;">Por eso esta materia está en<br><strong>Ciencia Política</strong>.</p>
+        </div>
+
+        <!-- ============ CIERRE ============ -->
+
+        <!-- 54 SIETE PREGUNTAS -->
+        <div class="slide bg-blanco">
+            <h2>Siete preguntas. Un método.</h2>
+            <div>
+                <div class="mapa-item"><div class="disc-dot" style="background: #3B82F6;"></div><span>Alquileres → <strong>oferta, demanda, fallas</strong></span></div>
+                <div class="mapa-item"><div class="disc-dot" style="background: #8B5CF6;"></div><span>Pobreza → <strong>índices, medición, crecimiento</strong></span></div>
+                <div class="mapa-item"><div class="disc-dot" style="background: #EF4444;"></div><span>Impuestos e IA → <strong>elasticidades, trabajo, tecnología</strong></span></div>
+                <div class="mapa-item"><div class="disc-dot" style="background: #F59E0B;"></div><span>Hipotecas → <strong>ahorro, inversión, riesgo</strong></span></div>
+                <div class="mapa-item"><div class="disc-dot" style="background: #EC4899;"></div><span>El ministro → <strong>presupuesto, fiscal, monetaria</strong></span></div>
+                <div class="mapa-item"><div class="disc-dot" style="background: #14B8A6;"></div><span>El dólar → <strong>nominal, real, balanza de pagos</strong></span></div>
+                <div class="mapa-item"><div class="disc-dot" style="background: #A3E635;"></div><span>Ricos y pobres → <strong>instituciones e incentivos</strong></span></div>
+            </div>
+        </div>
+
+        <!-- 55 LO QUE SE LLEVAN -->
+        <div class="slide bg-impulso">
+            <h2>Lo que quiero que se lleven</h2>
+            <ul>
+                <li><strong>Pensar con modelos</strong> — supuestos explícitos, cadena causal</li>
+                <li><strong>Contrastar con datos</strong> — de dónde sale un número y qué no muestra</li>
+                <li><strong>Positivo ≠ normativo</strong> — qué va a pasar vs. qué debería pasar</li>
+                <li><strong>Discutir sin traductor</strong></li>
+            </ul>
+        </div>
+
+        <!-- 56 CIERRE -->
+        <div class="slide bg-respaldo portada">
+            <div class="frase-final">
+                "Si verdaderamente entendés algo,<br>por más complejo que sea,<br><em>tiene que haber una forma simple<br>y concreta de explicarlo</em>."
+            </div>
+            <p style="margin-top: 50px; font-size: 1.9rem;">Si algo no se entiende, la responsabilidad es mía.<br><strong>Pregunten siempre.</strong></p>
+            <p style="margin-top: 40px; font-size: 1.7rem; opacity: 0.6;">Felipe Venancio</p>
+        </div>
+
+    </div>
+
+    <div class="proyectar-tag">Para proyectar</div>
+    <div class="slide-counter"><span id="current">1</span> / <span id="total">56</span></div>
+    <div class="nav-hint">← → para navegar | F para pantalla completa</div>
+
+    <script>
+        const slides = document.querySelectorAll('.slide');
+        let currentSlide = 0;
+        const total = slides.length;
+        document.getElementById('total').textContent = total;
+
+        function showSlide(n) {
+            slides[currentSlide].classList.remove('active');
+            currentSlide = (n + total) % total;
+            slides[currentSlide].classList.add('active');
+            document.getElementById('current').textContent = currentSlide + 1;
+        }
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowRight' || e.key === ' ' || e.key === 'Enter') showSlide(currentSlide + 1);
+            else if (e.key === 'ArrowLeft') showSlide(currentSlide - 1);
+            else if (e.key === 'Home') showSlide(0);
+            else if (e.key === 'End') showSlide(total - 1);
+            else if (e.key === 'f' || e.key === 'F') {
+                if (!document.fullscreenElement) document.documentElement.requestFullscreen();
+                else document.exitFullscreen();
+            }
+        });
+
+        let touchStartX = 0;
+        document.addEventListener('touchstart', (e) => { touchStartX = e.touches[0].clientX; });
+        document.addEventListener('touchend', (e) => {
+            const diff = touchStartX - e.changedTouches[0].clientX;
+            if (Math.abs(diff) > 50) { if (diff > 0) showSlide(currentSlide + 1); else showSlide(currentSlide - 1); }
+        });
+
+        document.addEventListener('click', (e) => {
+            if (e.target.tagName === 'A' || e.target.tagName === 'BUTTON') return;
+            if (e.clientX > window.innerWidth / 2) showSlide(currentSlide + 1);
+            else showSlide(currentSlide - 1);
+        });
+    </script>
+</body>
+</html>
