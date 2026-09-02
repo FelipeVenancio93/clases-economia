@@ -1,0 +1,1475 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Alquileres, precios y fallas — FADU · PARA PROYECTAR</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Albert+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+/* ================================================================
+   Aspectos Económicos del Diseño — FADU
+   Formato del Curso Freakonomics, versión PARA PROYECTAR.
+   Aula de 100 personas: menos contenido por slide, tipografía grande.
+   Nada por debajo de 1.3rem.
+   ================================================================ */
+:root{
+  --azul-impulso:#1036E2; --verde-activo:#00C600; --azul-respaldo:#021751;
+  --blanco:#FFFFFF; --rojo-alerta:#DC2626; --amarillo:#F59E0B;
+  --clasico:#8B5CF6; --manual:#1036E2; --frontera:#00C600;
+  --verde-grafico:#00920A;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:'Albert Sans',-apple-system,BlinkMacSystemFont,sans-serif;
+     background:var(--azul-respaldo);color:var(--blanco);overflow:hidden;}
+.slide-container{width:100vw;height:100vh;display:flex;align-items:center;justify-content:center;}
+.slide{display:none;width:100%;height:100%;padding:60px 100px;flex-direction:column;justify-content:center;}
+.slide.active{display:flex;}
+
+.bg-respaldo{background:var(--azul-respaldo);color:var(--blanco);}
+.bg-impulso{background:var(--azul-impulso);color:var(--blanco);}
+.bg-verde{background:var(--verde-activo);color:var(--blanco);}
+.bg-blanco{background:var(--blanco);color:var(--azul-respaldo);}
+
+h1{font-size:5rem;font-weight:700;line-height:1.06;margin-bottom:26px;}
+h2{font-size:3.5rem;font-weight:600;line-height:1.12;margin-bottom:24px;}
+h3{font-size:2.2rem;font-weight:500;line-height:1.25;margin-bottom:18px;}
+h4{font-size:1.5rem;font-weight:600;margin-bottom:10px;}
+p{font-size:1.8rem;line-height:1.45;margin-bottom:18px;font-weight:300;}
+ul{list-style:none;margin:18px 0;}
+li{font-size:1.8rem;line-height:1.42;margin-bottom:20px;font-weight:300;padding-left:38px;position:relative;}
+li::before{content:"\2192";position:absolute;left:0;color:var(--verde-activo);font-weight:700;}
+.bg-blanco li::before{color:var(--azul-impulso);}
+.bg-verde li::before{color:var(--azul-respaldo);}
+
+.highlight{color:var(--verde-activo);font-weight:600;}
+.bg-blanco .highlight{color:var(--azul-impulso);}
+.bg-verde .highlight{color:var(--azul-respaldo);}
+.bg-impulso .highlight{color:#7DFF7D;}
+
+.kicker{font-size:1.3rem;font-weight:700;letter-spacing:4px;text-transform:uppercase;opacity:.65;margin-bottom:22px;}
+.momento{position:fixed;top:24px;right:34px;font-size:1.05rem;font-weight:700;letter-spacing:2px;
+         text-transform:uppercase;opacity:.35;z-index:90;}
+.subtitulo{font-size:2.2rem;font-weight:300;opacity:.9;line-height:1.35;}
+
+/* cita formal al pie — 1.3rem es el piso de la versión proyectable */
+.fuente{font-size:1.3rem;opacity:.62;margin-top:auto;padding-top:22px;font-weight:400;line-height:1.4;
+        border-top:1px solid rgba(255,255,255,.18);}
+.bg-blanco .fuente{border-top-color:rgba(2,23,81,.16);}
+
+/* badges de capa del estado del arte */
+.capa{display:inline-block;align-self:flex-start;font-size:1.3rem;font-weight:800;letter-spacing:3px;
+      text-transform:uppercase;padding:9px 24px;border-radius:30px;margin-bottom:24px;}
+.capa.clasico{background:var(--clasico);color:#fff;}
+.capa.manual{background:var(--manual);color:#fff;}
+.capa.frontera{background:var(--frontera);color:#00230A;}
+.bg-impulso .capa.manual{background:#fff;color:var(--azul-impulso);}
+
+.programa{display:inline-block;font-size:1.3rem;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;
+          background:var(--verde-activo);color:#00230A;padding:4px 14px;border-radius:6px;
+          margin-left:12px;vertical-align:middle;}
+
+.cita-paper{background:rgba(255,255,255,.08);border-left:7px solid var(--verde-activo);
+            border-radius:10px;padding:28px 34px;margin:20px 0;}
+.bg-blanco .cita-paper{background:rgba(16,54,226,.05);border-left-color:var(--azul-impulso);}
+.cita-paper .titulo{font-size:2rem;font-weight:600;line-height:1.25;}
+.cita-paper .autores{font-size:1.4rem;opacity:.78;margin-top:10px;}
+.cita-paper .contenido{font-size:1.65rem;margin-top:16px;line-height:1.4;opacity:.95;}
+
+.seccion-titulo{text-align:center;}
+.seccion-titulo .num{font-size:1.5rem;letter-spacing:5px;text-transform:uppercase;opacity:.6;margin-bottom:22px;}
+.seccion-titulo h1{font-size:5.5rem;margin-bottom:24px;}
+.seccion-titulo .detalle{font-size:2rem;opacity:.85;font-weight:300;line-height:1.4;}
+
+.capas-tabla{display:grid;grid-template-columns:repeat(3,1fr);gap:28px;margin-top:22px;}
+.capa-col{border-radius:12px;padding:26px 26px;background:rgba(255,255,255,.08);border-top:8px solid;}
+.bg-blanco .capa-col{background:rgba(16,54,226,.05);}
+.capa-col.c1{border-top-color:var(--clasico);}
+.capa-col.c2{border-top-color:var(--manual);}
+.capa-col.c3{border-top-color:var(--frontera);}
+.capa-col h4{font-size:1.4rem;letter-spacing:2.5px;text-transform:uppercase;margin-bottom:14px;}
+.capa-col.c1 h4{color:var(--clasico);}
+.capa-col.c2 h4{color:var(--manual);}
+.bg-respaldo .capa-col.c2 h4{color:#7E99FF;}
+.capa-col.c3 h4{color:var(--frontera);}
+.capa-col p{font-size:1.35rem;line-height:1.4;margin-bottom:12px;}
+.capa-col p:last-child{margin-bottom:0;}
+
+.two-cols{display:grid;grid-template-columns:1fr 1fr;gap:46px;align-items:start;}
+.three-cols{display:grid;grid-template-columns:repeat(3,1fr);gap:28px;align-items:start;}
+
+.concepto-box{background:rgba(255,255,255,.09);border-left:7px solid var(--verde-activo);
+              border-radius:10px;padding:26px 30px;}
+.bg-blanco .concepto-box{background:rgba(16,54,226,.05);border-left-color:var(--azul-impulso);}
+.concepto-box h4{font-size:1.7rem;color:var(--verde-activo);margin-bottom:12px;}
+.bg-blanco .concepto-box h4{color:var(--azul-impulso);}
+.bg-impulso .concepto-box h4{color:#fff;}
+.concepto-box p{font-size:1.5rem;margin-bottom:0;line-height:1.4;}
+
+.problema-box,.solucion-box{background:rgba(255,255,255,.09);border-radius:10px;padding:26px 30px;
+              border-left:7px solid var(--rojo-alerta);}
+.solucion-box{border-left-color:var(--verde-activo);}
+.bg-blanco .problema-box{background:rgba(220,38,38,.06);}
+.bg-blanco .solucion-box{background:rgba(0,198,0,.07);}
+.problema-box h4,.solucion-box h4{font-size:1.7rem;margin-bottom:10px;}
+.problema-box h4{color:#FF6B6B;}
+.bg-blanco .problema-box h4{color:var(--rojo-alerta);}
+.solucion-box h4{color:var(--verde-activo);}
+.bg-blanco .solucion-box h4{color:#047833;}
+.problema-box p,.solucion-box p{font-size:1.5rem;margin-bottom:0;line-height:1.4;}
+
+.formula-grande{font-size:3rem;font-weight:700;text-align:center;padding:38px 26px;
+                background:rgba(255,255,255,.1);border-radius:16px;margin:22px 0;line-height:1.3;}
+.bg-blanco .formula-grande{background:rgba(16,54,226,.06);}
+
+.flow{display:flex;align-items:center;justify-content:center;gap:14px;margin:30px 0;flex-wrap:wrap;}
+.flow-box{background:rgba(255,255,255,.12);border:3px solid rgba(255,255,255,.3);border-radius:14px;
+          padding:25px 35px;font-size:1.5rem;font-weight:600;text-align:center;line-height:1.3;min-width:190px;}
+.bg-blanco .flow-box{background:rgba(16,54,226,.06);border-color:rgba(16,54,226,.28);}
+.flow-box.alerta{border-color:var(--rojo-alerta);}
+.flow-arrow{font-size:2.2rem;opacity:.55;font-weight:700;}
+
+table{width:100%;border-collapse:collapse;margin:20px 0;font-size:1.55rem;}
+th{text-align:left;padding:16px 20px;font-weight:600;font-size:1.35rem;text-transform:uppercase;
+   letter-spacing:1.5px;border-bottom:4px solid var(--verde-activo);}
+.bg-blanco th{border-bottom-color:var(--azul-impulso);}
+td{padding:16px 20px;border-bottom:1px solid rgba(255,255,255,.16);font-weight:300;}
+.bg-blanco td{border-bottom-color:rgba(2,23,81,.13);}
+
+blockquote{font-size:2.8rem;font-weight:300;font-style:italic;line-height:1.28;
+           border-left:8px solid var(--verde-activo);padding-left:40px;margin:20px 0;}
+.bg-blanco blockquote{border-left-color:var(--azul-impulso);}
+blockquote cite{display:block;font-size:1.5rem;font-style:normal;opacity:.75;margin-top:26px;font-weight:400;}
+
+.apuesta-box{border:5px solid var(--verde-activo);border-radius:18px;padding:34px 40px;margin:22px 0;}
+.bg-blanco .apuesta-box{border-color:var(--azul-impulso);}
+.apuesta-box h3{margin-bottom:0;}
+.apuesta-box .opciones{display:flex;gap:26px;margin-top:24px;flex-wrap:wrap;}
+.apuesta-box .op{background:rgba(255,255,255,.14);border-radius:12px;padding:20px 36px;
+                 font-size:1.9rem;font-weight:600;}
+.bg-blanco .apuesta-box .op{background:rgba(16,54,226,.08);}
+
+/* Hueco donde el inyector de resultados escribe el voto real del curso.
+   Vacío no ocupa lugar: el slide se ve igual antes y después de la clase. */
+.resultado:empty{display:none;}
+.resultado{margin-top:22px;font-size:1.5rem;opacity:.85;}
+
+.ley{background:rgba(255,255,255,.1);border-left:8px solid var(--amarillo);border-radius:10px;
+     padding:30px 36px;font-size:1.9rem;line-height:1.45;font-style:italic;margin:22px 0;}
+.bg-blanco .ley{background:rgba(245,158,11,.1);}
+
+.grafico{margin:6px 0;display:flex;align-items:center;justify-content:center;min-height:0;flex:1 1 auto;}
+.grafico svg{width:auto;height:100%;max-width:100%;max-height:100%;display:block;}
+.esquema-tag{font-size:1.3rem;letter-spacing:2px;text-transform:uppercase;opacity:.55;
+             margin-top:12px;font-weight:600;text-align:center;}
+
+.juego-box{background:var(--verde-activo);color:var(--azul-respaldo);border-radius:18px;padding:34px 40px;margin:22px 0;}
+.juego-box h4{font-size:1.5rem;letter-spacing:3px;text-transform:uppercase;opacity:.75;margin-bottom:16px;}
+.juego-box p{color:var(--azul-respaldo);margin-bottom:0;font-size:1.7rem;}
+
+/* Slides del juego, todavía sin contenido definitivo. */
+.reservado{border:5px dashed rgba(255,255,255,.4);border-radius:18px;padding:40px 46px;text-align:center;}
+.bg-blanco .reservado{border-color:rgba(2,23,81,.3);}
+.reservado .tag{font-size:1.4rem;letter-spacing:4px;text-transform:uppercase;opacity:.6;font-weight:800;margin-bottom:20px;}
+
+.big-number{font-size:9rem;font-weight:800;line-height:1;color:var(--verde-activo);}
+.bg-blanco .big-number{color:var(--azul-impulso);}
+.bg-impulso .big-number{color:#7DFF7D;}
+
+.regla{border:5px solid var(--amarillo);border-radius:18px;padding:34px 40px;margin:20px 0;}
+.regla h3{margin-bottom:0;font-weight:600;}
+
+.nav-hint{position:fixed;bottom:22px;right:34px;font-size:1.05rem;opacity:.32;z-index:100;}
+.slide-counter{position:fixed;bottom:22px;left:34px;font-size:1.05rem;opacity:.32;z-index:100;}
+
+@media (max-width:768px){
+  .slide{padding:26px 18px;}
+  h1{font-size:1.95rem;margin-bottom:13px;} h2{font-size:1.45rem;margin-bottom:11px;}
+  h3{font-size:1.15rem;} h4{font-size:.98rem;}
+  p{font-size:.95rem;margin-bottom:9px;} li{font-size:.95rem;padding-left:19px;margin-bottom:9px;}
+  .kicker{font-size:.68rem;letter-spacing:2px;margin-bottom:10px;}
+  .momento{top:10px;right:11px;font-size:.6rem;}
+  .subtitulo{font-size:1rem;} .fuente{font-size:.7rem;padding-top:10px;}
+  .capa{font-size:.66rem;padding:4px 11px;letter-spacing:1.5px;margin-bottom:10px;}
+  .programa{font-size:.58rem;padding:2px 7px;margin-left:6px;}
+  .seccion-titulo h1{font-size:2rem;} .seccion-titulo .detalle{font-size:.92rem;}
+  .capas-tabla,.two-cols,.three-cols{grid-template-columns:1fr;gap:11px;}
+  .capa-col{padding:13px 14px;} .capa-col p{font-size:.85rem;} .capa-col h4{font-size:.8rem;}
+  .concepto-box{padding:12px 13px;} .concepto-box p{font-size:.86rem;} .concepto-box h4{font-size:.98rem;}
+  .problema-box,.solucion-box{padding:12px 13px;}
+  .problema-box p,.solucion-box p{font-size:.86rem;}
+  .problema-box h4,.solucion-box h4{font-size:.98rem;}
+  .cita-paper{padding:12px 14px;border-left-width:4px;} .cita-paper .titulo{font-size:.94rem;}
+  .cita-paper .autores{font-size:.76rem;} .cita-paper .contenido{font-size:.84rem;}
+  .formula-grande{font-size:1.1rem;padding:15px 11px;}
+  .flow{gap:5px;margin:12px 0;} .flow-box{font-size:.75rem;padding:8px 7px;min-width:0;flex:1 1 40%;}
+  .flow-arrow{display:none;}
+  table{font-size:.82rem;} th,td{padding:6px 7px;}
+  blockquote{font-size:1.15rem;padding-left:14px;border-left-width:4px;} blockquote cite{font-size:.8rem;}
+  .apuesta-box{padding:14px 15px;border-width:3px;} .apuesta-box .op{font-size:.92rem;padding:8px 13px;}
+  .apuesta-box .opciones{gap:10px;margin-top:12px;}
+  .resultado{font-size:.85rem;margin-top:10px;}
+  .ley{font-size:.88rem;padding:13px 14px;border-left-width:5px;}
+  .juego-box{padding:14px 15px;} .juego-box p{font-size:.9rem;} .juego-box h4{font-size:.8rem;}
+  .reservado{padding:16px 14px;} .reservado .tag{font-size:.72rem;}
+  .regla{padding:14px 15px;border-width:3px;}
+  .big-number{font-size:2.9rem;}
+  .grafico{flex:0 0 auto;} .grafico svg{width:100%;height:auto;}
+  .esquema-tag{font-size:.66rem;}
+  .nav-hint{bottom:10px;right:10px;font-size:.66rem;}
+  .slide-counter{bottom:10px;left:10px;font-size:.66rem;}
+}
+</style>
+</head>
+<body>
+
+<div class="momento" id="momento"></div>
+<div class="slide-container">
+  <!-- ================================================================
+       BLOQUE 1 · LA PREGUNTA — 0 a 15 minutos
+       ================================================================ -->
+
+  <div class="slide active bg-respaldo" data-momento="">
+    <div class="kicker">Aspectos Económicos del Diseño · FADU</div>
+    <h1>¿Por qué un<br>departamento barato<br>puede ser la razón por<br>la que <span class="highlight">no conseguís</span><br>departamento?</h1>
+    <p class="subtitulo">Precios, mercados y las dos fallas</p>
+  </div>
+
+  <div class="slide bg-blanco" data-momento="La pregunta · 0-15">
+    <div class="kicker">Julio de 2020 · Ley 27.551</div>
+    <div class="ley">Contratos de alquiler de <strong>tres años</strong>.<br>Ajuste <strong>anual</strong> por un índice oficial.<br>Depósito de <strong>un mes</strong>.<br>Obligación de <strong>registrar</strong> el contrato.</div>
+  </div>
+
+  <div class="slide bg-impulso" data-momento="La pregunta · 0-15">
+    <h2>El objetivo era claro<br>y era razonable</h2>
+    <h1 style="font-size:4rem;">Que alquilar fuera<br>más previsible<br>y <span class="highlight">más barato</span>.</h1>
+  </div>
+
+  <div class="slide bg-respaldo" data-momento="La pregunta · 0-15">
+    <h1 style="font-size:4.2rem;">Tres años después,<br>la ley se derogó.</h1>
+    <h3>Hoy vamos a ver por qué —<br>y sobre todo <span class="highlight">qué se puede y qué no se puede concluir</span> de eso.</h3>
+  </div>
+
+  <div class="slide bg-verde" data-momento="La apuesta · 0-15">
+    <div class="kicker" style="opacity:.8;">Antes del dato</div>
+    <h1 style="font-size:4.6rem;">Votamos.</h1>
+    <h3 style="font-size:2.4rem;">Y el voto queda anotado.<br>Después no vale decir «yo ya sabía».</h3>
+  </div>
+
+  <div class="slide bg-blanco" data-momento="La apuesta · 0-15" data-apuesta="alq-cantidad">
+    <div class="kicker">Apuesta 1 de 2</div>
+    <div class="apuesta-box">
+      <h3>¿Qué le pasó a la <span class="highlight">cantidad</span> de departamentos<br>publicados para alquilar en CABA?</h3>
+      <div class="opciones"><div class="op">Subió</div><div class="op">Bajó</div><div class="op">Quedó igual</div></div>
+    </div>
+    <div class="resultado" data-resultado="alq-cantidad"></div>
+  </div>
+
+  <div class="slide bg-blanco" data-momento="La apuesta · 0-15" data-apuesta="alq-precio">
+    <div class="kicker">Apuesta 2 de 2</div>
+    <div class="apuesta-box">
+      <h3>¿Y al <span class="highlight">precio real</span> del alquiler?</h3>
+      <div class="opciones"><div class="op">Subió</div><div class="op">Bajó</div><div class="op">Quedó igual</div></div>
+    </div>
+    <div class="resultado" data-resultado="alq-precio"></div>
+  </div>
+
+  <!-- ================================================================
+       BLOQUE 2 · EL JUEGO — 15 a 50 minutos
+       Los slides marcados RESERVADO esperan la definición del juego.
+       ================================================================ -->
+
+  <div class="slide bg-respaldo seccion-titulo" data-momento="El juego · 15-50">
+    <div class="num">Bloque 2 · 15 a 50 minutos</div>
+    <h1>Primero,<br>un mercado</h1>
+    <div class="detalle">Antes de discutir teoría<br>vamos a construir uno acá adentro.</div>
+  </div>
+
+  <div class="slide bg-blanco" data-momento="El juego · 15-50" data-juego="doble-subasta">
+    <div class="kicker">Parte 1 · Mercado libre · 20 minutos</div>
+    <div class="reservado">
+      <div class="tag">Reservado · consigna del juego</div>
+      <h3 style="margin-bottom:0;">Mercado de doble subasta.<br>Mitad compradores con valor máximo secreto,<br>mitad vendedores con costo mínimo secreto.</h3>
+    </div>
+  </div>
+
+  <div class="slide bg-blanco" data-momento="El juego · 15-50" data-juego="doble-subasta">
+    <div class="kicker">Parte 1 · Cómo se juega</div>
+    <div class="reservado">
+      <div class="tag">Reservado · mecánica y rondas</div>
+      <h3 style="margin-bottom:0;">Tres rondas de tres minutos.<br>Cada trato cerrado se registra<br>y se proyecta al frente.</h3>
+    </div>
+  </div>
+
+  <div class="slide bg-impulso" data-momento="El juego · 15-50" data-resultado-juego="subasta-ronda1-3">
+    <h1 style="font-size:4rem;">Nadie conocía<br>el precio de equilibrio.</h1>
+    <h2 style="font-weight:300;">Y el mercado lo encontró igual,<br><span class="highlight">en tres rondas.</span></h2>
+    <div class="resultado" data-resultado="subasta-dispersion"></div>
+  </div>
+
+  <div class="slide bg-blanco" data-momento="El juego · 15-50" data-juego="doble-subasta-techo">
+    <div class="kicker">Parte 2 · Con precio máximo · 15 minutos</div>
+    <div class="reservado">
+      <div class="tag">Reservado · la regla nueva</div>
+      <h3 style="margin-bottom:0;">Ningún trato puede cerrarse<br>por encima de un tope.<br>El que lo supere queda anulado.</h3>
+    </div>
+  </div>
+
+  <div class="slide bg-respaldo" data-momento="El juego · 15-50" data-resultado-juego="subasta-techo">
+    <div class="kicker">Lo que acaba de pasar</div>
+    <h1 style="font-size:4.4rem;">Se cerró<br>la <span class="highlight">mitad</span><br>de las operaciones.</h1>
+    <div class="resultado" data-resultado="subasta-operaciones"></div>
+  </div>
+
+  <div class="slide bg-blanco" data-momento="El juego · 15-50">
+    <h2>Y apareció algo que<br>nadie puso en la consigna</h2>
+    <ul>
+      <li>Pagos <strong>por fuera</strong> del precio</li>
+      <li>Favores y contactos</li>
+      <li><strong>Colas informales</strong> alrededor de los pocos vendedores baratos</li>
+      <li>Requisitos extra para elegir a quién venderle</li>
+    </ul>
+  </div>
+
+  <div class="slide bg-verde" data-momento="El juego · 15-50">
+    <h1 style="font-size:4.6rem;">Cuando el precio<br>no puede racionar,</h1>
+    <h1 style="font-size:4.6rem;">raciona otra cosa.</h1>
+  </div>
+
+  <div class="slide bg-respaldo" data-momento="El juego · 15-50">
+    <div class="kicker">De dónde sale este juego</div>
+    <h2>No lo inventamos nosotros</h2>
+    <div class="cita-paper">
+      <div class="titulo">An Experimental Study of Competitive Market Behavior</div>
+      <div class="autores">Smith, V. (1962). <em>Journal of Political Economy</em>, 70(2), 111-137. — <strong>Nobel de Economía 2002.</strong></div>
+      <div class="contenido">Smith puso a estudiantes a comprar y vender con valores privados, como recién. El precio convergía al equilibrio teórico en pocas rondas, <strong>aunque ningún participante supiera cuál era</strong>. Fue el nacimiento de la economía experimental.</div>
+    </div>
+  </div>
+
+  <div class="slide bg-verde" data-momento="Corte · 50-60">
+    <h1 style="font-size:5.5rem;">Diez minutos.</h1>
+    <p class="subtitulo">Cuando volvemos: la herramienta para explicar<br>lo que acaba de pasar en el pizarrón.</p>
+  </div>
+
+  <!-- ================================================================
+       BLOQUE 3 · EL ESTADO DEL ARTE — 60 a 125 minutos
+       ================================================================ -->
+
+  <div class="slide bg-respaldo seccion-titulo" data-momento="Estado del arte · 60-125">
+    <div class="num">Bloque 3 · 60 a 125 minutos</div>
+    <h1>El estado<br>del arte</h1>
+    <div class="detalle">Cómo se llegó a entender qué hace un precio,<br>y cómo se dibuja lo que acaba de pasar.</div>
+  </div>
+
+  <!-- ---------- CAPA 1 · EL CLÁSICO ---------- -->
+
+  <div class="slide bg-blanco" data-momento="Estado del arte · 60-125">
+    <span class="capa clasico">Capa 1 · El clásico</span>
+    <h2>Las dos hojas de la tijera</h2>
+    <blockquote>Podríamos discutir con igual razón si es la hoja superior o la inferior de una tijera la que corta un papel, o si el valor está determinado por la utilidad o por el costo de producción.
+      <cite>Marshall, A. (1890). <em>Principles of Economics</em>. Macmillan.</cite></blockquote>
+  </div>
+
+  <div class="slide bg-impulso" data-momento="Estado del arte · 60-125">
+    <span class="capa clasico">Capa 1 · El clásico</span>
+    <h2>Marshall zanja<br>cien años de pelea</h2>
+    <div class="two-cols">
+      <div class="concepto-box">
+        <h4>Los clásicos decían</h4>
+        <p>El valor lo determina el <strong>costo de producción</strong>. Lo que vale es lo que cuesta hacer.</p>
+      </div>
+      <div class="concepto-box">
+        <h4>Los marginalistas decían</h4>
+        <p>El valor lo determina la <strong>utilidad</strong>. Lo que vale es lo que alguien está dispuesto a pagar.</p>
+      </div>
+    </div>
+    <h3 style="margin-top:30px;">La respuesta es <span class="highlight">las dos cosas a la vez</span>:<br>el precio sale del cruce.</h3>
+  </div>
+
+  <div class="slide bg-verde" data-momento="Estado del arte · 60-125">
+    <h1 style="font-size:4.4rem;">Es exactamente<br>lo que acaban de hacer<br>con las cartas.</h1>
+  </div>
+
+  <div class="slide bg-respaldo" data-momento="Estado del arte · 60-125">
+    <span class="capa clasico">Capa 1 · El clásico</span>
+    <h2>Y qué hace un precio,<br>además de ser un precio</h2>
+    <blockquote style="font-size:2.4rem;">El problema económico de la sociedad no es meramente cómo asignar recursos dados. Es cómo asegurar el mejor uso de recursos conocidos por cualquiera de los miembros de la sociedad, para fines cuya importancia relativa sólo esos individuos conocen.
+      <cite>Hayek, F. (1945). The Use of Knowledge in Society. <em>American Economic Review</em>, 35(4), 519-530. — Nobel, 1974.</cite></blockquote>
+  </div>
+
+  <div class="slide bg-blanco" data-momento="Estado del arte · 60-125">
+    <span class="capa clasico">Capa 1 · El clásico</span>
+    <h2>El argumento de Hayek,<br>en tres movimientos</h2>
+    <div class="flow">
+      <div class="flow-box"><strong>1 · El conocimiento<br>está repartido</strong><br>Cada uno conoce su rincón,<br>su costo, su urgencia.</div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-box"><strong>2 · El precio<br>lo resume</strong><br>Un número condensa millones<br>de circunstancias.</div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-box"><strong>3 · Y alcanza<br>con eso</strong><br>No hace falta saber por qué subió.<br>Sólo que subió.</div>
+    </div>
+  </div>
+
+  <div class="slide bg-blanco" data-momento="Estado del arte · 60-125">
+    <span class="capa clasico">Capa 1 · El clásico</span>
+    <h2>El ejemplo del estaño</h2>
+    <p>Si el estaño escasea, el que lo usa <strong>no necesita enterarse</strong> de si se cerró una mina o si apareció un uso nuevo.</p>
+    <h3 style="font-size:2.6rem;">Ve que está más caro<br>y <span class="highlight">economiza</span>.</h3>
+    <p>El precio le transmitió la información que necesitaba<br>sin transmitirle la que no.</p>
+  </div>
+
+  <div class="slide bg-impulso" data-momento="Estado del arte · 60-125">
+    <h2>Por eso un control de precios<br>no es sólo un tope</h2>
+    <h1 style="font-size:3.8rem;">Es apagar el canal<br>por el que viaja<br>esa <span class="highlight">información</span>.</h1>
+    <p>El precio deja de informar escasez,<br>y nadie recibe la señal de economizar.</p>
+  </div>
+
+  <!-- ---------- CAPA 2 · EL MANUAL: EL APARATO GRÁFICO ---------- -->
+
+  <div class="slide bg-respaldo seccion-titulo" data-momento="El aparato · 60-125">
+    <span class="capa manual" style="align-self:center;">Capa 2 · El manual</span>
+    <h1>Ahora,<br>la herramienta</h1>
+    <div class="detalle">El gráfico que van a usar el resto de la materia —<br>y que explica lo que pasó en el pizarrón.</div>
+  </div>
+
+  <div class="slide bg-blanco" data-momento="El aparato · 60-125">
+    <span class="capa manual">Capa 2 · El manual</span>
+    <h2>Empezamos por los ejes</h2>
+    <div class="grafico">
+      <svg viewBox="-170 0 1075 665" role="img" aria-label="Ejes del gráfico de mercado: precio en la vertical, cantidad en la horizontal">
+        <defs><marker id="ejeA" markerWidth="12" markerHeight="9" refX="11" refY="4.5" orient="auto"><polygon points="0 0, 12 4.5, 0 9" fill="#021751"/></marker></defs>
+        <line x1="110" y1="470" x2="862" y2="470" stroke="#021751" stroke-width="4" marker-end="url(#ejeA)"/>
+        <line x1="110" y1="470" x2="110" y2="42" stroke="#021751" stroke-width="4" marker-end="url(#ejeA)"/>
+        <text x="480" y="628" text-anchor="middle" fill="#021751" font-size="30" font-weight="700">Cantidad de departamentos alquilados</text>
+        <text x="-120" y="256" text-anchor="middle" fill="#021751" font-size="30" font-weight="700" transform="rotate(-90, -120, 256)">Precio del alquiler</text>
+        <text x="150" y="440" fill="#021751" font-size="26" opacity="0.55">origen</text>
+      </svg>
+    </div>
+    <div class="esquema-tag">Esquema · elaboración propia</div>
+  </div>
+
+  <div class="slide bg-verde" data-momento="El aparato · 60-125">
+    <div class="kicker" style="opacity:.8;">Una advertencia</div>
+    <h2>En matemática, la variable que<br>vos elegís va en la horizontal.</h2>
+    <h1 style="font-size:4rem;">Acá está al revés:<br>el <span class="highlight">precio</span> va en la vertical.</h1>
+    <p style="font-size:1.7rem;">Es una herencia de Marshall y ya no se puede cambiar.<br>Acostumbrarse ahora ahorra tres meses de confusión.</p>
+  </div>
+
+  <div class="slide bg-respaldo" data-momento="El aparato · 60-125">
+    <span class="capa manual">Capa 2 · El manual</span>
+    <h2>La ley de demanda</h2>
+    <div class="flow">
+      <div class="flow-box">Precio ↑</div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-box">Cantidad<br>demandada ↓</div>
+    </div>
+    <p>Si el alquiler de un dos ambientes sale $900.000, mucha gente se queda en casa de los padres, comparte o se va a otro barrio. Si sale $300.000, aparecen inquilinos que antes no estaban.</p>
+  </div>
+
+  <div class="slide bg-blanco" data-momento="El aparato · 60-125" data-nuevo="det-demanda">
+    <span class="capa manual">Capa 2 · El manual</span>
+    <h2>Determinantes de la demanda</h2>
+    <p>Todo lo que pesa cuando alguien decide si alquila, y cuánto está dispuesto a pagar.</p>
+    <ul>
+      <li><strong>Precio</strong> de ese bien — es el único que mueve <em>sobre</em> la curva</li>
+      <li><strong>Gustos y preferencias</strong> — el barrio, la orientación, el ascensor</li>
+      <li><strong>Precio de otros bienes</strong> — comprar, el temporario, el barrio de al lado</li>
+      <li><strong>Ingreso</strong> del hogar</li>
+      <li><strong>Expectativas</strong> — si creo que el año que viene sale el doble, alquilo hoy</li>
+    </ul>
+  </div>
+
+  <div class="slide bg-blanco" data-momento="El aparato · 60-125">
+    <span class="capa manual">Capa 2 · El manual</span>
+    <h2>La curva de demanda</h2>
+    <div class="grafico">
+      <svg viewBox="-170 0 1075 665" role="img" aria-label="Curva de demanda de alquileres con tres pares de precio y cantidad">
+        <defs><marker id="ejeB" markerWidth="12" markerHeight="9" refX="11" refY="4.5" orient="auto"><polygon points="0 0, 12 4.5, 0 9" fill="#021751"/></marker></defs>
+        <line x1="110" y1="470" x2="862" y2="470" stroke="#021751" stroke-width="4" marker-end="url(#ejeB)"/>
+        <line x1="110" y1="470" x2="110" y2="42" stroke="#021751" stroke-width="4" marker-end="url(#ejeB)"/>
+        <text x="480" y="628" text-anchor="middle" fill="#021751" font-size="27" font-weight="700">Cantidad (departamentos)</text>
+        <text x="-120" y="256" text-anchor="middle" fill="#021751" font-size="30" font-weight="700" transform="rotate(-90, -120, 256)">Precio ($/mes)</text>
+        <line x1="110" y1="123" x2="220" y2="123" stroke="#1036E2" stroke-width="3" stroke-dasharray="9,7"/>
+        <line x1="220" y1="123" x2="220" y2="470" stroke="#1036E2" stroke-width="3" stroke-dasharray="9,7"/>
+        <line x1="110" y1="260" x2="465" y2="260" stroke="#1036E2" stroke-width="3" stroke-dasharray="9,7"/>
+        <line x1="465" y1="260" x2="465" y2="470" stroke="#1036E2" stroke-width="3" stroke-dasharray="9,7"/>
+        <line x1="110" y1="397" x2="710" y2="397" stroke="#1036E2" stroke-width="3" stroke-dasharray="9,7"/>
+        <line x1="710" y1="397" x2="710" y2="470" stroke="#1036E2" stroke-width="3" stroke-dasharray="9,7"/>
+        <line x1="160" y1="90" x2="770" y2="430" stroke="#1036E2" stroke-width="7"/>
+        <text x="792" y="440" fill="#1036E2" font-size="34" font-weight="800">D</text>
+        <circle cx="220" cy="123" r="10" fill="#1036E2"/>
+        <circle cx="465" cy="260" r="10" fill="#1036E2"/>
+        <circle cx="710" cy="397" r="10" fill="#1036E2"/>
+        <text x="98" y="132" text-anchor="end" fill="#021751" font-size="25">$900.000</text>
+        <text x="98" y="269" text-anchor="end" fill="#021751" font-size="25">$600.000</text>
+        <text x="98" y="406" text-anchor="end" fill="#021751" font-size="25">$300.000</text>
+        <text x="220" y="514" text-anchor="middle" fill="#021751" font-size="25">3.000</text>
+        <text x="465" y="514" text-anchor="middle" fill="#021751" font-size="25">9.000</text>
+        <text x="710" y="514" text-anchor="middle" fill="#021751" font-size="25">15.000</text>
+      </svg>
+    </div>
+    <div class="esquema-tag">Esquema · valores ilustrativos</div>
+  </div>
+
+  <div class="slide bg-verde" data-momento="El aparato · 60-125" data-nuevo="clasif-intro">
+    <div class="kicker" style="opacity:.8;">De los determinantes sale una clasificación</div>
+    <h1 style="font-size:4rem;">Cómo respondés<br>a cada uno de esos factores<br><span class="highlight">define qué tipo de bien es</span>.</h1>
+  </div>
+
+  <div class="slide bg-blanco" data-momento="El aparato · 60-125" data-nuevo="clasif-ingreso">
+    <span class="capa manual">Capa 2 · El manual</span>
+    <h2>Según el <em>ingreso</em></h2>
+    <div class="two-cols">
+      <div class="concepto-box">
+        <h4>Bien normal</h4>
+        <p><strong>↑ Ingreso → compro más.</strong><br>El dos ambientes en Palermo. El branding integral. El sushi.</p>
+      </div>
+      <div class="problema-box">
+        <h4>Bien inferior</h4>
+        <p><strong>↑ Ingreso → compro menos.</strong><br>La pensión y el departamento compartido. El template de Canva. Los fideos secos.</p>
+      </div>
+    </div>
+    <h3 style="margin-top:26px;">Ojo: «inferior» no quiere decir malo.<br>Quiere decir <span class="highlight">que se deja de comprar cuando sobra plata</span>.</h3>
+  </div>
+
+  <div class="slide bg-respaldo" data-momento="El aparato · 60-125" data-nuevo="clasif-cruzado">
+    <span class="capa manual">Capa 2 · El manual</span>
+    <h2>Según el precio <em>de otro</em> bien</h2>
+    <div class="two-cols">
+      <div class="concepto-box">
+        <h4>Sustitutos</h4>
+        <p><strong>↑ Precio del otro → compro más de éste.</strong><br>Alquilar y comprar. El temporario y el permanente. Freelance y agencia. Coca y Pepsi.</p>
+      </div>
+      <div class="concepto-box">
+        <h4>Complementarios</h4>
+        <p><strong>↑ Precio del otro → compro menos de éste.</strong><br>Alquiler y expensas. Auto y nafta. Impresora y tinta. Software y cursos.</p>
+      </div>
+    </div>
+    <p style="font-size:1.7rem;margin-top:24px;">Por eso las expensas importan tanto: para el inquilino, <strong>el precio del alquiler es el alquiler más las expensas</strong>.</p>
+  </div>
+
+  <div class="slide bg-respaldo" data-momento="El aparato · 60-125">
+    <span class="capa manual">Capa 2 · El manual</span>
+    <h2>Del otro lado está<br>el propietario</h2>
+    <div class="flow">
+      <div class="flow-box">Precio ↑</div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-box">Cantidad<br>ofrecida ↑</div>
+    </div>
+    <p>A $300.000 conviene vender el departamento, dejarlo vacío o ponerlo en alquiler temporario. A $900.000 aparecen unidades que estaban cerradas.</p>
+  </div>
+
+  <div class="slide bg-blanco" data-momento="El aparato · 60-125" data-nuevo="det-oferta">
+    <span class="capa manual">Capa 2 · El manual</span>
+    <h2>Determinantes de la oferta</h2>
+    <p>Lo que mira el que decide si pone su unidad en alquiler.</p>
+    <ul>
+      <li><strong>Precio</strong> de ese bien — otra vez, el único que mueve <em>sobre</em> la curva</li>
+      <li><strong>Costo</strong> de producción — construir, refaccionar, mantener</li>
+      <li><strong>Precio de lo que podría hacer en su lugar</strong> — vender, temporario, dejarlo vacío</li>
+      <li><strong>Expectativas</strong> y tendencias</li>
+      <li><strong>Políticas del Estado</strong> — permisos, habilitaciones, impuestos, <strong>el código urbanístico</strong></li>
+    </ul>
+  </div>
+
+  <div class="slide bg-blanco" data-momento="El aparato · 60-125">
+    <span class="capa manual">Capa 2 · El manual</span>
+    <h2>La curva de oferta</h2>
+    <div class="grafico">
+      <svg viewBox="-170 0 1075 665" role="img" aria-label="Curva de oferta de alquileres con dos pares de precio y cantidad">
+        <defs><marker id="ejeC" markerWidth="12" markerHeight="9" refX="11" refY="4.5" orient="auto"><polygon points="0 0, 12 4.5, 0 9" fill="#021751"/></marker></defs>
+        <line x1="110" y1="470" x2="862" y2="470" stroke="#021751" stroke-width="4" marker-end="url(#ejeC)"/>
+        <line x1="110" y1="470" x2="110" y2="42" stroke="#021751" stroke-width="4" marker-end="url(#ejeC)"/>
+        <text x="480" y="628" text-anchor="middle" fill="#021751" font-size="27" font-weight="700">Cantidad (departamentos)</text>
+        <text x="-120" y="256" text-anchor="middle" fill="#021751" font-size="30" font-weight="700" transform="rotate(-90, -120, 256)">Precio ($/mes)</text>
+        <line x1="110" y1="397" x2="220" y2="397" stroke="#00920A" stroke-width="3" stroke-dasharray="9,7"/>
+        <line x1="220" y1="397" x2="220" y2="470" stroke="#00920A" stroke-width="3" stroke-dasharray="9,7"/>
+        <line x1="110" y1="123" x2="710" y2="123" stroke="#00920A" stroke-width="3" stroke-dasharray="9,7"/>
+        <line x1="710" y1="123" x2="710" y2="470" stroke="#00920A" stroke-width="3" stroke-dasharray="9,7"/>
+        <line x1="160" y1="430" x2="770" y2="90" stroke="#00920A" stroke-width="7"/>
+        <text x="792" y="100" fill="#00920A" font-size="34" font-weight="800">O</text>
+        <circle cx="220" cy="397" r="10" fill="#00920A"/>
+        <circle cx="710" cy="123" r="10" fill="#00920A"/>
+        <text x="98" y="132" text-anchor="end" fill="#021751" font-size="25">$900.000</text>
+        <text x="98" y="406" text-anchor="end" fill="#021751" font-size="25">$300.000</text>
+        <text x="220" y="514" text-anchor="middle" fill="#021751" font-size="25">3.000</text>
+        <text x="710" y="514" text-anchor="middle" fill="#021751" font-size="25">15.000</text>
+      </svg>
+    </div>
+    <div class="esquema-tag">Esquema · valores ilustrativos</div>
+  </div>
+
+  <div class="slide bg-blanco" data-momento="El aparato · 60-125">
+    <span class="capa manual">Capa 2 · El manual</span>
+    <h2>Las dos juntas: el equilibrio</h2>
+    <div class="grafico">
+      <svg viewBox="-170 0 1075 665" role="img" aria-label="Oferta y demanda cruzándose en el precio y la cantidad de equilibrio">
+        <defs><marker id="ejeD" markerWidth="12" markerHeight="9" refX="11" refY="4.5" orient="auto"><polygon points="0 0, 12 4.5, 0 9" fill="#021751"/></marker></defs>
+        <line x1="110" y1="470" x2="862" y2="470" stroke="#021751" stroke-width="4" marker-end="url(#ejeD)"/>
+        <line x1="110" y1="470" x2="110" y2="42" stroke="#021751" stroke-width="4" marker-end="url(#ejeD)"/>
+        <text x="480" y="628" text-anchor="middle" fill="#021751" font-size="27" font-weight="700">Cantidad (departamentos)</text>
+        <text x="-120" y="256" text-anchor="middle" fill="#021751" font-size="30" font-weight="700" transform="rotate(-90, -120, 256)">Precio ($/mes)</text>
+        <line x1="160" y1="90" x2="770" y2="430" stroke="#1036E2" stroke-width="7"/>
+        <text x="792" y="440" fill="#1036E2" font-size="34" font-weight="800">D</text>
+        <line x1="160" y1="430" x2="770" y2="90" stroke="#00920A" stroke-width="7"/>
+        <text x="792" y="100" fill="#00920A" font-size="34" font-weight="800">O</text>
+        <line x1="110" y1="260" x2="465" y2="260" stroke="#021751" stroke-width="3.5" stroke-dasharray="10,7"/>
+        <line x1="465" y1="260" x2="465" y2="470" stroke="#021751" stroke-width="3.5" stroke-dasharray="10,7"/>
+        <circle cx="465" cy="260" r="14" fill="#021751"/>
+        <text x="495" y="242" fill="#021751" font-size="32" font-weight="800">E</text>
+        <text x="98" y="270" text-anchor="end" fill="#021751" font-size="30" font-weight="700">P*</text>
+        <text x="465" y="514" text-anchor="middle" fill="#021751" font-size="30" font-weight="700">Q*</text>
+        <text x="98" y="308" text-anchor="end" fill="#021751" font-size="23" opacity="0.7">$600.000</text>
+        <text x="465" y="558" text-anchor="middle" fill="#021751" font-size="23" opacity="0.7">9.000</text>
+      </svg>
+    </div>
+    <div class="esquema-tag">Esquema · valores ilustrativos</div>
+  </div>
+
+  <div class="slide bg-impulso" data-momento="El aparato · 60-125">
+    <h2>El equilibrio no es<br>un precio «justo»</h2>
+    <h1 style="font-size:4rem;">Es el único precio<br>al que <span class="highlight">nadie se queda<br>con las ganas</span><br>de una operación posible.</h1>
+    <p>Al que quiere alquilar y puede pagarlo, le alcanza.<br>Al que quiere alquilar su unidad y le cierra el número, le sale.</p>
+  </div>
+
+  <div class="slide bg-respaldo seccion-titulo" data-momento="El aparato · 60-125">
+    <div class="num">Y ahora el error que más se cobra</div>
+    <h1>Moverse sobre la curva<br>no es lo mismo<br>que mover la curva</h1>
+  </div>
+
+  <div class="slide bg-blanco" data-momento="El aparato · 60-125">
+    <span class="capa manual">Capa 2 · El manual</span>
+    <h2>1 · Movimiento <em>a lo largo</em> de la curva</h2>
+    <div class="grafico">
+      <svg viewBox="-170 0 1075 665" role="img" aria-label="Movimiento a lo largo de la curva de demanda entre dos puntos">
+        <defs>
+          <marker id="ejeE" markerWidth="12" markerHeight="9" refX="11" refY="4.5" orient="auto"><polygon points="0 0, 12 4.5, 0 9" fill="#021751"/></marker>
+          <marker id="flechaE" markerUnits="userSpaceOnUse" markerWidth="28" markerHeight="21" refX="26" refY="10.5" orient="auto"><polygon points="0 0, 28 10.5, 0 21" fill="#DC2626"/></marker>
+        </defs>
+        <line x1="110" y1="470" x2="862" y2="470" stroke="#021751" stroke-width="4" marker-end="url(#ejeE)"/>
+        <line x1="110" y1="470" x2="110" y2="42" stroke="#021751" stroke-width="4" marker-end="url(#ejeE)"/>
+        <text x="480" y="628" text-anchor="middle" fill="#021751" font-size="27" font-weight="700">Cantidad</text>
+        <text x="-120" y="256" text-anchor="middle" fill="#021751" font-size="30" font-weight="700" transform="rotate(-90, -120, 256)">Precio</text>
+        <line x1="160" y1="90" x2="770" y2="430" stroke="#1036E2" stroke-width="7"/>
+        <text x="792" y="440" fill="#1036E2" font-size="34" font-weight="800">D</text>
+        <line x1="110" y1="150" x2="268" y2="150" stroke="#021751" stroke-width="3" stroke-dasharray="9,7"/>
+        <line x1="268" y1="150" x2="268" y2="470" stroke="#021751" stroke-width="3" stroke-dasharray="9,7"/>
+        <line x1="110" y1="370" x2="662" y2="370" stroke="#021751" stroke-width="3" stroke-dasharray="9,7"/>
+        <line x1="662" y1="370" x2="662" y2="470" stroke="#021751" stroke-width="3" stroke-dasharray="9,7"/>
+        <circle cx="268" cy="150" r="12" fill="#1036E2"/>
+        <circle cx="662" cy="370" r="12" fill="#1036E2"/>
+        <text x="238" y="132" text-anchor="end" fill="#021751" font-size="30" font-weight="800">A</text>
+        <text x="690" y="360" fill="#021751" font-size="30" font-weight="800">B</text>
+        <path d="M 300 174 Q 470 300 630 350" stroke="#DC2626" stroke-width="6" fill="none" marker-end="url(#flechaE)"/>
+        <text x="480" y="180" text-anchor="middle" fill="#DC2626" font-size="28" font-weight="700">Cambió el precio</text>
+        <text x="480" y="216" text-anchor="middle" fill="#DC2626" font-size="28" font-weight="700">y nada más</text>
+      </svg>
+    </div>
+    <div class="esquema-tag">La curva es la misma · se cambió de punto</div>
+  </div>
+
+  <div class="slide bg-blanco" data-momento="El aparato · 60-125">
+    <span class="capa manual">Capa 2 · El manual</span>
+    <h2>2 · Desplazamiento <em>de</em> la curva</h2>
+    <div class="grafico">
+      <svg viewBox="-170 0 1075 665" role="img" aria-label="Desplazamiento de toda la curva de demanda hacia la derecha">
+        <defs>
+          <marker id="ejeF" markerWidth="12" markerHeight="9" refX="11" refY="4.5" orient="auto"><polygon points="0 0, 12 4.5, 0 9" fill="#021751"/></marker>
+          <marker id="flechaF" markerUnits="userSpaceOnUse" markerWidth="28" markerHeight="21" refX="26" refY="10.5" orient="auto"><polygon points="0 0, 28 10.5, 0 21" fill="#DC2626"/></marker>
+        </defs>
+        <line x1="110" y1="470" x2="862" y2="470" stroke="#021751" stroke-width="4" marker-end="url(#ejeF)"/>
+        <line x1="110" y1="470" x2="110" y2="42" stroke="#021751" stroke-width="4" marker-end="url(#ejeF)"/>
+        <text x="480" y="628" text-anchor="middle" fill="#021751" font-size="27" font-weight="700">Cantidad</text>
+        <text x="-120" y="256" text-anchor="middle" fill="#021751" font-size="30" font-weight="700" transform="rotate(-90, -120, 256)">Precio</text>
+        <line x1="160" y1="90" x2="770" y2="430" stroke="#1036E2" stroke-width="7" opacity="0.35"/>
+        <text x="790" y="442" fill="#1036E2" font-size="32" font-weight="800" opacity="0.45">D</text>
+        <line x1="260" y1="90" x2="830" y2="408" stroke="#1036E2" stroke-width="7"/>
+        <text x="852" y="420" fill="#1036E2" font-size="32" font-weight="800">D&#8242;</text>
+        <line x1="330" y1="250" x2="450" y2="250" stroke="#DC2626" stroke-width="7" marker-end="url(#flechaF)"/>
+        <text x="380" y="378" text-anchor="middle" fill="#DC2626" font-size="28" font-weight="700">Cambió cualquier otra cosa:</text>
+        <text x="380" y="416" text-anchor="middle" fill="#DC2626" font-size="28" font-weight="700">ingreso, población, expectativas</text>
+        <text x="480" y="516" text-anchor="middle" fill="#021751" font-size="26" opacity="0.8">A cada precio se demanda más que antes</text>
+      </svg>
+    </div>
+    <div class="esquema-tag">La curva entera se mudó de lugar</div>
+  </div>
+
+  <div class="slide bg-verde" data-momento="El aparato · 60-125">
+    <div class="kicker" style="opacity:.8;">La regla que hay que memorizar</div>
+    <div class="regla" style="border-color:var(--azul-respaldo);">
+      <h3 style="font-size:2.6rem;">Si lo que cambió es <strong>el precio de ese bien</strong>,<br>te movés <strong>sobre</strong> la curva.</h3>
+    </div>
+    <div class="regla" style="border-color:var(--azul-respaldo);">
+      <h3 style="font-size:2.6rem;">Si lo que cambió es <strong>cualquier otra cosa</strong>,<br>se mueve <strong>la curva</strong>.</h3>
+    </div>
+  </div>
+
+  <div class="slide bg-respaldo" data-momento="El aparato · 60-125">
+    <span class="capa manual">Capa 2 · El manual</span>
+    <h2>Qué mueve cada curva<br>en el mercado de alquiler</h2>
+    <div class="two-cols">
+      <div class="concepto-box">
+        <h4>Corren la demanda</h4>
+        <p>Migración a la ciudad · ingreso de los hogares · crédito hipotecario (si hay, se compra en vez de alquilar) · expectativas de inflación</p>
+      </div>
+      <div class="concepto-box">
+        <h4>Corren la oferta</h4>
+        <p>Costo de construcción · impuestos y expensas · alquiler temporario como alternativa · <strong>código urbanístico</strong> · seguridad jurídica del contrato</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="slide bg-blanco" data-momento="El aparato · 60-125">
+    <span class="capa manual">Capa 2 · El manual</span>
+    <h2>Estática comparada:<br>llega gente a la ciudad</h2>
+    <div class="grafico">
+      <svg viewBox="-170 0 1075 665" role="img" aria-label="La demanda se desplaza a la derecha y el equilibrio se mueve a mayor precio y mayor cantidad">
+        <defs>
+          <marker id="ejeG" markerWidth="12" markerHeight="9" refX="11" refY="4.5" orient="auto"><polygon points="0 0, 12 4.5, 0 9" fill="#021751"/></marker>
+          <marker id="flechaG" markerUnits="userSpaceOnUse" markerWidth="28" markerHeight="21" refX="26" refY="10.5" orient="auto"><polygon points="0 0, 28 10.5, 0 21" fill="#DC2626"/></marker>
+        </defs>
+        <line x1="110" y1="470" x2="862" y2="470" stroke="#021751" stroke-width="4" marker-end="url(#ejeG)"/>
+        <line x1="110" y1="470" x2="110" y2="42" stroke="#021751" stroke-width="4" marker-end="url(#ejeG)"/>
+        <text x="480" y="628" text-anchor="middle" fill="#021751" font-size="27" font-weight="700">Cantidad</text>
+        <text x="-120" y="256" text-anchor="middle" fill="#021751" font-size="30" font-weight="700" transform="rotate(-90, -120, 256)">Precio</text>
+        <line x1="160" y1="430" x2="770" y2="90" stroke="#00920A" stroke-width="7"/>
+        <text x="792" y="100" fill="#00920A" font-size="34" font-weight="800">O</text>
+        <line x1="160" y1="90" x2="770" y2="430" stroke="#1036E2" stroke-width="7" opacity="0.35"/>
+        <text x="790" y="442" fill="#1036E2" font-size="32" font-weight="800" opacity="0.45">D</text>
+        <line x1="260" y1="90" x2="830" y2="408" stroke="#1036E2" stroke-width="7"/>
+        <text x="852" y="420" fill="#1036E2" font-size="32" font-weight="800">D&#8242;</text>
+        <line x1="300" y1="330" x2="410" y2="330" stroke="#DC2626" stroke-width="6" marker-end="url(#flechaG)"/>
+        <circle cx="465" cy="260" r="11" fill="#021751" opacity="0.4"/>
+        <circle cx="515" cy="232" r="14" fill="#021751"/>
+        <line x1="110" y1="260" x2="465" y2="260" stroke="#021751" stroke-width="2.5" stroke-dasharray="9,7" opacity="0.45"/>
+        <line x1="465" y1="260" x2="465" y2="470" stroke="#021751" stroke-width="2.5" stroke-dasharray="9,7" opacity="0.45"/>
+        <line x1="110" y1="232" x2="515" y2="232" stroke="#021751" stroke-width="3.5" stroke-dasharray="10,7"/>
+        <line x1="515" y1="232" x2="515" y2="470" stroke="#021751" stroke-width="3.5" stroke-dasharray="10,7"/>
+        <text x="98" y="268" text-anchor="end" fill="#021751" font-size="27" opacity="0.5">P*</text>
+        <text x="98" y="226" text-anchor="end" fill="#021751" font-size="30" font-weight="800">P**</text>
+        <text x="455" y="514" text-anchor="end" fill="#021751" font-size="27" opacity="0.5">Q*</text>
+        <text x="540" y="514" fill="#021751" font-size="30" font-weight="800">Q**</text>
+        <text x="775" y="514" text-anchor="middle" fill="#021751" font-size="26">Sube el precio</text>
+        <text x="775" y="550" text-anchor="middle" fill="#021751" font-size="26">y sube la cantidad</text>
+      </svg>
+    </div>
+    <div class="esquema-tag">Cambiar un dato y comparar el equilibrio nuevo con el viejo</div>
+  </div>
+
+  <div class="slide bg-impulso" data-momento="El aparato · 60-125">
+    <span class="capa manual">Capa 2 · El manual</span>
+    <h2>Eso que acabamos de hacer<br>tiene nombre</h2>
+    <h1 style="font-size:4.4rem;">Estática comparada.</h1>
+    <p style="font-size:2rem;">Y es <strong>casi todo</strong> lo que se hace en microeconomía aplicada:<br>cambiar un dato de afuera y comparar el equilibrio nuevo con el viejo.</p>
+    <p class="fuente">Mankiw, N. G. (2012), caps. 4 y 5 <span class="programa">En el programa</span> · Samuelson, P. y Nordhaus, W. (2010), caps. 3 y 4 <span class="programa">En el programa</span></p>
+  </div>
+
+  <!-- ---------- CAPA 2 (cont.) · ELASTICIDAD ---------- -->
+
+  <div class="slide bg-respaldo seccion-titulo" data-momento="El aparato · 60-125">
+    <div class="num">Falta una pieza</div>
+    <h1>¿Cuánto<br>se mueve?</h1>
+    <div class="detalle">Saber la dirección no alcanza.<br>Todo lo que viene depende de la <strong>pendiente</strong>.</div>
+  </div>
+
+  <div class="slide bg-impulso" data-momento="El aparato · 60-125">
+    <span class="capa manual">Capa 2 · El manual</span>
+    <h2>Elasticidad</h2>
+    <div class="formula-grande">Cuánto responde la <strong>cantidad</strong><br>ante un cambio del <strong>precio</strong></div>
+    <p style="font-size:2rem;">Curva <strong>parada</strong> = poco responde = <span class="highlight">inelástica</span>.<br>Curva <strong>acostada</strong> = mucho responde = <span class="highlight">elástica</span>.</p>
+  </div>
+
+  <div class="slide bg-blanco" data-momento="El aparato · 60-125" data-nuevo="tipos-elast">
+    <span class="capa manual">Capa 2 · El manual</span>
+    <h2>Hay cuatro elasticidades,<br>no una</h2>
+    <div class="two-cols">
+      <div class="concepto-box"><h4>Precio — demanda</h4><p>Cambia el precio del bien: ¿cuánto cambia la cantidad demandada?</p></div>
+      <div class="concepto-box"><h4>Precio — oferta</h4><p>Cambia el precio del bien: ¿cuánto cambia la cantidad ofrecida?</p></div>
+    </div>
+    <div class="two-cols" style="margin-top:22px;">
+      <div class="concepto-box"><h4>Ingreso — demanda</h4><p>Cambia el ingreso: ¿cuánto cambia la cantidad? <strong>El signo dice si es normal o inferior.</strong></p></div>
+      <div class="concepto-box"><h4>Cruzada</h4><p>Cambia el precio de <em>otro</em> bien. <strong>El signo dice si es sustituto o complementario.</strong></p></div>
+    </div>
+  </div>
+
+  <div class="slide bg-verde" data-momento="El aparato · 60-125" data-nuevo="elast-signo">
+    <div class="kicker" style="opacity:.8;">Lo que hay que ver</div>
+    <h1 style="font-size:3.6rem;">La clasificación de bienes<br>no es una lista para memorizar.</h1>
+    <h2 style="font-size:2.8rem;">Es <strong>el signo</strong> de dos de esas elasticidades.</h2>
+  </div>
+
+  <div class="slide bg-blanco" data-momento="El aparato · 60-125" data-nuevo="elast-grafico">
+    <span class="capa manual">Capa 2 · El manual</span>
+    <h2>Elástica e inelástica,<br>en el mismo gráfico</h2>
+    <div class="grafico">
+      <svg viewBox="-170 0 1075 665" role="img" aria-label="Ante la misma suba de precio, la demanda inelástica cae poco y la elástica cae mucho">
+        <defs><marker id="ejeL" markerWidth="12" markerHeight="9" refX="11" refY="4.5" orient="auto"><polygon points="0 0, 12 4.5, 0 9" fill="#021751"/></marker></defs>
+        <line x1="110" y1="470" x2="862" y2="470" stroke="#021751" stroke-width="4" marker-end="url(#ejeL)"/>
+        <line x1="110" y1="470" x2="110" y2="42" stroke="#021751" stroke-width="4" marker-end="url(#ejeL)"/>
+        <text x="480" y="628" text-anchor="middle" fill="#021751" font-size="27" font-weight="700">Cantidad</text>
+        <text x="-120" y="256" text-anchor="middle" fill="#021751" font-size="30" font-weight="700" transform="rotate(-90, -120, 256)">Precio</text>
+        <line x1="110" y1="258" x2="700" y2="258" stroke="#021751" stroke-width="3" stroke-dasharray="10,7" opacity="0.55"/>
+        <line x1="110" y1="195" x2="700" y2="195" stroke="#DC2626" stroke-width="4" stroke-dasharray="10,7"/>
+        <text x="98" y="267" text-anchor="end" fill="#021751" font-size="27" font-weight="700">P&#8321;</text>
+        <text x="98" y="204" text-anchor="end" fill="#DC2626" font-size="27" font-weight="800">P&#8322;</text>
+        <line x1="344" y1="60" x2="590" y2="470" stroke="#1036E2" stroke-width="7"/>
+        <text x="330" y="80" text-anchor="end" fill="#1036E2" font-size="27" font-weight="800">D inelástica</text>
+        <line x1="260" y1="200" x2="820" y2="360" stroke="#F59E0B" stroke-width="7"/>
+        <text x="700" y="410" fill="#C77C00" font-size="27" font-weight="800">D elástica</text>
+        <circle cx="463" cy="258" r="13" fill="#021751"/>
+        <circle cx="425" cy="195" r="12" fill="#1036E2"/>
+        <circle cx="243" cy="195" r="12" fill="#C77C00"/>
+        <line x1="463" y1="258" x2="463" y2="470" stroke="#021751" stroke-width="3" stroke-dasharray="9,7" opacity="0.55"/>
+        <line x1="425" y1="195" x2="425" y2="470" stroke="#1036E2" stroke-width="3" stroke-dasharray="9,7"/>
+        <line x1="243" y1="195" x2="243" y2="470" stroke="#C77C00" stroke-width="3" stroke-dasharray="9,7"/>
+        <text x="444" y="514" text-anchor="middle" fill="#1036E2" font-size="26" font-weight="700">cae poco</text>
+        <text x="353" y="558" text-anchor="middle" fill="#C77C00" font-size="26" font-weight="700">cae mucho</text>
+      </svg>
+    </div>
+    <div class="esquema-tag">La misma suba de precio · dos respuestas distintas</div>
+  </div>
+
+  <div class="slide bg-respaldo" data-momento="El aparato · 60-125" data-nuevo="elast-ejemplos">
+    <h2>Y de qué depende<br>que sea una o la otra</h2>
+    <div class="two-cols">
+      <div class="concepto-box">
+        <h4>Se vuelve elástica cuando…</h4>
+        <p>Hay sustitutos cerca, el gasto pesa mucho en el presupuesto, y hay tiempo para reaccionar.<br><em>Viajes, ropa de marca, salir a comer.</em></p>
+      </div>
+      <div class="problema-box">
+        <h4>Se vuelve inelástica cuando…</h4>
+        <p>No hay con qué reemplazarlo, es una necesidad, y hay que decidir ya.<br><em>Medicamentos, nafta, agua — y buscar dónde vivir en treinta días.</em></p>
+      </div>
+    </div>
+    <h3 style="margin-top:26px;">Fíjense qué incómodo:<br><span class="highlight">el inquilino apurado tiene la demanda más inelástica de todas.</span></h3>
+  </div>
+
+  <div class="slide bg-blanco" data-momento="El aparato · 60-125">
+    <span class="capa manual">Capa 2 · El manual</span>
+    <h2>Vivienda a <em>corto</em> plazo:<br>la oferta casi no responde</h2>
+    <div class="grafico">
+      <svg viewBox="-170 0 1075 665" role="img" aria-label="Con oferta inelástica un aumento de la demanda sube mucho el precio y casi no cambia la cantidad">
+        <defs><marker id="ejeH" markerWidth="12" markerHeight="9" refX="11" refY="4.5" orient="auto"><polygon points="0 0, 12 4.5, 0 9" fill="#021751"/></marker></defs>
+        <line x1="110" y1="470" x2="862" y2="470" stroke="#021751" stroke-width="4" marker-end="url(#ejeH)"/>
+        <line x1="110" y1="470" x2="110" y2="42" stroke="#021751" stroke-width="4" marker-end="url(#ejeH)"/>
+        <text x="480" y="628" text-anchor="middle" fill="#021751" font-size="27" font-weight="700">Cantidad</text>
+        <text x="-120" y="256" text-anchor="middle" fill="#021751" font-size="30" font-weight="700" transform="rotate(-90, -120, 256)">Precio</text>
+        <line x1="425" y1="470" x2="505" y2="60" stroke="#00920A" stroke-width="7"/>
+        <text x="522" y="76" fill="#00920A" font-size="32" font-weight="800">O</text>
+        <line x1="160" y1="90" x2="770" y2="430" stroke="#1036E2" stroke-width="7" opacity="0.35"/>
+        <text x="790" y="442" fill="#1036E2" font-size="30" font-weight="800" opacity="0.45">D</text>
+        <line x1="260" y1="90" x2="830" y2="408" stroke="#1036E2" stroke-width="7"/>
+        <text x="852" y="420" fill="#1036E2" font-size="30" font-weight="800">D&#8242;</text>
+        <circle cx="466" cy="260" r="11" fill="#021751" opacity="0.4"/>
+        <circle cx="476" cy="210" r="14" fill="#021751"/>
+        <line x1="110" y1="260" x2="466" y2="260" stroke="#021751" stroke-width="2.5" stroke-dasharray="9,7" opacity="0.45"/>
+        <line x1="110" y1="210" x2="476" y2="210" stroke="#DC2626" stroke-width="4" stroke-dasharray="10,7"/>
+        <line x1="466" y1="260" x2="466" y2="470" stroke="#021751" stroke-width="2.5" stroke-dasharray="9,7" opacity="0.45"/>
+        <text x="735" y="120" text-anchor="middle" fill="#DC2626" font-size="28" font-weight="700">El precio pega un salto</text>
+        <text x="560" y="500" text-anchor="middle" fill="#021751" font-size="26">La cantidad casi no se mueve</text>
+      </svg>
+    </div>
+    <div class="esquema-tag">Construir lleva años · el stock de hoy está dado</div>
+  </div>
+
+  <div class="slide bg-blanco" data-momento="El aparato · 60-125">
+    <span class="capa manual">Capa 2 · El manual</span>
+    <h2>A <em>largo</em> plazo:<br>la oferta sí responde</h2>
+    <div class="grafico">
+      <svg viewBox="-170 0 1075 665" role="img" aria-label="Con oferta elástica un aumento de la demanda sube mucho la cantidad y casi no cambia el precio">
+        <defs><marker id="ejeI" markerWidth="12" markerHeight="9" refX="11" refY="4.5" orient="auto"><polygon points="0 0, 12 4.5, 0 9" fill="#021751"/></marker></defs>
+        <line x1="110" y1="470" x2="862" y2="470" stroke="#021751" stroke-width="4" marker-end="url(#ejeI)"/>
+        <line x1="110" y1="470" x2="110" y2="42" stroke="#021751" stroke-width="4" marker-end="url(#ejeI)"/>
+        <text x="480" y="628" text-anchor="middle" fill="#021751" font-size="27" font-weight="700">Cantidad</text>
+        <text x="-120" y="256" text-anchor="middle" fill="#021751" font-size="30" font-weight="700" transform="rotate(-90, -120, 256)">Precio</text>
+        <line x1="160" y1="300" x2="800" y2="219" stroke="#00920A" stroke-width="7"/>
+        <text x="822" y="228" fill="#00920A" font-size="32" font-weight="800">O</text>
+        <line x1="160" y1="90" x2="770" y2="430" stroke="#1036E2" stroke-width="7" opacity="0.35"/>
+        <text x="790" y="442" fill="#1036E2" font-size="30" font-weight="800" opacity="0.45">D</text>
+        <line x1="260" y1="90" x2="830" y2="408" stroke="#1036E2" stroke-width="7"/>
+        <text x="852" y="420" fill="#1036E2" font-size="30" font-weight="800">D&#8242;</text>
+        <circle cx="467" cy="261" r="11" fill="#021751" opacity="0.4"/>
+        <circle cx="548" cy="251" r="14" fill="#021751"/>
+        <line x1="467" y1="261" x2="467" y2="470" stroke="#021751" stroke-width="2.5" stroke-dasharray="9,7" opacity="0.45"/>
+        <line x1="548" y1="251" x2="548" y2="470" stroke="#DC2626" stroke-width="4" stroke-dasharray="10,7"/>
+        <text x="735" y="120" text-anchor="middle" fill="#021751" font-size="26">El precio casi no se mueve</text>
+        <text x="600" y="500" text-anchor="middle" fill="#DC2626" font-size="28" font-weight="700">La cantidad crece mucho</text>
+      </svg>
+    </div>
+    <div class="esquema-tag">Con tiempo se construye, se recicla, se subdivide</div>
+  </div>
+
+  <div class="slide bg-verde" data-momento="El aparato · 60-125">
+    <h2>Guarden esta idea,<br>que vuelve en veinte minutos</h2>
+    <h1 style="font-size:4rem;">La oferta de vivienda<br>es inelástica <strong>ya</strong><br>y elástica <strong>después</strong>.</h1>
+    <p style="font-size:1.9rem;">Por eso una política puede parecer inofensiva el primer año<br>y hacer daño el quinto.</p>
+  </div>
+
+  <!-- ---------- CAPA 2 (cont.) · EL PRECIO MÁXIMO ---------- -->
+
+  <div class="slide bg-respaldo seccion-titulo" data-momento="El aparato · 60-125">
+    <div class="num">Y ahora sí</div>
+    <h1>Volvamos al juego</h1>
+    <div class="detalle">Dibujemos el tope que pusimos en la ronda 2.</div>
+  </div>
+
+  <div class="slide bg-blanco" data-momento="El aparato · 60-125">
+    <span class="capa manual">Capa 2 · El manual</span>
+    <h2>Un precio máximo<br><em>por debajo</em> del equilibrio</h2>
+    <div class="grafico">
+      <svg viewBox="-170 0 1075 665" role="img" aria-label="Un precio máximo por debajo del equilibrio genera exceso de demanda">
+        <defs><marker id="ejeJ" markerWidth="12" markerHeight="9" refX="11" refY="4.5" orient="auto"><polygon points="0 0, 12 4.5, 0 9" fill="#021751"/></marker></defs>
+        <line x1="110" y1="470" x2="862" y2="470" stroke="#021751" stroke-width="4" marker-end="url(#ejeJ)"/>
+        <line x1="110" y1="470" x2="110" y2="42" stroke="#021751" stroke-width="4" marker-end="url(#ejeJ)"/>
+        <text x="480" y="628" text-anchor="middle" fill="#021751" font-size="27" font-weight="700">Cantidad (departamentos)</text>
+        <text x="-120" y="256" text-anchor="middle" fill="#021751" font-size="30" font-weight="700" transform="rotate(-90, -120, 256)">Precio ($/mes)</text>
+        <line x1="160" y1="90" x2="770" y2="430" stroke="#1036E2" stroke-width="7"/>
+        <text x="792" y="440" fill="#1036E2" font-size="34" font-weight="800">D</text>
+        <line x1="160" y1="430" x2="770" y2="90" stroke="#00920A" stroke-width="7"/>
+        <text x="792" y="100" fill="#00920A" font-size="34" font-weight="800">O</text>
+        <circle cx="465" cy="260" r="11" fill="#021751" opacity="0.45"/>
+        <line x1="110" y1="260" x2="465" y2="260" stroke="#021751" stroke-width="2.5" stroke-dasharray="9,7" opacity="0.45"/>
+        <text x="98" y="268" text-anchor="end" fill="#021751" font-size="26" opacity="0.6">$600.000</text>
+        <line x1="110" y1="351" x2="800" y2="351" stroke="#DC2626" stroke-width="7"/>
+        <text x="812" y="344" fill="#DC2626" font-size="27" font-weight="800">Tope</text>
+        <text x="98" y="360" text-anchor="end" fill="#DC2626" font-size="27" font-weight="800">$400.000</text>
+        <circle cx="302" cy="351" r="12" fill="#00920A"/>
+        <circle cx="628" cy="351" r="12" fill="#1036E2"/>
+        <line x1="302" y1="351" x2="302" y2="470" stroke="#00920A" stroke-width="3.5" stroke-dasharray="9,7"/>
+        <line x1="628" y1="351" x2="628" y2="470" stroke="#1036E2" stroke-width="3.5" stroke-dasharray="9,7"/>
+        <text x="302" y="514" text-anchor="middle" fill="#00920A" font-size="27" font-weight="800">5.000</text>
+        <text x="628" y="514" text-anchor="middle" fill="#1036E2" font-size="27" font-weight="800">13.000</text>
+        <text x="302" y="558" text-anchor="middle" fill="#00920A" font-size="23">se ofrecen</text>
+        <text x="628" y="558" text-anchor="middle" fill="#1036E2" font-size="23">se buscan</text>
+        <line x1="302" y1="404" x2="628" y2="404" stroke="#DC2626" stroke-width="5"/>
+        <line x1="302" y1="392" x2="302" y2="416" stroke="#DC2626" stroke-width="5"/>
+        <line x1="628" y1="392" x2="628" y2="416" stroke="#DC2626" stroke-width="5"/>
+        <text x="465" y="446" text-anchor="middle" fill="#DC2626" font-size="28" font-weight="800">Faltan 8.000</text>
+      </svg>
+    </div>
+    <div class="esquema-tag">Exceso de demanda · esquema con valores ilustrativos</div>
+  </div>
+
+  <div class="slide bg-respaldo" data-momento="El aparato · 60-125">
+    <h2>Leamos el gráfico despacio</h2>
+    <ul>
+      <li>Se firman <strong>5.000</strong> contratos, no 9.000. <strong>Manda el lado corto</strong> del mercado</li>
+      <li>Los 5.000 que alquilan <strong>pagan menos</strong>. Ganaron, y es real</li>
+      <li>Hay <strong>13.000</strong> buscando. <strong>8.000</strong> se quedan sin nada</li>
+      <li>Nadie los ve: no salen en ninguna estadística de precios</li>
+    </ul>
+  </div>
+
+  <div class="slide bg-impulso" data-momento="El aparato · 60-125">
+    <h2>Y ahí vuelve el juego</h2>
+    <h1 style="font-size:3.8rem;">Ese segmento rojo<br><span class="highlight">es la cola</span><br>que se armó en el aula.</h1>
+    <p style="font-size:2rem;">Con 8.000 personas peleando por 5.000 llaves, el que decide ya no es el precio.<br>Deciden el garante, el contacto, el adelanto en negro, la cara del inquilino.</p>
+  </div>
+
+  <div class="slide bg-blanco" data-momento="El aparato · 60-125">
+    <span class="capa manual">Capa 2 · El manual</span>
+    <h2>Y con el tiempo,<br>la oferta se retira</h2>
+    <p style="font-size:1.7rem;margin-bottom:6px;">Con el tope vigente, el propietario <strong>vende, cierra la unidad o la pasa a temporario</strong>.</p>
+    <div class="grafico">
+      <svg viewBox="-170 0 1075 665" role="img" aria-label="Con el tope vigente la oferta se desplaza a la izquierda y el faltante se agranda">
+        <defs>
+          <marker id="ejeK" markerWidth="12" markerHeight="9" refX="11" refY="4.5" orient="auto"><polygon points="0 0, 12 4.5, 0 9" fill="#021751"/></marker>
+          <marker id="flechaK" markerUnits="userSpaceOnUse" markerWidth="28" markerHeight="21" refX="26" refY="10.5" orient="auto"><polygon points="0 0, 28 10.5, 0 21" fill="#DC2626"/></marker>
+        </defs>
+        <line x1="110" y1="470" x2="862" y2="470" stroke="#021751" stroke-width="4" marker-end="url(#ejeK)"/>
+        <line x1="110" y1="470" x2="110" y2="42" stroke="#021751" stroke-width="4" marker-end="url(#ejeK)"/>
+        <text x="480" y="628" text-anchor="middle" fill="#021751" font-size="27" font-weight="700">Cantidad</text>
+        <text x="-120" y="256" text-anchor="middle" fill="#021751" font-size="30" font-weight="700" transform="rotate(-90, -120, 256)">Precio</text>
+        <line x1="160" y1="90" x2="770" y2="430" stroke="#1036E2" stroke-width="7"/>
+        <text x="792" y="440" fill="#1036E2" font-size="32" font-weight="800">D</text>
+        <line x1="160" y1="430" x2="770" y2="90" stroke="#00920A" stroke-width="7" opacity="0.32"/>
+        <text x="790" y="102" fill="#00920A" font-size="30" font-weight="800" opacity="0.42">O</text>
+        <line x1="110" y1="402" x2="700" y2="73" stroke="#00920A" stroke-width="7"/>
+        <text x="716" y="66" fill="#00920A" font-size="30" font-weight="800">O&#8242;</text>
+        <line x1="380" y1="200" x2="285" y2="200" stroke="#DC2626" stroke-width="6" marker-end="url(#flechaK)"/>
+                <line x1="110" y1="351" x2="800" y2="351" stroke="#DC2626" stroke-width="6"/>
+        <text x="812" y="344" fill="#DC2626" font-size="26" font-weight="800">Tope</text>
+        <circle cx="302" cy="351" r="10" fill="#00920A" opacity="0.4"/>
+        <circle cx="202" cy="351" r="12" fill="#00920A"/>
+        <circle cx="628" cy="351" r="12" fill="#1036E2"/>
+        <line x1="202" y1="404" x2="628" y2="404" stroke="#DC2626" stroke-width="5"/>
+        <line x1="202" y1="392" x2="202" y2="416" stroke="#DC2626" stroke-width="5"/>
+        <line x1="628" y1="392" x2="628" y2="416" stroke="#DC2626" stroke-width="5"/>
+        <text x="415" y="446" text-anchor="middle" fill="#DC2626" font-size="28" font-weight="800">El faltante se agranda</text>
+      </svg>
+    </div>
+    <div class="esquema-tag">El daño de corto plazo es chico · el de largo plazo es el grande</div>
+  </div>
+
+  <div class="slide bg-respaldo" data-momento="El aparato · 60-125">
+    <div class="kicker">Cierre del aparato</div>
+    <h2>Lo que se llevan del gráfico</h2>
+    <table>
+      <tr><th>Concepto</th><th>Qué es</th></tr>
+      <tr><td><strong>Equilibrio</strong></td><td>El precio que vacía el mercado. No es un precio justo</td></tr>
+      <tr><td><strong>Movimiento vs. desplazamiento</strong></td><td>Cambia el precio: te movés. Cambia otra cosa: se mueve la curva</td></tr>
+      <tr><td><strong>Estática comparada</strong></td><td>Cambiar un dato y comparar los dos equilibrios</td></tr>
+      <tr><td><strong>Elasticidad</strong></td><td>Cuánto responde la cantidad. Decide quién absorbe el golpe</td></tr>
+      <tr><td><strong>Precio máximo</strong></td><td>Debajo del equilibrio: exceso de demanda y racionamiento por otra vía</td></tr>
+    </table>
+    <p class="fuente">Mankiw, N. G. (2012), caps. 4, 5 y 6 <span class="programa">En el programa</span></p>
+  </div>
+
+  <!-- ---------- CAPA 3 · LA FRONTERA ---------- -->
+
+  <div class="slide bg-verde" data-momento="La evidencia · 60-125">
+    <div class="kicker" style="opacity:.8;">Hasta acá, un dibujo</div>
+    <h1 style="font-size:4.6rem;">¿Y en una<br>ciudad real?</h1>
+  </div>
+
+  <div class="slide bg-blanco" data-momento="La evidencia · 60-125">
+    <span class="capa frontera">Capa 3 · La frontera</span>
+    <h2>La evidencia del día</h2>
+    <div class="cita-paper">
+      <div class="titulo">The Effects of Rent Control Expansion on Tenants, Landlords, and Inequality: Evidence from San Francisco</div>
+      <div class="autores">Diamond, R., McQuade, T. y Qian, F. (2019). <em>American Economic Review</em>, 109(9), 3365-3394.</div>
+      <div class="contenido">En 1994 una votación popular extendió el control de alquileres a los edificios pequeños construidos <strong>antes de 1980</strong>. Un edificio de 1979 quedó bajo control. Uno de 1981, enfrente, no.</div>
+    </div>
+  </div>
+
+  <div class="slide bg-impulso" data-momento="La evidencia · 60-125">
+    <h2>Ese par de edificios<br><span class="highlight">es el experimento</span></h2>
+    <div class="flow">
+      <div class="flow-box">Mismo barrio</div>
+      <div class="flow-box">Mismos inquilinos</div>
+      <div class="flow-box">Misma década</div>
+      <div class="flow-box alerta">Distinta ley</div>
+    </div>
+    <p style="font-size:2rem;">Lo único que los separa es la norma.<br>Todo lo demás se cancela solo.</p>
+  </div>
+
+  <div class="slide bg-blanco" data-momento="La evidencia · 60-125">
+    <span class="capa frontera">Capa 3 · La frontera</span>
+    <h2>Resultado 1</h2>
+    <div class="big-number">&minus;20%</div>
+    <h3 style="font-size:2.4rem;margin-top:20px;">Cayó la movilidad de los inquilinos protegidos.</h3>
+    <p>Se quedaron más tiempo y se redujo el desplazamiento fuera de la ciudad.<br><strong>El beneficio es real y es grande.</strong></p>
+    <p class="fuente">Diamond, R., McQuade, T. y Qian, F. (2019). <em>AER</em>, 109(9), 3365-3394.</p>
+  </div>
+
+  <div class="slide bg-respaldo" data-momento="La evidencia · 60-125">
+    <span class="capa frontera">Capa 3 · La frontera</span>
+    <h2>Resultado 2</h2>
+    <div class="big-number">&minus;15%</div>
+    <h3 style="font-size:2.4rem;margin-top:20px;">Cayó la oferta de vivienda en alquiler.</h3>
+    <p>Los propietarios sacaron unidades del mercado: las vendieron, las convirtieron o redesarrollaron el edificio.</p>
+    <p class="fuente">Diamond, R., McQuade, T. y Qian, F. (2019). <em>AER</em>, 109(9), 3365-3394.</p>
+  </div>
+
+  <div class="slide bg-verde" data-momento="La evidencia · 60-125">
+    <h1 style="font-size:4.2rem;">Los dos resultados<br>son verdaderos<br>al mismo tiempo.</h1>
+    <h3 style="font-size:2.4rem;">Y esa oferta perdida empujó hacia arriba<br>el alquiler del resto de la ciudad.</h3>
+  </div>
+
+  <div class="slide bg-impulso" data-momento="La evidencia · 60-125">
+    <h1 style="font-size:4.6rem;">La política<br>transfirió.</h1>
+    <h1 style="font-size:4.6rem;">No creó vivienda.</h1>
+  </div>
+
+  <div class="slide bg-blanco" data-momento="El método · 60-125">
+    <div class="kicker">El método — y es lo más importante de la clase</div>
+    <h2>Por qué el antes-y-después<br><span class="highlight">no alcanza</span></h2>
+    <p>La ley argentina entró en vigencia en <strong>julio de 2020</strong>.</p>
+    <div class="apuesta-box">
+      <h3>Es decir: en plena pandemia, con inflación de tres dígitos<br>y con el crédito hipotecario congelado.</h3>
+    </div>
+  </div>
+
+  <div class="slide bg-respaldo" data-momento="El método · 60-125">
+    <h2>Cualquier cosa que le haya pasado<br>al mercado de alquileres tiene<br><span class="highlight">cuatro sospechosos</span> además de la ley</h2>
+    <div class="flow">
+      <div class="flow-box">Pandemia</div>
+      <div class="flow-box">Inflación</div>
+      <div class="flow-box">Sin crédito</div>
+      <div class="flow-box">Alquiler<br>temporario</div>
+    </div>
+    <p style="font-size:2rem;">Por eso Diamond y sus coautores necesitan un <strong>grupo de control</strong>: edificios comparables no alcanzados por la norma.</p>
+  </div>
+
+  <div class="slide bg-verde" data-momento="El método · 60-125">
+    <h1 style="font-size:3.6rem;">La pregunta que<br>les va a servir<br>toda la carrera:</h1>
+    <h1 style="font-size:5rem;">¿Comparado<br>con qué?</h1>
+  </div>
+
+  <div class="slide bg-blanco" data-momento="La evidencia · 60-125">
+    <span class="capa frontera">Capa 3 · La frontera</span>
+    <h2>El experimento inverso</h2>
+    <div class="cita-paper">
+      <div class="titulo">Housing Market Spillovers: Evidence from the End of Rent Control in Cambridge, Massachusetts</div>
+      <div class="autores">Autor, D., Palmer, C. y Pathak, P. (2014). <em>Journal of Political Economy</em>, 122(3), 661-717.</div>
+      <div class="contenido">En 1995 Cambridge <strong>eliminó</strong> el control de golpe, por un referéndum estatal. El valor de las propiedades subió — <strong>incluso el de las que nunca habían estado controladas</strong>.</div>
+    </div>
+    <p style="font-size:1.9rem;">Una expansión y una eliminación, diseños opuestos, apuntando a lo mismo.<br><strong class="highlight">Eso es más fuerte que cualquiera de los dos por separado.</strong></p>
+  </div>
+
+  <div class="slide bg-respaldo" data-momento="La evidencia · 60-125">
+    <div class="kicker">Y ahora, el paper que les toca a ustedes</div>
+    <h1 style="font-size:4rem;">El techo al alquiler<br>no es la restricción<br>de oferta más grande<br>de una ciudad.</h1>
+  </div>
+
+  <div class="slide bg-blanco" data-momento="La evidencia · 60-125">
+    <span class="capa frontera">Capa 3 · La frontera</span>
+    <h2>Dónde se decide<br>cuánta vivienda hay</h2>
+    <div class="cita-paper">
+      <div class="titulo">The Economic Implications of Housing Supply</div>
+      <div class="autores">Glaeser, E. y Gyourko, J. (2018). <em>Journal of Economic Perspectives</em>, 32(1), 3-30.</div>
+      <div class="contenido">Comparan el precio de la vivienda con lo que cuesta construirla. Donde los dos números van juntos, la oferta responde. Donde el precio se despega del costo de construcción, lo que manda no es el mercado: es <strong>cuánto se puede edificar</strong> — altura, densidad, usos, tiempos de aprobación.</div>
+    </div>
+  </div>
+
+  <div class="slide bg-impulso" data-momento="La evidencia · 60-125">
+    <h2>Traducido al gráfico<br>que acabamos de aprender</h2>
+    <h1 style="font-size:3.6rem;">El código urbanístico<br>es lo que decide<br><span class="highlight">la pendiente</span><br>de la curva de oferta.</h1>
+    <p style="font-size:2rem;">No es un detalle técnico ni un tema de arquitectos.<br>Es el parámetro del que dependen todos los resultados anteriores.</p>
+  </div>
+
+  <div class="slide bg-blanco" data-momento="Estado del arte · 60-125">
+    <div class="kicker">Síntesis del bloque</div>
+    <h2>Dónde queda cada cosa</h2>
+    <div class="capas-tabla">
+      <div class="capa-col c1">
+        <h4>El clásico</h4>
+        <p><strong>Marshall (1890)</strong> — el precio sale del cruce.</p>
+        <p><strong>Hayek (1945)</strong> — el precio es información.</p>
+        <p><strong>Smith (1962)</strong> — y el mercado lo encuentra solo.</p>
+      </div>
+      <div class="capa-col c2">
+        <h4>El manual</h4>
+        <p><strong>Mankiw 4-6</strong> — equilibrio, estática comparada, elasticidad, controles de precios.</p>
+        <p><strong>Mankiw 10-11</strong> — externalidades y bienes públicos.</p>
+      </div>
+      <div class="capa-col c3">
+        <h4>La frontera</h4>
+        <p><strong>Diamond, McQuade y Qian (2019)</strong>.</p>
+        <p><strong>Autor, Palmer y Pathak (2014)</strong>.</p>
+        <p><strong>Glaeser y Gyourko (2018)</strong> — la oferta y su regulación.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="slide bg-verde" data-momento="Corte · 125-135">
+    <h1 style="font-size:5.5rem;">Diez minutos.</h1>
+    <p class="subtitulo">Después: la conclusión fácil sería «que el Estado no se meta».<br>Y vamos a ver por qué no alcanza.</p>
+  </div>
+
+  <!-- ================================================================
+       BLOQUE 4 · APLICACIÓN Y CIERRE — 135 a 180 minutos
+       ================================================================ -->
+
+  <div class="slide bg-respaldo seccion-titulo" data-momento="Aplicación · 135-180">
+    <div class="num">Bloque 4 · 135 a 180 minutos</div>
+    <h1>Las dos fallas</h1>
+    <div class="detalle">Y por qué la pregunta «mercado o Estado»<br>está mal formulada.</div>
+  </div>
+
+  <div class="slide bg-blanco" data-momento="Aplicación · 135-180">
+    <h2>Pero entonces, ¿el Estado<br>no debería meterse nunca?</h2>
+    <h1 style="font-size:3.6rem;margin-top:20px;">¿Por qué el mar<br>se queda sin peces<br>y el campo <span class="highlight">no se queda<br>sin vacas</span>?</h1>
+  </div>
+
+  <div class="slide bg-verde" data-momento="Aplicación · 135-180">
+    <p style="font-size:2.2rem;">Nadie se preocupa por la extinción de la vaca,<br>y las vacas se comen por millones.</p>
+    <h1 style="font-size:4rem;">Los peces<br>no son de nadie.</h1>
+    <h3 style="font-size:2.4rem;">El problema no es de biología.<br>Es de <strong>derechos de propiedad</strong>.</h3>
+  </div>
+
+  <div class="slide bg-respaldo" data-momento="Aplicación · 135-180">
+    <span class="capa clasico">Capa 1 · El clásico</span>
+    <h2>La tragedia</h2>
+    <div class="cita-paper">
+      <div class="titulo">The Tragedy of the Commons</div>
+      <div class="autores">Hardin, G. (1968). <em>Science</em>, 162(3859), 1243-1248.</div>
+      <div class="contenido">Recurso común más acceso libre igual colapso. A cada pastor le conviene meter un animal más: la ganancia es toda suya y el desgaste se reparte. <strong>El desastre es el resultado de que cada uno haga lo que le conviene.</strong> Salida de Hardin: privatizar o estatizar.</div>
+    </div>
+  </div>
+
+  <div class="slide bg-blanco" data-momento="Aplicación · 135-180">
+    <span class="capa clasico">Capa 1 · El clásico</span>
+    <h2>Y su refutación</h2>
+    <div class="cita-paper">
+      <div class="titulo">Governing the Commons: The Evolution of Institutions for Collective Action</div>
+      <div class="autores">Ostrom, E. (1990). Cambridge University Press. — <strong>Nobel de Economía 2009.</strong></div>
+      <div class="contenido">Documenta comunidades reales —regantes en España, pesqueros en Turquía, pastores en Suiza— que administraron recursos comunes <strong>durante siglos</strong>, sin privatizarlos y sin estatizarlos: con reglas propias, monitoreo mutuo y sanciones graduadas.</div>
+    </div>
+    <p style="font-size:1.9rem;"><strong class="highlight">Entre privatizar y estatizar</strong> hay una tercera familia de soluciones que la teoría no había mirado.</p>
+  </div>
+
+  <div class="slide bg-impulso" data-momento="Aplicación · 135-180">
+    <h2>El cuadro de la clase</h2>
+    <table>
+      <tr><th></th><th>Falla de mercado</th><th>Falla del Estado</th></tr>
+      <tr><td><strong>Qué es</strong></td><td>Librado a sí mismo, produce un resultado malo para todos</td><td>La intervención produce un resultado peor que el problema</td></tr>
+      <tr><td><strong>Ejemplo de hoy</strong></td><td>El banco de peces que se agota</td><td>El techo al alquiler que achica la oferta</td></tr>
+      <tr><td><strong>Por qué pasa</strong></td><td>Nadie es dueño: el costo se reparte y el beneficio se concentra</td><td>Información, incentivos del regulador, búsqueda de rentas</td></tr>
+    </table>
+    <p class="fuente">Stiglitz, J. (2010). Regulación y fallas. <em>Revista de Economía Institucional</em>, 12(23), 13-28 <span class="programa">En el programa</span> · Krueger, A. (2012). Fallas del Gobierno en el desarrollo. <em>Criterio Jurídico</em>, 12(1) <span class="programa">En el programa</span></p>
+  </div>
+
+  <div class="slide bg-verde" data-momento="Aplicación · 135-180">
+    <div class="kicker" style="opacity:.8;">Lo más valioso que se llevan hoy</div>
+    <h2>La pregunta útil no es<br>«¿mercado o Estado?»</h2>
+    <h1 style="font-size:3.4rem;">Es: ¿qué falla estamos mirando,<br>y qué instrumento le corresponde?</h1>
+  </div>
+
+  <!-- ---------- ATERRIZAJE FADU ---------- -->
+
+  <div class="slide bg-respaldo seccion-titulo" data-momento="Aplicación · 135-180">
+    <div class="num">Y esto, ¿qué tiene que ver con ustedes?</div>
+    <h1>Todo</h1>
+  </div>
+
+  <div class="slide bg-blanco" data-momento="Aplicación · 135-180">
+    <h2>Ustedes no están mirando<br>el gráfico desde afuera</h2>
+    <div class="three-cols">
+      <div class="concepto-box"><h4>El que proyecta</h4><p>Cada decisión de partido, densidad y programa <strong>es un punto de la curva de oferta</strong>.</p></div>
+      <div class="concepto-box"><h4>El que norma</h4><p>El código urbanístico define la <strong>pendiente</strong> de esa curva. Es la política de vivienda más poderosa que existe.</p></div>
+      <div class="concepto-box"><h4>El que produce</h4><p>Costos, materiales y tiempos de obra son <strong>lo que corre la curva</strong> de un año al otro.</p></div>
+    </div>
+    <p style="font-size:1.9rem;">La discusión sobre alquileres se decide, en buena medida, en decisiones de proyecto y de norma.</p>
+  </div>
+
+  <div class="slide bg-impulso" data-momento="Aplicación · 135-180">
+    <h2>Y el mismo aparato<br>explica su propio mercado</h2>
+    <div class="two-cols">
+      <div class="concepto-box">
+        <h4>La IA generativa</h4>
+        <p>Baja el costo de producir imagen. <strong>Corre la oferta de diseño a la derecha</strong>. En el gráfico: baja el precio y sube la cantidad.</p>
+      </div>
+      <div class="concepto-box">
+        <h4>Su defensa</h4>
+        <p>Volver su demanda <strong>más inelástica</strong>: criterio, marca, autoría, relación con el cliente. Todo lo que no se sustituye por un prompt.</p>
+      </div>
+    </div>
+    <h3 style="margin-top:26px;">Es el mismo dibujo. Cambia la etiqueta de los ejes.</h3>
+  </div>
+
+  <div class="slide bg-respaldo seccion-titulo" data-momento="Ejercicios · 135-180" data-nuevo="ejercicios-portada">
+    <div class="num">Antes de la discusión</div>
+    <h1>Cuatro ejercicios</h1>
+    <div class="detalle">Para cada uno: qué curva se mueve, para qué lado,<br>y qué pasa con el precio y la cantidad de equilibrio.</div>
+  </div>
+
+  <div class="slide bg-blanco" data-momento="Ejercicios · 135-180" data-nuevo="ej-pollo">
+    <div class="kicker">Ejercicio 1</div>
+    <h2>Mercado de pollo</h2>
+    <p>Aumenta el <strong>precio de la carne vacuna</strong>.</p>
+    <ul>
+      <li>¿Qué tipo de bien es el pollo <strong>respecto de la carne</strong>?</li>
+      <li>¿Se mueve la oferta o la demanda de pollo? ¿Para qué lado?</li>
+      <li>¿Qué pasa con el <strong>precio y la cantidad</strong> de equilibrio?</li>
+    </ul>
+  </div>
+
+  <div class="slide bg-respaldo" data-momento="Ejercicios · 135-180" data-nuevo="ej-transporte">
+    <div class="kicker">Ejercicio 2</div>
+    <h2>Transporte público</h2>
+    <p>Suben los <strong>ingresos</strong> de la población.</p>
+    <ul>
+      <li>¿Qué tipo de bien es el transporte público?</li>
+      <li>¿Para qué lado se mueve la demanda?</li>
+      <li>¿Qué pasa con el precio y la cantidad de equilibrio?</li>
+    </ul>
+  </div>
+
+  <div class="slide bg-blanco" data-momento="Ejercicios · 135-180" data-nuevo="ej-dolar">
+    <div class="kicker">Ejercicio 3</div>
+    <h2>Mercado de dólares</h2>
+    <p>Aparece la <strong>expectativa</strong> de que el dólar va a subir.</p>
+    <ul>
+      <li>¿Qué pasa con la demanda de dólares <strong>hoy</strong>?</li>
+      <li>¿Qué pasa con el tipo de cambio de equilibrio?</li>
+      <li>La expectativa se cumple sola. <strong>¿Es eso una falla de mercado?</strong></li>
+    </ul>
+  </div>
+
+  <div class="slide bg-respaldo" data-momento="Ejercicios · 135-180" data-nuevo="ej-codigo">
+    <div class="kicker">Ejercicio 4 · el de ustedes</div>
+    <h2>Se cambia el código urbanístico</h2>
+    <p>En un corredor de la ciudad se <strong>autoriza el doble de altura</strong>.</p>
+    <ul>
+      <li>¿Se mueve la oferta o la demanda de vivienda?</li>
+      <li>¿Cambia la <strong>posición</strong> de la curva, su <strong>pendiente</strong>, o las dos?</li>
+      <li>¿Cuánto tarda en verse en el gráfico? <strong>Acá vuelve el corto y el largo plazo.</strong></li>
+      <li>¿Quién gana y quién pierde en ese corredor?</li>
+    </ul>
+  </div>
+
+  <div class="slide bg-respaldo" data-momento="Discusión · 135-180">
+    <div class="kicker">Discusión guiada · de a dos · 20 minutos</div>
+    <h2>Dos preguntas políticas</h2>
+    <ul>
+      <li>El control protege a quien <strong>ya tiene contrato</strong> y perjudica a quien busca. <strong class="highlight">¿Cuál de los dos vota?</strong></li>
+      <li>Si el precio es información, <strong>¿qué información se pierde</strong> cuando se lo congela?</li>
+    </ul>
+  </div>
+
+  <div class="slide bg-respaldo" data-momento="Discusión · 135-180">
+    <div class="kicker">Discusión guiada · de a dos · 20 minutos</div>
+    <h2>Dos preguntas de proyecto</h2>
+    <ul>
+      <li>Según Glaeser y Gyourko, ¿qué cambio en el código urbanístico haría <strong>más elástica</strong> la oferta de vivienda de CABA?</li>
+      <li>¿Qué política de vivienda <strong>no</strong> tendría el problema que tuvo ésta?</li>
+    </ul>
+  </div>
+
+  <div class="slide bg-impulso" data-momento="Cierre · 165-180">
+    <blockquote style="font-size:3rem;">El mercado falla<br>y el Estado falla.<br><br>El que les diga que sólo falla uno de los dos<br>les está vendiendo algo.</blockquote>
+  </div>
+
+  <div class="slide bg-respaldo" data-momento="Cierre · 165-180">
+    <div class="kicker">Para la clase que viene</div>
+    <h2>Tarea</h2>
+    <ul>
+      <li>Leer <strong>Mankiw, caps. 4, 5 y 6</strong></li>
+      <li>Traer <strong>una decisión de proyecto o de norma</strong> —de cualquier ciudad— y explicar si corre la oferta, la demanda, o ninguna de las dos</li>
+    </ul>
+    <p class="fuente">Aspectos Económicos del Diseño · FADU — Felipe Venancio</p>
+  </div>
+
+</div>
+
+<div class="slide-counter"><span id="current">1</span> / <span id="total">0</span></div>
+<div class="nav-hint">← → para navegar | F para pantalla completa</div>
+
+<script>
+  const slides = document.querySelectorAll('.slide');
+  let currentSlide = 0;
+  const total = slides.length;
+  document.getElementById('total').textContent = total;
+  const momento = document.getElementById('momento');
+
+  function showSlide(n){
+    slides[currentSlide].classList.remove('active');
+    currentSlide = (n + total) % total;
+    slides[currentSlide].classList.add('active');
+    document.getElementById('current').textContent = currentSlide + 1;
+    momento.textContent = slides[currentSlide].dataset.momento || '';
+  }
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'ArrowRight' || e.key === ' ' || e.key === 'Enter') showSlide(currentSlide + 1);
+    else if (e.key === 'ArrowLeft') showSlide(currentSlide - 1);
+    else if (e.key === 'Home') showSlide(0);
+    else if (e.key === 'End') showSlide(total - 1);
+    else if (e.key === 'f' || e.key === 'F') {
+      if (document.fullscreenElement) document.exitFullscreen();
+      else document.documentElement.requestFullscreen();
+    }
+  });
+  let touchStartX = 0;
+  document.addEventListener('touchstart', e => { touchStartX = e.touches[0].clientX; });
+  document.addEventListener('touchend', e => {
+    const diff = touchStartX - e.changedTouches[0].clientX;
+    if (Math.abs(diff) > 50) showSlide(currentSlide + (diff > 0 ? 1 : -1));
+  });
+  document.querySelector('.slide-container').addEventListener('click', e => {
+    showSlide(currentSlide + (e.clientX > window.innerWidth / 2 ? 1 : -1));
+  });
+  showSlide(0);
+</script>
+<script>
+/* ================================================================
+   Resultados en vivo dentro de un deck.
+
+   Se pega al final de la presentación. Busca los huecos que el deck ya trae:
+
+       <div class="slide" data-apuesta="alq-cantidad">
+         ...
+         <div class="resultado" data-resultado="alq-cantidad"></div>
+       </div>
+
+   y los llena con lo que votó el curso.
+
+   Cómo se usa en el aula:
+       presentacion.html?sala=K7QM
+   y opcionalmente ?api=https://votacion-clases.vercel.app para apuntar a otro
+   servidor (en local, ?api=http://localhost:3000).
+
+   Si no hay ?sala, si no hay internet o si el servidor no contesta, el script
+   no hace absolutamente nada: el hueco queda vacío, el CSS lo esconde y la
+   presentación se ve igual que siempre. El deck sigue siendo standalone.
+   ================================================================ */
+(function () {
+  'use strict';
+
+  var API_POR_DEFECTO = 'https://votacion-clases.vercel.app';   // ?api= la pisa
+
+  var q = new URLSearchParams(location.search);
+  var sala = (q.get('sala') || '').toUpperCase().replace(/[^A-Z0-9]/g, '');
+  var api = (q.get('api') || API_POR_DEFECTO).replace(/\/+$/, '');
+  if (!sala || !api) return;
+
+  var huecos = {};
+  document.querySelectorAll('.resultado[data-resultado]').forEach(function (el) {
+    huecos[el.dataset.resultado] = el;
+  });
+  if (!Object.keys(huecos).length) return;
+
+  var css = document.createElement('style');
+  css.textContent = [
+    '.rv{display:flex;flex-direction:column;gap:10px;}',
+    '.rv-f{display:grid;grid-template-columns:1fr auto;gap:8px 14px;align-items:baseline;}',
+    '.rv-pista{grid-column:1/-1;height:16px;border-radius:8px;background:rgba(127,127,127,.22);overflow:hidden;}',
+    '.rv-pista i{display:block;height:100%;border-radius:8px;background:currentColor;transition:width .6s;}',
+    '.rv-tot{font-size:.85em;opacity:.7;margin-top:4px;}',
+    '.rv-vivo{font-weight:700;}'
+  ].join('');
+  document.head.appendChild(css);
+
+  var esc = function (s) {
+    return String(s).replace(/[&<>"]/g, function (c) {
+      return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c];
+    });
+  };
+
+  function pintar(el, p, r, abierta) {
+    if (!r || !r.total) { el.innerHTML = ''; return; }
+    if (abierta) { el.innerHTML = '<div class="rv-vivo">' + r.total + ' votos y contando…</div>'; return; }
+
+    if (r.tipo === 'numero') {
+      el.innerHTML = '<div class="rv">' +
+        '<div class="rv-f"><span>Mediana del curso</span><strong>' + r.mediana + '</strong></div>' +
+        '<div class="rv-f"><span>Del más bajo al más alto</span><strong>' + r.min + ' a ' + r.max + '</strong></div>' +
+        '<div class="rv-tot">' + r.total + ' respuestas.</div></div>';
+      return;
+    }
+
+    var max = Math.max.apply(null, r.conteo.concat([1]));
+    var filas = (p.opciones || []).map(function (o, i) {
+      var n = r.conteo[i] || 0;
+      var pc = Math.round(n * 100 / r.total);
+      return '<div class="rv-f"><span>' + esc(o) + '</span><strong>' + pc + '%</strong>' +
+        '<div class="rv-pista"><i style="width:' + Math.round(n * 100 / max) + '%"></i></div></div>';
+    }).join('');
+    el.innerHTML = '<div class="rv">' + filas +
+      '<div class="rv-tot">Votó el curso: ' + r.total + ' respuestas.</div></div>';
+  }
+
+  function aplicar(datos) {
+    var abiertaAhora = datos.estado === 'abierta' ? datos.actual : null;
+    Object.keys(huecos).forEach(function (id) {
+      var r = (datos.resultados || {})[id];
+      var p = (datos.preguntas || {})[id] || {};
+      pintar(huecos[id], p, r, id === abiertaAhora);
+    });
+  }
+
+  function consultar() {
+    fetch(api + '/api/estado?s=' + sala + '&todo=1', { cache: 'no-store' })
+      .then(function (r) { return r.ok ? r.json() : null; })
+      .then(function (d) { if (d && !d.error) aplicar(d); })
+      .catch(function () { /* sin red: los huecos quedan como estaban */ });
+  }
+
+  consultar();
+  var t = setInterval(function () { if (!document.hidden) consultar(); }, 3000);
+  document.addEventListener('visibilitychange', function () { if (!document.hidden) consultar(); });
+  window.addEventListener('pagehide', function () { clearInterval(t); });
+})();
+</script>
+</body>
+</html>

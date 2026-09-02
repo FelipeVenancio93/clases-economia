@@ -1,0 +1,52 @@
+# ---------------------------------------------------------------
+#  Repo: clases-economia  (GitHub Pages)
+#
+#  Regla general: se publica lo que se ve en el sitio.
+#  .html e imagenes SI se trackean (las presentaciones las usan).
+#  Material fuente y salidas pesadas, NO.
+# ---------------------------------------------------------------
+
+# Dependencias
+node_modules/
+
+# Salidas pesadas generadas (video / audio)
+*.mp4
+*.mp3
+*.wav
+*.m4a
+
+# Temporales de Office y del pipeline
+~$*
+*.tmp
+_shot_tmp.js
+
+# Material fuente y referencias (no se publican)
+*.pdf
+*.pptx
+*.ppt
+*.docx
+*.doc
+*.xlsx
+*.xls
+Referencias Docentes/
+Referencias Graficas/
+Referencias Gr*ficas/
+Curso Finanzas PyME/
+
+# El curso de verano NO va al repo publico: es material de campus cerrado y usa
+# figuras originales con cita. Decision registrada en su propio TODO.md.
+Curso Freakonomics FSOC/
+
+# Claves de correccion. Esto es GitHub Pages: lo que se sube lo lee cualquiera,
+# alumnos incluidos.
+EXAMEN_*.md
+
+# Sistema
+Thumbs.db
+desktop.ini
+.DS_Store
+
+# NOTA: las imagenes (.jpg .png .webp .svg) NO se ignoran a proposito.
+# Las presentaciones las referencian con rutas relativas, p. ej.:
+#   url('good_bad_ugly_poster.jpg'), src="thonet%2014.jpg"
+# Si se ignoran, el sitio publicado queda con imagenes rotas.
