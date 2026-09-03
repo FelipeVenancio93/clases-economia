@@ -1384,14 +1384,21 @@ blockquote cite{display:block;font-size:1.5rem;font-style:normal;opacity:.75;mar
 
    y los llena con lo que votó el curso.
 
+   Hace dos cosas:
+
+   1. Pone un link al panel de votación abajo de todo, en TODAS las filminas.
+      Va siempre, con o sin sesión abierta, porque el docente lo necesita
+      justamente cuando todavía no la abrió.
+   2. Si el deck se abrió con ?sala, sondea el resultado y llena los huecos.
+
    Cómo se usa en el aula:
        presentacion.html?sala=K7QM
    y opcionalmente ?api=https://votacion-clases.vercel.app para apuntar a otro
    servidor (en local, ?api=http://localhost:3000).
 
-   Si no hay ?sala, si no hay internet o si el servidor no contesta, el script
-   no hace absolutamente nada: el hueco queda vacío, el CSS lo esconde y la
-   presentación se ve igual que siempre. El deck sigue siendo standalone.
+   Si no hay internet o si el servidor no contesta, el hueco queda vacío, el
+   CSS lo esconde y la presentación se ve igual que siempre. El deck sigue
+   siendo standalone.
    ================================================================ */
 (function () {
   'use strict';
@@ -1401,13 +1408,13 @@ blockquote cite{display:block;font-size:1.5rem;font-style:normal;opacity:.75;mar
   var q = new URLSearchParams(location.search);
   var sala = (q.get('sala') || '').toUpperCase().replace(/[^A-Z0-9]/g, '');
   var api = (q.get('api') || API_POR_DEFECTO).replace(/\/+$/, '');
-  if (!sala || !api) return;
 
   var huecos = {};
   document.querySelectorAll('.resultado[data-resultado]').forEach(function (el) {
     huecos[el.dataset.resultado] = el;
   });
-  if (!Object.keys(huecos).length) return;
+  // sin huecos no hay apuestas en este deck: no va ni el link ni el sondeo
+  if (!Object.keys(huecos).length || !api) return;
 
   var css = document.createElement('style');
   css.textContent = [
@@ -1416,9 +1423,36 @@ blockquote cite{display:block;font-size:1.5rem;font-style:normal;opacity:.75;mar
     '.rv-pista{grid-column:1/-1;height:16px;border-radius:8px;background:rgba(127,127,127,.22);overflow:hidden;}',
     '.rv-pista i{display:block;height:100%;border-radius:8px;background:currentColor;transition:width .6s;}',
     '.rv-tot{font-size:.85em;opacity:.7;margin-top:4px;}',
-    '.rv-vivo{font-weight:700;}'
+    '.rv-vivo{font-weight:700;}',
+    // El link al panel. Pastilla oscura con texto blanco para que se lea igual
+    // sobre las filminas blancas y sobre las azules: es fijo, así que no hereda
+    // el color del slide de abajo.
+    '.rv-panel{position:fixed;bottom:18px;left:50%;transform:translateX(-50%);z-index:200;',
+    '  background:rgba(0,0,0,.34);color:#fff;text-decoration:none;border-radius:22px;',
+    '  padding:7px 16px;font-size:.82rem;font-weight:700;letter-spacing:1.4px;',
+    '  text-transform:uppercase;opacity:.42;transition:opacity .18s;backdrop-filter:blur(3px);',
+    '  border:1px solid rgba(255,255,255,.22);}',
+    '.rv-panel:hover,.rv-panel:focus{opacity:1;}',
+    '@media (max-width:768px){.rv-panel{display:none;}}',
+    '@media print{.rv-panel{display:none;}}'
   ].join('');
   document.head.appendChild(css);
+
+  /* ---- el link al panel, que va SIEMPRE ----------------------------------
+     Con o sin ?sala. El docente lo necesita justamente cuando todavía no abrió
+     la sesión: entra al panel, crea la clase y proyecta el QR. Va fuera del
+     .slide-container para que hacer clic no adelante la filmina. */
+  var link = document.createElement('a');
+  link.className = 'rv-panel';
+  link.href = api + '/panel.html';
+  link.target = '_blank';
+  link.rel = 'noopener';
+  link.title = 'Abrir el panel de votación en otra pestaña';
+  link.textContent = sala ? 'Votación · ' + sala : 'Abrir votación';
+  link.addEventListener('click', function (e) { e.stopPropagation(); });
+  document.body.appendChild(link);
+
+  if (!sala) return;   // sin sala no hay nada que sondear
 
   var esc = function (s) {
     return String(s).replace(/[&<>"]/g, function (c) {
